@@ -35,6 +35,9 @@ dependencies {
 
     //load BrAPI providers modules
     implementation fileTree (dir: "providers/modules", include: "*.jar")
+
+    //SQLite JDBC driver for database operations
+    implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
 }
 
 jar {

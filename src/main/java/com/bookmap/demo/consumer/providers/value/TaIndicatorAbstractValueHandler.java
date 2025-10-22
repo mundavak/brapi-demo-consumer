@@ -38,12 +38,8 @@ public abstract class TaIndicatorAbstractValueHandler implements ProviderValueHa
     @Override
     public Event castEventInOurClassLoader(Object o) {
         Event event = null;
-        try {
-            if(o.getClass().getName().equals(BroadcastingEventAliased.class.getName())) {
-                event = CastUtilities.castObject(o, BroadcastingEventAliased.class);
-            }
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
+        if(o.getClass().getName().equals(BroadcastingEventAliased.class.getName())) {
+            event = CastUtilities.castObject(o, BroadcastingEventAliased.class);
         }
         return event;
     }
@@ -70,11 +66,7 @@ public abstract class TaIndicatorAbstractValueHandler implements ProviderValueHa
 
     @Override
     public Object castSettings(Object o) {
-        try {
-            return broadcastingBarSettings = CastUtilities.castObject(o, BroadcastingBarSettings.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
+        return broadcastingBarSettings = CastUtilities.castObject(o, BroadcastingBarSettings.class);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.bookmap.demo.consumer.providers.value;
 import com.bookmap.addons.broadcasting.api.view.Event;
 import com.bookmap.addons.broadcasting.api.view.EventFilter;
 import com.bookmap.addons.broadcasting.implementations.base.CastUtilities;
-import com.bookmap.addons.broadcasting.implementations.base.FailedToCastObject;
 import com.bookmap.addons.marketpulse.broadcasting.*;
 import com.bookmap.addons.marketpulse.broadcasting.implementations.MPDoubleBarEventV1;
 import com.bookmap.addons.marketpulse.broadcasting.implementations.MPFilterV1;
@@ -55,14 +54,10 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
     @Override
     public Event castEventInOurClassLoader(Object o) {
         MPEvent mpEvent = null;
-        try {
-            if(o.getClass().getSimpleName().equals(MPDoubleBarEventV1.class.getSimpleName())){
-                mpEvent = CastUtilities.castObject(o, MPDoubleBarEventV1.class);
-            } else if(o.getClass().getSimpleName().equals(MPSingleBarEventV1.class.getSimpleName())){
-                mpEvent = CastUtilities.castObject(o, MPSingleBarEventV1.class);
-            }
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
+        if(o.getClass().getSimpleName().equals(MPDoubleBarEventV1.class.getSimpleName())){
+            mpEvent = CastUtilities.castObject(o, MPDoubleBarEventV1.class);
+        } else if(o.getClass().getSimpleName().equals(MPSingleBarEventV1.class.getSimpleName())){
+            mpEvent = CastUtilities.castObject(o, MPSingleBarEventV1.class);
         }
         return mpEvent;
     }
@@ -79,23 +74,11 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        MPFilter filter = null;
-        try {
-            filter = CastUtilities.castObject(o, MPFilterV1.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
-        return filter;
+        return CastUtilities.castObject(o, MPFilterV1.class);
     }
 
     @Override
     public Object castSettings(Object o) {
-        MPWidgetSettings settings = null;
-        try {
-            settings = CastUtilities.castObject(o, MPWidgetSettingsV1.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
-        return settings;
+        return CastUtilities.castObject(o, MPWidgetSettingsV1.class);
     }
 }

@@ -41,13 +41,7 @@ public class AvwapValueHandler implements ProviderValueHandler {
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        BrVwapEvent lineEvent;
-        try {
-            lineEvent = CastUtilities.castObject(o, BrVwapEvent.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
-        return lineEvent;
+        return CastUtilities.castObject(o, BrVwapEvent.class);
     }
 
     @Override
@@ -57,20 +51,12 @@ public class AvwapValueHandler implements ProviderValueHandler {
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        try {
-            return CastUtilities.castObject(o, Filter.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
+        return CastUtilities.castObject(o, Filter.class);
     }
 
     @Override
     public Object castSettings(Object o) {
-        try {
-            return CastUtilities.castObject(o, ProviderSettingsProxy.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
+        return CastUtilities.castObject(o, ProviderSettingsProxy.class);
     }
 
     @Override

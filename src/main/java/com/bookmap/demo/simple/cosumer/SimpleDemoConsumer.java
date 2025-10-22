@@ -82,18 +82,14 @@ public class SimpleDemoConsumer implements
             LiveEventListener liveEventListener = new LiveEventListener() {
                 @Override
                 public void giveEvent(Object o) {
-                    try {
-                        EventInterface eventInterface = CastUtilities.castObject(o, TradeEvent.class);
-                        if (events.size() > 9) {
-                            events.removeFirst();
-                        }
-                        String event = "Price: " + eventInterface.getPrice()
-                                + ", Size: " + eventInterface.getValue()
-                                + ", ChainSize: " + eventInterface.getMaxChainSize();
-                        events.addLast(event);
-                    } catch (FailedToCastObject e) {
-                        throw new RuntimeException(e);
+                    EventInterface eventInterface = CastUtilities.castObject(o, TradeEvent.class);
+                    if (events.size() > 9) {
+                        events.removeFirst();
                     }
+                    String event = "Price: " + eventInterface.getPrice()
+                            + ", Size: " + eventInterface.getValue()
+                            + ", ChainSize: " + eventInterface.getMaxChainSize();
+                    events.addLast(event);
                 }
             };
 

@@ -55,13 +55,7 @@ public class AbsorptionAndSweepsValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        TradeEvent tradeEvent = null;
-        try {
-            tradeEvent = CastUtilities.castObject(o, TradeEvent.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
-        return tradeEvent;
+        return CastUtilities.castObject(o, TradeEvent.class);
     }
 
     @Override
@@ -71,19 +65,11 @@ public class AbsorptionAndSweepsValueHandler implements ProviderValueHandler{
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        try {
-            return CastUtilities.castObject(o, Filter.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
+        return CastUtilities.castObject(o, Filter.class);
     }
 
     @Override
     public Object castSettings(Object o) {
-        try {
-            return CastUtilities.castObject(o, ProviderSettingsProxy.class);
-        } catch (FailedToCastObject e) {
-            throw new RuntimeException(e);
-        }
+        return CastUtilities.castObject(o, ProviderSettingsProxy.class);
     }
 }
