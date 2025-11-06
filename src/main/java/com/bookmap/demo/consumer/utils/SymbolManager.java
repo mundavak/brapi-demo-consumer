@@ -334,7 +334,7 @@ public class SymbolManager {
 
         @Override
         public String toString() {
-            return String.format("%s (%s) - %s [Tick: %.2f = $%.2f]",
+            return "%s (%s) - %s [Tick: %.2f = $%.2f]".formatted(
                     symbol, exchange, description, tickSize, tickValue);
         }
     }

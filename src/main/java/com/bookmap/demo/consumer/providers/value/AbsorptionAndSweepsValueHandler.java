@@ -33,11 +33,11 @@ public class AbsorptionAndSweepsValueHandler implements ProviderValueHandler{
         double chainSize = eventInterface.getMaxChainSize() / instrumentInfo.sizeMultiplier;
         chainSize = Math.ceil(chainSize * scale) / scale;
 
-        String firstRow = String.format("Price=%s, Size=%s, isBid=%s, Time=%s,",
+        String firstRow = "Price=%s, Size=%s, isBid=%s, Time=%s,".formatted(
                 price, size, eventInterface.isBid(),
                 ProviderValueHandler.convertTime(event.getTime()),
                 chainSize);
-        String secondRow = String.format(" ChainSize=%s;", chainSize);
+        String secondRow = " ChainSize=%s;".formatted(chainSize);
 
         return new String[] {firstRow,secondRow};
     }

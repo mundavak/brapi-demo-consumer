@@ -21,7 +21,7 @@ public class StrengthLevelValueHandler implements ProviderValueHandler {
     public String[] getTextualVisualizationOfEvent(Event event, InstrumentInfo instrumentInfo) {
         EventInterface eventInterface = (EventInterface) event;
 
-        String firstRow = String.format("Price = %s, Size=%s, IsBid=%s, Time=%s,",
+        String firstRow = "Price = %s, Size=%s, IsBid=%s, Time=%s,".formatted(
                 eventInterface.getLevel(),
                 eventInterface.getSize(),
                 eventInterface.isBid(),

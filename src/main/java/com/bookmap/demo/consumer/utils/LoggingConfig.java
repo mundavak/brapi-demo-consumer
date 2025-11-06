@@ -80,7 +80,7 @@ public class LoggingConfig {
                 thrown = "\n" + getStackTrace(record.getThrown());
             }
 
-            return String.format(FORMAT,
+            return FORMAT.formatted(
                     new java.util.Date(record.getMillis()),
                     record.getLevel().getName(),
                     record.getLoggerName(),
@@ -131,7 +131,7 @@ public class LoggingConfig {
      */
     public static void logPerformanceMetrics(String component, long processingTime, int recordCount) {
         Logger perfLogger = Logger.getLogger("Performance");
-        perfLogger.info(String.format("PERF [%s] processed %d records in %dms (%.2f rec/s)",
+        perfLogger.info("PERF [%s] processed %d records in %dms (%.2f rec/s)".formatted(
                 component, recordCount, processingTime,
                 recordCount / (processingTime / 1000.0)));
     }
@@ -140,7 +140,7 @@ public class LoggingConfig {
      * Log error with context
      */
     public static void logErrorWithContext(Logger logger, String context, Exception e) {
-        logger.severe(String.format("ERROR in %s: %s", context, e.getMessage()));
+        logger.severe("ERROR in %s: %s".formatted(context, e.getMessage()));
         logger.log(Level.SEVERE, "Stack trace:", e);
     }
 
@@ -148,7 +148,7 @@ public class LoggingConfig {
      * Log batch processing summary
      */
     public static void logBatchSummary(Logger logger, String eventType, int batchSize, long processingTime) {
-        logger.info(String.format("Batch processed: %s events=%d time=%dms rate=%.2f/s",
+        logger.info("Batch processed: %s events=%d time=%dms rate=%.2f/s".formatted(
                 eventType, batchSize, processingTime, batchSize / (processingTime / 1000.0)));
     }
 }

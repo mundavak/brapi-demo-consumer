@@ -25,9 +25,9 @@ public class AvwapValueHandler implements ProviderValueHandler {
     public String[] getTextualVisualizationOfEvent(Event event, InstrumentInfo instrumentInfo) {
         EventInterface eventInterface = (EventInterface) event;
 
-        String firstRow = String.format("VWAP = %s, Std. Dev.=%s, Time=%s,",
-                String.format("%.2f", eventInterface.getVwap() * instrumentInfo.pips),
-                String.format("%.2f", eventInterface.getStandardDeviation() * instrumentInfo.pips),
+        String firstRow = "VWAP = %s, Std. Dev.=%s, Time=%s,".formatted(
+                "%.2f".formatted(eventInterface.getVwap() * instrumentInfo.pips),
+                "%.2f".formatted(eventInterface.getStandardDeviation() * instrumentInfo.pips),
                 ProviderValueHandler.convertTime(event.getTime())
         );
         return new String[] {firstRow};

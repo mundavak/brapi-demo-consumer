@@ -28,7 +28,7 @@ public class Generator implements StrategyUpdateGenerator {
         this.currentAlias = alias;
         this.trades = new LinkedList<>();
 
-        this.generatorId = String.format(GENERATOR_ID_PATTERN, alias);
+        this.generatorId = GENERATOR_ID_PATTERN.formatted(alias);
     }
 
     public String getGeneratorId() {

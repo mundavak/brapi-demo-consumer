@@ -112,10 +112,10 @@ public class SimpleDemoProvider implements
             String time = convertTimeToData(event.getTime());
             double movingAverage = event.getMovingAverage() * instrumentInfoMap.get(alias).pips;
 
-            String text = String.format(DISPLAY_EVENT_PATTERN, time, movingAverage);
+            String text = DISPLAY_EVENT_PATTERN.formatted(time, movingAverage);
             lines.add(text);
             if(lines.size() > NUMBER_OF_ROWS){
-                lines.remove(0);
+                lines.removeFirst();
             }
 
             JTextArea textArea = guiPanel.computeIfAbsent(alias, s -> new JTextArea());

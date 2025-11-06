@@ -28,10 +28,10 @@ public class SitValueHandler implements ProviderValueHandler{
         double size = eventInterface.getSize() / instrumentInfo.sizeMultiplier;
         size = Math.ceil(size * scale) / scale;
 
-        String firstRow = String.format("Price=%s, Size=%s, isBid=%s,Time=%s",
-                price,size,eventInterface.isBid(),
-                ProviderValueHandler.convertTime(event.getTime()),eventInterface.getType());
-        String secondRow = String.format(" Type=%s,TotalSize=%s;", eventInterface.getType(),
+        String firstRow = "Price=%s, Size=%s, isBid=%s,Time=%s".formatted(
+                price, size, eventInterface.isBid(),
+                ProviderValueHandler.convertTime(event.getTime()), eventInterface.getType());
+        String secondRow = " Type=%s,TotalSize=%s;".formatted(eventInterface.getType(),
                 ((EventInterface) event).getTotalSize());
 
         return new String[] {firstRow,secondRow};

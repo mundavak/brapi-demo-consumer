@@ -19,7 +19,7 @@ public class IntrinsicValueHandler implements ProviderValueHandler {
             com.bookmap.addons.intrinsic.broadcasting.module.EventInterface eventInterface =
                     (EventInterface) event;
 
-            String firstRow = String.format("Line = %s, Price=%s, Time=%s,",
+            String firstRow = "Line = %s, Price=%s, Time=%s,".formatted(
                     eventInterface.getLineType(),
                     eventInterface.getPrice(),
                     ProviderValueHandler.convertTime(event.getTime())

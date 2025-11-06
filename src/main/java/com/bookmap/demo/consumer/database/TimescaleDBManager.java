@@ -73,7 +73,7 @@ public class TimescaleDBManager {
         String user = config.getProperty("timescaledb.user", "postgres");
         String password = config.getProperty("timescaledb.password", "postgres");
 
-        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, database);
+        String jdbcUrl = "jdbc:postgresql://%s:%s/%s".formatted(host, port, database);
         hikariConfig.setJdbcUrl(jdbcUrl);
         hikariConfig.setUsername(user);
         hikariConfig.setPassword(password);

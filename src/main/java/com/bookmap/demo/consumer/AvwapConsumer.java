@@ -96,8 +96,8 @@ public class AvwapConsumer implements
         broadcaster.setProviderStatusListener(new ProviderStatusListener() {
             @Override
             public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
-                log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
-                    providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
+                log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
+                        providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
 
                 if (isWorking.get()) {
                     ExecutorsUtilities.getExecutor().submit(() -> {
@@ -247,8 +247,7 @@ public class AvwapConsumer implements
 
             // Check time window first
             Object timeObj = getFieldValue(event, "time");
-            if (timeObj instanceof Long) {
-                long eventTime = (Long) timeObj;
+            if (timeObj instanceof Long eventTime) {
                 if (!isWithinTradingWindow(eventTime)) {
                     log("DEBUG", "AvwapEvent outside trading window, skipping");
                     return;
@@ -265,20 +264,16 @@ public class AvwapConsumer implements
             if (vwapObj == null) vwapObj = getFieldValue(event, "vwap");
             if (vwapObj == null) vwapObj = getFieldValue(event, "price");
 
-            if (vwapObj instanceof Integer) {
-                int tickVwap = (Integer) vwapObj;
+            if (vwapObj instanceof Integer tickVwap) {
                 double actualVwap = convertPrice(tickVwap, instrument);
                 avwapData.put("vwapValue", actualVwap);
                 avwapData.put("price", actualVwap); // Use VWAP as price
-            } else if (vwapObj instanceof Long) {
-                long tickVwap = (Long) vwapObj;
-                double actualVwap = convertPrice((int)tickVwap, instrument);
+            } else if (vwapObj instanceof Long tickVwap) {
+                double actualVwap = convertPrice(tickVwap.intValue(), instrument);
                 avwapData.put("vwapValue", actualVwap);
                 avwapData.put("price", actualVwap); // Use VWAP as price
-            } else if (vwapObj instanceof Double) {
-                // Double values also need conversion (multiply by pips)
-                double tickVwap = (Double) vwapObj;
-                double actualVwap = convertPrice((int)tickVwap, instrument);
+            } else if (vwapObj instanceof Double tickVwap) {
+                double actualVwap = convertPrice(tickVwap.intValue(), instrument);
                 avwapData.put("vwapValue", actualVwap);
                 avwapData.put("price", actualVwap);
             } else {
@@ -315,12 +310,12 @@ public class AvwapConsumer implements
             avwapEvents.add(avwapData);
             int count = totalCount.incrementAndGet();
 
-            String logMsg = String.format("[AVWAP #%d] vwap=%s, volume=%s, deviation=%s, anchor=%s",
-                count,
-                formatNumber(avwapData.get("vwapValue")),
-                formatNumber(avwapData.get("volume")),
-                formatNumber(avwapData.get("deviation")),
-                avwapData.get("anchorTime") != null ? avwapData.get("anchorTime").toString() : "N/A"
+            String logMsg = "[AVWAP #%d] vwap=%s, volume=%s, deviation=%s, anchor=%s".formatted(
+                    count,
+                    formatNumber(avwapData.get("vwapValue")),
+                    formatNumber(avwapData.get("volume")),
+                    formatNumber(avwapData.get("deviation")),
+                    avwapData.get("anchorTime") != null ? avwapData.get("anchorTime").toString() : "N/A"
             );
 
             log("AVWAP", logMsg);
@@ -375,8 +370,8 @@ public class AvwapConsumer implements
     }
 
     private void setDoubleOrNull(PreparedStatement pstmt, int index, Object value) throws SQLException {
-        if (value instanceof Number) {
-            pstmt.setDouble(index, ((Number) value).doubleValue());
+        if (value instanceof Number number) {
+            pstmt.setDouble(index, number.doubleValue());
         } else {
             pstmt.setNull(index, java.sql.Types.REAL);
         }
@@ -424,7 +419,7 @@ public class AvwapConsumer implements
             field.setAccessible(true);
             try {
                 Object value = field.get(event);
-                log("INSPECT", String.format("  %s = %s", field.getName(), value));
+                log("INSPECT", "  %s = %s".formatted(field.getName(), value));
             } catch (Exception e) {
                 // Ignore
             }
@@ -487,7 +482,7 @@ public class AvwapConsumer implements
     }
 
     private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", dateFormat.format(new Date()), level, message);
+        String logLine = "[%s] [%s] %s".formatted(dateFormat.format(new Date()), level, message);
         Log.info(logLine);
 
         try (FileWriter writer = new FileWriter(LOG_PATH, true)) {
@@ -523,8 +518,8 @@ public class AvwapConsumer implements
 
     private String formatNumber(Object o) {
         if (o == null) return "N/A";
-        if (o instanceof Number) {
-            return String.format("%.2f", ((Number) o).doubleValue());
+        if (o instanceof Number number) {
+            return "%.2f".formatted(number.doubleValue());
         }
         return o.toString();
     }
@@ -553,7 +548,7 @@ public class AvwapConsumer implements
     public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
         instrumentsInfo.put(alias, instrumentInfo);
         instrumentPips.put(alias, instrumentInfo.pips);
-        log("INFO", String.format("Instrument added: %s (pips=%.8f)", alias, instrumentInfo.pips));
+        log("INFO", "Instrument added: %s (pips=%.8f)".formatted(alias, instrumentInfo.pips));
     }
 
     @Override

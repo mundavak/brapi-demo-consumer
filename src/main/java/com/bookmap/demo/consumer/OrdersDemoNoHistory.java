@@ -64,7 +64,7 @@ public class OrdersDemoNoHistory implements
             return;
         }
 
-        balance.addPoint(balanceInfo.balancesInCurrency.get(0).balance);
+        balance.addPoint(balanceInfo.balancesInCurrency.getFirst().balance);
     }
 
     @Override

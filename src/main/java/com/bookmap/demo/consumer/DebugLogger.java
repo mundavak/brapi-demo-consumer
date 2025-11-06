@@ -11,7 +11,7 @@ public class DebugLogger {
 
     public static void printLog(Class<?> sender, String message){
         if(enabled){
-            String text = String.format("DemoConsumer: %s: %s",sender.getSimpleName(), message);
+            String text = "DemoConsumer: %s: %s".formatted(sender.getSimpleName(), message);
             Log.info(text);
         }
     }

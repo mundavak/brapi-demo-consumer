@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -351,7 +351,7 @@ public class MboDashboard implements CustomModule, CustomSettingsPanelProvider {
     private void updatePriceData() {
         try {
             // Read live prices from cache file
-            if (Files.exists(Paths.get(PRICE_CACHE_FILE))) {
+            if (Files.exists(Path.of(PRICE_CACHE_FILE))) {
                 try (FileReader reader = new FileReader(PRICE_CACHE_FILE)) {
                     StringBuilder content = new StringBuilder();
                     char[] buffer = new char[1024];
@@ -463,7 +463,7 @@ public class MboDashboard implements CustomModule, CustomSettingsPanelProvider {
     private void updateAlerts() {
         try {
             // Read alerts from analytics file
-            if (Files.exists(Paths.get(ANALYTICS_FILE))) {
+            if (Files.exists(Path.of(ANALYTICS_FILE))) {
                 try (FileReader reader = new FileReader(ANALYTICS_FILE)) {
                     StringBuilder content = new StringBuilder();
                     char[] buffer = new char[1024];
@@ -1041,13 +1041,13 @@ public class MboDashboard implements CustomModule, CustomSettingsPanelProvider {
         if (value.isNaN()) return "N/A";
 
         if (Math.abs(value) < 0.001) {
-            return String.format("%.6f", value);
+            return "%.6f".formatted(value);
         } else if (Math.abs(value) < 1) {
-            return String.format("%.4f", value);
+            return "%.4f".formatted(value);
         } else if (Math.abs(value) < 10) {
-            return String.format("%.2f", value);
+            return "%.2f".formatted(value);
         } else {
-            return String.format("%.0f", value);
+            return "%.0f".formatted(value);
         }
     }
 
@@ -1055,7 +1055,7 @@ public class MboDashboard implements CustomModule, CustomSettingsPanelProvider {
         if (value == null) return "N/A";
         if (value.isNaN()) return "N/A";
 
-        return String.format("%.1f%%", value * 100);
+        return "%.1f%%".formatted(value * 100);
     }
 
     private void logDebug(String message) {
@@ -1076,7 +1076,7 @@ public class MboDashboard implements CustomModule, CustomSettingsPanelProvider {
 
             // Log to file
             try {
-                Files.createDirectories(Paths.get(DEBUG_FILE).getParent());
+                Files.createDirectories(Path.of(DEBUG_FILE).getParent());
                 try (FileWriter writer = new FileWriter(DEBUG_FILE, true)) {
                     writer.write(logMessage + "\n");
 

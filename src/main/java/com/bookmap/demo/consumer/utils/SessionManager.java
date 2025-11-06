@@ -145,10 +145,10 @@ public class SessionManager {
     public String generateSessionId(String symbol) {
         ZonedDateTime est = ZonedDateTime.now(EST_ZONE);
         String sessionType = getSessionType(System.currentTimeMillis());
-        return String.format("%s_%s_%s",
-            symbol,
-            est.toLocalDate().toString().replace("-", ""),
-            sessionType
+        return "%s_%s_%s".formatted(
+                symbol,
+                est.toLocalDate().toString().replace("-", ""),
+                sessionType
         );
     }
 

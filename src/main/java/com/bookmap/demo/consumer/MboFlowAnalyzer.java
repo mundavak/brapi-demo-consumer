@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -247,7 +247,7 @@ public class MboFlowAnalyzer implements CustomModule, CustomSettingsPanelProvide
                 trades.add(trade);
                 // Keep only last 1000 trades
                 while (trades.size() > 1000) {
-                    trades.remove(0);
+                    trades.removeFirst();
                 }
             }
 
@@ -404,8 +404,8 @@ public class MboFlowAnalyzer implements CustomModule, CustomSettingsPanelProvide
                 double windowVolume = 0;
                 double windowBuyVolume = 0;
                 double windowSellVolume = 0;
-                double firstPrice = windowTrades.isEmpty() ? 0 : (double) windowTrades.get(0).get("price");
-                double lastPrice = windowTrades.isEmpty() ? 0 : (double) windowTrades.get(windowTrades.size() - 1).get("price");
+                double firstPrice = windowTrades.isEmpty() ? 0 : (double) windowTrades.getFirst().get("price");
+                double lastPrice = windowTrades.isEmpty() ? 0 : (double) windowTrades.getLast().get("price");
 
                 for (Map<String, Object> trade : windowTrades) {
                     int size = (int) trade.get("size");
@@ -592,7 +592,7 @@ public class MboFlowAnalyzer implements CustomModule, CustomSettingsPanelProvide
 
                 // Potential iceberg if many new orders at same price level
                 if (newOrderCount >= 5) {
-                    boolean isBid = (boolean) ordersAtPrice.get(0).get("isBid");
+                    boolean isBid = (boolean) ordersAtPrice.getFirst().get("isBid");
                     String side = isBid ? "BID" : "ASK";
 
                     createAlert(alias, "ICEBERG_" + side,
@@ -679,8 +679,8 @@ public class MboFlowAnalyzer implements CustomModule, CustomSettingsPanelProvide
                 // A stop run typically involves a rapid sequence of trades in one direction,
                 // often accompanied by a quick reversal
 
-                double firstPrice = (double) trades.get(0).get("price");
-                double lastPrice = (double) trades.get(trades.size() - 1).get("price");
+                double firstPrice = (double) trades.getFirst().get("price");
+                double lastPrice = (double) trades.getLast().get("price");
                 double maxMove = 0;
                 double currentMove = 0;
                 double prevPrice = firstPrice;
@@ -1023,7 +1023,7 @@ public class MboFlowAnalyzer implements CustomModule, CustomSettingsPanelProvide
 
             // Log to file
             try {
-                Files.createDirectories(Paths.get(DEBUG_FILE).getParent());
+                Files.createDirectories(Path.of(DEBUG_FILE).getParent());
                 try (FileWriter writer = new FileWriter(DEBUG_FILE, true)) {
                     writer.write(logMessage + "\n");
 

@@ -83,8 +83,7 @@ public class OhlcCandleConsumer implements
 
     @Override
     public void onUserMessage(Object data) {
-        if (data instanceof UserMessageLayersChainCreatedTargeted) {
-            UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
+        if (data instanceof UserMessageLayersChainCreatedTargeted message) {
             if (message.targetClass == getClass()) {
                 LOGGER.info("OhlcCandleConsumer: Layers chain created");
             }
@@ -239,7 +238,7 @@ public class OhlcCandleConsumer implements
         }
 
         // Store closed candle in Redis with longer TTL
-        String closedKey = String.format("candle:%s:%s:closed:%d", symbol, timeframe, builder.startTime);
+        String closedKey = "candle:%s:%s:closed:%d".formatted(symbol, timeframe, builder.startTime);
         Map<String, String> candleData = new HashMap<>();
         candleData.put("open", String.valueOf(candle.open));
         candleData.put("high", String.valueOf(candle.high));
@@ -258,7 +257,7 @@ public class OhlcCandleConsumer implements
         // Reset builder for next candle
         builder.reset(builder.startTime + TIMEFRAME_MILLIS.get(timeframe));
 
-        LOGGER.fine(String.format("Closed candle: %s %s at %d", symbol, timeframe, candle.timestamp));
+        LOGGER.fine("Closed candle: %s %s at %d".formatted(symbol, timeframe, candle.timestamp));
     }
 
     /**

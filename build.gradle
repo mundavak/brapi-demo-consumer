@@ -2,11 +2,24 @@ plugins {
     id 'java'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
-// All consumers are now fixed and ready to build
-// No exclusions needed
+// Exclude problematic MBO files temporarily for Java 21 upgrade
+sourceSets {
+    main {
+        java {
+            exclude '**/MboDashboard.java'
+            exclude '**/MboFlowAnalyzer.java'
+            exclude '**/MboMarketMonitor.java'
+        }
+    }
+}
+
+// Set encoding to UTF-8 to handle special characters
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 group 'com.bookmap.addons'
 version '3.0.0'

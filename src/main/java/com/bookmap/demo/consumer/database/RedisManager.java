@@ -109,7 +109,7 @@ public class RedisManager {
     // ============================================
 
     public void addMboData(String symbol, String sessionId, long timestamp, String mboJson) {
-        String key = String.format("mbo:%s:%s", symbol, sessionId);
+        String key = "mbo:%s:%s".formatted(symbol, sessionId);
         try (Jedis jedis = getConnection()) {
             jedis.zadd(key, timestamp, mboJson);
             jedis.expire(key, ttlCache.get("mbo"));
@@ -119,7 +119,7 @@ public class RedisManager {
     }
 
     public List<String> getRecentMboData(String symbol, String sessionId, int count) {
-        String key = String.format("mbo:%s:%s", symbol, sessionId);
+        String key = "mbo:%s:%s".formatted(symbol, sessionId);
         try (Jedis jedis = getConnection()) {
             return jedis.zrevrange(key, 0, count - 1);
         } catch (Exception e) {
@@ -133,7 +133,7 @@ public class RedisManager {
     // ============================================
 
     public void updatePriceLadder(String symbol, String side, double price, long size) {
-        String key = String.format("ladder:%s:%s", symbol, side.toLowerCase());
+        String key = "ladder:%s:%s".formatted(symbol, side.toLowerCase());
         try (Jedis jedis = getConnection()) {
             jedis.hset(key, String.valueOf(price), String.valueOf(size));
         } catch (Exception e) {
@@ -142,7 +142,7 @@ public class RedisManager {
     }
 
     public Map<String, String> getPriceLadder(String symbol, String side) {
-        String key = String.format("ladder:%s:%s", symbol, side.toLowerCase());
+        String key = "ladder:%s:%s".formatted(symbol, side.toLowerCase());
         try (Jedis jedis = getConnection()) {
             return jedis.hgetAll(key);
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class RedisManager {
     // ============================================
 
     public void updateCurrentCandle(String symbol, String timeframe, Map<String, String> candleData) {
-        String key = String.format("candle:%s:%s:current", symbol, timeframe);
+        String key = "candle:%s:%s:current".formatted(symbol, timeframe);
         try (Jedis jedis = getConnection()) {
             jedis.hset(key, candleData);
             int ttl = timeframe.equals("1m") ? ttlCache.get("ohlc_1m") : ttlCache.get("ohlc_1m") * 2;
@@ -167,7 +167,7 @@ public class RedisManager {
     }
 
     public Map<String, String> getCurrentCandle(String symbol, String timeframe) {
-        String key = String.format("candle:%s:%s:current", symbol, timeframe);
+        String key = "candle:%s:%s:current".formatted(symbol, timeframe);
         try (Jedis jedis = getConnection()) {
             return jedis.hgetAll(key);
         } catch (Exception e) {
@@ -181,13 +181,13 @@ public class RedisManager {
     // ============================================
 
     public void addStopIcebergEvent(String symbol, String eventType, long timestamp, String eventJson) {
-        String key = String.format("%s:%s:session", eventType.toLowerCase(), symbol);
+        String key = "%s:%s:session".formatted(eventType.toLowerCase(), symbol);
         try (Jedis jedis = getConnection()) {
             jedis.zadd(key, timestamp, eventJson);
             jedis.expire(key, ttlCache.get("stops_icebergs"));
 
             // Also add to stream for real-time notifications
-            String streamKey = String.format("stream:stops_icebergs:%s", symbol);
+            String streamKey = "stream:stops_icebergs:%s".formatted(symbol);
             Map<String, String> streamData = new HashMap<>();
             streamData.put("type", eventType);
             streamData.put("timestamp", String.valueOf(timestamp));
@@ -200,7 +200,7 @@ public class RedisManager {
     }
 
     public List<String> getRecentStopIcebergEvents(String symbol, String eventType, int count) {
-        String key = String.format("%s:%s:session", eventType.toLowerCase(), symbol);
+        String key = "%s:%s:session".formatted(eventType.toLowerCase(), symbol);
         try (Jedis jedis = getConnection()) {
             return jedis.zrevrange(key, 0, count - 1);
         } catch (Exception e) {
@@ -214,13 +214,13 @@ public class RedisManager {
     // ============================================
 
     public void addAbsorptionEvent(String symbol, String cbdrWindow, double significance, String eventJson) {
-        String key = String.format("absorption:%s:%s", symbol, cbdrWindow);
+        String key = "absorption:%s:%s".formatted(symbol, cbdrWindow);
         try (Jedis jedis = getConnection()) {
             jedis.zadd(key, significance, eventJson);
             jedis.expire(key, ttlCache.get("absorption"));
 
             // Stream for real-time notifications
-            String streamKey = String.format("stream:absorption:%s", symbol);
+            String streamKey = "stream:absorption:%s".formatted(symbol);
             Map<String, String> streamData = new HashMap<>();
             streamData.put("window", cbdrWindow);
             streamData.put("significance", String.valueOf(significance));
@@ -233,7 +233,7 @@ public class RedisManager {
     }
 
     public List<String> getTopAbsorptionEvents(String symbol, String cbdrWindow, int count) {
-        String key = String.format("absorption:%s:%s", symbol, cbdrWindow);
+        String key = "absorption:%s:%s".formatted(symbol, cbdrWindow);
         try (Jedis jedis = getConnection()) {
             return jedis.zrevrange(key, 0, count - 1);
         } catch (Exception e) {
@@ -247,7 +247,7 @@ public class RedisManager {
     // ============================================
 
     public void updateCbdrWindow(String symbol, String windowType, Map<String, String> windowData) {
-        String key = String.format("cbdr:%s:%s", symbol, windowType);
+        String key = "cbdr:%s:%s".formatted(symbol, windowType);
         try (Jedis jedis = getConnection()) {
             jedis.hset(key, windowData);
             jedis.expire(key, ttlCache.get("cbdr"));
@@ -257,7 +257,7 @@ public class RedisManager {
     }
 
     public Map<String, String> getCbdrWindow(String symbol, String windowType) {
-        String key = String.format("cbdr:%s:%s", symbol, windowType);
+        String key = "cbdr:%s:%s".formatted(symbol, windowType);
         try (Jedis jedis = getConnection()) {
             return jedis.hgetAll(key);
         } catch (Exception e) {
@@ -271,7 +271,7 @@ public class RedisManager {
     // ============================================
 
     public void updateMarketBias(String symbol, String direction, double confidence, String supportingFactors) {
-        String key = String.format("bias:%s", symbol);
+        String key = "bias:%s".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             Map<String, String> biasData = new HashMap<>();
             biasData.put("direction", direction);
@@ -286,7 +286,7 @@ public class RedisManager {
     }
 
     public Map<String, String> getMarketBias(String symbol) {
-        String key = String.format("bias:%s", symbol);
+        String key = "bias:%s".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             return jedis.hgetAll(key);
         } catch (Exception e) {
@@ -300,7 +300,7 @@ public class RedisManager {
     // ============================================
 
     public void publishSignal(String symbol, String signal) {
-        String channel = String.format("signals:%s", symbol);
+        String channel = "signals:%s".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             jedis.publish(channel, signal);
         } catch (Exception e) {
@@ -313,7 +313,7 @@ public class RedisManager {
     // ============================================
 
     public void createSession(String sessionId, String symbol, long startTime) {
-        String key = String.format("session:%s", sessionId);
+        String key = "session:%s".formatted(sessionId);
         try (Jedis jedis = getConnection()) {
             Map<String, String> sessionData = new HashMap<>();
             sessionData.put("symbol", symbol);
@@ -331,7 +331,7 @@ public class RedisManager {
     }
 
     public void updateSessionMetrics(String sessionId, long volumeDelta, int tradesDelta) {
-        String key = String.format("session:%s", sessionId);
+        String key = "session:%s".formatted(sessionId);
         try (Jedis jedis = getConnection()) {
             jedis.hincrBy(key, "volume", volumeDelta);
             jedis.hincrBy(key, "trades", tradesDelta);
@@ -354,7 +354,7 @@ public class RedisManager {
     // ============================================
 
     public void updateSymbolConfig(String symbol, Map<String, String> config) {
-        String key = String.format("symbol:%s:config", symbol);
+        String key = "symbol:%s:config".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             jedis.hset(key, config);
         } catch (Exception e) {
@@ -388,7 +388,7 @@ public class RedisManager {
     // ============================================
 
     public void updateDashboardSummary(String symbol, String jsonSummary) {
-        String key = String.format("dashboard:%s:summary", symbol);
+        String key = "dashboard:%s:summary".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             jedis.set(key, jsonSummary);
             jedis.expire(key, ttlCache.get("dashboard"));
@@ -398,7 +398,7 @@ public class RedisManager {
     }
 
     public String getDashboardSummary(String symbol) {
-        String key = String.format("dashboard:%s:summary", symbol);
+        String key = "dashboard:%s:summary".formatted(symbol);
         try (Jedis jedis = getConnection()) {
             return jedis.get(key);
         } catch (Exception e) {
@@ -423,7 +423,7 @@ public class RedisManager {
 
     public void flushSymbolData(String symbol) {
         try (Jedis jedis = getConnection()) {
-            String pattern = String.format("*:%s:*", symbol);
+            String pattern = "*:%s:*".formatted(symbol);
             jedis.keys(pattern).forEach(jedis::del);
             LOGGER.info("Flushed all data for symbol: " + symbol);
         } catch (Exception e) {
@@ -436,14 +436,14 @@ public class RedisManager {
             Set<String> activeSymbols = getActiveSymbols();
             for (String symbol : activeSymbols) {
                 // Clean old MBO data
-                Set<String> sessions = jedis.keys(String.format("mbo:%s:*", symbol));
+                Set<String> sessions = jedis.keys("mbo:%s:*".formatted(symbol));
                 for (String key : sessions) {
                     jedis.zremrangeByScore(key, 0, olderThanTimestamp);
                 }
 
                 // Clean old events
-                jedis.zremrangeByScore(String.format("stops:%s:session", symbol), 0, olderThanTimestamp);
-                jedis.zremrangeByScore(String.format("icebergs:%s:session", symbol), 0, olderThanTimestamp);
+                jedis.zremrangeByScore("stops:%s:session".formatted(symbol), 0, olderThanTimestamp);
+                jedis.zremrangeByScore("icebergs:%s:session".formatted(symbol), 0, olderThanTimestamp);
             }
             LOGGER.info("Cleanup completed for data older than: " + olderThanTimestamp);
         } catch (Exception e) {

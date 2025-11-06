@@ -100,7 +100,7 @@ public class AbsorptionConsumer implements
      * File logging helper - writes to console, file, and UI
      */
     private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s",
+        String logLine = "[%s] [%s] %s".formatted(
                 dateFormat.format(new Date()), level, message);
 
         // Write to Bookmap console using Log
@@ -156,7 +156,7 @@ public class AbsorptionConsumer implements
                     @Override
                     public void providerUpdateGenerator(String providerName, String providerId,
                             GeneratorInfo generator, boolean isOnline) {
-                        log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
+                        log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
                                 providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
                     }
                 });
@@ -242,8 +242,7 @@ public class AbsorptionConsumer implements
             // ✅ Use CastUtilities as documented in provider README
             EventInterface eventInterface = CastUtilities.castObject(event, TradeEvent.class);
 
-            if (eventInterface instanceof TradeEvent) {
-                TradeEvent tradeEvent = (TradeEvent) eventInterface;
+            if (eventInterface instanceof TradeEvent tradeEvent) {
                 processTradeEvent(tradeEvent);
             } else {
                 log("WARN", "Unexpected event type: " + eventInterface.getClass().getName());
@@ -284,8 +283,7 @@ public class AbsorptionConsumer implements
             // Log every 10th event with significance (show converted price)
             if (stopCount.incrementAndGet() % 10 == 0) {
                 log("INFO",
-                        String.format(
-                                "TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d, significance=%.2f (threshold: 0.5)",
+                        "TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d, significance=%.2f (threshold: 0.5)".formatted(
                                 side, convertedPrice, price, size, maxChainSize, significance));
             }
 
@@ -308,7 +306,7 @@ public class AbsorptionConsumer implements
                 dbEvent.cbdrWindow = "REGULAR"; // TODO: Get actual CBDR window
                 dbEvent.isInCbdr = false; // TODO: Check actual CBDR status
                 dbEvent.significance = significance;
-                dbEvent.metadata = String.format("{\"maxChainSize\":%d,\"rawPrice\":%.2f}", maxChainSize, price);
+                dbEvent.metadata = "{\"maxChainSize\":%d,\"rawPrice\":%.2f}".formatted(maxChainSize, price);
 
                 // Store to Redis with converted price
                 String eventJson = gson.toJson(Map.of(
@@ -327,7 +325,7 @@ public class AbsorptionConsumer implements
                 // Update UI
                 updateUI();
 
-                log("INFO", String.format("✓ Stored absorption event: %s %s @ %.2f (raw: %.2f, sig=%.2f)",
+                log("INFO", "✓ Stored absorption event: %s %s @ %.2f (raw: %.2f, sig=%.2f)".formatted(
                         symbol, side, convertedPrice, price, significance));
             }
 
@@ -662,13 +660,13 @@ public class AbsorptionConsumer implements
             log("WARN", "Failed to queue absorption event: " + e.getMessage());
         }
 
-        log("INFO", String.format("ABSORPTION detected: %s at %.2f, ratio: %.2f, significance: %.2f %s",
+        log("INFO", "ABSORPTION detected: %s at %.2f, ratio: %.2f, significance: %.2f %s".formatted(
                 symbol, level.price, absorptionRatio, significance,
                 isInCbdr ? "[CBDR: " + cbdrWindow + "]" : ""));
 
         // Publish signal if significant
         if (significance >= 0.7) {
-            String signal = String.format("ABSORPTION:%s:%.2f:%.2f:%s",
+            String signal = "ABSORPTION:%s:%.2f:%.2f:%s".formatted(
                     side, level.price, significance, cbdrWindow != null ? cbdrWindow : "REGULAR");
             redisManager.publishSignal(symbol, signal);
         }
@@ -730,7 +728,7 @@ public class AbsorptionConsumer implements
             log("WARN", "Failed to queue sweep event: " + e.getMessage());
         }
 
-        log("INFO", String.format("SWEEP detected: %s %s at %.2f, volume: %d",
+        log("INFO", "SWEEP detected: %s %s at %.2f, volume: %d".formatted(
                 symbol, side, level.price, dominantVolume));
     }
 
@@ -807,7 +805,7 @@ public class AbsorptionConsumer implements
                 double confidence = Math.abs(bullishEvents - bearishEvents)
                         / (double) Math.max(1, bullishEvents + bearishEvents);
                 redisManager.updateMarketBias(symbol, bias, confidence,
-                        String.format("%s window absorption: %d vs %d", cbdrWindow, bullishEvents, bearishEvents));
+                        "%s window absorption: %d vs %d".formatted(cbdrWindow, bullishEvents, bearishEvents));
             }
         }
     }
@@ -820,10 +818,10 @@ public class AbsorptionConsumer implements
         batchQueue.drainTo(batch, 500);
 
         if (!batch.isEmpty()) {
-            log("INFO", String.format("[AbsorptionConsumer] Processing batch of %d events to TimescaleDB...",
+            log("INFO", "[AbsorptionConsumer] Processing batch of %d events to TimescaleDB...".formatted(
                     batch.size()));
             timescaleDBManager.batchInsertAbsorptionEvents(batch);
-            log("INFO", String.format("✓ [AbsorptionConsumer] Successfully wrote %d absorption events to TimescaleDB",
+            log("INFO", "✓ [AbsorptionConsumer] Successfully wrote %d absorption events to TimescaleDB".formatted(
                     batch.size()));
         }
         // Removed LOGGER.fine() - no need to spam logs for empty queue

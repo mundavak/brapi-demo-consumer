@@ -16,7 +16,7 @@ public class SimpleDemoProviderValueHandler implements ProviderValueHandler{
     @Override
     public String[] getTextualVisualizationOfEvent(Event event, InstrumentInfo instrumentInfo) {
         SimpleDemoProviderEvent providerEvent = (SimpleDemoProviderEvent) event;
-        String text = String.format(DISPLAY_EVENT_PATTERN, ProviderValueHandler.convertTime(providerEvent.getTime()),
+        String text = DISPLAY_EVENT_PATTERN.formatted(ProviderValueHandler.convertTime(providerEvent.getTime()),
                 providerEvent.getMovingAverage());
         return new String[]{text};
     }

@@ -140,7 +140,7 @@ public class StopsIcebergsConsumer
             @Override
             public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator,
                     boolean isOnline) {
-                StopsIcebergsConsumer.this.log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
+                StopsIcebergsConsumer.this.log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
                         providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
                 if (StopsIcebergsConsumer.this.isWorking.get()) {
                     ExecutorsUtilities.getExecutor().submit(() -> StopsIcebergsConsumer.this.provider
@@ -178,7 +178,7 @@ public class StopsIcebergsConsumer
             this.batchQueue.drainTo(batch, 500);
             if (!batch.isEmpty()) {
                 this.dbManager.batchInsertStopIcebergEvents(batch);
-                this.log("INFO", String.format("[BATCH] Wrote %d events to TimescaleDB", batch.size()));
+                this.log("INFO", "[BATCH] Wrote %d events to TimescaleDB".formatted(batch.size()));
             }
         } catch (Exception e) {
             this.log("ERROR", "[BATCH] Error processing batch: " + e.getMessage());
@@ -338,8 +338,7 @@ public class StopsIcebergsConsumer
                             : this.instrumentsInfo.keySet().iterator().next();
                     stopData.put("orderID", this.getFieldValue(event, "orderId"));
                     Object priceObj = this.getFieldValue(event, "price");
-                    if (priceObj instanceof Integer) {
-                        int tickPrice = (Integer) priceObj;
+                    if (priceObj instanceof Integer tickPrice) {
                         double actualPrice = this.convertPrice(tickPrice, instrument);
                         stopData.put("price", actualPrice);
                     } else {
@@ -361,7 +360,7 @@ public class StopsIcebergsConsumer
             }
             this.stopEvents.add(stopData);
             int count = this.stopCount.incrementAndGet();
-            String logMsg = String.format("[STOP #%d] %s %s @ %s, size=%s, totalSize=%s", count,
+            String logMsg = "[STOP #%d] %s %s @ %s, size=%s, totalSize=%s".formatted(count,
                     stopData.getOrDefault("side", "N/A"), stopData.getOrDefault("orderID", "N/A"),
                     this.formatNumber(stopData.get("price")), this.formatNumber(stopData.get("size")),
                     this.formatNumber(stopData.get("totalSize")));
@@ -388,10 +387,9 @@ public class StopsIcebergsConsumer
                     cbdrWindow = "OUTSIDE_CBDR";
                     this.log("DEBUG", "[STOP] Event outside CBDR windows - still recording");
                 } else {
-                    this.log("INFO", String.format("[STOP] Event in CBDR window: %s", cbdrWindow));
+                    this.log("INFO", "[STOP] Event in CBDR window: %s".formatted(cbdrWindow));
                 }
-                String eventJson = String.format(
-                        "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}",
+                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}".formatted(
                         symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
                 this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
                 TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
@@ -436,8 +434,7 @@ public class StopsIcebergsConsumer
                     this.icebergTypeCounts.merge(eventType, 1, Integer::sum);
                     icebergData.put("orderID", this.getFieldValue(event, "orderId"));
                     Object priceObj = this.getFieldValue(event, "price");
-                    if (priceObj instanceof Integer) {
-                        int tickPrice = (Integer) priceObj;
+                    if (priceObj instanceof Integer tickPrice) {
                         double actualPrice = this.convertPrice(tickPrice, instrument);
                         icebergData.put("price", actualPrice);
                     } else {
@@ -457,7 +454,7 @@ public class StopsIcebergsConsumer
             }
             this.icebergEvents.add(icebergData);
             int count = this.icebergCount.incrementAndGet();
-            String logMsg = String.format("[ICEBERG #%d] %s %s @ %s %s", count,
+            String logMsg = "[ICEBERG #%d] %s %s @ %s %s".formatted(count,
                     icebergData.getOrDefault("typeMessage", ""), icebergData.getOrDefault("orderID", "N/A"),
                     this.formatNumber(icebergData.get("price")), icebergData.getOrDefault("side", "N/A"));
             this.log("ICEBERG", logMsg);
@@ -484,10 +481,9 @@ public class StopsIcebergsConsumer
                     cbdrWindow = "OUTSIDE_CBDR";
                     this.log("DEBUG", "[ICEBERG] Event outside CBDR windows - still recording");
                 } else {
-                    this.log("INFO", String.format("[ICEBERG] Event in CBDR window: %s", cbdrWindow));
+                    this.log("INFO", "[ICEBERG] Event in CBDR window: %s".formatted(cbdrWindow));
                 }
-                String eventJson = String.format(
-                        "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}",
+                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}".formatted(
                         symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
                 this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
                 TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
@@ -579,9 +575,9 @@ public class StopsIcebergsConsumer
             try {
                 Object value = field.get(event);
                 this.log("INSPECT",
-                        String.format("  %s (%s) = %s", field.getName(), field.getType().getSimpleName(), value));
+                        "  %s (%s) = %s".formatted(field.getName(), field.getType().getSimpleName(), value));
             } catch (Exception e) {
-                this.log("INSPECT", String.format("  %s (%s) = <error accessing>", field.getName(),
+                this.log("INSPECT", "  %s (%s) = <error accessing>".formatted(field.getName(),
                         field.getType().getSimpleName()));
             }
         }
@@ -593,10 +589,10 @@ public class StopsIcebergsConsumer
                 continue;
             try {
                 Object value = method.invoke(event, new Object[0]);
-                this.log("INSPECT", String.format("  %s() returns %s = %s", methodName,
+                this.log("INSPECT", "  %s() returns %s = %s".formatted(methodName,
                         method.getReturnType().getSimpleName(), value));
             } catch (Exception e) {
-                this.log("INSPECT", String.format("  %s() returns %s = <error invoking>", methodName,
+                this.log("INSPECT", "  %s() returns %s = <error invoking>".formatted(methodName,
                         method.getReturnType().getSimpleName()));
             }
         }
@@ -604,7 +600,7 @@ public class StopsIcebergsConsumer
     }
 
     private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", this.dateFormat.format(new Date()), level, message);
+        String logLine = "[%s] [%s] %s".formatted(this.dateFormat.format(new Date()), level, message);
         Log.info((String) logLine);
         try (FileWriter writer = new FileWriter(SI_LOG_PATH, true);) {
             writer.write(logLine + "\n");
@@ -736,19 +732,19 @@ public class StopsIcebergsConsumer
             String orderId = String.valueOf(event.getOrDefault("orderID", ""));
             Double price = null;
             Object priceObj = event.get("price");
-            if (priceObj instanceof Number) {
-                price = ((Number) priceObj).doubleValue();
+            if (priceObj instanceof Number number) {
+                price = number.doubleValue();
             }
             Double size = null;
             Object sizeObj = event.get("size");
-            if (sizeObj instanceof Number) {
-                size = ((Number) sizeObj).doubleValue();
+            if (sizeObj instanceof Number number) {
+                size = number.doubleValue();
             }
             String side = (String) event.getOrDefault("side", "");
             Double totalSize = null;
             Object totalSizeObj = event.get("totalSize");
-            if (totalSizeObj instanceof Number) {
-                totalSize = ((Number) totalSizeObj).doubleValue();
+            if (totalSizeObj instanceof Number number) {
+                totalSize = number.doubleValue();
             }
             int isBidInt = (isBid = (Boolean) event.get("isBid")) != null && isBid != false ? 1 : 0;
             String instrument = this.instrumentsInfo.isEmpty() ? "" : this.instrumentsInfo.keySet().iterator().next();
@@ -785,8 +781,8 @@ public class StopsIcebergsConsumer
         if (o == null) {
             return "N/A";
         }
-        if (o instanceof Number) {
-            return String.format("%.2f", ((Number) o).doubleValue());
+        if (o instanceof Number number) {
+            return "%.2f".formatted(number.doubleValue());
         }
         return o.toString();
     }
@@ -822,7 +818,7 @@ public class StopsIcebergsConsumer
         this.instrumentsInfo.put(alias, instrumentInfo);
         double pips = instrumentInfo.pips;
         this.instrumentPips.put(alias, pips);
-        this.log("INFO", String.format("Instrument added: %s (pips=%.8f, multiplier=%.2f)", alias, pips,
+        this.log("INFO", "Instrument added: %s (pips=%.8f, multiplier=%.2f)".formatted(alias, pips,
                 instrumentInfo.multiplier));
     }
 

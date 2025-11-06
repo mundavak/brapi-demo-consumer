@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -624,7 +624,7 @@ public class MboMarketMonitor implements CustomModule, CustomSettingsPanelProvid
 
             // Log to file
             try {
-                Files.createDirectories(Paths.get(DEBUG_FILE).getParent());
+                Files.createDirectories(Path.of(DEBUG_FILE).getParent());
                 try (FileWriter writer = new FileWriter(DEBUG_FILE, true)) {
                     writer.write(logMessage + "\n");
 

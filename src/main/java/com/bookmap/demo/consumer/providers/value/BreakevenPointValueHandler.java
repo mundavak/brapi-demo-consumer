@@ -24,11 +24,11 @@ public class BreakevenPointValueHandler implements ProviderValueHandler{
         if(event instanceof BreakevenEvent breakevenEvent) {
             double pips = instrumentInfo.pips;
             double price = breakevenEvent.getBreakevenPrice() * pips;
-            String firstRow = String.format("Price=%s; Short=%s", price, breakevenEvent.isShort());
+            String firstRow = "Price=%s; Short=%s".formatted(price, breakevenEvent.isShort());
             return new String[]{firstRow};
         } else if(event instanceof PaidCommissionEvent paidCommissionEvent){
             double commission = paidCommissionEvent.getCommission();
-            String firstRow = String.format("Commission=%s;", commission);
+            String firstRow = "Commission=%s;".formatted(commission);
             return new String[]{firstRow};
         }
         return new String[]{};

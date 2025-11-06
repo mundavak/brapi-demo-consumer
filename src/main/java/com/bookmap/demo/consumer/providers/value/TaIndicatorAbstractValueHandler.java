@@ -24,7 +24,7 @@ public abstract class TaIndicatorAbstractValueHandler implements ProviderValueHa
     public String[] getTextualVisualizationOfEvent(Event event, InstrumentInfo instrumentInfo) {
         BroadcastingEventAliased eventInterface =
                 (BroadcastingEventAliased) event;
-               String s = String.format("%s value Price=%f,Time=%s",
+               String s = "%s value Price=%f,Time=%s".formatted(
                        getIndicatorName(), eventInterface.value, ProviderValueHandler.convertTime(eventInterface.time));
         return new String[] {s};
     }
@@ -32,7 +32,7 @@ public abstract class TaIndicatorAbstractValueHandler implements ProviderValueHa
     @Override
     public String getGeneratorSettingsInfo(Object providerSettings) {
         long nanos = ((BroadcastingBarSettings)providerSettings).barDurationNanos;
-        return String.format("%s barDuration in min: %d", getIndicatorName(), TimeUnit.NANOSECONDS.toMinutes(nanos));
+        return "%s barDuration in min: %d".formatted(getIndicatorName(), TimeUnit.NANOSECONDS.toMinutes(nanos));
     }
 
     @Override
@@ -65,7 +65,7 @@ public abstract class TaIndicatorAbstractValueHandler implements ProviderValueHa
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        throw new RuntimeException(String.format("Filters are not supported by %s", getIndicatorName()));
+        throw new RuntimeException("Filters are not supported by %s".formatted(getIndicatorName()));
     }
 
     @Override

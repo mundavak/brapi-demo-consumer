@@ -23,18 +23,18 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
             double pips = widgetSettings.getPips();
             if (event instanceof MPDoubleBarEvent doubleBarEvent) {
                 String zeroRow = "----------------------------";
-                String firstRow = String.format("Buy=%s, BuyEstimate=%s, ",
+                String firstRow = "Buy=%s, BuyEstimate=%s, ".formatted(
                         (doubleBarEvent.getBuy() * pips), doubleBarEvent.getBuyEstimate());
-                String secondRow = String.format("Sell=%s, SellEstimate=%s,",
+                String secondRow = "Sell=%s, SellEstimate=%s,".formatted(
                         (doubleBarEvent.getSell() * pips), doubleBarEvent.getSellEstimate());
-                String thirdRow = String.format("MaxValue=%s;",
-                        (doubleBarEvent.getMaxValue()  * pips));
+                String thirdRow = "MaxValue=%s;".formatted(
+                        (doubleBarEvent.getMaxValue() * pips));
                 String fourthRow = "----------------------------";
                 return new String[]{zeroRow, firstRow, secondRow, thirdRow, fourthRow};
             } else if (event instanceof MPSingleBarEvent circleEvent) {
                 String zeroRow = "----------------------------";
-                String firstRow = String.format("Value=%s, Estimate=%s, ",
-                        (circleEvent.getValue()  * pips), circleEvent.getEstimate());
+                String firstRow = "Value=%s, Estimate=%s, ".formatted(
+                        (circleEvent.getValue() * pips), circleEvent.getEstimate());
                 String secondRow = "----------------------------";
                 return new String[]{zeroRow, firstRow, secondRow};
             }
@@ -47,7 +47,7 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
         MPWidgetSettings mpSettings = (MPWidgetSettings) settings;
         widgetSettings = mpSettings;
         double threshold = Double.parseDouble(mpSettings.getParams().get("threshold"));
-        String thresholdStr = String.format("%.2f", threshold);
+        String thresholdStr = "%.2f".formatted(threshold);
         return "<html>Generator information:  Threshold - " + thresholdStr + ".</html>";
     }
 

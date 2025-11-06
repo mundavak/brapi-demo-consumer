@@ -94,8 +94,8 @@ public class LiquidityMarkerConsumer implements
         broadcaster.setProviderStatusListener(new ProviderStatusListener() {
             @Override
             public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
-                log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
-                    providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
+                log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
+                        providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
 
                 if (isWorking.get()) {
                     ExecutorsUtilities.getExecutor().submit(() -> {
@@ -218,8 +218,7 @@ public class LiquidityMarkerConsumer implements
         try {
             // Check time window first
             Object timeObj = getFieldValue(event, "time");
-            if (timeObj instanceof Long) {
-                long eventTime = (Long) timeObj;
+            if (timeObj instanceof Long eventTime) {
                 if (!isWithinTradingWindow(eventTime)) {
                     log("DEBUG", "LiquidityEvent outside trading window, skipping");
                     return;
@@ -237,8 +236,7 @@ public class LiquidityMarkerConsumer implements
 
             // Extract price and convert
             Object priceObj = getFieldValue(event, "price");
-            if (priceObj instanceof Integer) {
-                int tickPrice = (Integer) priceObj;
+            if (priceObj instanceof Integer tickPrice) {
                 double actualPrice = convertPrice(tickPrice, instrument);
                 liquidityData.put("price", actualPrice);
             } else {
@@ -262,12 +260,12 @@ public class LiquidityMarkerConsumer implements
             liquidityEvents.add(liquidityData);
             int count = totalCount.incrementAndGet();
 
-            String logMsg = String.format("[LIQUIDITY #%d] %s @ %s, size=%s, level=%s",
-                count,
-                liquidityData.getOrDefault("side", "N/A"),
-                formatNumber(liquidityData.get("price")),
-                formatNumber(liquidityData.get("size")),
-                formatNumber(liquidityData.get("liquidityLevel"))
+            String logMsg = "[LIQUIDITY #%d] %s @ %s, size=%s, level=%s".formatted(
+                    count,
+                    liquidityData.getOrDefault("side", "N/A"),
+                    formatNumber(liquidityData.get("price")),
+                    formatNumber(liquidityData.get("size")),
+                    formatNumber(liquidityData.get("liquidityLevel"))
             );
 
             log("LIQUIDITY", logMsg);
@@ -318,8 +316,8 @@ public class LiquidityMarkerConsumer implements
     }
 
     private void setDoubleOrNull(PreparedStatement pstmt, int index, Object value) throws SQLException {
-        if (value instanceof Number) {
-            pstmt.setDouble(index, ((Number) value).doubleValue());
+        if (value instanceof Number number) {
+            pstmt.setDouble(index, number.doubleValue());
         } else {
             pstmt.setNull(index, java.sql.Types.REAL);
         }
@@ -367,7 +365,7 @@ public class LiquidityMarkerConsumer implements
             field.setAccessible(true);
             try {
                 Object value = field.get(event);
-                log("INSPECT", String.format("  %s = %s", field.getName(), value));
+                log("INSPECT", "  %s = %s".formatted(field.getName(), value));
             } catch (Exception e) {
                 // Ignore
             }
@@ -430,7 +428,7 @@ public class LiquidityMarkerConsumer implements
     }
 
     private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", dateFormat.format(new Date()), level, message);
+        String logLine = "[%s] [%s] %s".formatted(dateFormat.format(new Date()), level, message);
         Log.info(logLine);
 
         try (FileWriter writer = new FileWriter(LOG_PATH, true)) {
@@ -466,8 +464,8 @@ public class LiquidityMarkerConsumer implements
 
     private String formatNumber(Object o) {
         if (o == null) return "N/A";
-        if (o instanceof Number) {
-            return String.format("%.2f", ((Number) o).doubleValue());
+        if (o instanceof Number number) {
+            return "%.2f".formatted(number.doubleValue());
         }
         return o.toString();
     }
@@ -495,7 +493,7 @@ public class LiquidityMarkerConsumer implements
     public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
         instrumentsInfo.put(alias, instrumentInfo);
         instrumentPips.put(alias, instrumentInfo.pips);
-        log("INFO", String.format("Instrument added: %s (pips=%.8f)", alias, instrumentInfo.pips));
+        log("INFO", "Instrument added: %s (pips=%.8f)".formatted(alias, instrumentInfo.pips));
     }
 
     @Override
