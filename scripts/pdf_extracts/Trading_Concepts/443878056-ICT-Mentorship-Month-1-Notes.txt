@@ -1,0 +1,519 @@
+Source: 443878056-ICT-Mentorship-Month-1-Notes.pdf
+Pages: 32
+Characters: 17796
+Processing Time: 0.04s
+================================================================================
+
+--- Page 1 ---
+September 2016 – ICT Pdf Collection
+September Study Notes
+Copyright 2016 TheInnerCircleTrader.com All Rights Reserved
+This presentation is intended for paid members of The ICT Monthly Mentorship only & permission is not given to resell, host or share for 
+public or paid viewing apart from mediums associated with ICT.
+ICT Monthly Mentorship
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 2 ---
+ICT Monthly Mentorship - September Study Notes
+Forex Risk Disclosure:
+The National Futures Association (NFA) and CFTC (Commodity Futures Trading Commission), the regulatory agencies for the forex and futures market in the United States, require that customers be informed about potential risks in the forex market. If you don't understand any of the 
+information provided on this page, please contact us or seek advice from an independent financial advisor. 
+Risk Associated with Forex Trading Off-exchange foreign currency trading on margin carries a high level of risk and may not be suitable for all investors. The high degree of leverage can work against you as well as for you. Before deciding to invest in foreign exchange you should 
+carefully consider your investment objectives, level of experience, and risk appetite. 
+The possibility exists that you could sustain a loss of some or all of your initial investment and, therefore, you should not invest money that you cannot afford to lose. You should be aware of all the risks associated with off-exchange foreign currency trading and seek advice from an 
+independent financial advisor if you have any doubts. 
+TheInnerCircleTrader.com Market Opinions:
+Any opinions, news, research, analyses, prices, or other information contained on this website is provided as general market commentary, and does not constitute investment advice. http://www.TheInnerCircleTrader.com, Michael J. Huddleston, aka "ICT" and or The Inner Circle 
+Trader will not accept liability for any loss or damage, including without limitation to, any loss of profit, which may arise directly or indirectly from use of or reliance on such information. 
+Accuracy of Information The content on this website is subject to change at any time without notice, and is provided for the sole purpose of assisting traders to make independent investment decisions. http://www.TheInnerCircleTrader.com has taken reasonable measures to 
+ensure the accuracy of the information on the website, however, does not guarantee its accuracy, and will not accept liability for any loss or damage which may arise directly or indirectly from the content or your inability to access the website, for any delay in or failure of the 
+transmission or the receipt of any instruction or notifications sent through this website. 
+Government Required Risk Disclaimer and Disclosure Statement:
+CFTC RULE 4.41 - HYPOTHETICAL OR SIMULATED PERFORMANCE RESULTS HAVE CERTAIN LIMITATIONS. UNLIKE AN ACTUAL PERFORMANCE RECORD, SIMULATED RESULTS DO NOT REPRESENT 
+ACTUAL TRADING. ALSO, SINCE THE TRADES HAVE NOT BEEN EXECUTED, THE RESULTS MAY HAVE UNDER-OR-OVER COMPENSATED FOR THE IMPACT, IF ANY, OF CERTAIN MARKET FACTORS, 
+SUCH AS LACK OF LIQUIDITY. SIMULATED TRADING PROGRAMS IN GENERAL ARE ALSO SUBJECT TO THE FACT THAT THEY ARE DESIGNED WITH THE BENEFIT OF HINDSIGHT. NO 
+REPRESENTATION IS BEING MADE THAT ANY ACCOUNT WILL OR IS LIKELY TO ACHIEVE PROFIT OR LOSSES SIMILAR TO THOSE SHOWN.
+Trading performance displayed herein is hypothetical. Hypothetical performance results have many inherent limitations, some of which are described below. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown. In fact, 
+there are frequently sharp differences between hypothetical performance results and the actual results subsequently achieved by any particular trading program. One of the limitations of hypothetical performance trading results is that they are generally prepared with the 
+benefit of hindsight. In addition, hypothetical trading does not involve financial risk, and no hypothetical trading record can completely account for the impact of financial risk in actual trading. For example, the ability to withstand losses or to adhere to a particular trading 
+program in spite of trading losses are material points which can also adversely affect actual trading results. There are numerous other factors related to the markets in general or to the implementation of any specific trading program which cannot be fully accounted for in the 
+preparation of hypothetical performance results and all of which can adversely affect actual trading results. 
+U.S. Government Required Disclaimer - Commodity Futures Trading Commission Futures and Options trading has large potential rewards, but also large potential risk. You must be aware of the risks and be willing to accept them in order to invest in the futures and options markets. 
+Don't trade with money you can't afford to lose. This is neither a solicitation nor an offer to Buy/Sell futures or options. No representation is being made that any account will or is likely to achieve profits or losses similar to those discussed on this web site. The past performance of any 
+trading system or methodology is not necessarily indicative of future results. Trade at your own risk. The information provided here is of the nature of a general comment only and neither purports nor intends to be, specific trading advice. It has been prepared without regard to 
+any particular person's investment objectives, financial situation and particular needs. Information should not be considered as an offer or enticement to buy, sell or trade. 
+You should seek appropriate advice from your broker, or licensed investment advisor, before taking any action. Past performance does not guarantee future results. Simulated performance results contain inherent limitations. Unlike actual performance records the results may 
+under or over compensate for such factors such as lack of liquidity. No representation is being made that any account will or is likely to achieve profits or losses to those shown. The risk of loss in trading can be substantial. You should therefore carefully consider whether such 
+trading is suitable for you in light of your financial condition. 
+If you purchase or sell Equities, Futures, Currencies or Options you may sustain a total loss of the initial margin funds and any additional funds that you deposit with your broker to establish or maintain your position. If the market moves against your position, you may be called upon 
+by your broker to deposit a substantial amount of additional margin funds, on short notice in order to maintain your position. If you do not provide the required funds within the prescribed time, your position may be liquidated at a loss, and you may be liable for any resulting 
+deficit in your account. 
+Under certain market conditions, you may find it difficult or impossible to liquidate a position. This can occur, for example, when the market makes a "limit move." The placement of contingent orders by you, such as a "stop-loss" or "stop-limit" order, will not necessarily limit your 
+losses to the intended amounts, since market conditions may make it impossible to execute such orders. By viewing any http://www.TheInnerCircleTrader.com text, audio, visual commentary, video or presentation, you acknowledge and accept that all trading decisions are your 
+own sole responsibility, and the author, Michael J. Huddleston and anybody associated with http://www.TheInnerCircleTrader.com cannot be held responsible for any losses that are incurred as a result. 
+
+
+--- Page 3 ---
+A. Context or Framework surrounding the idea.
+1)
+Expansion
+2)
+Retracement
+3)
+Reversal
+4)
+Consolidation
+B. Reference Points In Institutional Order Flow
+1)
+Orderblocks
+2)
+Fair Value Gaps & Liquidity Voids
+3)
+Liquidity Pools & Stop Runs
+4)
+Equilibrium
+Elements To A Trade Setup
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 4 ---
+A. Context or Framework surrounding the idea.
+1)
+Expansion = Judas Swing
+2)
+Retracement = New York Session
+3)
+Reversal = London Swing
+4)
+Consolidation = Asian Range
+B. Reference Points In Institutional Order Flow
+1)
+Orderblocks
+2)
+Fair Value Gaps & Liquidity Voids
+3)
+Liquidity Pools & Stop Runs
+4)
+Equilibrium
+Elements To A Trade Setup
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 5 ---
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 6 ---
+ICT Monthly Mentorship - September Study Notes
+Price
+Delivery
+Retracement
+Reversal
+Consolidation
+Expansion
+
+
+--- Page 7 ---
+ICT Monthly Mentorship - September Study Notes
+The
+Interbank
+Price
+Delivery
+Algorithm, or IPDA, that delivers
+Price
+to
+the
+world
+financial
+institutions and banks, defines the
+daily range between 12:00 am New
+York Time & 3:00 pm New York
+Time.
+The
+period
+outside
+this specific
+range is often referred to as “dead
+time” or less predictable.
+True Day – Daily Range
+
+
+--- Page 8 ---
+ICT Monthly Mentorship - September Study Notes
+The Interbank Price Delivery Algorithm
+Daily Range Structure
+Price Equilibrium
+Manipulation
+Expansion
+Reversal
+Retracement
+Consolidation
+
+
+--- Page 9 ---
+ICT Monthly Mentorship - September Study Notes
+What is Expansion?
+Expansion
+is
+when
+Price
+moves
+quickly from a level of Equilibrium.
+What is the importance?
+When Price leaves a level quickly
+this indicates a willingness on the
+part of the Market Makers to reveal
+their intended repricing model.
+What do we look for in Price?
+The Orderblock the Market Makers
+leave at or near the Equilibrium.
+Elements To A Trade Setup
+Expansion
+Orderblock
+
+
+--- Page 10 ---
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 11 ---
+ICT Monthly Mentorship - September Study Notes
+What is Retracement?
+Retracement is when Price moves back
+inside the recently created Price Range.
+What is the importance?
+When Price returns inside a recent
+Price
+Range
+this
+indicates
+a
+willingness on the part of the Market
+Makers
+to
+reprice
+to
+levels
+not
+efficiently traded for Fair Value.
+What do we look for in Price?
+The Fair Value Gaps and Liquidity
+Voids.
+Elements To A Trade Setup
+Retracement
+Liquidity 
+Gaps & Voids
+
+
+--- Page 12 ---
+ICT Monthly Mentorship - September Study Notes
+Liquidity Void
+Liquidity Void Filled In
+
+
+--- Page 13 ---
+ICT Monthly Mentorship - September Study Notes
+What is Reversal?
+Reversal
+is
+when
+Price
+moves
+the
+opposite direction that current direction
+has taken it.
+What is the importance?
+When
+Price
+reverses
+direction
+it
+indicates the Market Makers have ran
+a level of Stops and a significant move
+should unfold in the new direction.
+What do we look for in Price?
+The Liquidity Pools just above an old
+Price High and just below an old Price
+Low.
+Elements To A Trade Setup
+Reversal
+Liquidity 
+Pools
+
+
+--- Page 14 ---
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 15 ---
+ICT Monthly Mentorship - September Study Notes
+What is Consolidation?
+Consolidation
+is
+when
+Price
+moves
+inside a clear trading range and shows
+no
+willingness
+to
+move
+significantly
+higher or lower.
+What is the importance?
+When Price consolidates it indicates
+the Market Makers are allowing orders
+to build on both sides of the market.
+Expect a new Expansion near term.
+What do we look for in Price?
+The Impulse Swing in Price away from
+the Equilibrium price level that is found
+exactly in the halfway point of the
+Consolidation range.
+Elements To A Trade Setup
+Consolidation
+Equilibrium
+
+
+--- Page 16 ---
+ICT Monthly Mentorship - September Study Notes
+
+
+--- Page 17 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 18 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 19 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 20 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 21 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 22 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 23 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 24 ---
+ICT Monthly Mentorship - September Study Notes
+Old Highs – Buy Stops or Buy Side Open Float.
+Old Lows – Sell Stops or Sell Side Open Float.
+Clean Highs – Liquidity Pool of Buy Stops.
+Clean Lows – Liquidity Pool of Sell Stops.
+Sharp Runs In Price – Liquidity Voids.
+Swing High – Three candle pattern. The up candle.
+Swing Low – Three candle pattern. The down candle.
+What To Focus On
+
+
+--- Page 25 ---
+ICT Monthly Mentorship - September Study Notes
+After a market makes a run Higher
+and begins to retrace lower, look
+for a drop below 50% of the Price
+Run Higher.
+A drop below 50% or Equilibrium
+indicates that Price is now in a
+Discount.
+Frames ideal Buy Setups.
+Equilibrium vs. Discount
+
+
+--- Page 26 ---
+ICT Monthly Mentorship - September Study Notes
+After a market makes a run Lower
+and begins to retrace higher, look
+for a rise above 50% of the Price
+Run Lower.
+A rise above 50% or Equilibrium
+indicates that Price is now in a
+Premium.
+Frames ideal Sell Setups.
+Equilibrium vs. Premium
+
+
+--- Page 27 ---
+ICT Monthly Mentorship - September Study Notes
+After a sharp run in Price, the large
+candles that form are the least
+efficiently trades in the range.
+Sudden runs in Price will leave
+porous Price Action that tends to fill
+in at a later time.
+This is described as a void of
+market liquidity or Liquidity Void.
+Liquidity Void
+Liquidity Void
+
+
+--- Page 28 ---
+ICT Monthly Mentorship - September Study Notes
+When Price trades back inside it’s
+current range and returns to the
+levels it recently moved from, this is
+Fair Valuation.
+Smart
+Money
+will
+unload
+long
+positions in this area and many
+times establish new shorts.
+Good location to take profits on a
+long position and not require a
+move outside the current trading
+range.
+Fair Valuation
+
+
+--- Page 29 ---
+ICT Monthly Mentorship - September Study Notes
+When Price leave a specific level
+and only has a small section of
+price action that is seen as one
+directional, this is known as a Fair
+Value Gap.
+It
+is
+very
+similar
+to
+what
+is
+traditionally known as a “Common
+Gap” in technical analysis.
+They can present objectives for
+profits or new setups, depending
+on the current market environment.
+Fair Value Gap
+
+
+--- Page 30 ---
+ICT Monthly Mentorship - September Study Notes
+When Price has little resistance in it’s
+way to run an area of Liquidity.
+This is classically seen just under an
+Old High or above an Old Low.
+Price will surge sharply and typically on
+the
+release
+of
+an
+economic
+news
+release.
+High Probability setups are framed on
+the premise the market will have very
+little resistance in its path to run into
+obvious Liquidity Pools.
+Low Resistance Liquidity Run
+
+
+--- Page 31 ---
+ICT Monthly Mentorship - September Study Notes
+Specific times of the day there are
+events that see a sudden move
+opposite
+to
+the
+daily
+range
+direction.
+This event is known as Market
+Protraction.
+It is referred to as a
+“Judas Swing” in my earlier works.
+It is a micro expansion in price that
+seeks
+nearby
+liquidity
+before
+reversing directions.
+Market Protraction
+
+
+--- Page 32 ---
+ICT Monthly Mentorship - September Study Notes
+The first month of the 12 month ICT
+Monthly Mentorship was designed to
+introduce the foundations to my core
+Price Action Analysis.
+In the Live presentations we learned
+the multitudes of Price Action Trading
+opportunities that present themselves
+on the daily basis.
+Take Away: No Fear Of Missing setups
+or trades.
+They form daily for the
+Institutional Mindset Trader.
+This concludes September

@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "analysis_timestamp": "2025-10-31T08:52:53.353125",
+    "target_date": "2025-10-03",
+    "symbols_analyzed": [
+      "MNQZ5",
+      "MNQH6",
+      "MNQU6"
+    ]
+  },
+  "summary": {
+    "total_events_analyzed": 26335274,
+    "judas_swings_detected": 0
+  },
+  "daily_sessions": [
+    {
+      "date": "2025-10-03",
+      "symbol": "MNQZ5",
+      "previous_day": {
+        "high": 26000.0,
+        "low": 24000.0,
+        "open": 25472.0,
+        "close": 25121.0,
+        "equilibrium": 25000.0
+      },
+      "current_day": {
+        "open_price": 24450.0,
+        "opening_zone": "DISCOUNT",
+        "first_30_high": 26000.0,
+        "first_30_low": 24000.0,
+        "first_move": {
+          "direction": "UP",
+          "size": 1550.0
+        }
+      }
+    }
+  ]
+}

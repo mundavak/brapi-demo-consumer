@@ -5,16 +5,15 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-def properties = new Properties()
-file('src/main/resources/application.properties').withInputStream { inputStream ->
-    properties.load(inputStream)
-}
+// All consumers are now fixed and ready to build
+// No exclusions needed
 
 group 'com.bookmap.addons'
-def version = properties.getProperty('version')
-def brApiVersion = properties.getProperty('brapi.version')
+version '3.0.0'
 
 repositories {
+    // Prefer local maven (~/.m2/repository) so developers can `mvn install` jars there
+    mavenLocal()
     mavenCentral()
     maven {
         url "https://maven.bookmap.com/maven2/releases/"
@@ -25,26 +24,110 @@ repositories {
 }
 
 dependencies {
-    compileOnly group: 'com.bookmap.api', name: 'api-core', version: '7.5.0.4'
+    // Bookmap API (compileOnly since Bookmap provides it)
+    // Prefer a versioned api-core from mavenLocal, but also accept any api-core JAR placed in mavenLib.
+    // This avoids build failures when api-core version differs from the hardcoded value.
+    compileOnly fileTree(dir: 'mavenLib', include: ['**/api-core*.jar'])
+    compileOnly fileTree(dir: 'mavenLib', include: ['**/bm-simplified-api-wrapper*.jar'])
     compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
-    //load Broadcasting API
-    final def brAPI = "${brApiVersion}"
-    implementation group: 'com.bookmap.addons', name: 'broadcasting-api', version: brAPI
-    compileOnly group: 'com.bookmap.addons', name: 'broadcasting-api', version: brAPI, classifier: 'javadoc'
+    // Broadcasting API (compileOnly since Bookmap provides it at runtime)
+    // The project previously required a specific broadcasting-api:3.0.0.18 artifact which often lives only in Bookmap install.
+    // Fallback strategy: allow any broadcasting-api JAR placed under mavenLib or providers/modules to be used so the build can proceed locally.
+    // If you have the exact artifact you can still `mvn install` it into your local repo and it will be resolved via mavenLocal().
+    //compileOnly group: 'com.bookmap.addons', name: 'broadcasting-api', version: '3.0.0.18'
+    //compileOnly group: 'com.bookmap.addons', name: 'broadcasting-api', version: '3.0.0.18', classifier: 'javadoc'
 
-    //load BrAPI providers modules
-    implementation fileTree (dir: "providers/modules", include: "*.jar")
+    // Use any broadcasting-api jars found in mavenLib (coordinates-style layout) or in providers/modules (file drop-in).
+    compileOnly files('mavenLib/com/bookmap/addons/broadcasting-api/0.54/broadcasting-api-0.54.jar')
+    compileOnly fileTree(dir: 'mavenLib', include: ['**/broadcasting-api-*.jar'])
+    implementation fileTree(dir: 'providers/modules', include: ['7.*.jar'])
 
-    //SQLite JDBC driver for database operations
-    implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
+    // Redis client for hot storage
+    implementation 'redis.clients:jedis:5.1.0'
+
+    // PostgreSQL/TimescaleDB driver for cold storage
+    // Include ALL transitive dependencies to avoid ClassNotFoundException
+    implementation('org.postgresql:postgresql:42.7.1') {
+        transitive = true
+    }
+    
+    // Explicitly add PostgreSQL utilities that might be missing
+    implementation 'com.github.waffle:waffle-jna:3.3.0'
+
+    // HikariCP for connection pooling
+    implementation 'com.zaxxer:HikariCP:5.1.0'
+
+    // JSON processing
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.json:json:20231013'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
 }
 
 jar {
-    archiveName "Demo-Consumer-${version}.jar"
-    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveBaseName = 'Demo-Consumer'
+    archiveVersion = '3.0.0'
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
     setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    into 'resources', {
-        from 'resources'
+
+    manifest {
+        attributes(
+            'Implementation-Title': 'Bookmap Trading Data Consumer',
+            'Implementation-Version': version,
+            'Main-Class': 'com.bookmap.demo.consumer.OhlcCandleConsumer'
+        )
     }
 }
+
+// Task to create Python addon JAR (copy working MBO_Automated_v3 and replace script)
+task pythonAddonJar(type: Copy) {
+    from('providers/modules/MBO_Automated_v3')
+    into("$buildDir/tmp/pythonAddon")
+    
+    doLast {
+        // Create JAR from the copied directory
+        ant.jar(destfile: "$buildDir/tmp/MBO_Consumer_Python-1.0.0.jar") {
+            fileset(dir: "$buildDir/tmp/pythonAddon") {
+                exclude(name: 'script.py')
+            }
+        }
+        
+        // Add our Python script as script.py
+        ant.jar(destfile: "$buildDir/tmp/MBO_Consumer_Python-1.0.0.jar", update: true) {
+            zipfileset(dir: 'src/main/python', includes: 'MBO_Redis_Consumer.py', fullpath: 'script.py')
+        }
+
+        // Also include an optional Windows launcher (script.bat) that forces a specific python executable
+        ant.jar(destfile: "$buildDir/tmp/MBO_Consumer_Python-1.0.0.jar", update: true) {
+            zipfileset(dir: 'src/main/python', includes: 'script_launcher.bat', fullpath: 'script.bat')
+        }
+
+        // Copy to final location
+        copy {
+            from "$buildDir/tmp/MBO_Consumer_Python-1.0.0.jar"
+            into 'F:/Bookmap/Python/build/'
+        }
+        
+        println "Python addon JAR created: MBO_Consumer_Python-1.0.0.jar"
+    }
+}
+
+// Task to copy JARs to Bookmap directory
+task copyJars(type: Copy) {
+    from jar
+    from pythonAddonJar
+    into 'F:/Bookmap/Python/build/'
+    doLast {
+        println "JARs copied to F:/Bookmap/Python/build/"
+    }
+}
+
+build.dependsOn copyJars
+copyJars.dependsOn pythonAddonJar

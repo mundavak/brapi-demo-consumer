@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "analysis_timestamp": "2025-10-31T09:50:35.925367",
+    "symbols_analyzed": [
+      "MNQU5",
+      "MNQZ5",
+      "MNQH6"
+    ],
+    "methodology": "ICT Killzones Analysis - Previous Day Comparison",
+    "time_windows": {
+      "previous_day_session": "9:30-16:00",
+      "london_killzone": "2:00-5:00",
+      "ny_killzone": "8:30-11:00",
+      "first_30_min": "9:30-9:60"
+    }
+  },
+  "summary": {
+    "total_days_processed": 0,
+    "total_events_analyzed": 0,
+    "judas_swings_detected": 0,
+    "successful_reversals": 0
+  },
+  "daily_sessions": [],
+  "ict_patterns": []
+}

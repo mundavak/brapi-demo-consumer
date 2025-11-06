@@ -1,0 +1,200 @@
+[
+  {
+    "date": "2025-08-25",
+    "weekday": "Monday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.11:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-08-28",
+    "weekday": "Thursday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "0.21:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-01",
+    "weekday": "Monday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": NaN,
+    "judas_swing_detected": NaN,
+    "real_move_direction": NaN,
+    "risk_reward_ratio": "N/A",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-03",
+    "weekday": "Wednesday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.19:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-08",
+    "weekday": "Monday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": false,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "1.00:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-15",
+    "weekday": "Monday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "0.44:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-16",
+    "weekday": "Tuesday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": false,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "1.00:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-22",
+    "weekday": "Monday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.35:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-23",
+    "weekday": "Tuesday",
+    "opening_zone": "EQUILIBRIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.54:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-24",
+    "weekday": "Wednesday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "0.91:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-09-29",
+    "weekday": "Monday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "28.07:1",
+    "pm_volume": "679,090",
+    "opening_delta": "-26,457"
+  },
+  {
+    "date": "2025-09-30",
+    "weekday": "Tuesday",
+    "opening_zone": "EQUILIBRIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": false,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "N/A",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-10-06",
+    "weekday": "Monday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "54.11:1",
+    "pm_volume": "556,152",
+    "opening_delta": "73,047"
+  },
+  {
+    "date": "2025-10-07",
+    "weekday": "Tuesday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "UP",
+    "judas_swing_detected": false,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "1.00:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-10-08",
+    "weekday": "Wednesday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.71:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-10-13",
+    "weekday": "Monday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "0.08:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-10-20",
+    "weekday": "Monday",
+    "opening_zone": "DISCOUNT",
+    "first_move_direction": "UP",
+    "judas_swing_detected": true,
+    "real_move_direction": "DOWN",
+    "risk_reward_ratio": "0.17:1",
+    "pm_volume": "500,000",
+    "opening_delta": "2,000"
+  },
+  {
+    "date": "2025-10-27",
+    "weekday": "Monday",
+    "opening_zone": "PREMIUM",
+    "first_move_direction": "DOWN",
+    "judas_swing_detected": true,
+    "real_move_direction": "UP",
+    "risk_reward_ratio": "9.12:1",
+    "pm_volume": "499,816",
+    "opening_delta": "-15,960"
+  }
+]

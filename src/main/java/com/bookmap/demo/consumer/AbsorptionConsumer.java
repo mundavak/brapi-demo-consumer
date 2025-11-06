@@ -1,24 +1,30 @@
 package com.bookmap.demo.consumer;
 
 import com.bookmap.addons.broadcasting.api.view.BroadcasterConsumer;
+import com.bookmap.addons.broadcasting.api.view.Event;
 import com.bookmap.addons.broadcasting.api.view.GeneratorInfo;
+import com.bookmap.addons.broadcasting.api.view.listeners.ConnectionStatusListener;
 import com.bookmap.addons.broadcasting.api.view.listeners.LiveConnectionStatusListener;
 import com.bookmap.addons.broadcasting.api.view.listeners.LiveEventListener;
 import com.bookmap.addons.broadcasting.api.view.listeners.ProviderStatusListener;
 import com.bookmap.addons.broadcasting.implementations.view.BroadcastFactory;
-import velox.api.layer1.Layer1ApiAdminAdapter;
-import velox.api.layer1.Layer1ApiFinishable;
-import velox.api.layer1.Layer1ApiInstrumentAdapter;
-import velox.api.layer1.Layer1ApiProvider;
-import velox.api.layer1.Layer1CustomPanelsGetter;
-import velox.api.layer1.annotations.Layer1ApiVersion;
-import velox.api.layer1.annotations.Layer1ApiVersionValue;
-import velox.api.layer1.annotations.Layer1Attachable;
-import velox.api.layer1.annotations.Layer1StrategyName;
+import com.bookmap.addons.broadcasting.implementations.base.CastUtilities;
+import com.bookmap.addons.broadcasting.implementations.base.FailedToCastObject;
+import com.bookmap.demo.consumer.Connector;
+import com.bookmap.demo.consumer.database.RedisManager;
+import com.bookmap.demo.consumer.database.TimescaleDBManager;
+import com.bookmap.demo.consumer.providers.Provider;
+import com.bookmap.demo.consumer.utils.SessionManager;
+import com.bookmap.demo.consumer.utils.LoggingConfig;
+
+import com.google.gson.Gson;
+import velox.indicators.absorption.broadcasting.module.EventInterface;
+import velox.indicators.absorption.broadcasting.module.implementations.TradeEvent;
+import velox.api.layer1.*;
+import velox.api.layer1.annotations.*;
 import velox.api.layer1.common.ListenableHelper;
 import velox.api.layer1.common.Log;
-import velox.api.layer1.data.InstrumentInfo;
-import velox.api.layer1.messages.Layer1ApiUserMessageReloadStrategyGui;
+import velox.api.layer1.data.*;
 import velox.api.layer1.messages.UserMessageLayersChainCreatedTargeted;
 import velox.gui.StrategyPanel;
 
@@ -26,26 +32,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Consumer for Absorption Indicator broadcasting events
- * Receives and logs absorption events with trading window filtering
+ * Absorption Consumer - Subscribes to Absorption Indicator provider
+ * Detects absorption events and liquidity sweeps during CBDR windows
  */
 @Layer1Attachable
-@Layer1StrategyName("Absorption Broadcasting Consumer")
+@Layer1StrategyName("Absorption Consumer")
 @Layer1ApiVersion(Layer1ApiVersionValue.VERSION2)
 public class AbsorptionConsumer implements
         Layer1ApiFinishable,
@@ -53,156 +50,161 @@ public class AbsorptionConsumer implements
         Layer1ApiInstrumentAdapter,
         Layer1CustomPanelsGetter {
 
-    private static final String LOG_PATH = "F:/TradingAgent/absorption_events.log";
-    private static final String JSON_PATH = "F:/TradingAgent/absorption_data.json";
-    private static final String SQLITE_DB_PATH = "F:/TradingAgent/enhanced_market_monitor_mbo.db";
+    private static final String ADDON_NAME = "Absorption Consumer";
+    private static final String LOG_FILE = "F:/TradingAgent/absorption_consumer.log";
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private static final Provider PROVIDER = Provider.ABSORPTION_INDICATOR;
+    private static final Gson gson = new Gson();
 
-    // Trading windows in EST (Bookmap times are in UTC-4)
-    private static final int[][] TRADING_WINDOWS_EST = {
-        {16, 0, 20, 0},  // CBDR PM/Asian: 16:00-20:00 EST
-        {2, 0, 5, 0},    // CBDR London: 02:00-05:00 EST
-        {7, 30, 9, 30}   // Pre-NY: 07:30-09:30 EST
-    };
+    private final Layer1ApiProvider provider;
+    private BroadcasterConsumer broadcaster;
+    private Connector connector;
+    private final AtomicBoolean isWorking = new AtomicBoolean(false);
 
+    private RedisManager redisManager;
+    private TimescaleDBManager timescaleDBManager;
+    private SessionManager sessionManager;
+
+    // Tracking structures
+    private final Map<String, String> activeSymbols = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionIds = new ConcurrentHashMap<>();
+    private final Map<String, OrderBook> orderBooks = new ConcurrentHashMap<>();
+    private final Map<String, java.util.List<InternalTradeEvent>> recentTrades = new ConcurrentHashMap<>();
+
+    // UI components
     private JTextArea logArea;
     private JLabel statsLabel;
 
-    private final List<Map<String, Object>> absorptionEvents = new ArrayList<>();
-    private final AtomicInteger totalCount = new AtomicInteger(0);
-    private final Map<String, Integer> typeCounts = new HashMap<>();
+    // Event counters for logging
+    private final java.util.concurrent.atomic.AtomicInteger stopCount = new java.util.concurrent.atomic.AtomicInteger(
+            0);
+    private final java.util.concurrent.atomic.AtomicInteger sweepCount = new java.util.concurrent.atomic.AtomicInteger(
+            0);
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    private final Map<String, InstrumentInfo> instrumentsInfo = new ConcurrentHashMap<>();
-    private final Map<String, Double> instrumentPips = new ConcurrentHashMap<>();
+    // Detection parameters
+    private static final double ABSORPTION_RATIO_THRESHOLD = 0.6; // 60% absorption
+    private static final long ABSORPTION_WINDOW_MS = 2000; // 2 second window
+    private static final int MIN_VOLUME_THRESHOLD = 10; // Minimum volume to consider
+    private static final double IMBALANCE_THRESHOLD = 0.7; // 70% imbalance
 
-    private final Layer1ApiProvider provider;
-    private final BroadcasterConsumer broadcaster;
-    private Connection dbConnection;
-    private final AtomicBoolean isWorking = new AtomicBoolean(false);
-    private final Connector connector;
+    // Batch processing
+    private final BlockingQueue<TimescaleDBManager.AbsorptionEvent> batchQueue = new LinkedBlockingQueue<>(5000);
+    private final ScheduledExecutorService batchProcessor = Executors.newSingleThreadScheduledExecutor(
+            r -> new Thread(r, "Absorption-BatchProcessor"));
+    private final ScheduledExecutorService analyzer = Executors.newSingleThreadScheduledExecutor(
+            r -> new Thread(r, "Absorption-Analyzer"));
+    private final ScheduledExecutorService cbdrMonitor = Executors.newSingleThreadScheduledExecutor(
+            r -> new Thread(r, "Absorption-CBDRMonitor"));
+
+    /**
+     * File logging helper - writes to console, file, and UI
+     */
+    private void log(String level, String message) {
+        String logLine = String.format("[%s] [%s] %s",
+                dateFormat.format(new Date()), level, message);
+
+        // Write to Bookmap console using Log
+        Log.info(logLine);
+
+        // Write to file
+        try (FileWriter writer = new FileWriter(LOG_FILE, true)) {
+            writer.write(logLine + "\n");
+        } catch (IOException e) {
+            Log.error("Failed to write to log file", e);
+        }
+
+        // Update UI log area
+        if (this.logArea != null) {
+            SwingUtilities.invokeLater(() -> {
+                this.logArea.append(logLine + "\n");
+                this.logArea.setCaretPosition(this.logArea.getDocument().getLength());
+            });
+        }
+    }
 
     public AbsorptionConsumer(Layer1ApiProvider provider) {
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         ListenableHelper.addListeners(provider, this);
         this.provider = provider;
 
+        // Initialize managers early (before onInstrumentAdded can be called)
+        redisManager = RedisManager.getInstance();
+        timescaleDBManager = TimescaleDBManager.getInstance();
+        sessionManager = SessionManager.getInstance();
+
+        // Use direct Log.info() calls for startup (same as old consumer)
         Log.info("========================================");
-        Log.info("Absorption Broadcasting Consumer: STARTING UP");
+        Log.info("Absorption Consumer: STARTING UP");
         Log.info("========================================");
-
-        initializeDatabase();
-
-        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "Absorption Broadcasting Consumer", this.getClass());
-        this.connector = new Connector(provider, broadcaster, com.bookmap.demo.consumer.providers.Provider.ABSORPTION_INDICATOR);
-
-        broadcaster.setProviderStatusListener(new ProviderStatusListener() {
-            @Override
-            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
-                log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
-                    providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
-
-                if (isWorking.get()) {
-                    ExecutorsUtilities.getExecutor().submit(() -> {
-                        AbsorptionConsumer.this.provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                    });
-                }
-            }
-        });
-
-        Log.info("AbsorptionConsumer: Broadcaster created");
-        Log.info("Log file: " + LOG_PATH);
-        Log.info("SQLite DB: " + SQLITE_DB_PATH);
+        log("INFO", "[AbsorptionConsumer] Initialized");
+        log("INFO", "Log file: " + LOG_FILE);
     }
 
-    private void initializeDatabase() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + SQLITE_DB_PATH;
-            dbConnection = DriverManager.getConnection(url);
+    @Override
+    public void onUserMessage(Object data) {
+        if (data instanceof UserMessageLayersChainCreatedTargeted message) {
+            if (message.targetClass == getClass()) {
+                isWorking.set(true);
 
-            String createTableSQL = """
-                CREATE TABLE IF NOT EXISTS AbsorptionEvents (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL,
-                    price REAL,
-                    size REAL,
-                    absorbed_size REAL,
-                    side TEXT,
-                    is_bid INTEGER,
-                    instrument TEXT,
-                    event_type TEXT,
-                    strength REAL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-                """;
+                // Initialize broadcaster
+                broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, ADDON_NAME, this.getClass());
 
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createTableSQL);
-                log("INFO", "SQLite database initialized - AbsorptionEvents table ready");
-            }
+                // Initialize connector (same pattern as StopsIcebergsConsumer)
+                connector = new Connector(provider, broadcaster, PROVIDER);
 
-            String createIndexSQL = "CREATE INDEX IF NOT EXISTS idx_absorption_timestamp ON AbsorptionEvents(timestamp)";
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createIndexSQL);
-            }
+                // Set provider status listener
+                broadcaster.setProviderStatusListener(new ProviderStatusListener() {
+                    @Override
+                    public void providerUpdateGenerator(String providerName, String providerId,
+                            GeneratorInfo generator, boolean isOnline) {
+                        log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
+                                providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
+                    }
+                });
 
-        } catch (ClassNotFoundException e) {
-            log("ERROR", "SQLite JDBC driver not found: " + e.getMessage());
-        } catch (SQLException e) {
-            log("ERROR", "Failed to initialize database: " + e.getMessage());
-        }
-    }
+                broadcaster.start();
 
-    private boolean isWithinTradingWindow(long timestampNanos) {
-        long timestampMillis = timestampNanos / 1_000_000;
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
-        cal.setTimeInMillis(timestampMillis);
+                Log.info("========================================");
+                Log.info("Broadcaster STARTED - Now listening for Absorption events");
+                Log.info("========================================");
 
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
-        int currentMinutes = hour * 60 + minute;
+                // Delay connection attempt to allow broadcaster to discover providers
+                analyzer.schedule(() -> {
+                    connectToProvider();
+                }, 2, TimeUnit.SECONDS);
 
-        for (int[] window : TRADING_WINDOWS_EST) {
-            int startMinutes = window[0] * 60 + window[1];
-            int endMinutes = window[2] * 60 + window[3];
+                // Start batch processor (every 5 seconds)
+                batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS);
 
-            if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
-                return true;
+                log("INFO",
+                        "[AbsorptionConsumer] Started, will attempt connection to Absorption indicator in 2 seconds");
             }
         }
-
-        return false;
     }
 
     private void connectToProvider() {
-        log("INFO", "Connecting to Absorption provider...");
-
+        log("INFO", "Connecting to Absorption Indicator provider...");
         try {
             connector.connect();
-
-            ExecutorsUtilities.getExecutor().submit(() -> {
+            analyzer.schedule(() -> {
                 try {
-                    Thread.sleep(1000);
-
+                    Thread.sleep(1000L);
                     if (connector.isConnected()) {
-                        log("INFO", "✓ Successfully connected to Absorption");
-
-                        List<String> generators = connector.getGeneratorsNames();
+                        log("INFO", "✓ Successfully connected to Absorption Indicator");
+                        java.util.List<String> generators = connector.getGeneratorsNames();
                         log("INFO", "Found " + generators.size() + " generator(s)");
-
                         for (String generatorName : generators) {
                             log("INFO", "Subscribing to generator: " + generatorName);
                             subscribeToGenerator(generatorName);
                         }
                     } else {
-                        log("WARN", "Connection not established, retrying...");
-                        Thread.sleep(2000);
+                        log("WARN", "Connection not yet established, will retry in 2 seconds...");
+                        Thread.sleep(2000L);
                         connectToProvider();
                     }
                 } catch (Exception e) {
                     log("ERROR", "Error during connection setup: " + e.getMessage());
                 }
-            });
+            }, 0, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             log("ERROR", "Failed to connect to provider: " + e.getMessage());
         }
@@ -217,387 +219,750 @@ public class AbsorptionConsumer implements
 
             LiveEventListener eventListener = event -> {
                 if (event != null) {
-                    processAbsorptionEvent(event);
+                    processIncomingEvent(event);
                 }
             };
 
             LiveConnectionStatusListener connectionListener = isSubscribed -> {
                 if (isSubscribed) {
-                    log("INFO", "✓ Successfully subscribed to: " + generatorName);
+                    log("INFO", "✓ Successfully subscribed to live data: " + generatorName);
                 } else {
                     log("WARN", "✗ Unsubscribed from: " + generatorName);
                 }
             };
 
-            broadcaster.subscribeToLiveData(
-                com.bookmap.demo.consumer.providers.Provider.ABSORPTION_INDICATOR.getFullName(),
-                generatorName,
-                eventListener,
-                connectionListener
-            );
-
+            broadcaster.subscribeToLiveData(PROVIDER.getFullName(), generatorName, eventListener, connectionListener);
         } catch (Exception e) {
-            log("ERROR", "Failed to subscribe to generator: " + e.getMessage());
+            log("ERROR", "Failed to subscribe to generator " + generatorName + ": " + e.getMessage());
         }
     }
 
-    private void processAbsorptionEvent(Object event) {
+    private void processIncomingEvent(Object event) {
         try {
-            // Always log the first event structure to understand the fields
-            if (totalCount.get() == 0) {
-                logEventStructure("AbsorptionEvent", event);
-            }
+            // ✅ Use CastUtilities as documented in provider README
+            EventInterface eventInterface = CastUtilities.castObject(event, TradeEvent.class);
 
-            // Check time window
-            Object timeObj = getFieldValue(event, "time");
-            if (timeObj instanceof Long) {
-                long eventTime = (Long) timeObj;
-                if (!isWithinTradingWindow(eventTime)) {
-                    log("DEBUG", "AbsorptionEvent outside trading window, skipping");
-                    return;
-                }
-            }
-
-            Map<String, Object> absorptionData = new HashMap<>();
-            absorptionData.put("timestamp", dateFormat.format(new Date()));
-
-            String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
-
-            // Extract price and convert - ALL numeric values need to be multiplied by pips (0.25)
-            Object priceObj = getFieldValue(event, "price");
-            if (priceObj instanceof Integer) {
-                int tickPrice = (Integer) priceObj;
-                double actualPrice = convertPrice(tickPrice, instrument);
-                absorptionData.put("price", actualPrice);
-            } else if (priceObj instanceof Long) {
-                long tickPrice = (Long) priceObj;
-                double actualPrice = convertPrice((int)tickPrice, instrument);
-                absorptionData.put("price", actualPrice);
-            } else if (priceObj instanceof Double) {
-                // Double values also need conversion (multiply by pips)
-                double tickPrice = (Double) priceObj;
-                double actualPrice = convertPrice((int)tickPrice, instrument);
-                absorptionData.put("price", actualPrice);
+            if (eventInterface instanceof TradeEvent) {
+                TradeEvent tradeEvent = (TradeEvent) eventInterface;
+                processTradeEvent(tradeEvent);
             } else {
-                absorptionData.put("price", priceObj);
+                log("WARN", "Unexpected event type: " + eventInterface.getClass().getName());
             }
 
-            // Try multiple field names for size
-            Object sizeObj = getFieldValue(event, "size");
-            if (sizeObj == null) sizeObj = getFieldValue(event, "volume");
-            if (sizeObj == null) sizeObj = getFieldValue(event, "quantity");
-            absorptionData.put("size", sizeObj);
-
-            // Try multiple field names for absorbed size
-            Object absorbedObj = getFieldValue(event, "absorbedSize");
-            if (absorbedObj == null) absorbedObj = getFieldValue(event, "absorbed");
-            if (absorbedObj == null) absorbedObj = getFieldValue(event, "absorbedVolume");
-            if (absorbedObj == null) absorbedObj = getFieldValue(event, "absorbedQty");
-            absorptionData.put("absorbedSize", absorbedObj);
-
-            Boolean isBid = (Boolean) getFieldValue(event, "isBid");
-            absorptionData.put("isBid", isBid);
-            absorptionData.put("side", (isBid != null && isBid) ? "BUY" : "SELL");
-
-            // Try multiple field names for event type
-            Object typeObj = getFieldValue(event, "type");
-            if (typeObj == null) typeObj = getFieldValue(event, "eventType");
-            String eventType = (typeObj != null) ? typeObj.toString() : "ABSORPTION";
-            absorptionData.put("eventType", eventType);
-            typeCounts.merge(eventType, 1, Integer::sum);
-
-            // Try multiple field names for strength
-            Object strengthObj = getFieldValue(event, "strength");
-            if (strengthObj == null) strengthObj = getFieldValue(event, "intensity");
-            if (strengthObj == null) strengthObj = getFieldValue(event, "level");
-            absorptionData.put("strength", strengthObj);
-
-            absorptionData.put("instrument", instrument);
-
-            absorptionEvents.add(absorptionData);
-            int count = totalCount.incrementAndGet();
-
-            String logMsg = String.format("[ABSORPTION #%d] %s @ %s, size=%s, absorbed=%s, strength=%s",
-                count,
-                absorptionData.getOrDefault("side", "N/A"),
-                formatNumber(absorptionData.get("price")),
-                formatNumber(absorptionData.get("size")),
-                formatNumber(absorptionData.get("absorbedSize")),
-                formatNumber(absorptionData.get("strength"))
-            );
-
-            log("ABSORPTION", logMsg);
-            updateUI();
-            saveEventToDatabase(absorptionData);
-
-            if (count % 10 == 0) {
-                saveToJson();
-            }
-
+        } catch (FailedToCastObject e) {
+            log("ERROR", "Failed to cast event to TradeEvent: " + e.getMessage());
         } catch (Exception e) {
-            log("ERROR", "Error processing AbsorptionEvent: " + e.getMessage());
-            e.printStackTrace();
+            log("ERROR", "Error processing incoming event: " + e.getMessage());
         }
     }
 
-    private void saveEventToDatabase(Map<String, Object> event) {
-        if (dbConnection == null) {
-            return;
-        }
-
-        String insertSQL = """
-            INSERT INTO AbsorptionEvents (timestamp, price, size, absorbed_size, side,
-                                         is_bid, instrument, event_type, strength)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
-
-        try (PreparedStatement pstmt = dbConnection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, (String) event.get("timestamp"));
-
-            setDoubleOrNull(pstmt, 2, event.get("price"));
-            setDoubleOrNull(pstmt, 3, event.get("size"));
-            setDoubleOrNull(pstmt, 4, event.get("absorbedSize"));
-
-            pstmt.setString(5, (String) event.get("side"));
-
-            Boolean isBid = (Boolean) event.get("isBid");
-            pstmt.setInt(6, (isBid != null && isBid) ? 1 : 0);
-
-            pstmt.setString(7, (String) event.get("instrument"));
-            pstmt.setString(8, (String) event.get("eventType"));
-
-            setDoubleOrNull(pstmt, 9, event.get("strength"));
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            log("ERROR", "Failed to save to database: " + e.getMessage());
-        }
-    }
-
-    private void setDoubleOrNull(PreparedStatement pstmt, int index, Object value) throws SQLException {
-        if (value instanceof Number) {
-            pstmt.setDouble(index, ((Number) value).doubleValue());
-        } else {
-            pstmt.setNull(index, java.sql.Types.REAL);
-        }
-    }
-
-    private double convertPrice(int tickPrice, String alias) {
-        Double pips = instrumentPips.get(alias);
-        if (pips == null && !instrumentPips.isEmpty()) {
-            pips = instrumentPips.values().iterator().next();
-        }
-        if (pips == null) {
-            pips = 0.25;
-        }
-        return tickPrice * pips;
-    }
-
-    private Object getFieldValue(Object obj, String fieldName) {
-        if (obj == null) return null;
+    private void processTradeEvent(TradeEvent tradeEvent) {
         try {
-            java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return field.get(obj);
+            // Direct field access - NO REFLECTION
+            long timestampNanos = tradeEvent.getTime();
+            double price = tradeEvent.getPrice();
+            int size = tradeEvent.getValue(); // getValue() returns size
+            boolean isBid = tradeEvent.isBid();
+            int maxChainSize = tradeEvent.getMaxChainSize();
+
+            // CRITICAL: Convert price by multiplying by 0.25 (NQ tick to index point)
+            double convertedPrice = price * 0.25;
+
+            String side = isBid ? "BUY" : "SELL";
+
+            // Get symbol from active instruments
+            String symbol = activeSymbols.isEmpty() ? "UNKNOWN" : activeSymbols.values().iterator().next();
+            String sessionId = sessionIds.getOrDefault(symbol, "UNKNOWN");
+
+            // Convert timestamp: nanoseconds → seconds for PostgreSQL (for JSON storage
+            // only)
+            double timestampSeconds = timestampNanos / 1_000_000_000.0;
+
+            // Calculate significance using converted price
+            double significance = calculateSignificance(convertedPrice, size, maxChainSize, isBid);
+
+            // Log every 10th event with significance (show converted price)
+            if (stopCount.incrementAndGet() % 10 == 0) {
+                log("INFO",
+                        String.format(
+                                "TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d, significance=%.2f (threshold: 0.5)",
+                                side, convertedPrice, price, size, maxChainSize, significance));
+            }
+
+            // Only store if significant
+            if (significance >= 0.5) {
+                // Create DB event
+                TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+                dbEvent.symbol = symbol;
+                dbEvent.timestamp = timestampNanos; // CRITICAL FIX: Store nanoseconds directly (TimescaleDBManager
+                                                    // converts to seconds)
+                dbEvent.eventType = "ABSORPTION";
+                dbEvent.side = side;
+                dbEvent.price = convertedPrice; // CRITICAL FIX: Use converted price (raw * 0.25)
+                dbEvent.absorbedVolume = size;
+                dbEvent.aggressorVolume = size;
+                dbEvent.liquidityRemoved = size;
+                dbEvent.absorptionRatio = maxChainSize > 0 ? (double) size / maxChainSize : 0.0;
+                dbEvent.imbalanceRatio = 0.0;
+                dbEvent.sessionId = sessionId;
+                dbEvent.cbdrWindow = "REGULAR"; // TODO: Get actual CBDR window
+                dbEvent.isInCbdr = false; // TODO: Check actual CBDR status
+                dbEvent.significance = significance;
+                dbEvent.metadata = String.format("{\"maxChainSize\":%d,\"rawPrice\":%.2f}", maxChainSize, price);
+
+                // Store to Redis with converted price
+                String eventJson = gson.toJson(Map.of(
+                        "timestamp", timestampSeconds,
+                        "price", convertedPrice, // CRITICAL FIX: Use converted price
+                        "rawPrice", price, // Store raw price for reference
+                        "size", size,
+                        "side", side,
+                        "maxChainSize", maxChainSize,
+                        "significance", significance));
+                redisManager.addAbsorptionEvent(symbol, dbEvent.cbdrWindow, significance, eventJson);
+
+                // Queue for TimescaleDB
+                batchQueue.put(dbEvent);
+
+                // Update UI
+                updateUI();
+
+                log("INFO", String.format("✓ Stored absorption event: %s %s @ %.2f (raw: %.2f, sig=%.2f)",
+                        symbol, side, convertedPrice, price, significance));
+            }
+
         } catch (Exception e) {
-            try {
-                String getter = "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                return obj.getClass().getMethod(getter).invoke(obj);
-            } catch (Exception e2) {
-                try {
-                    String getter = "is" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                    return obj.getClass().getMethod(getter).invoke(obj);
-                } catch (Exception e3) {
-                    return null;
+            log("ERROR", "Error processing TradeEvent: " + e.getMessage());
+        }
+    }
+
+    private double calculateSignificance(double price, int size, int maxChainSize, boolean isBid) {
+        // Consider maxChainSize in the calculation
+        double chainRatio = maxChainSize > 0 ? (double) size / maxChainSize : 1.0;
+        double volumeScore = Math.min(1.0, size / 100.0);
+
+        // Weight chain ratio heavily (absorption chains are key indicator)
+        return (chainRatio * 0.6) + (volumeScore * 0.4);
+    }
+
+    /**
+     * Request historical data for last 24 hours to backfill CBDR gaps
+     */
+    private void requestHistoricalData(String generatorName) {
+        try {
+            // Get data structure interface for querying historical data
+            com.bookmap.addons.broadcasting.api.view.BrDataStructureInterface dataStructureInterface = broadcaster
+                    .getDataStructureInterface(PROVIDER.getFullName());
+
+            if (dataStructureInterface == null) {
+                Log.warn("[AbsorptionConsumer] Data structure interface not available for historical data");
+                return;
+            }
+
+            // Calculate time range: last 24 hours
+            long endTime = System.currentTimeMillis();
+            long startTime = endTime - (24 * 60 * 60 * 1000L); // 24 hours ago
+
+            // Get instrument alias from active symbols
+            String alias = null;
+            for (Map.Entry<String, String> entry : activeSymbols.entrySet()) {
+                alias = entry.getKey();
+                break; // Use first active instrument
+            }
+
+            if (alias == null) {
+                Log.warn("[AbsorptionConsumer] No active instrument for historical data request");
+                return;
+            }
+
+            Log.info("[AbsorptionConsumer] Requesting historical data: " + generatorName +
+                    " from " + new java.util.Date(startTime) + " to " + new java.util.Date(endTime));
+
+            // Request historical data from provider
+            java.util.List<Object> historicalData = PROVIDER.getValueHandler().requestHistoricalData(
+                    dataStructureInterface, generatorName, startTime, endTime, alias);
+
+            if (historicalData == null || historicalData.isEmpty()) {
+                Log.info("[AbsorptionConsumer] No historical data available for past 24 hours");
+                return;
+            }
+
+            // Cast and process historical events
+            java.util.List<Event> events = PROVIDER.getValueHandler().castEventsInOurClassLoader(historicalData);
+            int processedCount = 0;
+            int filteredCount = 0;
+
+            for (Event event : events) {
+                long eventTime = event.getTime();
+
+                // Check if event was during CBDR window
+                String cbdrWindow = sessionManager.getCbdrWindow(eventTime);
+
+                if (cbdrWindow != null) {
+                    // Process the historical event (same logic as live events)
+                    processHistoricalAbsorptionEvent(event, cbdrWindow);
+                    processedCount++;
+                } else {
+                    filteredCount++;
                 }
             }
+
+            Log.info("[AbsorptionConsumer] Historical data processed: " + processedCount +
+                    " events stored, " + filteredCount + " filtered (outside CBDR)");
+
+        } catch (Exception e) {
+            Log.warn("[AbsorptionConsumer] Error requesting historical data", e);
         }
     }
 
-    private void logEventStructure(String eventName, Object event) {
-        log("INSPECT", "========================================");
-        log("INSPECT", "Inspecting " + eventName);
-        log("INSPECT", "Class: " + event.getClass().getName());
-
-        java.lang.reflect.Field[] fields = event.getClass().getDeclaredFields();
-        for (java.lang.reflect.Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(event);
-                log("INSPECT", String.format("  %s = %s", field.getName(), value));
-            } catch (Exception e) {
-                // Ignore
-            }
-        }
-        log("INSPECT", "========================================");
-    }
-
-    private void saveToJson() {
-        try (FileWriter writer = new FileWriter(JSON_PATH)) {
-            StringBuilder json = new StringBuilder();
-            json.append("{\n");
-            json.append("  \"timestamp\": \"").append(dateFormat.format(new Date())).append("\",\n");
-            json.append("  \"statistics\": {\n");
-            json.append("    \"total\": ").append(totalCount.get()).append(",\n");
-            json.append("    \"types\": {\n");
-
-            int idx = 0;
-            for (Map.Entry<String, Integer> e : typeCounts.entrySet()) {
-                json.append("      \"").append(e.getKey()).append("\": ").append(e.getValue());
-                if (++idx < typeCounts.size()) json.append(",");
-                json.append("\n");
+    /**
+     * Process historical absorption event with same logic as live events
+     */
+    private void processHistoricalAbsorptionEvent(Event event, String cbdrWindow) {
+        try {
+            // Get symbol and session
+            String symbol = null;
+            String sessionId = null;
+            for (Map.Entry<String, String> entry : activeSymbols.entrySet()) {
+                symbol = entry.getValue();
+                sessionId = sessionIds.get(entry.getKey());
+                break;
             }
 
-            json.append("    }\n");
-            json.append("  },\n");
-            json.append("  \"events\": [\n");
-
-            for (int i = 0; i < absorptionEvents.size(); i++) {
-                json.append("    ").append(mapToJson(absorptionEvents.get(i)));
-                if (i < absorptionEvents.size() - 1) json.append(",");
-                json.append("\n");
+            if (symbol == null || sessionId == null) {
+                return;
             }
 
-            json.append("  ]\n");
-            json.append("}\n");
-            writer.write(json.toString());
+            long timestamp = event.getTime();
 
-        } catch (IOException e) {
-            log("ERROR", "Failed to save JSON: " + e.getMessage());
-        }
-    }
+            // Determine event type
+            String eventType = event.getClass().getSimpleName();
+            boolean isAbsorption = eventType.contains("Absorption") || eventType.equals("TradeEvent");
+            boolean isSweep = eventType.contains("Sweep");
 
-    private String mapToJson(Map<String, Object> map) {
-        StringBuilder s = new StringBuilder("{");
-        int i = 0;
-        for (Map.Entry<String, Object> e : map.entrySet()) {
-            s.append("\"").append(e.getKey()).append("\":");
-            Object v = e.getValue();
-            if (v == null) {
-                s.append("null");
-            } else if (v instanceof Number || v instanceof Boolean) {
-                s.append(v);
-            } else {
-                s.append("\"").append(v.toString().replace("\"", "\\\"")).append("\"");
+            // Use reflection to access provider-specific fields
+            double price = (double) event.getClass().getMethod("getPrice").invoke(event);
+            double sizeDouble = (double) event.getClass().getMethod("getSize").invoke(event);
+            long size = (long) sizeDouble;
+            boolean isBid = (boolean) event.getClass().getMethod("isBid").invoke(event);
+            String side = isBid ? "BUY" : "SELL";
+
+            // Calculate significance
+            double absorptionRatio = 0.8;
+            double significance = calculateSignificance(absorptionRatio, size, true); // Historical = in CBDR
+
+            // Skip low significance events
+            if (significance < 0.5) {
+                return;
             }
-            if (++i < map.size()) s.append(",");
-        }
-        s.append("}");
-        return s.toString();
-    }
 
-    private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", dateFormat.format(new Date()), level, message);
-        Log.info(logLine);
+            // Create absorption event for database
+            TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+            dbEvent.symbol = symbol;
+            dbEvent.timestamp = timestamp;
+            dbEvent.eventType = isAbsorption ? "ABSORPTION" : (isSweep ? "SWEEP" : "UNKNOWN");
+            dbEvent.side = side;
+            dbEvent.price = price;
+            dbEvent.absorbedVolume = size;
+            dbEvent.aggressorVolume = size;
+            dbEvent.liquidityRemoved = size;
+            dbEvent.absorptionRatio = absorptionRatio;
+            dbEvent.imbalanceRatio = 0;
+            dbEvent.sessionId = sessionId;
+            dbEvent.cbdrWindow = cbdrWindow;
+            dbEvent.isInCbdr = true; // Historical events are only from CBDR windows
+            dbEvent.significance = significance;
+            dbEvent.metadata = "{\"historical\":true}";
 
-        try (FileWriter writer = new FileWriter(LOG_PATH, true)) {
-            writer.write(logLine + "\n");
-        } catch (IOException e) {
-            Log.error("Failed to write to log", e);
-        }
-
-        if (logArea != null) {
-            SwingUtilities.invokeLater(() -> {
-                logArea.append(logLine + "\n");
-                logArea.setCaretPosition(logArea.getDocument().getLength());
-            });
-        }
-    }
-
-    private void updateUI() {
-        if (statsLabel != null) {
-            SwingUtilities.invokeLater(() -> {
-                StringBuilder stats = new StringBuilder("<html><b>ABSORPTION STATISTICS</b><br>");
-                stats.append("Total Events: ").append(totalCount.get()).append("<br>");
-                if (!typeCounts.isEmpty()) {
-                    stats.append("<br><b>Event Types:</b><br>");
-                    typeCounts.forEach((type, count) ->
-                        stats.append("  ").append(type).append(": ").append(count).append("<br>")
-                    );
-                }
-                stats.append("</html>");
-                statsLabel.setText(stats.toString());
-            });
-        }
-    }
-
-    private String formatNumber(Object o) {
-        if (o == null) return "N/A";
-        if (o instanceof Number) {
-            return String.format("%.2f", ((Number) o).doubleValue());
-        }
-        return o.toString();
-    }
-
-    @Override
-    public void onUserMessage(Object data) {
-        if (data == null) return;
-
-        if (data.getClass() == UserMessageLayersChainCreatedTargeted.class) {
-            UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
-            if (message.targetClass == getClass()) {
-                isWorking.set(true);
-                broadcaster.start();
-                log("INFO", "========================================");
-                log("INFO", "Broadcaster STARTED - Listening for Absorption events");
-                log("INFO", "========================================");
-                connectToProvider();
-                ExecutorsUtilities.getExecutor().submit(() -> {
-                    provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                });
+            // Queue for batch processing
+            if (!batchQueue.offer(dbEvent)) {
+                log("WARN", "[AbsorptionConsumer] Historical event queue full, dropping event");
             }
+        } catch (Exception e) {
+            Log.warn("[AbsorptionConsumer] Error processing historical absorption event", e);
         }
     }
+
+    // OLD REFLECTION-BASED METHODS REMOVED - Now using CastUtilities pattern
+    // See processTradeEvent() method above for the correct implementation
 
     @Override
     public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
-        instrumentsInfo.put(alias, instrumentInfo);
-        instrumentPips.put(alias, instrumentInfo.pips);
-        log("INFO", String.format("Instrument added: %s (pips=%.8f)", alias, instrumentInfo.pips));
+        String symbol = instrumentInfo.symbol;
+        activeSymbols.put(alias, symbol);
+
+        // Generate session ID
+        String sessionId = sessionManager.generateSessionId(symbol);
+        sessionIds.put(symbol, sessionId);
+
+        // Initialize tracking structures
+        orderBooks.put(symbol, new OrderBook(symbol));
+        recentTrades.put(symbol, new CopyOnWriteArrayList<>());
+
+        // Start analyzer for this symbol (every 500ms)
+        analyzer.scheduleAtFixedRate(() -> analyzeAbsorption(symbol), 500, 500, TimeUnit.MILLISECONDS);
+
+        // Start CBDR monitor for this symbol (every 10 seconds)
+        cbdrMonitor.scheduleAtFixedRate(() -> updateCbdrState(symbol), 10, 10, TimeUnit.SECONDS);
+
+        Log.info("[AbsorptionConsumer] Instrument added: " + symbol + " -> " + sessionId);
+    }
+
+    @Override
+    public void onInstrumentRemoved(String alias) {
+        String symbol = activeSymbols.remove(alias);
+        if (symbol != null) {
+            sessionIds.remove(symbol);
+            orderBooks.remove(symbol);
+            recentTrades.remove(symbol);
+        }
+        Log.info("[AbsorptionConsumer] Instrument removed: " + symbol);
+    }
+
+    /**
+     * Analyze recent trades for absorption patterns
+     */
+    private void analyzeAbsorption(String symbol) {
+        java.util.List<InternalTradeEvent> trades = recentTrades.get(symbol);
+        if (trades == null || trades.isEmpty())
+            return;
+
+        long now = System.currentTimeMillis();
+        long windowStart = now - ABSORPTION_WINDOW_MS;
+
+        // Group trades by price level within the window
+        Map<Double, LevelAbsorption> levels = new HashMap<>();
+
+        for (InternalTradeEvent trade : trades) {
+            if (trade.timestamp < windowStart)
+                continue;
+
+            LevelAbsorption level = levels.computeIfAbsent(trade.price, k -> new LevelAbsorption(trade.price));
+            if (trade.isBuy) {
+                level.buyVolume += trade.size;
+            } else {
+                level.sellVolume += trade.size;
+            }
+            level.totalVolume += trade.size;
+            level.lastTimestamp = trade.timestamp;
+        }
+
+        // Analyze each level for absorption
+        for (LevelAbsorption level : levels.values()) {
+            if (level.totalVolume < MIN_VOLUME_THRESHOLD)
+                continue;
+
+            double absorptionRatio = calculateAbsorptionRatio(level);
+            double imbalanceRatio = calculateImbalanceRatio(level);
+
+            if (absorptionRatio >= ABSORPTION_RATIO_THRESHOLD) {
+                detectAbsorption(symbol, level, absorptionRatio, imbalanceRatio, now);
+            } else if (imbalanceRatio >= IMBALANCE_THRESHOLD) {
+                detectSweep(symbol, level, imbalanceRatio, now);
+            }
+        }
+    }
+
+    /**
+     * Calculate absorption ratio (passive liquidity absorbed vs aggressive volume)
+     */
+    private double calculateAbsorptionRatio(LevelAbsorption level) {
+        long aggressorVolume = Math.max(level.buyVolume, level.sellVolume);
+        long passiveVolume = Math.min(level.buyVolume, level.sellVolume);
+
+        if (aggressorVolume == 0)
+            return 0;
+
+        // Higher ratio means more absorption (liquidity soaking up aggression)
+        return (double) passiveVolume / aggressorVolume;
+    }
+
+    /**
+     * Calculate imbalance ratio (directional bias)
+     */
+    private double calculateImbalanceRatio(LevelAbsorption level) {
+        if (level.totalVolume == 0)
+            return 0;
+
+        long dominantVolume = Math.max(level.buyVolume, level.sellVolume);
+        return (double) dominantVolume / level.totalVolume;
+    }
+
+    /**
+     * Detect and record absorption event
+     */
+    private void detectAbsorption(String symbol, LevelAbsorption level, double absorptionRatio,
+            double imbalanceRatio, long timestamp) {
+        String sessionId = sessionIds.get(symbol);
+        String cbdrWindow = sessionManager.getCbdrWindow(timestamp);
+        boolean isInCbdr = cbdrWindow != null;
+
+        // Determine side (who's absorbing)
+        String side = level.buyVolume > level.sellVolume ? "SELL" : "BUY"; // Passive side
+        long absorbedVolume = Math.min(level.buyVolume, level.sellVolume);
+        long aggressorVolume = Math.max(level.buyVolume, level.sellVolume);
+
+        // Calculate significance (higher during CBDR windows)
+        double significance = calculateSignificance(absorptionRatio, level.totalVolume, isInCbdr);
+
+        // Only record significant events
+        if (significance < 0.5)
+            return;
+
+        // Create event data for Redis
+        Map<String, Object> eventData = new HashMap<>();
+        eventData.put("event_id", "absorption_" + timestamp);
+        eventData.put("timestamp", timestamp);
+        eventData.put("price", level.price);
+        eventData.put("absorbed_volume", absorbedVolume);
+        eventData.put("aggressor_volume", aggressorVolume);
+        eventData.put("absorption_ratio", absorptionRatio);
+        eventData.put("imbalance_ratio", imbalanceRatio);
+        eventData.put("side", side);
+        eventData.put("cbdr_window", cbdrWindow);
+        eventData.put("is_in_cbdr", isInCbdr);
+        eventData.put("significance", significance);
+
+        String eventJson = gson.toJson(eventData);
+
+        // Store in Redis
+        if (isInCbdr) {
+            redisManager.addAbsorptionEvent(symbol, cbdrWindow, significance, eventJson);
+        } else {
+            redisManager.addAbsorptionEvent(symbol, "REGULAR", significance, eventJson);
+        }
+
+        // Create metadata
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("buy_volume", level.buyVolume);
+        metadata.put("sell_volume", level.sellVolume);
+        metadata.put("trading_mode", sessionManager.getRecommendedTradingMode());
+
+        // Queue for TimescaleDB
+        TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+        dbEvent.symbol = symbol;
+        dbEvent.timestamp = timestamp;
+        dbEvent.eventType = "ABSORPTION";
+        dbEvent.side = side;
+        dbEvent.price = level.price;
+        dbEvent.absorbedVolume = absorbedVolume;
+        dbEvent.aggressorVolume = aggressorVolume;
+        dbEvent.liquidityRemoved = absorbedVolume;
+        dbEvent.absorptionRatio = absorptionRatio;
+        dbEvent.imbalanceRatio = imbalanceRatio;
+        dbEvent.sessionId = sessionId;
+        dbEvent.cbdrWindow = cbdrWindow;
+        dbEvent.isInCbdr = isInCbdr;
+        dbEvent.significance = significance;
+        dbEvent.metadata = gson.toJson(metadata);
+
+        try {
+            batchQueue.put(dbEvent);
+        } catch (InterruptedException e) {
+            log("WARN", "Failed to queue absorption event: " + e.getMessage());
+        }
+
+        log("INFO", String.format("ABSORPTION detected: %s at %.2f, ratio: %.2f, significance: %.2f %s",
+                symbol, level.price, absorptionRatio, significance,
+                isInCbdr ? "[CBDR: " + cbdrWindow + "]" : ""));
+
+        // Publish signal if significant
+        if (significance >= 0.7) {
+            String signal = String.format("ABSORPTION:%s:%.2f:%.2f:%s",
+                    side, level.price, significance, cbdrWindow != null ? cbdrWindow : "REGULAR");
+            redisManager.publishSignal(symbol, signal);
+        }
+    }
+
+    /**
+     * Detect liquidity sweep
+     */
+    private void detectSweep(String symbol, LevelAbsorption level, double imbalanceRatio, long timestamp) {
+        String sessionId = sessionIds.get(symbol);
+        String cbdrWindow = sessionManager.getCbdrWindow(timestamp);
+        boolean isInCbdr = cbdrWindow != null;
+
+        String side = level.buyVolume > level.sellVolume ? "BUY" : "SELL";
+        long dominantVolume = Math.max(level.buyVolume, level.sellVolume);
+
+        double significance = calculateSignificance(imbalanceRatio, level.totalVolume, isInCbdr);
+
+        if (significance < 0.6)
+            return;
+
+        // Create event
+        Map<String, Object> eventData = new HashMap<>();
+        eventData.put("event_id", "sweep_" + timestamp);
+        eventData.put("timestamp", timestamp);
+        eventData.put("price", level.price);
+        eventData.put("volume", dominantVolume);
+        eventData.put("imbalance_ratio", imbalanceRatio);
+        eventData.put("side", side);
+        eventData.put("significance", significance);
+
+        String eventJson = gson.toJson(eventData);
+
+        if (isInCbdr) {
+            redisManager.addAbsorptionEvent(symbol, cbdrWindow, significance, eventJson);
+        }
+
+        // Queue for TimescaleDB
+        TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+        dbEvent.symbol = symbol;
+        dbEvent.timestamp = timestamp;
+        dbEvent.eventType = "SWEEP";
+        dbEvent.side = side;
+        dbEvent.price = level.price;
+        dbEvent.absorbedVolume = 0;
+        dbEvent.aggressorVolume = dominantVolume;
+        dbEvent.liquidityRemoved = dominantVolume;
+        dbEvent.absorptionRatio = 0;
+        dbEvent.imbalanceRatio = imbalanceRatio;
+        dbEvent.sessionId = sessionId;
+        dbEvent.cbdrWindow = cbdrWindow;
+        dbEvent.isInCbdr = isInCbdr;
+        dbEvent.significance = significance;
+        dbEvent.metadata = "{}";
+
+        try {
+            batchQueue.put(dbEvent);
+        } catch (InterruptedException e) {
+            log("WARN", "Failed to queue sweep event: " + e.getMessage());
+        }
+
+        log("INFO", String.format("SWEEP detected: %s %s at %.2f, volume: %d",
+                symbol, side, level.price, dominantVolume));
+    }
+
+    /**
+     * Calculate significance score based on multiple factors
+     */
+    private double calculateSignificance(double ratio, long volume, boolean isInCbdr) {
+        double significance = 0;
+
+        // Base score from ratio
+        significance += ratio * 0.5;
+
+        // Volume contribution (normalized)
+        double volumeScore = Math.min(1.0, volume / 100.0);
+        significance += volumeScore * 0.3;
+
+        // CBDR bonus
+        if (isInCbdr) {
+            significance += 0.2;
+        }
+
+        return Math.min(1.0, significance);
+    }
+
+    /**
+     * Update CBDR window state in Redis
+     */
+    private void updateCbdrState(String symbol) {
+        long now = System.currentTimeMillis();
+        String cbdrWindow = sessionManager.getCbdrWindow(now);
+
+        if (cbdrWindow != null) {
+            // Get recent absorption events for this window
+            java.util.List<String> recentEvents = redisManager.getTopAbsorptionEvents(symbol, cbdrWindow, 20);
+
+            // Calculate window bias
+            int bullishEvents = 0;
+            int bearishEvents = 0;
+
+            for (String eventJson : recentEvents) {
+                try {
+                    Map<String, Object> event = gson.fromJson(eventJson, Map.class);
+                    String side = (String) event.get("side");
+                    if ("BUY".equals(side))
+                        bullishEvents++;
+                    else if ("SELL".equals(side))
+                        bearishEvents++;
+                } catch (Exception e) {
+                    // Skip invalid events
+                }
+            }
+
+            String bias = "NEUTRAL";
+            if (bullishEvents > bearishEvents * 1.5) {
+                bias = "BULLISH";
+            } else if (bearishEvents > bullishEvents * 1.5) {
+                bias = "BEARISH";
+            }
+
+            // Update CBDR state in Redis
+            Map<String, String> cbdrData = new HashMap<>();
+            cbdrData.put("status", "ACTIVE");
+            cbdrData.put("bias", bias);
+            cbdrData.put("start_time", String.valueOf(sessionManager.getCbdrWindowStart(cbdrWindow, now)));
+            cbdrData.put("end_time", String.valueOf(sessionManager.getCbdrWindowEnd(cbdrWindow, now)));
+            cbdrData.put("event_count", String.valueOf(recentEvents.size()));
+            cbdrData.put("bullish_events", String.valueOf(bullishEvents));
+            cbdrData.put("bearish_events", String.valueOf(bearishEvents));
+
+            redisManager.updateCbdrWindow(symbol, cbdrWindow, cbdrData);
+
+            // Update market bias if strong signal
+            if (!bias.equals("NEUTRAL")) {
+                double confidence = Math.abs(bullishEvents - bearishEvents)
+                        / (double) Math.max(1, bullishEvents + bearishEvents);
+                redisManager.updateMarketBias(symbol, bias, confidence,
+                        String.format("%s window absorption: %d vs %d", cbdrWindow, bullishEvents, bearishEvents));
+            }
+        }
+    }
+
+    /**
+     * Process batch to TimescaleDB
+     */
+    private void processBatch() {
+        java.util.List<TimescaleDBManager.AbsorptionEvent> batch = new ArrayList<>();
+        batchQueue.drainTo(batch, 500);
+
+        if (!batch.isEmpty()) {
+            log("INFO", String.format("[AbsorptionConsumer] Processing batch of %d events to TimescaleDB...",
+                    batch.size()));
+            timescaleDBManager.batchInsertAbsorptionEvents(batch);
+            log("INFO", String.format("✓ [AbsorptionConsumer] Successfully wrote %d absorption events to TimescaleDB",
+                    batch.size()));
+        }
+        // Removed LOGGER.fine() - no need to spam logs for empty queue
     }
 
     @Override
     public void finish() {
-        if (broadcaster != null) {
-            broadcaster.finish();
-        }
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-                log("INFO", "Database connection closed");
-            } catch (SQLException e) {
-                log("ERROR", "Error closing database: " + e.getMessage());
+        try {
+            if (broadcaster != null) {
+                broadcaster.finish();
             }
+
+            // Process remaining batch
+            processBatch();
+
+            // Shutdown executors
+            batchProcessor.shutdown();
+            analyzer.shutdown();
+            cbdrMonitor.shutdown();
+
+            if (!batchProcessor.awaitTermination(10, TimeUnit.SECONDS)) {
+                batchProcessor.shutdownNow();
+            }
+            if (!analyzer.awaitTermination(10, TimeUnit.SECONDS)) {
+                analyzer.shutdownNow();
+            }
+            if (!cbdrMonitor.awaitTermination(10, TimeUnit.SECONDS)) {
+                cbdrMonitor.shutdownNow();
+            }
+
+            Log.info("[AbsorptionConsumer] Finished and cleaned up");
+        } catch (Exception e) {
+            Log.warn("[AbsorptionConsumer] Error during finish", e);
+            batchProcessor.shutdownNow();
+            analyzer.shutdownNow();
+            cbdrMonitor.shutdownNow();
         }
-        saveToJson();
     }
 
+    /**
+     * Trade event data structure (internal use)
+     */
+    private static class InternalTradeEvent {
+        long timestamp;
+        double price;
+        long size;
+        boolean isBuy;
+    }
+
+    /**
+     * Level absorption tracker
+     */
+    private static class LevelAbsorption {
+        double price;
+        long buyVolume;
+        long sellVolume;
+        long totalVolume;
+        long lastTimestamp;
+
+        LevelAbsorption(double price) {
+            this.price = price;
+        }
+    }
+
+    /**
+     * Order book tracker
+     */
+    private static class OrderBook {
+        String symbol;
+        Map<Double, Long> bids = new ConcurrentHashMap<>();
+        Map<Double, Long> asks = new ConcurrentHashMap<>();
+
+        OrderBook(String symbol) {
+            this.symbol = symbol;
+        }
+
+        void processTrade(InternalTradeEvent trade) {
+            // Update liquidity after trade
+            Map<Double, Long> levels = trade.isBuy ? asks : bids;
+            levels.compute(trade.price, (k, v) -> {
+                if (v == null)
+                    return 0L;
+                long remaining = v - trade.size;
+                return remaining > 0 ? remaining : null;
+            });
+        }
+    }
+
+    /**
+     * Update UI statistics display
+     */
+    private void updateUI() {
+        if (this.statsLabel != null) {
+            SwingUtilities.invokeLater(() -> {
+                StringBuilder stats = new StringBuilder("<html>");
+                stats.append("<b>ABSORPTION EVENTS STATISTICS</b><br><br>");
+                stats.append("<b>Event Counts:</b><br>");
+                stats.append("&nbsp;&nbsp;Absorption Events: ").append(this.stopCount.get()).append("<br>");
+                stats.append("&nbsp;&nbsp;Sweep Events: ").append(this.sweepCount.get()).append("<br><br>");
+                stats.append("<b>Active Instruments:</b><br>");
+                stats.append("&nbsp;&nbsp;Count: ").append(this.activeSymbols.size()).append("<br>");
+                if (!this.activeSymbols.isEmpty()) {
+                    stats.append("&nbsp;&nbsp;Symbols: ").append(String.join(", ", this.activeSymbols.keySet()))
+                            .append("<br>");
+                }
+                stats.append("</html>");
+                this.statsLabel.setText(stats.toString());
+            });
+        }
+    }
+
+    /**
+     * Create custom GUI panel for this addon
+     */
     @Override
     public StrategyPanel[] getCustomGuiFor(String alias, String indicatorName) {
-        if (!isWorking.get()) {
+        if (!this.isWorking.get()) {
             return new StrategyPanel[0];
         }
 
         StrategyPanel mainPanel = new StrategyPanel("Absorption Events - " + alias);
         mainPanel.setLayout(new BorderLayout());
 
-        statsLabel = new JLabel("<html><b>Waiting for events...</b></html>");
+        // Statistics panel at top
+        this.statsLabel = new JLabel("<html><b>Waiting for events...</b></html>");
         JPanel statsPanel = new JPanel(new BorderLayout());
-        statsPanel.add(statsLabel, BorderLayout.NORTH);
+        statsPanel.add(this.statsLabel, BorderLayout.NORTH);
 
-        logArea = new JTextArea(20, 60);
-        logArea.setEditable(false);
-        logArea.setBackground(Color.BLACK);
-        logArea.setForeground(Color.CYAN);
-        JScrollPane scrollPane = new JScrollPane(logArea);
+        // Log area in center with scrolling
+        this.logArea = new JTextArea(20, 60);
+        this.logArea.setEditable(false);
+        this.logArea.setBackground(Color.BLACK);
+        this.logArea.setForeground(Color.GREEN);
+        this.logArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        JScrollPane scrollPane = new JScrollPane(this.logArea);
 
         mainPanel.add(statsPanel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        updateUI();
-
-        return new StrategyPanel[]{mainPanel};
+        return new StrategyPanel[] { mainPanel };
     }
 }
-

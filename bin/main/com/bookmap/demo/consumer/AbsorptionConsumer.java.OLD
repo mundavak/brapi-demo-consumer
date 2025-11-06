@@ -1,0 +1,527 @@
+package com.bookmap.demo.consumer;
+
+import com.bookmap.demo.consumer.database.RedisManager;
+import com.bookmap.demo.consumer.database.TimescaleDBManager;
+import com.bookmap.demo.consumer.utils.SessionManager;
+import com.bookmap.demo.consumer.utils.LoggingConfig;
+
+import com.google.gson.Gson;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+// Bookmap Simplified API imports (provided by Bookmap at runtime)
+import velox.api.layer1.simplified.*;
+import velox.api.layer1.annotations.*;
+import velox.api.layer1.data.*;
+
+/**
+ * Absorption Consumer - Detects absorption events and liquidity sweeps
+ * Particularly important during CBDR windows for identifying institutional
+ * activity
+ */
+@Layer1SimpleAttachable
+@Layer1StrategyName("Absorption Consumer")
+@Layer1ApiVersion(Layer1ApiVersionValue.VERSION2)
+public class AbsorptionConsumer implements
+        CustomModule,
+        DepthDataListener,
+        TradeDataListener,
+        IntervalListener {
+
+    private static final Logger LOGGER = Logger.getLogger(AbsorptionConsumer.class.getName());
+    private static final Gson gson = new Gson();
+
+    private Api api;
+    private RedisManager redisManager;
+    private TimescaleDBManager timescaleDBManager;
+    private SessionManager sessionManager;
+
+    // Tracking structures
+    private final Map<String, String> activeSymbols = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionIds = new ConcurrentHashMap<>();
+    private final Map<String, OrderBook> orderBooks = new ConcurrentHashMap<>();
+    private final Map<String, List<TradeEvent>> recentTrades = new ConcurrentHashMap<>();
+
+    // Detection parameters
+    private static final double ABSORPTION_RATIO_THRESHOLD = 0.6; // 60% absorption
+    private static final long ABSORPTION_WINDOW_MS = 2000; // 2 second window
+    private static final int MIN_VOLUME_THRESHOLD = 10; // Minimum volume to consider
+    private static final double IMBALANCE_THRESHOLD = 0.7; // 70% imbalance
+
+    // Batch processing
+    private final BlockingQueue<TimescaleDBManager.AbsorptionEvent> batchQueue = new LinkedBlockingQueue<>(5000);
+    private final ScheduledExecutorService batchProcessor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService analyzer = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService cbdrMonitor = Executors.newSingleThreadScheduledExecutor();
+
+    @Override
+    public void initialize(String alias, InstrumentInfo info, Api api, InitialState initialState) {
+        this.api = api;
+
+        // Initialize logging
+        LoggingConfig.initializeLogging("AbsorptionConsumer", Level.INFO);
+
+        // Initialize managers
+        redisManager = RedisManager.getInstance();
+        timescaleDBManager = TimescaleDBManager.getInstance();
+        sessionManager = SessionManager.getInstance();
+
+        String symbol = info.symbol;
+        activeSymbols.put(alias, symbol);
+
+        // Generate session ID
+        String sessionId = sessionManager.generateSessionId(symbol);
+        sessionIds.put(symbol, sessionId);
+
+        // Initialize order book tracker
+        orderBooks.put(symbol, new OrderBook(symbol));
+        recentTrades.put(symbol, new CopyOnWriteArrayList<>());
+
+        // Start batch processor (every 5 seconds)
+        batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS);
+
+        // Start absorption analyzer (every 500ms for responsiveness)
+        analyzer.scheduleAtFixedRate(() -> analyzeAbsorption(symbol), 500, 500, TimeUnit.MILLISECONDS);
+
+        // Start CBDR monitor (every 10 seconds)
+        cbdrMonitor.scheduleAtFixedRate(() -> updateCbdrState(symbol), 10, 10, TimeUnit.SECONDS);
+
+        LOGGER.info("AbsorptionConsumer initialized for " + symbol);
+    }
+
+    @Override
+    public void onDepth(boolean isBid, int price, int size) {
+        // Order book updates - track liquidity changes
+        // Note: Bookmap uses integer prices
+    }
+
+    @Override
+    public void onTrade(String alias, double price, int size, TradeInfo tradeInfo) {
+        String symbol = activeSymbols.get(alias);
+        if (symbol == null)
+            return;
+
+        long timestamp = System.currentTimeMillis();
+        boolean isBidAggressor = tradeInfo.isBidAggressor;
+
+        // Record trade
+        TradeEvent trade = new TradeEvent();
+        trade.timestamp = timestamp;
+        trade.price = price;
+        trade.size = size;
+        trade.isBuy = isBidAggressor;
+
+        List<TradeEvent> trades = recentTrades.get(symbol);
+        if (trades != null) {
+            trades.add(trade);
+
+            // Keep only recent trades (last 5 seconds)
+            long cutoffTime = timestamp - 5000;
+            trades.removeIf(t -> t.timestamp < cutoffTime);
+        }
+
+        // Update order book tracker
+        OrderBook orderBook = orderBooks.get(symbol);
+        if (orderBook != null) {
+            orderBook.processTrade(trade);
+        }
+    }
+
+    /**
+     * Analyze recent trades for absorption patterns
+     */
+    private void analyzeAbsorption(String symbol) {
+        List<TradeEvent> trades = recentTrades.get(symbol);
+        if (trades == null || trades.isEmpty())
+            return;
+
+        long now = System.currentTimeMillis();
+        long windowStart = now - ABSORPTION_WINDOW_MS;
+
+        // Group trades by price level within the window
+        Map<Double, LevelAbsorption> levels = new HashMap<>();
+
+        for (TradeEvent trade : trades) {
+            if (trade.timestamp < windowStart)
+                continue;
+
+            LevelAbsorption level = levels.computeIfAbsent(trade.price, k -> new LevelAbsorption(trade.price));
+            if (trade.isBuy) {
+                level.buyVolume += trade.size;
+            } else {
+                level.sellVolume += trade.size;
+            }
+            level.totalVolume += trade.size;
+            level.lastTimestamp = trade.timestamp;
+        }
+
+        // Analyze each level for absorption
+        for (LevelAbsorption level : levels.values()) {
+            if (level.totalVolume < MIN_VOLUME_THRESHOLD)
+                continue;
+
+            double absorptionRatio = calculateAbsorptionRatio(level);
+            double imbalanceRatio = calculateImbalanceRatio(level);
+
+            if (absorptionRatio >= ABSORPTION_RATIO_THRESHOLD) {
+                detectAbsorption(symbol, level, absorptionRatio, imbalanceRatio, now);
+            } else if (imbalanceRatio >= IMBALANCE_THRESHOLD) {
+                detectSweep(symbol, level, imbalanceRatio, now);
+            }
+        }
+    }
+
+    /**
+     * Calculate absorption ratio (passive liquidity absorbed vs aggressive volume)
+     */
+    private double calculateAbsorptionRatio(LevelAbsorption level) {
+        long aggressorVolume = Math.max(level.buyVolume, level.sellVolume);
+        long passiveVolume = Math.min(level.buyVolume, level.sellVolume);
+
+        if (aggressorVolume == 0)
+            return 0;
+
+        // Higher ratio means more absorption (liquidity soaking up aggression)
+        return (double) passiveVolume / aggressorVolume;
+    }
+
+    /**
+     * Calculate imbalance ratio (directional bias)
+     */
+    private double calculateImbalanceRatio(LevelAbsorption level) {
+        if (level.totalVolume == 0)
+            return 0;
+
+        long dominantVolume = Math.max(level.buyVolume, level.sellVolume);
+        return (double) dominantVolume / level.totalVolume;
+    }
+
+    /**
+     * Detect and record absorption event
+     */
+    private void detectAbsorption(String symbol, LevelAbsorption level, double absorptionRatio,
+            double imbalanceRatio, long timestamp) {
+        String sessionId = sessionIds.get(symbol);
+        String cbdrWindow = sessionManager.getCbdrWindow(timestamp);
+        boolean isInCbdr = cbdrWindow != null;
+
+        // Determine side (who's absorbing)
+        String side = level.buyVolume > level.sellVolume ? "SELL" : "BUY"; // Passive side
+        long absorbedVolume = Math.min(level.buyVolume, level.sellVolume);
+        long aggressorVolume = Math.max(level.buyVolume, level.sellVolume);
+
+        // Calculate significance (higher during CBDR windows)
+        double significance = calculateSignificance(absorptionRatio, level.totalVolume, isInCbdr);
+
+        // Only record significant events
+        if (significance < 0.5)
+            return;
+
+        // Create event data for Redis
+        Map<String, Object> eventData = new HashMap<>();
+        eventData.put("event_id", "absorption_" + timestamp);
+        eventData.put("timestamp", timestamp);
+        eventData.put("price", level.price);
+        eventData.put("absorbed_volume", absorbedVolume);
+        eventData.put("aggressor_volume", aggressorVolume);
+        eventData.put("absorption_ratio", absorptionRatio);
+        eventData.put("imbalance_ratio", imbalanceRatio);
+        eventData.put("side", side);
+        eventData.put("cbdr_window", cbdrWindow);
+        eventData.put("is_in_cbdr", isInCbdr);
+        eventData.put("significance", significance);
+
+        String eventJson = gson.toJson(eventData);
+
+        // Store in Redis
+        if (isInCbdr) {
+            redisManager.addAbsorptionEvent(symbol, cbdrWindow, significance, eventJson);
+        } else {
+            redisManager.addAbsorptionEvent(symbol, "REGULAR", significance, eventJson);
+        }
+
+        // Create metadata
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("buy_volume", level.buyVolume);
+        metadata.put("sell_volume", level.sellVolume);
+        metadata.put("trading_mode", sessionManager.getRecommendedTradingMode());
+
+        // Queue for TimescaleDB
+        TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+        dbEvent.symbol = symbol;
+        dbEvent.timestamp = timestamp;
+        dbEvent.eventType = "ABSORPTION";
+        dbEvent.side = side;
+        dbEvent.price = level.price;
+        dbEvent.absorbedVolume = absorbedVolume;
+        dbEvent.aggressorVolume = aggressorVolume;
+        dbEvent.liquidityRemoved = absorbedVolume;
+        dbEvent.absorptionRatio = absorptionRatio;
+        dbEvent.imbalanceRatio = imbalanceRatio;
+        dbEvent.sessionId = sessionId;
+        dbEvent.cbdrWindow = cbdrWindow;
+        dbEvent.isInCbdr = isInCbdr;
+        dbEvent.significance = significance;
+        dbEvent.metadata = gson.toJson(metadata);
+
+        try {
+            batchQueue.put(dbEvent);
+        } catch (InterruptedException e) {
+            LOGGER.warning("Failed to queue absorption event: " + e.getMessage());
+        }
+
+        LOGGER.info(String.format("ABSORPTION detected: %s at %.2f, ratio: %.2f, significance: %.2f %s",
+                symbol, level.price, absorptionRatio, significance,
+                isInCbdr ? "[CBDR: " + cbdrWindow + "]" : ""));
+
+        // Publish signal if significant
+        if (significance >= 0.7) {
+            String signal = String.format("ABSORPTION:%s:%.2f:%.2f:%s",
+                    side, level.price, significance, cbdrWindow != null ? cbdrWindow : "REGULAR");
+            redisManager.publishSignal(symbol, signal);
+        }
+    }
+
+    /**
+     * Detect liquidity sweep
+     */
+    private void detectSweep(String symbol, LevelAbsorption level, double imbalanceRatio, long timestamp) {
+        String sessionId = sessionIds.get(symbol);
+        String cbdrWindow = sessionManager.getCbdrWindow(timestamp);
+        boolean isInCbdr = cbdrWindow != null;
+
+        String side = level.buyVolume > level.sellVolume ? "BUY" : "SELL";
+        long dominantVolume = Math.max(level.buyVolume, level.sellVolume);
+
+        double significance = calculateSignificance(imbalanceRatio, level.totalVolume, isInCbdr);
+
+        if (significance < 0.6)
+            return;
+
+        // Create event
+        Map<String, Object> eventData = new HashMap<>();
+        eventData.put("event_id", "sweep_" + timestamp);
+        eventData.put("timestamp", timestamp);
+        eventData.put("price", level.price);
+        eventData.put("volume", dominantVolume);
+        eventData.put("imbalance_ratio", imbalanceRatio);
+        eventData.put("side", side);
+        eventData.put("significance", significance);
+
+        String eventJson = gson.toJson(eventData);
+
+        if (isInCbdr) {
+            redisManager.addAbsorptionEvent(symbol, cbdrWindow, significance, eventJson);
+        }
+
+        // Queue for TimescaleDB
+        TimescaleDBManager.AbsorptionEvent dbEvent = new TimescaleDBManager.AbsorptionEvent();
+        dbEvent.symbol = symbol;
+        dbEvent.timestamp = timestamp;
+        dbEvent.eventType = "SWEEP";
+        dbEvent.side = side;
+        dbEvent.price = level.price;
+        dbEvent.absorbedVolume = 0;
+        dbEvent.aggressorVolume = dominantVolume;
+        dbEvent.liquidityRemoved = dominantVolume;
+        dbEvent.absorptionRatio = 0;
+        dbEvent.imbalanceRatio = imbalanceRatio;
+        dbEvent.sessionId = sessionId;
+        dbEvent.cbdrWindow = cbdrWindow;
+        dbEvent.isInCbdr = isInCbdr;
+        dbEvent.significance = significance;
+        dbEvent.metadata = "{}";
+
+        try {
+            batchQueue.put(dbEvent);
+        } catch (InterruptedException e) {
+            LOGGER.warning("Failed to queue sweep event: " + e.getMessage());
+        }
+
+        LOGGER.info(String.format("SWEEP detected: %s %s at %.2f, volume: %d",
+                symbol, side, level.price, dominantVolume));
+    }
+
+    /**
+     * Calculate significance score based on multiple factors
+     */
+    private double calculateSignificance(double ratio, long volume, boolean isInCbdr) {
+        double significance = 0;
+
+        // Base score from ratio
+        significance += ratio * 0.5;
+
+        // Volume contribution (normalized)
+        double volumeScore = Math.min(1.0, volume / 100.0);
+        significance += volumeScore * 0.3;
+
+        // CBDR bonus
+        if (isInCbdr) {
+            significance += 0.2;
+        }
+
+        return Math.min(1.0, significance);
+    }
+
+    /**
+     * Update CBDR window state in Redis
+     */
+    private void updateCbdrState(String symbol) {
+        long now = System.currentTimeMillis();
+        String cbdrWindow = sessionManager.getCbdrWindow(now);
+
+        if (cbdrWindow != null) {
+            // Get recent absorption events for this window
+            List<String> recentEvents = redisManager.getTopAbsorptionEvents(symbol, cbdrWindow, 20);
+
+            // Calculate window bias
+            int bullishEvents = 0;
+            int bearishEvents = 0;
+
+            for (String eventJson : recentEvents) {
+                try {
+                    Map<String, Object> event = gson.fromJson(eventJson, Map.class);
+                    String side = (String) event.get("side");
+                    if ("BUY".equals(side))
+                        bullishEvents++;
+                    else if ("SELL".equals(side))
+                        bearishEvents++;
+                } catch (Exception e) {
+                    // Skip invalid events
+                }
+            }
+
+            String bias = "NEUTRAL";
+            if (bullishEvents > bearishEvents * 1.5) {
+                bias = "BULLISH";
+            } else if (bearishEvents > bullishEvents * 1.5) {
+                bias = "BEARISH";
+            }
+
+            // Update CBDR state in Redis
+            Map<String, String> cbdrData = new HashMap<>();
+            cbdrData.put("status", "ACTIVE");
+            cbdrData.put("bias", bias);
+            cbdrData.put("start_time", String.valueOf(sessionManager.getCbdrWindowStart(cbdrWindow, now)));
+            cbdrData.put("end_time", String.valueOf(sessionManager.getCbdrWindowEnd(cbdrWindow, now)));
+            cbdrData.put("event_count", String.valueOf(recentEvents.size()));
+            cbdrData.put("bullish_events", String.valueOf(bullishEvents));
+            cbdrData.put("bearish_events", String.valueOf(bearishEvents));
+
+            redisManager.updateCbdrWindow(symbol, cbdrWindow, cbdrData);
+
+            // Update market bias if strong signal
+            if (!bias.equals("NEUTRAL")) {
+                double confidence = Math.abs(bullishEvents - bearishEvents)
+                        / (double) Math.max(1, bullishEvents + bearishEvents);
+                redisManager.updateMarketBias(symbol, bias, confidence,
+                        String.format("%s window absorption: %d vs %d", cbdrWindow, bullishEvents, bearishEvents));
+            }
+        }
+    }
+
+    /**
+     * Process batch to TimescaleDB
+     */
+    private void processBatch() {
+        List<TimescaleDBManager.AbsorptionEvent> batch = new ArrayList<>();
+        batchQueue.drainTo(batch, 500);
+
+        if (!batch.isEmpty()) {
+            timescaleDBManager.batchInsertAbsorptionEvents(batch);
+            LOGGER.info("Processed batch of " + batch.size() + " absorption events to TimescaleDB");
+        }
+    }
+
+    @Override
+    public long getInterval() {
+        return Intervals.INTERVAL_1_SECOND;
+    }
+
+    @Override
+    public void onInterval() {
+        // Handled by scheduled executors
+    }
+
+    @Override
+    public void stop() {
+        LOGGER.info("Stopping AbsorptionConsumer...");
+
+        // Process remaining batch
+        processBatch();
+
+        // Shutdown executors
+        batchProcessor.shutdown();
+        analyzer.shutdown();
+        cbdrMonitor.shutdown();
+
+        try {
+            if (!batchProcessor.awaitTermination(10, TimeUnit.SECONDS)) {
+                batchProcessor.shutdownNow();
+            }
+            if (!analyzer.awaitTermination(10, TimeUnit.SECONDS)) {
+                analyzer.shutdownNow();
+            }
+            if (!cbdrMonitor.awaitTermination(10, TimeUnit.SECONDS)) {
+                cbdrMonitor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            batchProcessor.shutdownNow();
+            analyzer.shutdownNow();
+            cbdrMonitor.shutdownNow();
+        }
+
+        LOGGER.info("AbsorptionConsumer stopped");
+    }
+
+    /**
+     * Trade event data structure
+     */
+    private static class TradeEvent {
+        long timestamp;
+        double price;
+        long size;
+        boolean isBuy;
+    }
+
+    /**
+     * Level absorption tracker
+     */
+    private static class LevelAbsorption {
+        double price;
+        long buyVolume;
+        long sellVolume;
+        long totalVolume;
+        long lastTimestamp;
+
+        LevelAbsorption(double price) {
+            this.price = price;
+        }
+    }
+
+    /**
+     * Order book tracker
+     */
+    private static class OrderBook {
+        String symbol;
+        Map<Double, Long> bids = new ConcurrentHashMap<>();
+        Map<Double, Long> asks = new ConcurrentHashMap<>();
+
+        OrderBook(String symbol) {
+            this.symbol = symbol;
+        }
+
+        void processTrade(TradeEvent trade) {
+            // Update liquidity after trade
+            Map<Double, Long> levels = trade.isBuy ? asks : bids;
+            levels.compute(trade.price, (k, v) -> {
+                if (v == null)
+                    return 0L;
+                long remaining = v - trade.size;
+                return remaining > 0 ? remaining : null;
+            });
+        }
+    }
+}

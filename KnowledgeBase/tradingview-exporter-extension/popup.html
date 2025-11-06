@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TradingView Enhanced Exporter</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 450px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+    }
+    h1 { font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+    h1::before { content: "📊"; }
+    .section {
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-select {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .quick-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .quick-btn.active { background: #4ade80; color: white; }
+    .quick-btn:not(.active) { background: rgba(255, 255, 255, 0.3); color: white; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 12px; margin-bottom: 5px; opacity: 0.9; }
+    input[type="text"], select, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+      color: #333;
+    }
+    .timeframes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    .checkbox-group label { margin: 0; cursor: pointer; font-size: 12px; }
+    .export-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #4ade80;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      margin-top: 15px;
+    }
+    .export-btn:hover {
+      background: #22c55e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+    }
+    .export-btn::before { content: "📥"; }
+    .auto-section {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .auto-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .start-btn, .stop-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .start-btn { background: #3b82f6; color: white; }
+    .start-btn::before { content: "▶️"; }
+    .stop-btn { background: #ef4444; color: white; }
+    .stop-btn::before { content: "⏹️"; }
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 12px;
+      text-align: center;
+    }
+    .status.active { background: rgba(74, 222, 128, 0.3); }
+    
+    .monitor-section {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .monitor-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .monitor-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .monitor-start { background: #10b981; color: white; }
+    .monitor-start::before { content: "🔍"; }
+    .monitor-stop { background: #f59e0b; color: white; }
+    .monitor-stop::before { content: "⏹️"; }
+    .monitor-report { 
+      background: #8b5cf6; 
+      color: white; 
+      grid-column: span 2; 
+      margin-top: 5px;
+    }
+    .monitor-report::before { content: "📊"; }
+    .monitor-info {
+      font-size: 11px;
+      margin-top: 8px;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <h1>TradingView Enhanced Exporter</h1>
+  <p style="font-size: 11px; opacity: 0.8; margin-bottom: 15px;">
+    Export data using your browser session + Auto Screenshots
+  </p>
+  
+  <div class="section">
+    <div class="section-title">🚀 CME Futures Quick Select</div>
+    <div class="quick-select">
+      <button class="quick-btn active" data-symbol="NQ1!">NQ1!</button>
+      <button class="quick-btn" data-symbol="ES1!">ES1!</button>
+      <button class="quick-btn" data-symbol="YM1!">YM1!</button>
+      <button class="quick-btn" data-symbol="RTY1!">RTY1!</button>
+      <button class="quick-btn" data-symbol="CL1!">CL1!</button>
+      <button class="quick-btn" data-symbol="GC1!">GC1!</button>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">🔧 Export Settings</div>
+    
+    <div class="form-group">
+      <label>Symbol:</label>
+      <input type="text" id="symbol" value="NQ1!" placeholder="e.g., NQ1!, ES1!" />
+    </div>
+    
+    <div class="form-group">
+      <label>Exchange:</label>
+      <select id="exchange">
+        <option value="CME">CME</option>
+        <option value="CBOT">CBOT</option>
+        <option value="NYMEX">NYMEX</option>
+        <option value="COMEX">COMEX</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Timeframes to Export:</label>
+      <div class="timeframes">
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_tick" />
+          <label for="tf_tick">Tick</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_1s" />
+          <label for="tf_1s">1 Second</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_15s" />
+          <label for="tf_15s">15 Seconds</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_1m" checked />
+          <label for="tf_1m">1 Minute</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_5m" />
+          <label for="tf_5m">5 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_15m" />
+          <label for="tf_15m">15 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_1h" checked />
+          <label for="tf_1h">1 Hour</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_4h" />
+          <label for="tf_4h">4 Hours</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">💾 Smart Download Settings</div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="autoSaveEnabled" checked />
+          Auto-save with smart filenames
+        </label>
+      </div>
+      
+      <div class="form-group">
+        <label>Download Folder:</label>
+        <input type="text" id="downloadPath" placeholder="TradingView_Data" value="TradingView_Data" />
+      </div>
+      
+      <div class="form-group">
+        <label>File Prefix:</label>
+        <input type="text" id="filePrefix" placeholder="chart_export_" value="chart_export_" />
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="enableNotifications" checked />
+          Show download notifications
+        </label>
+      </div>
+      
+      <div class="download-info">
+        <small style="opacity: 0.9;">
+          📁 Files auto-saved as: <code>chart_export_SYMBOL_2025-11-03_143025.csv</code><br>
+          🚀 Downloads API provides enhanced automation & monitoring
+        </small>
+      </div>
+    </div>
+    
+    <button class="export-btn" id="exportNow">Export Visible Data</button>
+  </div>
+  
+  <div class="auto-section">
+    <div class="section-title">📸 Auto Screenshot</div>
+    
+    <div class="form-group">
+      <label>Screenshot Interval (seconds):</label>
+      <select id="screenshotInterval">
+        <option value="15">15 seconds</option>
+        <option value="30" selected>30 seconds</option>
+        <option value="60">60 seconds</option>
+        <option value="300">5 minutes</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Save Location (folder name):</label>
+      <input type="text" id="saveLocation" value="tradingview_screenshots" />
+    </div>
+    
+    <div class="form-group">
+      <label>Capture Timeframes:</label>
+      <div class="timeframes">
+        <div class="checkbox-group">
+          <input type="checkbox" id="capture_1m" checked />
+          <label for="capture_1m">1 Minute</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="capture_5m" />
+          <label for="capture_5m">5 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="capture_15m" />
+          <label for="capture_15m">15 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="capture_1h" />
+          <label for="capture_1h">1 Hour</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="auto-controls">
+      <button class="start-btn" id="startAuto">Start Auto</button>
+      <button class="stop-btn" id="stopAuto">Stop Auto</button>
+    </div>
+  </div>
+  
+  <div class="monitor-section">
+    <div class="section-title">🔍 Manual Action Monitor</div>
+    <div class="monitor-info">
+      Record and analyze your manual export workflow to improve automation
+    </div>
+    
+    <div class="monitor-controls">
+      <button class="monitor-btn monitor-start" id="startMonitor">Start Monitor</button>
+      <button class="monitor-btn monitor-stop" id="stopMonitor">Stop Monitor</button>
+      <button class="monitor-btn monitor-report" id="getReport">Download Report</button>
+    </div>
+    
+    <div class="monitor-info">
+      💡 Instructions:<br>
+      1. Click "Start Monitor"<br>
+      2. Manually export data (right-click → export)<br>
+      3. Click "Stop Monitor" when done<br>
+      4. Review downloaded report
+    </div>
+  </div>
+  
+  <div class="status" id="status">Status: Ready</div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

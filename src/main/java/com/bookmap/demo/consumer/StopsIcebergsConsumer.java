@@ -1,3 +1,24 @@
+/*
+ * Decompiled with CFR 0.152.
+ * 
+ * Could not load the following classes:
+ *  velox.api.layer1.Layer1ApiAdminAdapter
+ *  velox.api.layer1.Layer1ApiFinishable
+ *  velox.api.layer1.Layer1ApiInstrumentAdapter
+ *  velox.api.layer1.Layer1ApiProvider
+ *  velox.api.layer1.Layer1CustomPanelsGetter
+ *  velox.api.layer1.LayerApiListenable
+ *  velox.api.layer1.annotations.Layer1ApiVersion
+ *  velox.api.layer1.annotations.Layer1ApiVersionValue
+ *  velox.api.layer1.annotations.Layer1Attachable
+ *  velox.api.layer1.annotations.Layer1StrategyName
+ *  velox.api.layer1.common.ListenableHelper
+ *  velox.api.layer1.common.Log
+ *  velox.api.layer1.data.InstrumentInfo
+ *  velox.api.layer1.messages.Layer1ApiUserMessageReloadStrategyGui
+ *  velox.api.layer1.messages.UserMessageLayersChainCreatedTargeted
+ *  velox.gui.StrategyPanel
+ */
 package com.bookmap.demo.consumer;
 
 import com.bookmap.addons.broadcasting.api.view.BroadcasterConsumer;
@@ -6,11 +27,52 @@ import com.bookmap.addons.broadcasting.api.view.listeners.LiveConnectionStatusLi
 import com.bookmap.addons.broadcasting.api.view.listeners.LiveEventListener;
 import com.bookmap.addons.broadcasting.api.view.listeners.ProviderStatusListener;
 import com.bookmap.addons.broadcasting.implementations.view.BroadcastFactory;
+import com.bookmap.demo.consumer.Connector;
+import com.bookmap.demo.consumer.ExecutorsUtilities;
+import com.bookmap.demo.consumer.database.RedisManager;
+import com.bookmap.demo.consumer.database.TimescaleDBManager;
+import com.bookmap.demo.consumer.providers.Provider;
+import com.bookmap.demo.consumer.utils.SessionManager;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.LayoutManager;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import velox.api.layer1.Layer1ApiAdminAdapter;
 import velox.api.layer1.Layer1ApiFinishable;
 import velox.api.layer1.Layer1ApiInstrumentAdapter;
 import velox.api.layer1.Layer1ApiProvider;
 import velox.api.layer1.Layer1CustomPanelsGetter;
+import velox.api.layer1.LayerApiListenable;
 import velox.api.layer1.annotations.Layer1ApiVersion;
 import velox.api.layer1.annotations.Layer1ApiVersionValue;
 import velox.api.layer1.annotations.Layer1Attachable;
@@ -21,559 +83,441 @@ import velox.api.layer1.data.InstrumentInfo;
 import velox.api.layer1.messages.Layer1ApiUserMessageReloadStrategyGui;
 import velox.api.layer1.messages.UserMessageLayersChainCreatedTargeted;
 import velox.gui.StrategyPanel;
-
-// Import Stops & Icebergs event classes
-import velox.indicators.sionchart.broadcasting.implementations.StopEvent;
 import velox.indicators.sionchart.broadcasting.implementations.IcebergEvent;
+import velox.indicators.sionchart.broadcasting.implementations.StopEvent;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
-/**
- * Consumer for Stops & Icebergs On-Chart broadcasting events
- * Receives and logs StopEvent and IcebergEvent broadcasts
- */
 @Layer1Attachable
-@Layer1StrategyName("SI Broadcasting Consumer")
-@Layer1ApiVersion(Layer1ApiVersionValue.VERSION2)
-public class StopsIcebergsConsumer implements
-        Layer1ApiFinishable,
+@Layer1StrategyName(value = "SI Broadcasting Consumer")
+@Layer1ApiVersion(value = Layer1ApiVersionValue.VERSION2)
+public class StopsIcebergsConsumer
+        implements Layer1ApiFinishable,
         Layer1ApiAdminAdapter,
         Layer1ApiInstrumentAdapter,
         Layer1CustomPanelsGetter {
-
-    // File paths for logging and export
     private static final String SI_LOG_PATH = "F:/TradingAgent/si_events.log";
     private static final String SI_JSON_PATH = "F:/TradingAgent/si_data.json";
     private static final String SI_DB_PATH = "F:/TradingAgent/si_events_db.csv";
-    private static final String SQLITE_DB_PATH = "F:/TradingAgent/enhanced_market_monitor_mbo.db";
-
-    // Trading windows in EST (Bookmap times are in UTC-4)
-    private static final int[][] TRADING_WINDOWS_EST = {
-        {16, 0, 20, 0},  // CBDR PM/Asian: 16:00-20:00 EST
-        {2, 0, 5, 0},    // CBDR London: 02:00-05:00 EST
-        {7, 30, 9, 30}   // Pre-NY: 07:30-09:30 EST
-    };
-
-    // UI components
+    private static final int[][] TRADING_WINDOWS_EST = new int[][] { { 16, 0, 20, 0 }, { 2, 0, 5, 0 },
+            { 7, 30, 9, 30 } };
+    private final RedisManager redisManager;
+    private final TimescaleDBManager dbManager;
+    private final BlockingQueue<TimescaleDBManager.StopIcebergEvent> batchQueue;
+    private final ScheduledExecutorService batchProcessor;
+    private String currentSessionId;
     private JTextArea logArea;
     private JLabel statsLabel;
-
-    // Data storage
-    private final List<Map<String, Object>> stopEvents = new ArrayList<>();
-    private final List<Map<String, Object>> icebergEvents = new ArrayList<>();
+    private final List<Map<String, Object>> stopEvents = new ArrayList<Map<String, Object>>();
+    private final List<Map<String, Object>> icebergEvents = new ArrayList<Map<String, Object>>();
     private final AtomicInteger stopCount = new AtomicInteger(0);
     private final AtomicInteger icebergCount = new AtomicInteger(0);
-    private final Map<String, Integer> icebergTypeCounts = new HashMap<>();
-
+    private final Map<String, Integer> icebergTypeCounts = new HashMap<String, Integer>();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    private final Map<String, InstrumentInfo> instrumentsInfo = new ConcurrentHashMap<>();
-    private final Map<String, Double> instrumentPips = new ConcurrentHashMap<>();
-
+    private final Map<String, InstrumentInfo> instrumentsInfo = new ConcurrentHashMap<String, InstrumentInfo>();
+    private final Map<String, Double> instrumentPips = new ConcurrentHashMap<String, Double>();
     private final Layer1ApiProvider provider;
     private final BroadcasterConsumer broadcaster;
-    private Connection dbConnection;
     private final AtomicBoolean isWorking = new AtomicBoolean(false);
     private final Connector connector;
+    private Connection dbConnection;
 
     public StopsIcebergsConsumer(Layer1ApiProvider provider) {
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        ListenableHelper.addListeners(provider, this);
+        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        ListenableHelper.addListeners((LayerApiListenable) provider, (Object) this);
         this.provider = provider;
+        Log.info((String) "========================================");
+        Log.info((String) "SI Broadcasting Consumer: STARTING UP");
+        Log.info((String) "========================================");
+        this.redisManager = RedisManager.getInstance();
+        this.dbManager = TimescaleDBManager.getInstance();
+        this.batchQueue = new LinkedBlockingQueue<TimescaleDBManager.StopIcebergEvent>(5000);
+        this.batchProcessor = Executors.newSingleThreadScheduledExecutor();
+        this.batchProcessor.scheduleAtFixedRate(this::processBatch, 5L, 5L, TimeUnit.SECONDS);
+        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "SI Broadcasting Consumer",
+                this.getClass());
+        this.connector = new Connector(provider, this.broadcaster, Provider.SIT_INDICATOR);
+        this.broadcaster.setProviderStatusListener(new ProviderStatusListener() {
 
-        Log.info("========================================");
-        Log.info("SI Broadcasting Consumer: STARTING UP");
-        Log.info("========================================");
-
-        // Initialize SQLite database
-        initializeDatabase();
-
-        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "SI Broadcasting Consumer", this.getClass());
-
-        // Create connector for Stops & Icebergs On-Chart provider
-        this.connector = new Connector(provider, broadcaster, com.bookmap.demo.consumer.providers.Provider.SIT_INDICATOR);
-
-        // Set up provider status listener to receive updates when providers come online
-        broadcaster.setProviderStatusListener(new ProviderStatusListener() {
             @Override
-            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
-                log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
-                    providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
-
-                // Reload GUI when provider status changes
-                if (isWorking.get()) {
-                    ExecutorsUtilities.getExecutor().submit(() -> {
-                        StopsIcebergsConsumer.this.provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                    });
+            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator,
+                    boolean isOnline) {
+                StopsIcebergsConsumer.this.log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
+                        providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
+                if (StopsIcebergsConsumer.this.isWorking.get()) {
+                    ExecutorsUtilities.getExecutor().submit(() -> StopsIcebergsConsumer.this.provider
+                            .sendUserMessage((Object) new Layer1ApiUserMessageReloadStrategyGui()));
                 }
             }
         });
-
-        Log.info("StopsIcebergsConsumer: Broadcaster created (waiting for chain creation)");
-        Log.info("Log file: " + SI_LOG_PATH);
-        Log.info("JSON file: " + SI_JSON_PATH);
-        Log.info("DB file: " + SI_DB_PATH);
-        Log.info("SQLite DB: " + SQLITE_DB_PATH);
+        Log.info((String) "StopsIcebergsConsumer: Broadcaster created (waiting for chain creation)");
+        Log.info((String) "Log file: F:/TradingAgent/si_events.log");
+        Log.info((String) "JSON file: F:/TradingAgent/si_data.json");
+        Log.info((String) "Redis: Hot storage enabled");
+        Log.info((String) "TimescaleDB: Cold storage enabled (batch writes every 5 seconds)");
     }
 
-    /**
-     * Check if timestamp falls within any trading window (EST)
-     * Bookmap times are in UTC-4, so we convert to EST
-     */
     private boolean isWithinTradingWindow(long timestampNanos) {
-        long timestampMillis = timestampNanos / 1_000_000;
+        long timestampMillis = timestampNanos / 1000000L;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
         cal.setTimeInMillis(timestampMillis);
-
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
+        int hour = cal.get(11);
+        int minute = cal.get(12);
         int currentMinutes = hour * 60 + minute;
-
         for (int[] window : TRADING_WINDOWS_EST) {
             int startMinutes = window[0] * 60 + window[1];
             int endMinutes = window[2] * 60 + window[3];
-
-            if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
-                return true;
-            }
+            if (currentMinutes < startMinutes || currentMinutes > endMinutes)
+                continue;
+            return true;
         }
-
         return false;
     }
 
-    /**
-     * Initialize SQLite database connection and create Events table if it doesn't exist
-     */
-    private void initializeDatabase() {
+    private void processBatch() {
         try {
-            // Load SQLite JDBC driver
-            Class.forName("org.sqlite.JDBC");
-
-            // Establish connection to the database
-            String url = "jdbc:sqlite:" + SQLITE_DB_PATH;
-            dbConnection = DriverManager.getConnection(url);
-
-            // Create Events table if it doesn't exist
-            String createTableSQL = """
-                CREATE TABLE IF NOT EXISTS Events (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL,
-                    event_type TEXT NOT NULL,
-                    order_id TEXT,
-                    price REAL,
-                    size REAL,
-                    side TEXT,
-                    total_size REAL,
-                    is_bid INTEGER,
-                    instrument TEXT,
-                    sub_type TEXT,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-                """;
-
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createTableSQL);
-                log("INFO", "SQLite database initialized successfully at: " + SQLITE_DB_PATH);
-                log("INFO", "Events table created or already exists");
+            ArrayList<TimescaleDBManager.StopIcebergEvent> batch = new ArrayList<TimescaleDBManager.StopIcebergEvent>();
+            this.batchQueue.drainTo(batch, 500);
+            if (!batch.isEmpty()) {
+                this.dbManager.batchInsertStopIcebergEvents(batch);
+                this.log("INFO", String.format("[BATCH] Wrote %d events to TimescaleDB", batch.size()));
             }
-
-            // Create index on timestamp for better query performance
-            String createIndexSQL = "CREATE INDEX IF NOT EXISTS idx_events_timestamp ON Events(timestamp)";
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createIndexSQL);
-            }
-
-        } catch (ClassNotFoundException e) {
-            log("ERROR", "SQLite JDBC driver not found: " + e.getMessage());
-        } catch (SQLException e) {
-            log("ERROR", "Failed to initialize database: " + e.getMessage());
+        } catch (Exception e) {
+            this.log("ERROR", "[BATCH] Error processing batch: " + e.getMessage());
         }
     }
 
-    /**
-     * Connect to the Stops & Icebergs On-Chart provider and subscribe to its events
-     */
     private void connectToProvider() {
-        log("INFO", "Connecting to Stops & Icebergs On-Chart provider...");
-
+        this.log("INFO", "Connecting to Stops & Icebergs On-Chart provider...");
         try {
-            // Connect using the Connector
-            connector.connect();
-
-            // Wait a moment for connection to establish, then subscribe
+            this.connector.connect();
             ExecutorsUtilities.getExecutor().submit(() -> {
                 try {
-                    Thread.sleep(1000);
-
-                    if (connector.isConnected()) {
-                        log("INFO", "✓ Successfully connected to Stops & Icebergs On-Chart");
-
-                        // Get all available generators
-                        List<String> generators = connector.getGeneratorsNames();
-                        log("INFO", "Found " + generators.size() + " generator(s)");
-
-                        // Subscribe to live events from each generator
+                    Thread.sleep(1000L);
+                    if (this.connector.isConnected()) {
+                        this.log("INFO", "\u00e2\u0153\u201c Successfully connected to Stops & Icebergs On-Chart");
+                        List<String> generators = this.connector.getGeneratorsNames();
+                        this.log("INFO", "Found " + generators.size() + " generator(s)");
                         for (String generatorName : generators) {
-                            log("INFO", "Subscribing to generator: " + generatorName);
-                            subscribeToGenerator(generatorName);
+                            this.log("INFO", "Subscribing to generator: " + generatorName);
+                            this.subscribeToGenerator(generatorName);
                         }
                     } else {
-                        log("WARN", "Connection not yet established, will retry in 2 seconds...");
-                        Thread.sleep(2000);
-                        connectToProvider();
+                        this.log("WARN", "Connection not yet established, will retry in 2 seconds...");
+                        Thread.sleep(2000L);
+                        this.connectToProvider();
                     }
                 } catch (Exception e) {
-                    log("ERROR", "Error during connection setup: " + e.getMessage());
+                    this.log("ERROR", "Error during connection setup: " + e.getMessage());
                 }
             });
         } catch (Exception e) {
-            log("ERROR", "Failed to connect to provider: " + e.getMessage());
+            this.log("ERROR", "Failed to connect to provider: " + e.getMessage());
         }
     }
 
-    /**
-     * Subscribe to a specific generator to receive its live events
-     */
     private void subscribeToGenerator(String generatorName) {
         try {
-            if (!connector.isConnected()) {
-                log("WARN", "Not connected, cannot subscribe to " + generatorName);
+            if (!this.connector.isConnected()) {
+                this.log("WARN", "Not connected, cannot subscribe to " + generatorName);
                 return;
             }
-
-            // Create a custom LiveEventListener that will receive events
             LiveEventListener eventListener = event -> {
                 if (event != null) {
-                    // Process Stop and Iceberg events
-                    processIncomingEvent(event);
+                    this.processIncomingEvent(event);
                 }
             };
-
-            // Create a LiveConnectionStatusListener to monitor subscription status
             LiveConnectionStatusListener connectionListener = isSubscribed -> {
                 if (isSubscribed) {
-                    log("INFO", "✓ Successfully subscribed to live data: " + generatorName);
+                    this.log("INFO", "\u00e2\u0153\u201c Successfully subscribed to live data: " + generatorName);
                 } else {
-                    log("WARN", "✗ Unsubscribed from: " + generatorName);
+                    this.log("WARN", "\u00e2\u0153\u2014 Unsubscribed from: " + generatorName);
                 }
             };
-
-            // Subscribe to live data using the broadcaster
-            broadcaster.subscribeToLiveData(
-                com.bookmap.demo.consumer.providers.Provider.SIT_INDICATOR.getFullName(),
-                generatorName,
-                eventListener,
-                connectionListener
-            );
-
+            this.broadcaster.subscribeToLiveData(Provider.SIT_INDICATOR.getFullName(), generatorName, eventListener,
+                    connectionListener);
         } catch (Exception e) {
-            log("ERROR", "Failed to subscribe to generator " + generatorName + ": " + e.getMessage());
+            this.log("ERROR", "Failed to subscribe to generator " + generatorName + ": " + e.getMessage());
         }
     }
 
-    /**
-     * Process incoming events from the broadcaster
-     */
     private void processIncomingEvent(Object event) {
         try {
             String className = event.getClass().getName();
-
-            // Log ALL incoming events for debugging
-            if (icebergCount.get() == 0 && stopCount.get() % 100 == 0) {
-                log("INFO", "Still receiving events - Class: " + className);
+            if (this.icebergCount.get() == 0 && this.stopCount.get() % 100 == 0) {
+                this.log("INFO", "Still receiving events - Class: " + className);
             }
-
-            // Direct type checking for Stop and Iceberg events
             if (event instanceof StopEvent) {
-                log("DEBUG", "Received StopEvent (direct type)");
-                onStopEvent(event);
+                this.log("DEBUG", "Received StopEvent (direct type)");
+                this.onStopEvent(event);
                 return;
             }
-
             if (event instanceof IcebergEvent) {
-                log("INFO", "✓✓✓ Received IcebergEvent (direct type) ✓✓✓");
-                onIcebergEvent(event);
+                this.log("INFO",
+                        "\u00e2\u0153\u201c\u00e2\u0153\u201c\u00e2\u0153\u201c Received IcebergEvent (direct type) \u00e2\u0153\u201c\u00e2\u0153\u201c\u00e2\u0153\u201c");
+                this.onIcebergEvent(event);
                 return;
             }
-
-            // Fallback: Check by class name pattern
             if (className.toLowerCase().contains("stop") && className.toLowerCase().contains("event")) {
-                log("DEBUG", "Received StopEvent (by name): " + className);
-                onStopEvent(event);
+                this.log("DEBUG", "Received StopEvent (by name): " + className);
+                this.onStopEvent(event);
             } else if (className.toLowerCase().contains("iceberg") && className.toLowerCase().contains("event")) {
-                log("INFO", "✓✓✓ Received IcebergEvent (by name): " + className + " ✓✓✓");
-                onIcebergEvent(event);
-            } else {
-                // Log unknown events occasionally to see if we're missing something
-                if (stopCount.get() % 50 == 0) {
-                    log("WARN", "Received unknown event type: " + className);
-                }
+                this.log("INFO",
+                        "\u00e2\u0153\u201c\u00e2\u0153\u201c\u00e2\u0153\u201c Received IcebergEvent (by name): "
+                                + className + " \u00e2\u0153\u201c\u00e2\u0153\u201c\u00e2\u0153\u201c");
+                this.onIcebergEvent(event);
+            } else if (this.stopCount.get() % 50 == 0) {
+                this.log("WARN", "Received unknown event type: " + className);
             }
         } catch (Exception e) {
-            log("ERROR", "Error processing incoming event: " + e.getMessage());
+            this.log("ERROR", "Error processing incoming event: " + e.getMessage());
         }
     }
 
-    @Override
     public void onUserMessage(Object data) {
         try {
+            boolean isIcebergEvent;
             if (data == null) {
                 return;
             }
-
-            // Check if this is the chain creation message - start broadcaster when ready
             if (data.getClass() == UserMessageLayersChainCreatedTargeted.class) {
                 UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
-                if (message.targetClass == getClass()) {
-                    isWorking.set(true);
-                    broadcaster.start();
-                    log("INFO", "========================================");
-                    log("INFO", "Broadcaster STARTED - Now listening for Stop/Iceberg events");
-                    log("INFO", "========================================");
-
-                    // Connect to Stops & Icebergs On-Chart provider
-                    connectToProvider();
-
-                    // Reload GUI
-                    ExecutorsUtilities.getExecutor().submit(() -> {
-                        provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                    });
+                if (message.targetClass == this.getClass()) {
+                    this.isWorking.set(true);
+                    this.broadcaster.start();
+                    this.log("INFO", "========================================");
+                    this.log("INFO", "Broadcaster STARTED - Now listening for Stop/Iceberg events");
+                    this.log("INFO", "========================================");
+                    this.connectToProvider();
+                    ExecutorsUtilities.getExecutor().submit(
+                            () -> this.provider.sendUserMessage((Object) new Layer1ApiUserMessageReloadStrategyGui()));
                 }
                 return;
             }
-
-            // Only process events if broadcaster is working
-            if (!isWorking.get()) {
+            if (!this.isWorking.get()) {
                 return;
             }
-
             String className = data.getClass().getName();
-
-            // Log ALL messages for debugging (can be filtered later)
-            Log.info("SI Consumer received message: " + className);
-
-            // Direct type checking for Stop and Iceberg events
+            Log.info((String) ("SI Consumer received message: " + className));
             if (data instanceof StopEvent) {
-                log("FOUND", "Detected StopEvent (direct type): " + className);
-                onStopEvent(data);
+                this.log("FOUND", "Detected StopEvent (direct type): " + className);
+                this.onStopEvent(data);
                 return;
             }
-
             if (data instanceof IcebergEvent) {
-                log("FOUND", "Detected IcebergEvent (direct type): " + className);
-                onIcebergEvent(data);
+                this.log("FOUND", "Detected IcebergEvent (direct type): " + className);
+                this.onIcebergEvent(data);
                 return;
             }
-
-            // Fallback: Check by class name pattern (in case of different classloaders)
-            boolean isStopEvent = className.toLowerCase().contains("stop") &&
-                                 className.toLowerCase().contains("event");
-            boolean isIcebergEvent = className.toLowerCase().contains("iceberg") &&
-                                    className.toLowerCase().contains("event");
-
+            boolean isStopEvent = className.toLowerCase().contains("stop") && className.toLowerCase().contains("event");
+            boolean bl = isIcebergEvent = className.toLowerCase().contains("iceberg")
+                    && className.toLowerCase().contains("event");
             if (isStopEvent) {
-                log("FOUND", "Detected StopEvent (by name): " + className);
-                onStopEvent(data);
+                this.log("FOUND", "Detected StopEvent (by name): " + className);
+                this.onStopEvent(data);
             } else if (isIcebergEvent) {
-                log("FOUND", "Detected IcebergEvent (by name): " + className);
-                onIcebergEvent(data);
+                this.log("FOUND", "Detected IcebergEvent (by name): " + className);
+                this.onIcebergEvent(data);
             }
-
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw));
-            log("ERROR", "Error in onUserMessage: " + e.getMessage());
+            this.log("ERROR", "Error in onUserMessage: " + e.getMessage());
         }
     }
 
     public void onStopEvent(Object event) {
         try {
-            // Check if event is within trading window first
-            if (event != null) {
-                Object timeObj = getFieldValue(event, "time");
-                if (timeObj instanceof Long) {
-                    long eventTime = (Long) timeObj;
-                    if (!isWithinTradingWindow(eventTime)) {
-                        log("DEBUG", "StopEvent outside trading window, skipping");
-                        return;
-                    }
-                }
-            }
-
-            Map<String, Object> stopData = new HashMap<>();
-            stopData.put("timestamp", dateFormat.format(new Date()));
+            HashMap<String, Object> stopData = new HashMap<String, Object>();
+            stopData.put("timestamp", this.dateFormat.format(new Date()));
             stopData.put("type", "stop");
-
             if (event != null) {
                 try {
-                    // First time: Log all available fields and methods for debugging
-                    if (stopCount.get() == 0) {
-                        logEventStructure("StopEvent", event);
+                    if (this.stopCount.get() == 0) {
+                        this.logEventStructure("StopEvent", event);
                     }
-
-                    // Get the instrument alias for price conversion
-                    String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
-
-                    // Use correct field names from decompiled class
-                    stopData.put("orderID", getFieldValue(event, "orderId"));
-
-                    // Convert integer tick price to actual decimal price (same as Python: price = tick * pips)
-                    Object priceObj = getFieldValue(event, "price");
+                    String instrument = this.instrumentsInfo.isEmpty() ? ""
+                            : this.instrumentsInfo.keySet().iterator().next();
+                    stopData.put("orderID", this.getFieldValue(event, "orderId"));
+                    Object priceObj = this.getFieldValue(event, "price");
                     if (priceObj instanceof Integer) {
                         int tickPrice = (Integer) priceObj;
-                        double actualPrice = convertPrice(tickPrice, instrument);
+                        double actualPrice = this.convertPrice(tickPrice, instrument);
                         stopData.put("price", actualPrice);
                     } else {
                         stopData.put("price", priceObj);
                     }
-
-                    stopData.put("size", getFieldValue(event, "size"));
-                    stopData.put("time", getFieldValue(event, "time"));
-                    stopData.put("totalSize", getFieldValue(event, "totalSize"));
-
-                    Boolean isBid = (Boolean) getFieldValue(event, "isBid");
+                    stopData.put("size", this.getFieldValue(event, "size"));
+                    stopData.put("time", this.getFieldValue(event, "time"));
+                    stopData.put("totalSize", this.getFieldValue(event, "totalSize"));
+                    Boolean isBid = (Boolean) this.getFieldValue(event, "isBid");
                     stopData.put("isBid", isBid);
-                    stopData.put("side", (isBid != null && isBid) ? "BUY" : "SELL");
-
-                    // Get EventType enum and convert to string
-                    Object typeObj = getFieldValue(event, "type");
+                    stopData.put("side", isBid != null && isBid != false ? "BUY" : "SELL");
+                    Object typeObj = this.getFieldValue(event, "type");
                     if (typeObj != null) {
                         stopData.put("eventType", typeObj.toString());
                     }
                 } catch (Exception e) {
-                    log("ERROR", "Failed to extract StopEvent fields: " + e.getMessage());
+                    this.log("ERROR", "Failed to extract StopEvent fields: " + e.getMessage());
                 }
             }
-
-            stopEvents.add(stopData);
-            int count = stopCount.incrementAndGet();
-
-            String logMsg = String.format("[STOP #%d] %s %s @ %s, size=%s, totalSize=%s",
-                count,
-                stopData.getOrDefault("side", "N/A"),
-                stopData.getOrDefault("orderID", "N/A"),
-                formatNumber(stopData.get("price")),
-                formatNumber(stopData.get("size")),
-                formatNumber(stopData.get("totalSize"))
-            );
-
-            log("STOP", logMsg);
-            updateUI();
-            exportEventToDb(stopData);
-
-            if (count % 10 == 0) {
-                saveToJson();
+            this.stopEvents.add(stopData);
+            int count = this.stopCount.incrementAndGet();
+            String logMsg = String.format("[STOP #%d] %s %s @ %s, size=%s, totalSize=%s", count,
+                    stopData.getOrDefault("side", "N/A"), stopData.getOrDefault("orderID", "N/A"),
+                    this.formatNumber(stopData.get("price")), this.formatNumber(stopData.get("size")),
+                    this.formatNumber(stopData.get("totalSize")));
+            this.log("STOP", logMsg);
+            this.updateUI();
+            try {
+                String symbol;
+                String string = symbol = this.instrumentsInfo.isEmpty() ? "UNKNOWN"
+                        : this.instrumentsInfo.keySet().iterator().next();
+                if (this.currentSessionId == null) {
+                    this.currentSessionId = SessionManager.getInstance().generateSessionId(symbol);
+                }
+                long timestamp = stopData.get("time") != null ? ((Number) stopData.get("time")).longValue()
+                        : System.nanoTime();
+                String eventType = (String) stopData.getOrDefault("eventType", "STOP");
+                String side = (String) stopData.getOrDefault("side", "UNKNOWN");
+                double price = stopData.get("price") != null ? ((Number) stopData.get("price")).doubleValue() : 0.0;
+                double size = stopData.get("size") != null ? ((Number) stopData.get("size")).doubleValue() : 0.0;
+                double totalSize = stopData.get("totalSize") != null
+                        ? ((Number) stopData.get("totalSize")).doubleValue()
+                        : 0.0;
+                String cbdrWindow = SessionManager.getInstance().getCbdrWindow(timestamp / 1_000_000L);
+                if (cbdrWindow == null) {
+                    cbdrWindow = "OUTSIDE_CBDR";
+                    this.log("DEBUG", "[STOP] Event outside CBDR windows - still recording");
+                } else {
+                    this.log("INFO", String.format("[STOP] Event in CBDR window: %s", cbdrWindow));
+                }
+                String eventJson = String.format(
+                        "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}",
+                        symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
+                this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
+                TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
+                dbEvent.symbol = symbol;
+                dbEvent.timestamp = timestamp;
+                dbEvent.eventType = eventType;
+                dbEvent.side = side;
+                dbEvent.price = price;
+                dbEvent.detectedSize = (long) size;
+                dbEvent.estimatedTotal = (long) totalSize;
+                dbEvent.sessionId = this.currentSessionId;
+                dbEvent.cbdrWindow = cbdrWindow;
+                if (!this.batchQueue.offer(dbEvent)) {
+                    this.log("WARN", "Batch queue full, event dropped");
+                }
+            } catch (Exception e) {
+                this.log("ERROR", "Failed to write to databases: " + e.getMessage());
             }
-
+            if (count % 10 == 0) {
+                this.saveToJson();
+            }
         } catch (Exception e) {
-            log("ERROR", "Error processing StopEvent: " + e.getMessage());
+            this.log("ERROR", "Error processing StopEvent: " + e.getMessage());
         }
     }
 
     public void onIcebergEvent(Object event) {
         try {
-            // Check if event is within trading window first
-            if (event != null) {
-                Object timeObj = getFieldValue(event, "time");
-                if (timeObj instanceof Long) {
-                    long eventTime = (Long) timeObj;
-                    if (!isWithinTradingWindow(eventTime)) {
-                        log("DEBUG", "IcebergEvent outside trading window, skipping");
-                        return;
-                    }
-                }
-            }
-
-            Map<String, Object> icebergData = new HashMap<>();
-            icebergData.put("timestamp", dateFormat.format(new Date()));
+            HashMap<String, Object> icebergData = new HashMap<String, Object>();
+            icebergData.put("timestamp", this.dateFormat.format(new Date()));
             icebergData.put("type", "iceberg");
-
             if (event != null) {
                 try {
-                    // First time: Log all available fields and methods for debugging
-                    if (icebergCount.get() == 0) {
-                        logEventStructure("IcebergEvent", event);
+                    if (this.icebergCount.get() == 0) {
+                        this.logEventStructure("IcebergEvent", event);
                     }
-
-                    // Get the instrument alias for price conversion
-                    String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
-
-                    // Get EventType enum and convert to string
-                    Object typeObj = getFieldValue(event, "type");
-                    String eventType = (typeObj != null) ? typeObj.toString() : "unknown";
+                    String instrument = this.instrumentsInfo.isEmpty() ? ""
+                            : this.instrumentsInfo.keySet().iterator().next();
+                    Object typeObj = this.getFieldValue(event, "type");
+                    String eventType = typeObj != null ? typeObj.toString() : "unknown";
                     icebergData.put("eventType", eventType);
-                    icebergTypeCounts.merge(eventType, 1, Integer::sum);
-
-                    // Use correct field names from decompiled class
-                    icebergData.put("orderID", getFieldValue(event, "orderId"));
-
-                    // Convert integer tick price to actual decimal price (same as Python: price = tick * pips)
-                    Object priceObj = getFieldValue(event, "price");
+                    this.icebergTypeCounts.merge(eventType, 1, Integer::sum);
+                    icebergData.put("orderID", this.getFieldValue(event, "orderId"));
+                    Object priceObj = this.getFieldValue(event, "price");
                     if (priceObj instanceof Integer) {
                         int tickPrice = (Integer) priceObj;
-                        double actualPrice = convertPrice(tickPrice, instrument);
+                        double actualPrice = this.convertPrice(tickPrice, instrument);
                         icebergData.put("price", actualPrice);
                     } else {
                         icebergData.put("price", priceObj);
                     }
-
-                    icebergData.put("size", getFieldValue(event, "size"));
-                    icebergData.put("time", getFieldValue(event, "time"));
-                    icebergData.put("totalSize", getFieldValue(event, "totalSize"));
-
-                    Boolean isBid = (Boolean) getFieldValue(event, "isBid");
+                    icebergData.put("size", this.getFieldValue(event, "size"));
+                    icebergData.put("time", this.getFieldValue(event, "time"));
+                    icebergData.put("totalSize", this.getFieldValue(event, "totalSize"));
+                    Boolean isBid = (Boolean) this.getFieldValue(event, "isBid");
                     icebergData.put("isBid", isBid);
-                    icebergData.put("side", (isBid != null && isBid) ? "BUY" : "SELL");
-
-                    String typeMsg = getEventTypeMessage(eventType);
+                    icebergData.put("side", isBid != null && isBid != false ? "BUY" : "SELL");
+                    String typeMsg = this.getEventTypeMessage(eventType);
                     icebergData.put("typeMessage", typeMsg);
-
                 } catch (Exception e) {
-                    log("ERROR", "Failed to extract IcebergEvent fields: " + e.getMessage());
+                    this.log("ERROR", "Failed to extract IcebergEvent fields: " + e.getMessage());
                 }
             }
-
-            icebergEvents.add(icebergData);
-            int count = icebergCount.incrementAndGet();
-
-            String logMsg = String.format("[ICEBERG #%d] %s %s @ %s %s",
-                count,
-                icebergData.getOrDefault("typeMessage", ""),
-                icebergData.getOrDefault("orderID", "N/A"),
-                formatNumber(icebergData.get("price")),
-                icebergData.getOrDefault("side", "N/A")
-            );
-
-            log("ICEBERG", logMsg);
-            updateUI();
-            exportEventToDb(icebergData);
-
-            if ((stopCount.get() + icebergCount.get()) % 10 == 0) {
-                saveToJson();
+            this.icebergEvents.add(icebergData);
+            int count = this.icebergCount.incrementAndGet();
+            String logMsg = String.format("[ICEBERG #%d] %s %s @ %s %s", count,
+                    icebergData.getOrDefault("typeMessage", ""), icebergData.getOrDefault("orderID", "N/A"),
+                    this.formatNumber(icebergData.get("price")), icebergData.getOrDefault("side", "N/A"));
+            this.log("ICEBERG", logMsg);
+            this.updateUI();
+            try {
+                String symbol;
+                String string = symbol = this.instrumentsInfo.isEmpty() ? "UNKNOWN"
+                        : this.instrumentsInfo.keySet().iterator().next();
+                if (this.currentSessionId == null) {
+                    this.currentSessionId = SessionManager.getInstance().generateSessionId(symbol);
+                }
+                long timestamp = icebergData.get("time") != null ? ((Number) icebergData.get("time")).longValue()
+                        : System.nanoTime();
+                String eventType = "ICEBERG";
+                String side = (String) icebergData.getOrDefault("side", "UNKNOWN");
+                double price = icebergData.get("price") != null ? ((Number) icebergData.get("price")).doubleValue()
+                        : 0.0;
+                double size = icebergData.get("size") != null ? ((Number) icebergData.get("size")).doubleValue() : 0.0;
+                double totalSize = icebergData.get("totalSize") != null
+                        ? ((Number) icebergData.get("totalSize")).doubleValue()
+                        : 0.0;
+                String cbdrWindow = SessionManager.getInstance().getCbdrWindow(timestamp / 1_000_000L);
+                if (cbdrWindow == null) {
+                    cbdrWindow = "OUTSIDE_CBDR";
+                    this.log("DEBUG", "[ICEBERG] Event outside CBDR windows - still recording");
+                } else {
+                    this.log("INFO", String.format("[ICEBERG] Event in CBDR window: %s", cbdrWindow));
+                }
+                String eventJson = String.format(
+                        "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}",
+                        symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
+                this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
+                TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
+                dbEvent.symbol = symbol;
+                dbEvent.timestamp = timestamp;
+                dbEvent.eventType = eventType;
+                dbEvent.side = side;
+                dbEvent.price = price;
+                dbEvent.detectedSize = (long) size;
+                dbEvent.estimatedTotal = (long) totalSize;
+                dbEvent.sessionId = this.currentSessionId;
+                dbEvent.cbdrWindow = cbdrWindow;
+                if (!this.batchQueue.offer(dbEvent)) {
+                    this.log("WARN", "Batch queue full, event dropped");
+                }
+            } catch (Exception e) {
+                this.log("ERROR", "Failed to write to databases: " + e.getMessage());
             }
-
+            if ((this.stopCount.get() + this.icebergCount.get()) % 10 == 0) {
+                this.saveToJson();
+            }
         } catch (Exception e) {
-            log("ERROR", "Error processing IcebergEvent: " + e.getMessage());
+            this.log("ERROR", "Error processing IcebergEvent: " + e.getMessage());
         }
     }
 
     private String getEventTypeMessage(String eventType) {
-        if (eventType == null) return "[UNKNOWN]";
+        if (eventType == null) {
+            return "[UNKNOWN]";
+        }
         return switch (eventType.toLowerCase()) {
             case "detection" -> "[DETECTION] New iceberg detected";
             case "trade" -> "[TRADE] Iceberg trade executed";
@@ -585,21 +529,23 @@ public class StopsIcebergsConsumer implements
     }
 
     private Object getFieldValue(Object obj, String fieldName) {
-        if (obj == null) return null;
+        if (obj == null) {
+            return null;
+        }
         try {
-            java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
+            Field field = obj.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             return field.get(obj);
         } catch (Exception e) {
             try {
                 String getter = "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                java.lang.reflect.Method m = obj.getClass().getMethod(getter);
-                return m.invoke(obj);
+                Method m = obj.getClass().getMethod(getter, new Class[0]);
+                return m.invoke(obj, new Object[0]);
             } catch (Exception e2) {
                 try {
                     String getter = "is" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                    java.lang.reflect.Method m = obj.getClass().getMethod(getter);
-                    return m.invoke(obj);
+                    Method m = obj.getClass().getMethod(getter, new Class[0]);
+                    return m.invoke(obj, new Object[0]);
                 } catch (Exception e3) {
                     return null;
                 }
@@ -607,161 +553,134 @@ public class StopsIcebergsConsumer implements
         }
     }
 
-    /**
-     * Convert integer tick price to actual decimal price
-     * Same logic as Python: actual_price = tick_price * pips
-     */
     private double convertPrice(int tickPrice, String alias) {
-        // Get the pip size for this instrument
-        Double pips = instrumentPips.get(alias);
-
+        Double pips = this.instrumentPips.get(alias);
         if (pips == null) {
-            // Fallback: try to get from first available instrument
-            if (!instrumentPips.isEmpty()) {
-                pips = instrumentPips.values().iterator().next();
-                log("WARN", "No pip size found for " + alias + ", using fallback: " + pips);
+            if (!this.instrumentPips.isEmpty()) {
+                pips = this.instrumentPips.values().iterator().next();
+                this.log("WARN", "No pip size found for " + alias + ", using fallback: " + pips);
             } else {
-                // Last resort: assume 0.25 for NQ
                 pips = 0.25;
-                log("WARN", "No pip size available, using default: " + pips);
+                this.log("WARN", "No pip size available, using default: " + pips);
             }
         }
-
-        // Convert: actual_price = tick_price * pips
-        return tickPrice * pips;
+        return (double) tickPrice * pips;
     }
 
-    /**
-     * Log the complete structure of an event object to discover available fields and methods
-     */
     private void logEventStructure(String eventName, Object event) {
-        log("INSPECT", "========================================");
-        log("INSPECT", "Inspecting " + eventName + " structure:");
-        log("INSPECT", "Class: " + event.getClass().getName());
-
-        // Log all declared fields
-        log("INSPECT", "--- Fields ---");
-        java.lang.reflect.Field[] fields = event.getClass().getDeclaredFields();
-        for (java.lang.reflect.Field field : fields) {
+        Method[] methods;
+        Field[] fields;
+        this.log("INSPECT", "========================================");
+        this.log("INSPECT", "Inspecting " + eventName + " structure:");
+        this.log("INSPECT", "Class: " + event.getClass().getName());
+        this.log("INSPECT", "--- Fields ---");
+        for (Field field : fields = event.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             try {
                 Object value = field.get(event);
-                log("INSPECT", String.format("  %s (%s) = %s",
-                    field.getName(),
-                    field.getType().getSimpleName(),
-                    value));
+                this.log("INSPECT",
+                        String.format("  %s (%s) = %s", field.getName(), field.getType().getSimpleName(), value));
             } catch (Exception e) {
-                log("INSPECT", String.format("  %s (%s) = <error accessing>",
-                    field.getName(),
-                    field.getType().getSimpleName()));
+                this.log("INSPECT", String.format("  %s (%s) = <error accessing>", field.getName(),
+                        field.getType().getSimpleName()));
             }
         }
-
-        // Log all public methods (getters)
-        log("INSPECT", "--- Public Methods ---");
-        java.lang.reflect.Method[] methods = event.getClass().getMethods();
-        for (java.lang.reflect.Method method : methods) {
+        this.log("INSPECT", "--- Public Methods ---");
+        for (Method method : methods = event.getClass().getMethods()) {
             String methodName = method.getName();
-            // Only show getters and relevant methods
-            if ((methodName.startsWith("get") || methodName.startsWith("is")) &&
-                method.getParameterCount() == 0 &&
-                !methodName.equals("getClass")) {
-                try {
-                    Object value = method.invoke(event);
-                    log("INSPECT", String.format("  %s() returns %s = %s",
-                        methodName,
-                        method.getReturnType().getSimpleName(),
-                        value));
-                } catch (Exception e) {
-                    log("INSPECT", String.format("  %s() returns %s = <error invoking>",
-                        methodName,
+            if (!methodName.startsWith("get") && !methodName.startsWith("is") || method.getParameterCount() != 0
+                    || methodName.equals("getClass"))
+                continue;
+            try {
+                Object value = method.invoke(event, new Object[0]);
+                this.log("INSPECT", String.format("  %s() returns %s = %s", methodName,
+                        method.getReturnType().getSimpleName(), value));
+            } catch (Exception e) {
+                this.log("INSPECT", String.format("  %s() returns %s = <error invoking>", methodName,
                         method.getReturnType().getSimpleName()));
-                }
             }
         }
-        log("INSPECT", "========================================");
+        this.log("INSPECT", "========================================");
     }
 
     private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", dateFormat.format(new Date()), level, message);
-        Log.info(logLine);
-
-        try (FileWriter writer = new FileWriter(SI_LOG_PATH, true)) {
+        String logLine = String.format("[%s] [%s] %s", this.dateFormat.format(new Date()), level, message);
+        Log.info((String) logLine);
+        try (FileWriter writer = new FileWriter(SI_LOG_PATH, true);) {
             writer.write(logLine + "\n");
         } catch (IOException e) {
-            Log.error("Failed to write to log file", e);
+            Log.error((String) "Failed to write to log file", (Throwable) e);
         }
-
-        if (logArea != null) {
+        if (this.logArea != null) {
             SwingUtilities.invokeLater(() -> {
-                logArea.append(logLine + "\n");
-                logArea.setCaretPosition(logArea.getDocument().getLength());
+                this.logArea.append(logLine + "\n");
+                this.logArea.setCaretPosition(this.logArea.getDocument().getLength());
             });
         }
     }
 
     private void updateUI() {
-        if (statsLabel != null) {
+        if (this.statsLabel != null) {
             SwingUtilities.invokeLater(() -> {
                 StringBuilder stats = new StringBuilder("<html>");
                 stats.append("<b>STATISTICS</b><br>");
-                stats.append("Total Stops: ").append(stopCount.get()).append("<br>");
-                stats.append("Total Icebergs: ").append(icebergCount.get()).append("<br>");
-                if (!icebergTypeCounts.isEmpty()) {
+                stats.append("Total Stops: ").append(this.stopCount.get()).append("<br>");
+                stats.append("Total Icebergs: ").append(this.icebergCount.get()).append("<br>");
+                if (!this.icebergTypeCounts.isEmpty()) {
                     stats.append("<br><b>Iceberg Types:</b><br>");
-                    icebergTypeCounts.forEach((type, count) ->
-                        stats.append("  ").append(type).append(": ").append(count).append("<br>")
-                    );
+                    this.icebergTypeCounts.forEach((type, count) -> stats.append("  ").append((String) type)
+                            .append(": ").append(count).append("<br>"));
                 }
                 stats.append("</html>");
-                statsLabel.setText(stats.toString());
+                this.statsLabel.setText(stats.toString());
             });
         }
     }
 
     private void saveToJson() {
-        try (FileWriter writer = new FileWriter(SI_JSON_PATH)) {
+        try (FileWriter writer = new FileWriter(SI_JSON_PATH);) {
+            int i;
             StringBuilder json = new StringBuilder();
             json.append("{\n");
-            json.append("  \"timestamp\": \"").append(dateFormat.format(new Date())).append("\",\n");
+            json.append("  \"timestamp\": \"").append(this.dateFormat.format(new Date())).append("\",\n");
             json.append("  \"statistics\": {\n");
-            json.append("    \"totalStops\": ").append(stopCount.get()).append(",\n");
-            json.append("    \"totalIcebergs\": ").append(icebergCount.get()).append(",\n");
+            json.append("    \"totalStops\": ").append(this.stopCount.get()).append(",\n");
+            json.append("    \"totalIcebergs\": ").append(this.icebergCount.get()).append(",\n");
             json.append("    \"icebergTypes\": {\n");
-
             int idx = 0;
-            for (Map.Entry<String, Integer> e : icebergTypeCounts.entrySet()) {
+            for (Map.Entry<String, Integer> e : this.icebergTypeCounts.entrySet()) {
                 json.append("      \"").append(e.getKey()).append("\": ").append(e.getValue());
-                if (++idx < icebergTypeCounts.size()) json.append(",");
+                if (++idx < this.icebergTypeCounts.size()) {
+                    json.append(",");
+                }
                 json.append("\n");
             }
-
             json.append("    }\n");
             json.append("  },\n");
             json.append("  \"stops\": [\n");
-
-            for (int i = 0; i < stopEvents.size(); i++) {
-                json.append("    ").append(mapToJson(stopEvents.get(i)));
-                if (i < stopEvents.size() - 1) json.append(",");
+            for (i = 0; i < this.stopEvents.size(); ++i) {
+                json.append("    ").append(this.mapToJson(this.stopEvents.get(i)));
+                if (i < this.stopEvents.size() - 1) {
+                    json.append(",");
+                }
                 json.append("\n");
             }
-
             json.append("  ],\n");
             json.append("  \"icebergs\": [\n");
-
-            for (int i = 0; i < icebergEvents.size(); i++) {
-                json.append("    ").append(mapToJson(icebergEvents.get(i)));
-                if (i < icebergEvents.size() - 1) json.append(",");
+            for (i = 0; i < this.icebergEvents.size(); ++i) {
+                json.append("    ").append(this.mapToJson(this.icebergEvents.get(i)));
+                if (i < this.icebergEvents.size() - 1) {
+                    json.append(",");
+                }
                 json.append("\n");
             }
-
             json.append("  ]\n");
             json.append("}\n");
             writer.write(json.toString());
-
-            log("INFO", "Saved data to JSON: " + stopCount.get() + " stops, " + icebergCount.get() + " icebergs");
+            this.log("INFO",
+                    "Saved data to JSON: " + this.stopCount.get() + " stops, " + this.icebergCount.get() + " icebergs");
         } catch (IOException e) {
-            log("ERROR", "Failed to save JSON: " + e.getMessage());
+            this.log("ERROR", "Failed to save JSON: " + e.getMessage());
         }
     }
 
@@ -779,190 +698,151 @@ public class StopsIcebergsConsumer implements
             } else {
                 s.append("\"").append(v.toString().replace("\"", "\\\"")).append("\"");
             }
-            if (++i < map.size()) s.append(",");
+            if (++i >= map.size())
+                continue;
+            s.append(",");
         }
         s.append("}");
         return s.toString();
     }
 
     private void exportEventToDb(Map<String, Object> event) {
-        // Save to CSV file (keep existing functionality)
-        try (FileWriter writer = new FileWriter(SI_DB_PATH, true)) {
-            String ts = (String) event.getOrDefault("timestamp", dateFormat.format(new Date()));
+        try (FileWriter writer = new FileWriter(SI_DB_PATH, true);) {
+            String ts = (String) event.getOrDefault("timestamp", this.dateFormat.format(new Date()));
             String type = (String) event.getOrDefault("type", "unknown");
             String orderId = String.valueOf(event.getOrDefault("orderID", ""));
             String price = String.valueOf(event.getOrDefault("price", ""));
             String size = String.valueOf(event.getOrDefault("size", ""));
             String side = String.valueOf(event.getOrDefault("side", ""));
             String totalSize = String.valueOf(event.getOrDefault("totalSize", ""));
-
-            String line = String.join(",", ts, type, orderId, price, size, side, totalSize);
+            String line = String.join((CharSequence) ",", ts, type, orderId, price, size, side, totalSize);
             writer.write(line + "\n");
         } catch (IOException e) {
-            log("ERROR", "Failed to append event to CSV file: " + e.getMessage());
+            this.log("ERROR", "Failed to append event to CSV file: " + e.getMessage());
         }
-
-        // Save to SQLite database
-        saveEventToSQLite(event);
+        this.saveEventToSQLite(event);
     }
 
-    /**
-     * Save event to SQLite database
-     */
     private void saveEventToSQLite(Map<String, Object> event) {
-        if (dbConnection == null) {
-            log("WARN", "Database connection is null, cannot save event");
+        if (this.dbConnection == null) {
+            this.log("WARN", "Database connection is null, cannot save event");
             return;
         }
-
-        String insertSQL = """
-            INSERT INTO Events (timestamp, event_type, order_id, price, size, side,
-                               total_size, is_bid, instrument, sub_type)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
-
-        try (PreparedStatement pstmt = dbConnection.prepareStatement(insertSQL)) {
-            // Get values from event map
-            String timestamp = (String) event.getOrDefault("timestamp", dateFormat.format(new Date()));
+        String insertSQL = "INSERT INTO Events (timestamp, event_type, order_id, price, size, side,\n                   total_size, is_bid, instrument, sub_type)\nVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
+        try (PreparedStatement pstmt = this.dbConnection.prepareStatement(insertSQL);) {
+            Boolean isBid;
+            String timestamp = (String) event.getOrDefault("timestamp", this.dateFormat.format(new Date()));
             String eventType = (String) event.getOrDefault("type", "unknown");
             String orderId = String.valueOf(event.getOrDefault("orderID", ""));
-
-            // Handle numeric values safely
             Double price = null;
             Object priceObj = event.get("price");
             if (priceObj instanceof Number) {
                 price = ((Number) priceObj).doubleValue();
             }
-
             Double size = null;
             Object sizeObj = event.get("size");
             if (sizeObj instanceof Number) {
                 size = ((Number) sizeObj).doubleValue();
             }
-
             String side = (String) event.getOrDefault("side", "");
-
             Double totalSize = null;
             Object totalSizeObj = event.get("totalSize");
             if (totalSizeObj instanceof Number) {
                 totalSize = ((Number) totalSizeObj).doubleValue();
             }
-
-            Boolean isBid = (Boolean) event.get("isBid");
-            int isBidInt = (isBid != null && isBid) ? 1 : 0;
-
-            // Get instrument from the first entry in instrumentsInfo (assuming single instrument for now)
-            String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
-
-            // Get sub_type for iceberg events
+            int isBidInt = (isBid = (Boolean) event.get("isBid")) != null && isBid != false ? 1 : 0;
+            String instrument = this.instrumentsInfo.isEmpty() ? "" : this.instrumentsInfo.keySet().iterator().next();
             String subType = (String) event.get("eventType");
-
-            // Set parameters
             pstmt.setString(1, timestamp);
             pstmt.setString(2, eventType);
             pstmt.setString(3, orderId);
-
             if (price != null) {
                 pstmt.setDouble(4, price);
             } else {
-                pstmt.setNull(4, java.sql.Types.REAL);
+                pstmt.setNull(4, 7);
             }
-
             if (size != null) {
                 pstmt.setDouble(5, size);
             } else {
-                pstmt.setNull(5, java.sql.Types.REAL);
+                pstmt.setNull(5, 7);
             }
-
             pstmt.setString(6, side);
-
             if (totalSize != null) {
                 pstmt.setDouble(7, totalSize);
             } else {
-                pstmt.setNull(7, java.sql.Types.REAL);
+                pstmt.setNull(7, 7);
             }
-
             pstmt.setInt(8, isBidInt);
             pstmt.setString(9, instrument);
             pstmt.setString(10, subType);
-
-            // Execute insert
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
-            log("ERROR", "Failed to save event to SQLite database: " + e.getMessage());
+            this.log("ERROR", "Failed to save event to SQLite database: " + e.getMessage());
         }
     }
 
     private String formatNumber(Object o) {
-        if (o == null) return "N/A";
+        if (o == null) {
+            return "N/A";
+        }
         if (o instanceof Number) {
             return String.format("%.2f", ((Number) o).doubleValue());
         }
         return o.toString();
     }
 
-    @Override
     public void finish() {
         try {
-            if (broadcaster != null) {
-                broadcaster.finish();
+            if (this.broadcaster != null) {
+                this.broadcaster.finish();
             }
         } catch (Exception e) {
-            Log.warn("Error finishing broadcaster: " + e.getMessage());
+            Log.warn((String) ("Error finishing broadcaster: " + e.getMessage()));
         }
-
-        // Close database connection
-        if (dbConnection != null) {
+        if (this.batchProcessor != null) {
             try {
-                dbConnection.close();
-                log("INFO", "Database connection closed successfully");
-            } catch (SQLException e) {
-                log("ERROR", "Error closing database connection: " + e.getMessage());
+                this.log("INFO", "Shutting down batch processor...");
+                this.batchProcessor.shutdown();
+                if (!this.batchProcessor.awaitTermination(10L, TimeUnit.SECONDS)) {
+                    this.batchProcessor.shutdownNow();
+                }
+                this.processBatch();
+                this.log("INFO", "Batch processor shutdown complete");
+            } catch (InterruptedException e) {
+                this.batchProcessor.shutdownNow();
+                Thread.currentThread().interrupt();
             }
         }
-
-        saveToJson();
-        log("INFO", "Final statistics: " + stopCount.get() + " stops, " + icebergCount.get() + " icebergs");
+        this.saveToJson();
+        this.log("INFO",
+                "Final statistics: " + this.stopCount.get() + " stops, " + this.icebergCount.get() + " icebergs");
     }
 
-    @Override
     public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
-        instrumentsInfo.put(alias, instrumentInfo);
-
-        // Store pip size for price conversion (same as Python: price = tick_price * pips)
+        this.instrumentsInfo.put(alias, instrumentInfo);
         double pips = instrumentInfo.pips;
-        instrumentPips.put(alias, pips);
-
-        log("INFO", String.format("Instrument added: %s (pips=%.8f, multiplier=%.2f)",
-            alias, pips, instrumentInfo.multiplier));
+        this.instrumentPips.put(alias, pips);
+        this.log("INFO", String.format("Instrument added: %s (pips=%.8f, multiplier=%.2f)", alias, pips,
+                instrumentInfo.multiplier));
     }
 
-    @Override
     public StrategyPanel[] getCustomGuiFor(String alias, String indicatorName) {
-        if (!isWorking.get()) {
+        if (!this.isWorking.get()) {
             return new StrategyPanel[0];
         }
-
         StrategyPanel mainPanel = new StrategyPanel("SI Events - " + alias);
-        mainPanel.setLayout(new BorderLayout());
-
-        statsLabel = new JLabel("<html><b>Waiting for events...</b></html>");
+        mainPanel.setLayout((LayoutManager) new BorderLayout());
+        this.statsLabel = new JLabel("<html><b>Waiting for events...</b></html>");
         JPanel statsPanel = new JPanel(new BorderLayout());
-        statsPanel.add(statsLabel, BorderLayout.NORTH);
-
-        logArea = new JTextArea(20, 60);
-        logArea.setEditable(false);
-        logArea.setBackground(Color.BLACK);
-        logArea.setForeground(Color.GREEN);
-        JScrollPane scrollPane = new JScrollPane(logArea);
-
-        mainPanel.add(statsPanel, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-        updateUI();
-
-        return new StrategyPanel[]{mainPanel};
+        statsPanel.add((Component) this.statsLabel, "North");
+        this.logArea = new JTextArea(20, 60);
+        this.logArea.setEditable(false);
+        this.logArea.setBackground(Color.BLACK);
+        this.logArea.setForeground(Color.GREEN);
+        JScrollPane scrollPane = new JScrollPane(this.logArea);
+        mainPanel.add((Component) statsPanel, (Object) "North");
+        mainPanel.add((Component) scrollPane, (Object) "Center");
+        this.updateUI();
+        return new StrategyPanel[] { mainPanel };
     }
 }
-

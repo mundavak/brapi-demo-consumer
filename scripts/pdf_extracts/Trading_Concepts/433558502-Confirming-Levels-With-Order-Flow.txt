@@ -1,0 +1,261 @@
+Source: 433558502-Confirming-Levels-With-Order-Flow.pdf
+Pages: 14
+Characters: 8537
+Processing Time: 0.01s
+================================================================================
+
+--- Page 1 ---
+Confirming Day Trading Levels 
+with Order Flow 
+Peter Davies – Jigsaw Trading 
+
+
+--- Page 2 ---
+Presumptions & Objectives 
+• Presume you already understand order flow 
+conceptually. 
+– http://www.jigsawtrading.com/blog/fridays-webinar-
+introduction-to-order-flow-topstep-trader/ 
+– http://www.jigsawtrading.com/blog/friday-18th-january-
+webinar-practical-application-of-order-flow/ 
+• Dive into specific things to look for and why. 
+– Gauging volatility, trade confirmation, post entry 
+confirmation. 
+• Lots of Q&A 
+• This is in the context of looking at JPs value based 
+approach to trading which focuses on reversals 
+rather than momentum 
+ 
+
+
+--- Page 3 ---
+Average Depth 
+• Depth dictates price volatility 
+• Depth can change intra day – watch prior to a 
+news release 
+• Depth changes drastically when the VIX spikes 
+ 
+ 
+ 
+ 
+ 
+
+
+--- Page 4 ---
+Reversals 
+• Basic components of a reversal (long to short) 
+1.
+Absorption. Bids stay firm in the face of continued 
+selling. Often this is with an iceberg, often this 
+absorption/accumulation occurs across many prices. The 
+more they can absorb the better. Delta will continue to 
+increase but price will not. Easy to spot in the order 
+flow.  
+2.
+Sellers fade away. Sellers simply stop selling. Quite often 
+they will return to the same spot several times and just 
+not hit it. This is more significant when the offer is small. 
+Easy to spot in the order flow but the market does 
+pause all the time. 
+3.
+Buyers come in and start buying. AKA “The Roll” there is 
+not so much a fade in selling as much as the buyers just 
+appear ‘out of nowhere’. Hard to spot anywhere in a 
+timely manner. 
+These are not mutually exclusive! 
+
+
+--- Page 5 ---
+Second Chances 
+• The ES has a tendency to give us second chances 
+• Very thick markets like US Treasuries tend to 
+turn and not come back. It takes a lot to make 
+them turn around 
+• Thin markets like CL also tend to give us second 
+chances 
+• That means we often have a second chance to 
+enter and a second chance to get out 
+• Being right does not necessarily mean hitting in 
+at your first suspicion a turn is occurring 
+• Being wrong does not necessarily mean getting 
+out at a loss. Not if you take the second chance 
+to exit. 
+ 
+
+
+--- Page 6 ---
+Absorption – DOM 
+• Large qty of volume trading at or near the level. 
+• Looking for 3x the regular volume @ a level  
+• Market will often move through this area 2-4 ticks after the 
+volume has printed. Volume should fade over that next 2-4 ticks. 
+• Market will often move through your level 2-4 ticks and print 
+volume on the way back 
+• Market will often pullback to this area of high volume and hold. 
+• Aggressive trade is to trade when you see the volume but only in 
+context of the area you expect a turn. Fading all absorption will 
+fail. 
+• Less aggressive trade (short to long) 
+– If market prints volume and pushes down 2-4 ticks with weakening 
+volume @ price, enter on the way back thru 
+– If the market prints volume and pushes straight up from there, wait for 
+the re-test 
+– The market may launch off high volume, push up and print another high 
+volume cluster 4-6 ticks higher. In that case, this is where you look for a re-
+test 
+
+
+--- Page 7 ---
+Absorption – Tape 
+•
+Tape – “current trades”, “Recon Tape”, Strength Meters” 
+•
+When you see absorption, you might just be looking at one half of a stat arb 
+trade. 
+•
+If you see absorption at a low and you still see aggressive, fast paced selling 
+on the tape – wait for them to burn themselves out. 
+•
+They may eat through the liquidity at the low (which may be stat arb) or they 
+may give up. 
+•
+You do not want to see large orders selling into your level UNLESS those 
+traders get stuck. You very often see  a couple of 900-1200 lot orders sell into 
+a low and the price can’t make even a tick past the level they sold. Their exits 
+help fuel the move back up. 
+•
+Every trade is a buy & sell, so the whole point about absorption is that one 
+side will be trapped whichever way it goes. 
+•
+When the absorption level gets revisited, it should be much easier to read the 
+tape at that level. You usually won’t see more absorption but usually people 
+simply not wanting to see at that point.  
+•
+Reset your ‘tape’ as you move back for the second chance  
+
+
+--- Page 8 ---
+Sellers Fade – DOM 
+• This requires you to be a bit faster on the button. Absorption 
+takes time, seller fade is a little faster. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+•
+This seller fade usually involves multiple hits into a price. At 1801 above, we 
+can see 251 traded but current trades showing 30 contracts. So it hit multiple 
+times. We can also see the fade is gradual. That is not always the case. 
+•
+Let it go back a few times and show there’s really no sellers there. Just one hit 
+with low volume is not a good fade trade.  
+•
+Don’t worry about trying to get the low + 1 tick. Let it confirm. 
+ 
+
+
+--- Page 9 ---
+Sellers Fade – Tape 
+• Should be pretty obvious whichever tape you are using. 
+• You might have large sell orders 1 tick above the price no-one 
+wants to trade.  Don’t let them scare you off. They are actually 
+getting trapped and adding fuel to your trade. 
+• The market does pause all the time, so again you can’t take this 
+trade just anywhere and you do need to give it time to confirm. 
+• You will never know 100% that this is a momentary pause or a 
+genuine reversal until you see size/momentum come in on the 
+other side.  
+• The longer the level doesn’t get hit, the better. The other side 
+will smell blood. 3-4 minutes and you really should see the other 
+side step in. 
+• Be aware that if we aren’t hitting a level but we are building 
+volume in the prices above, we may be building a trading range. 
+ 
+ 
+
+
+--- Page 10 ---
+Buyers Jump in - DOM 
+• This is the hardest to spot in a timely manner for entry. 
+But Order Flow is not just about entering. 
+• Sometimes you get to a level and without warning 
+buyers jump in.  
+• If you are not in at that point, remember the second 
+chance. 
+• Look for volume on the volume profile build on the way 
+up to act as a backstop. 
+• If there is no backstop, you look for either a retrace to 
+the low or a measured move back. 
+• Jumping in after an 8 tick move off the low after 
+aggressive buying is just about the worse way to play it. 
+– Just because you missed the turn, don’t let that feeling of 
+missing out put you in @ a crappy price. 
+ 
+
+
+--- Page 11 ---
+Buyers Jump in - Tape 
+• Helps if you clear your tape into the level. 
+• You want to see the action overall being fairly one-
+sided. Buys 1.5->2x the sells. 
+• Large trades on your side is a plus. 
+• Signs of impatience, market moving up 6-12 ticks off 
+the low quickly is good. 
+• As the market retraces back down – you do not want to 
+see large sellers (unless they get trapped), fast pace, or 
+sellers way outnumbering buyers. 
+• If buyers jump in with size and you go back to the low, 
+then you should expect large buyers to jump in again. 
+This is a good time to enter.  
+
+
+--- Page 12 ---
+Level Break 
+• With these techniques on the ES, you probably can’t get in with a 
+limit order – unless you join when you see absorption. 
+• So next best thing is to wait for a level break. This is a fairly easy 
+skill to acquire. 
+• Attempt to buy into the offer just before it leaves. 
+• If market is bid 300 and offer 1500 and I want to buy, I will wait 
+for the offer to reduce before I enter. If the offer is low but 
+refreshing, I will wait till they stop refreshing. 
+• I often will be poised to buy a level break only to see price tick 
+down 2-3 more ticks. This technique alone is a money saver. 
+• Snapshot strength meter is excellent for timing a level break 
+because it will whip up blue when on a short-long reversal. 
+• This is also something you should do when you stop out! 
+ 
+
+
+--- Page 13 ---
+Staying in the trade (long) 
+• Analyze post trade flow. Auto clear/center 
+• Price vs Flow 
+– Price moves down with low participation 
+– Ratio of trades @ bid vs @ offer 
+– Buyers getting stuck 
+– Stuck at a price, (onside or offside) just can’t push any higher after 
+multiple attempts – other side will SMELL BLOOD 
+– Don’t forget the second chance 
+• Depth 
+– ‘Decent’ Bids following you up? 
+– Massive Bids below you? 
+– Thick Offers @coming into highs? 
+• Large Traders 
+• Snapshot meter behavior 
+• Volume Profile behavior – volume clusters 
+• How long to keep watching the order flow closely? 
+
+
+--- Page 14 ---
+Q&A 
+ 
+ 
+ 
+ 
+Peter Davies – Jigsaw Trading 
+peterdavies@jigsawtrading.com 
+www.jigsawtrading.com

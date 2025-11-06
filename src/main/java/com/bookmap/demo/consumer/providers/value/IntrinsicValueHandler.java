@@ -35,12 +35,20 @@ public class IntrinsicValueHandler implements ProviderValueHandler {
 
         @Override
         public Event castEventInOurClassLoader(Object o) {
-            return CastUtilities.castObject(o, LineEvent.class);
+            try {
+                return CastUtilities.castObject(o, LineEvent.class);
+            } catch (Throwable t) {
+                return null;
+            }
         }
 
         @Override
         public List<Event> castEventsInOurClassLoader(List<Object> o) {
-            return new LinkedList<>(CastUtilities.castObjects(o, LineEvent.class));
+            try {
+                return new LinkedList<>(CastUtilities.castObjects(o, LineEvent.class));
+            } catch (Throwable t) {
+                return new LinkedList<>();
+            }
         }
 
         @Override
@@ -50,6 +58,10 @@ public class IntrinsicValueHandler implements ProviderValueHandler {
 
         @Override
         public Object castSettings(Object o) {
-            return CastUtilities.castObject(o, IntrinsicSettings.class);
+            try {
+                return CastUtilities.castObject(o, IntrinsicSettings.class);
+            } catch (Throwable t) {
+                return null;
+            }
         }
 }

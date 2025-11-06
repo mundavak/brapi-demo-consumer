@@ -1,0 +1,342 @@
+// HTF Candle Overlay - Kresto
+// Higher Timeframe Candle Overlay based on ICT AMD (Accumulation, Manipulation, Distribution) 
+// and PO3 (Power of 3) concepts
+// © Kresto - Enhanced for ICT Trading Methodology
+
+//@version=5
+indicator('HTF Candle Overlay - Kresto', shorttitle='HTF Candles', overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS - HIGHER TIMEFRAME CANDLES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+htfTimeframe = input.timeframe('240', 'Timeframe', group='HIGHER TIMEFRAME CANDLES', tooltip='Select the higher timeframe for candles')
+numCandles = input.int(12, 'No. of candles', minval=1, maxval=20, group='HIGHER TIMEFRAME CANDLES', tooltip='Number of historical candles to display (1-20)')
+startOffset = input.int(10, 'Start Offset', minval=0, group='HIGHER TIMEFRAME CANDLES', tooltip='Bars to the right of current bar')
+candleSpacing = input.int(5, 'Candle spacing', minval=1, group='HIGHER TIMEFRAME CANDLES', tooltip='Spacing between candles in bars')
+
+// Color Settings
+bullBodyColor = input.color(color.new(color.green, 70), 'Bullish Body', inline='bull', group='HIGHER TIMEFRAME CANDLES')
+bearBodyColor = input.color(color.new(color.red, 70), 'Bearish Body', inline='bear', group='HIGHER TIMEFRAME CANDLES')
+bullWickColor = input.color(color.green, 'Bull Wick', inline='bull', group='HIGHER TIMEFRAME CANDLES')
+bearWickColor = input.color(color.red, 'Bear Wick', inline='bear', group='HIGHER TIMEFRAME CANDLES')
+bullBorderColor = input.color(color.green, 'Bull Border', inline='border1', group='HIGHER TIMEFRAME CANDLES')
+bearBorderColor = input.color(color.red, 'Bear Border', inline='border2', group='HIGHER TIMEFRAME CANDLES')
+
+// Line Settings
+showOpenLine = input.bool(true, 'Open line', inline='open', group='HIGHER TIMEFRAME CANDLES')
+openLineColor = input.color(color.blue, '', inline='open', group='HIGHER TIMEFRAME CANDLES')
+showSweepLine = input.bool(true, 'Sweep line', inline='sweep', group='HIGHER TIMEFRAME CANDLES', tooltip='Show liquidity sweep detection line')
+sweepLineColor = input.color(color.orange, '', inline='sweep', group='HIGHER TIMEFRAME CANDLES')
+
+// Label Settings
+showTFLabel = input.bool(true, 'TimeFrame label', group='HIGHER TIMEFRAME CANDLES', tooltip='Show timeframe identifier on candles')
+showTimeLabel = input.bool(true, 'Time label (UTC-4)', group='HIGHER TIMEFRAME CANDLES', tooltip='Show time/date label for each candle')
+labelTextColor = input.color(color.white, 'Label Color', group='HIGHER TIMEFRAME CANDLES')
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS - AUTO TIME FRAMES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+autoTF = input.bool(false, 'Auto Timeframe', group='AUTO TIME FRAMES', tooltip='Automatically select HTF based on current chart timeframe')
+tf_5m = input.timeframe('120', 'If current TF < 5m', group='AUTO TIME FRAMES')
+tf_15m = input.timeframe('240', 'If current TF < 15m', group='AUTO TIME FRAMES')
+tf_1h = input.timeframe('D', 'If current TF < 1H', group='AUTO TIME FRAMES')
+tf_4h = input.timeframe('W', 'If current TF < 4H', group='AUTO TIME FRAMES')
+tf_1d = input.timeframe('M', 'If current TF < 1D', group='AUTO TIME FRAMES')
+tf_1w = input.timeframe('3M', 'If current TF < 1W', group='AUTO TIME FRAMES')
+tf_1mo = input.timeframe('6M', 'If current TF < 1M', group='AUTO TIME FRAMES')
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS - INPUT VALUES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+showInputsInStatus = input.bool(false, 'Inputs in status line', group='INPUT VALUES')
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// HELPER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Convert timeframe string to minutes for comparison
+timeframeToMinutes(tf) =>
+    float tfMinutes = 0.0
+    if str.contains(tf, 'S')
+        tfMinutes := str.tonumber(str.replace(tf, 'S', '')) / 60.0
+    else if str.contains(tf, 'D')
+        tfMinutes := str.tonumber(str.replace(tf, 'D', '')) * 1440.0
+    else if str.contains(tf, 'W')
+        tfMinutes := str.tonumber(str.replace(tf, 'W', '')) * 10080.0
+    else if str.contains(tf, 'M') and not str.contains(tf, 'mo')
+        tfMinutes := str.tonumber(str.replace(tf, 'M', '')) * 43200.0
+    else
+        tfMinutes := str.tonumber(tf)
+    tfMinutes
+
+// Get automatic timeframe based on current chart TF
+getAutoTimeframe() =>
+    string result = htfTimeframe
+    float currentTFMinutes = timeframeToMinutes(timeframe.period)
+    
+    if currentTFMinutes < 5.0
+        result := tf_5m
+    else if currentTFMinutes < 15.0
+        result := tf_15m
+    else if currentTFMinutes < 60.0
+        result := tf_1h
+    else if currentTFMinutes < 240.0
+        result := tf_4h
+    else if currentTFMinutes < 1440.0
+        result := tf_1d
+    else if currentTFMinutes < 10080.0
+        result := tf_1w
+    else if currentTFMinutes < 43200.0
+        result := tf_1mo
+    result
+
+// Format timeframe for display
+formatTimeframe(tf) =>
+    string display = tf
+    if str.contains(tf, '60')
+        display := '1H'
+    else if str.contains(tf, '120')
+        display := '2H'
+    else if str.contains(tf, '240')
+        display := '4H'
+    else if str.contains(tf, 'D')
+        display := str.replace(tf, 'D', 'D')
+    else if str.contains(tf, 'W')
+        display := str.replace(tf, 'W', 'W')
+    else if str.contains(tf, 'M')
+        display := str.replace(tf, 'M', 'M')
+    else if str.tonumber(tf) < 60
+        display := tf + 'm'
+    display
+
+// Format timestamp for display (UTC-4)
+formatTimestamp(t) =>
+    string result = str.format('{0,date,MM/dd HH:mm}', t - 4 * 60 * 60 * 1000)
+    result
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DETERMINE ACTIVE TIMEFRAME
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+activeTimeframe = autoTF ? getAutoTimeframe() : htfTimeframe
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// FETCH HTF DATA - Using direct historical lookback (proven working method)
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Fetch current and historical HTF candles (up to 20 bars back)
+[htf0_o, htf0_h, htf0_l, htf0_c, htf0_t] = request.security(syminfo.tickerid, activeTimeframe, [open, high, low, close, time])
+[htf1_o, htf1_h, htf1_l, htf1_c, htf1_t] = request.security(syminfo.tickerid, activeTimeframe, [open[1], high[1], low[1], close[1], time[1]])
+[htf2_o, htf2_h, htf2_l, htf2_c, htf2_t] = request.security(syminfo.tickerid, activeTimeframe, [open[2], high[2], low[2], close[2], time[2]])
+[htf3_o, htf3_h, htf3_l, htf3_c, htf3_t] = request.security(syminfo.tickerid, activeTimeframe, [open[3], high[3], low[3], close[3], time[3]])
+[htf4_o, htf4_h, htf4_l, htf4_c, htf4_t] = request.security(syminfo.tickerid, activeTimeframe, [open[4], high[4], low[4], close[4], time[4]])
+[htf5_o, htf5_h, htf5_l, htf5_c, htf5_t] = request.security(syminfo.tickerid, activeTimeframe, [open[5], high[5], low[5], close[5], time[5]])
+[htf6_o, htf6_h, htf6_l, htf6_c, htf6_t] = request.security(syminfo.tickerid, activeTimeframe, [open[6], high[6], low[6], close[6], time[6]])
+[htf7_o, htf7_h, htf7_l, htf7_c, htf7_t] = request.security(syminfo.tickerid, activeTimeframe, [open[7], high[7], low[7], close[7], time[7]])
+[htf8_o, htf8_h, htf8_l, htf8_c, htf8_t] = request.security(syminfo.tickerid, activeTimeframe, [open[8], high[8], low[8], close[8], time[8]])
+[htf9_o, htf9_h, htf9_l, htf9_c, htf9_t] = request.security(syminfo.tickerid, activeTimeframe, [open[9], high[9], low[9], close[9], time[9]])
+[htf10_o, htf10_h, htf10_l, htf10_c, htf10_t] = request.security(syminfo.tickerid, activeTimeframe, [open[10], high[10], low[10], close[10], time[10]])
+[htf11_o, htf11_h, htf11_l, htf11_c, htf11_t] = request.security(syminfo.tickerid, activeTimeframe, [open[11], high[11], low[11], close[11], time[11]])
+[htf12_o, htf12_h, htf12_l, htf12_c, htf12_t] = request.security(syminfo.tickerid, activeTimeframe, [open[12], high[12], low[12], close[12], time[12]])
+[htf13_o, htf13_h, htf13_l, htf13_c, htf13_t] = request.security(syminfo.tickerid, activeTimeframe, [open[13], high[13], low[13], close[13], time[13]])
+[htf14_o, htf14_h, htf14_l, htf14_c, htf14_t] = request.security(syminfo.tickerid, activeTimeframe, [open[14], high[14], low[14], close[14], time[14]])
+[htf15_o, htf15_h, htf15_l, htf15_c, htf15_t] = request.security(syminfo.tickerid, activeTimeframe, [open[15], high[15], low[15], close[15], time[15]])
+[htf16_o, htf16_h, htf16_l, htf16_c, htf16_t] = request.security(syminfo.tickerid, activeTimeframe, [open[16], high[16], low[16], close[16], time[16]])
+[htf17_o, htf17_h, htf17_l, htf17_c, htf17_t] = request.security(syminfo.tickerid, activeTimeframe, [open[17], high[17], low[17], close[17], time[17]])
+[htf18_o, htf18_h, htf18_l, htf18_c, htf18_t] = request.security(syminfo.tickerid, activeTimeframe, [open[18], high[18], low[18], close[18], time[18]])
+[htf19_o, htf19_h, htf19_l, htf19_c, htf19_t] = request.security(syminfo.tickerid, activeTimeframe, [open[19], high[19], low[19], close[19], time[19]])
+
+// Helper function to get candle data by index
+getCandleData(idx) =>
+    float o = na, float h = na, float l = na, float c = na, int t = na
+    
+    if idx == 0
+        o := htf0_o, h := htf0_h, l := htf0_l, c := htf0_c, t := htf0_t
+    else if idx == 1
+        o := htf1_o, h := htf1_h, l := htf1_l, c := htf1_c, t := htf1_t
+    else if idx == 2
+        o := htf2_o, h := htf2_h, l := htf2_l, c := htf2_c, t := htf2_t
+    else if idx == 3
+        o := htf3_o, h := htf3_h, l := htf3_l, c := htf3_c, t := htf3_t
+    else if idx == 4
+        o := htf4_o, h := htf4_h, l := htf4_l, c := htf4_c, t := htf4_t
+    else if idx == 5
+        o := htf5_o, h := htf5_h, l := htf5_l, c := htf5_c, t := htf5_t
+    else if idx == 6
+        o := htf6_o, h := htf6_h, l := htf6_l, c := htf6_c, t := htf6_t
+    else if idx == 7
+        o := htf7_o, h := htf7_h, l := htf7_l, c := htf7_c, t := htf7_t
+    else if idx == 8
+        o := htf8_o, h := htf8_h, l := htf8_l, c := htf8_c, t := htf8_t
+    else if idx == 9
+        o := htf9_o, h := htf9_h, l := htf9_l, c := htf9_c, t := htf9_t
+    else if idx == 10
+        o := htf10_o, h := htf10_h, l := htf10_l, c := htf10_c, t := htf10_t
+    else if idx == 11
+        o := htf11_o, h := htf11_h, l := htf11_l, c := htf11_c, t := htf11_t
+    else if idx == 12
+        o := htf12_o, h := htf12_h, l := htf12_l, c := htf12_c, t := htf12_t
+    else if idx == 13
+        o := htf13_o, h := htf13_h, l := htf13_l, c := htf13_c, t := htf13_t
+    else if idx == 14
+        o := htf14_o, h := htf14_h, l := htf14_l, c := htf14_c, t := htf14_t
+    else if idx == 15
+        o := htf15_o, h := htf15_h, l := htf15_l, c := htf15_c, t := htf15_t
+    else if idx == 16
+        o := htf16_o, h := htf16_h, l := htf16_l, c := htf16_c, t := htf16_t
+    else if idx == 17
+        o := htf17_o, h := htf17_h, l := htf17_l, c := htf17_c, t := htf17_t
+    else if idx == 18
+        o := htf18_o, h := htf18_h, l := htf18_l, c := htf18_c, t := htf18_t
+    else if idx == 19
+        o := htf19_o, h := htf19_h, l := htf19_l, c := htf19_c, t := htf19_t
+    
+    [o, h, l, c, t]
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DRAWING LOGIC
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Clean up old drawings
+var array<box> candleBoxes = array.new_box(0)
+var array<line> wickLines = array.new_line(0)
+var array<line> openLines = array.new_line(0)
+var array<line> sweepLines = array.new_line(0)
+var array<label> tfLabels = array.new_label(0)
+var array<label> timeLabels = array.new_label(0)
+
+// Clear all previous drawings
+if barstate.islast
+    // Delete all boxes
+    for i = 0 to array.size(candleBoxes) - 1
+        box.delete(array.get(candleBoxes, i))
+    array.clear(candleBoxes)
+    
+    // Delete all lines
+    for i = 0 to array.size(wickLines) - 1
+        line.delete(array.get(wickLines, i))
+    array.clear(wickLines)
+    
+    for i = 0 to array.size(openLines) - 1
+        line.delete(array.get(openLines, i))
+    array.clear(openLines)
+    
+    for i = 0 to array.size(sweepLines) - 1
+        line.delete(array.get(sweepLines, i))
+    array.clear(sweepLines)
+    
+    // Delete all labels
+    for i = 0 to array.size(tfLabels) - 1
+        label.delete(array.get(tfLabels, i))
+    array.clear(tfLabels)
+    
+    for i = 0 to array.size(timeLabels) - 1
+        label.delete(array.get(timeLabels, i))
+    array.clear(timeLabels)
+
+// Draw HTF candles
+if barstate.islast
+    for i = 0 to numCandles - 1
+        // Get candle data using helper function
+        [o, h, l, c, t] = getCandleData(i)
+        
+        // Skip if data is invalid
+        if na(o) or na(h) or na(l) or na(c)
+            continue
+        
+        // Determine if bullish or bearish
+        bool isBull = c >= o
+        
+        // Calculate positioning (draw to the right of current bar)
+        int leftBar = bar_index + startOffset + (i * candleSpacing)
+        int rightBar = leftBar + candleSpacing - 1
+        int centerBar = math.round((leftBar + rightBar) / 2)
+        
+        float bodyTop = math.max(o, c)
+        float bodyBottom = math.min(o, c)
+        
+        // Handle doji candles (when open == close)
+        if bodyTop == bodyBottom
+            bodyTop := bodyTop + (h - l) * 0.01
+            bodyBottom := bodyBottom - (h - l) * 0.01
+        
+        // Choose colors
+        color bodyColor = isBull ? bullBodyColor : bearBodyColor
+        color wickColor = isBull ? bullWickColor : bearWickColor
+        color borderColor = isBull ? bullBorderColor : bearBorderColor
+        
+        // Draw candle body (box)
+        box candleBox = box.new(leftBar, bodyTop, rightBar, bodyBottom, border_color=borderColor, bgcolor=bodyColor, border_width=1)
+        array.push(candleBoxes, candleBox)
+        
+        // Draw upper wick
+        if h > bodyTop
+            line upperWick = line.new(centerBar, bodyTop, centerBar, h, color=wickColor, width=1)
+            array.push(wickLines, upperWick)
+        
+        // Draw lower wick
+        if l < bodyBottom
+            line lowerWick = line.new(centerBar, bodyBottom, centerBar, l, color=wickColor, width=1)
+            array.push(wickLines, lowerWick)
+        
+        // Draw open line (dashed horizontal)
+        if showOpenLine
+            line openLine = line.new(leftBar, o, rightBar, o, color=openLineColor, style=line.style_dashed, width=1)
+            array.push(openLines, openLine)
+        
+        // Draw sweep line (solid horizontal at high/low)
+        if showSweepLine
+            // Draw at high for bearish, low for bullish (liquidity sweep detection)
+            float sweepLevel = isBull ? l : h
+            line sweepLine = line.new(leftBar, sweepLevel, rightBar, sweepLevel, color=sweepLineColor, style=line.style_solid, width=2)
+            array.push(sweepLines, sweepLine)
+        
+        // Draw timeframe label
+        if showTFLabel and i == 0  // Only show on first (most recent) candle
+            label tfLabel = label.new(centerBar, h, text=formatTimeframe(activeTimeframe), style=label.style_label_down, color=color.new(color.gray, 30), textcolor=labelTextColor, size=size.normal)
+            array.push(tfLabels, tfLabel)
+        
+        // Draw time label
+        if showTimeLabel
+            label timeLabel = label.new(centerBar, l, text=formatTimestamp(t), style=label.style_label_up, color=color.new(color.gray, 30), textcolor=labelTextColor, size=size.small)
+            array.push(timeLabels, timeLabel)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// STATUS LINE DISPLAY
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+if showInputsInStatus
+    var table statusTable = table.new(position.top_left, 2, 3, bgcolor=color.new(color.black, 80), border_width=1)
+    
+    if barstate.islast
+        table.cell(statusTable, 0, 0, "HTF Timeframe:", text_color=color.white, text_size=size.small)
+        table.cell(statusTable, 1, 0, formatTimeframe(activeTimeframe), text_color=color.yellow, text_size=size.small)
+        
+        table.cell(statusTable, 0, 1, "Candles Shown:", text_color=color.white, text_size=size.small)
+        table.cell(statusTable, 1, 1, str.tostring(numCandles), text_color=color.yellow, text_size=size.small)
+        
+        table.cell(statusTable, 0, 2, "Auto TF:", text_color=color.white, text_size=size.small)
+        table.cell(statusTable, 1, 2, autoTF ? "ON" : "OFF", text_color=autoTF ? color.green : color.red, text_size=size.small)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// ICT CONCEPTS INTEGRATION NOTES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// AMD (Accumulation, Manipulation, Distribution):
+//   - Accumulation: Early portion of HTF candle (first 1/3)
+//   - Manipulation: Middle portion with liquidity sweeps (middle 1/3, marked by sweep line)
+//   - Distribution: Final portion of HTF candle (last 1/3)
+//
+// PO3 (Power of 3):
+//   - Asian Session: Accumulation phase
+//   - London Open: Manipulation phase (sweep lines detect this)
+//   - New York Session: Distribution phase
+//
+// Usage:
+//   - Overlay multiple instances with different timeframes (4H + Daily)
+//   - Identify liquidity sweeps using sweep lines at HTF highs/lows
+//   - Look for price rejections at HTF open lines (open line shows institutional entry)
+//   - Use HTF candle structure to identify current phase of market cycle
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════

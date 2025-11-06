@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: bookmap-redis-stack
+    ports:
+      - "6379:6379"      # Redis port
+      - "8001:8001"      # RedisInsight web UI
+    volumes:
+      - redis-data:/data
+      - ./config/redis.conf:/redis-stack.conf
+    environment:
+      - REDIS_ARGS=--requirepass ""  # No password for localhost
+      - REDIS_MAX_MEMORY=2gb
+      - REDIS_MAX_MEMORY_POLICY=allkeys-lru
+    restart: unless-stopped
+    command: redis-stack-server --appendonly yes --save 60 1000
+    networks:
+      - bookmap-network
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg17
+    container_name: bookmap-timescaledb
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale-data:/var/lib/postgresql/data
+      - ./database/init_timescaledb.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=X74Ot*BvtjgKuCBx
+      - POSTGRES_DB=trading_data
+    restart: unless-stopped
+    networks:
+      - bookmap-network
+
+volumes:
+  redis-data:
+    driver: local
+  timescale-data:
+    driver: local
+
+networks:
+  bookmap-network:
+    driver: bridge

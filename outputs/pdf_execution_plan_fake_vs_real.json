@@ -1,0 +1,349 @@
+{
+  "execution_plan_metadata": {
+    "created": "2025-10-29T15:30:00-04:00",
+    "phase": "EXECUTION PHASE - PDF Reading & Analysis",
+    "user_confirmations": {
+      "categories_prioritized": ["ICT", "OrderFlow", "QuarterlyTheory", "Bookmap", "Redis", "Java", "TimescaleDB", "StopsIcebergs"],
+      "retention_strategy": "BOTH (File-based JSON + TimescaleDB database)",
+      "dashboard_integration_scope": "ALL 6 enhancements with focus on FAKE vs REAL move signals",
+      "test_knowledge_gaps": "YES - Start and Review",
+      "immediate_action": "Review documentation first"
+    }
+  },
+
+  "pdf_inventory": {
+    "total_pdfs_found": 26,
+    "by_category": {
+      "ICT": {
+        "count": 2,
+        "files": [
+          "443878056-ICT-Mentorship-Month-1-Notes.pdf",
+          "740500492-Full-ICT-Course.pdf"
+        ],
+        "priority": "CRITICAL",
+        "reason": "Core methodology for fake vs real move identification"
+      },
+      "OrderFlow": {
+        "count": 7,
+        "files": [
+          "433558502-Confirming-Levels-With-Order-Flow.pdf",
+          "435949428-The-Ultimate-Guide-To-Order-Flow-Trading.pdf",
+          "698793566-Institutional-Order-Flow-Trading.pdf",
+          "Cracking the Spoofing Code_Inside the World of Market Manipulation.pdf",
+          "How to Detect Spoofing in Trading _ Deceptive Trading Practices.pdf",
+          "Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf",
+          "ORDER-FLOW-Trading-Setups-Golden-ticket-edition-13.5.2024-1.pdf"
+        ],
+        "priority": "CRITICAL",
+        "reason": "Pattern library for reversal detection and fake move identification"
+      },
+      "QuarterlyTheory": {
+        "count": 1,
+        "files": [
+          "841225157-Quarterly-Theory.pdf"
+        ],
+        "priority": "HIGH",
+        "reason": "Macro context for bias and directional analysis"
+      },
+      "Bookmap": {
+        "count": 5,
+        "files": [
+          "373723507-Bookmap-User-Guide-5-0.pdf",
+          "430196357-Bookmap-User-Guide-6-1.pdf",
+          "484567392-traderunner-pro-A-Complete-BookMap-Review-pdf.pdf",
+          "789789011-Bookmap-Masterclass.pdf",
+          "Bookmap API _ Bookmap Knowledge Base.pdf"
+        ],
+        "priority": "HIGH",
+        "reason": "Platform-specific features, absorption, heatmap interpretation"
+      },
+      "StopsIcebergs": {
+        "count": 2,
+        "files": [
+          "Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf",
+          "Stops and Icebergs_ How to Detect Hidden Orders Using MBO Data.pdf"
+        ],
+        "priority": "HIGH",
+        "reason": "Hidden order detection for fake move identification"
+      },
+      "Redis": {
+        "count": 3,
+        "files": [
+          "489750666-Redis-Tutorial.pdf",
+          "how-to-manage-a-redis-database.pdf",
+          "What Redis TimescaleDB Actually Does and When to Use It.pdf"
+        ],
+        "priority": "MEDIUM",
+        "reason": "Infrastructure - hot storage configuration"
+      },
+      "TimescaleDB": {
+        "count": 4,
+        "files": [
+          "How to Migrate Your Data to Timescale (3 Ways) _ TigerData.pdf",
+          "postgresql-16-A4.pdf",
+          "TimescaleDB_Starter_Guide.pdf",
+          "What Redis TimescaleDB Actually Does and When to Use It.pdf"
+        ],
+        "priority": "MEDIUM",
+        "reason": "Infrastructure - cold storage optimization"
+      },
+      "Java": {
+        "count": 2,
+        "files": [
+          "java-developers-guide.pdf",
+          "javascript.pdf"
+        ],
+        "priority": "LOW",
+        "reason": "Development reference, not trading methodology"
+      },
+      "N8N": {
+        "count": 0,
+        "files": [],
+        "priority": "N/A",
+        "reason": "No PDFs found - may need to source separately"
+      }
+    }
+  },
+
+  "execution_phases": {
+    "phase_1_documentation_review": {
+      "status": "STARTING",
+      "objective": "Read and analyze all priority PDFs to extract fake vs real move signals",
+      "steps": [
+        {
+          "step": "1.1",
+          "action": "Read ICT PDFs (2 files)",
+          "pdfs": [
+            "443878056-ICT-Mentorship-Month-1-Notes.pdf",
+            "740500492-Full-ICT-Course.pdf"
+          ],
+          "extract": [
+            "Expansion vs Retracement concepts",
+            "Reversal patterns and confirmation",
+            "Fake moves (stop hunts, liquidity sweeps)",
+            "Real moves (institutional entries)",
+            "Bias determination rules",
+            "CBDR window concepts",
+            "Market structure breaks"
+          ],
+          "output_file": "outputs/pdf_extracts/ict_methodology_fake_vs_real.json"
+        },
+        {
+          "step": "1.2",
+          "action": "Read Order Flow PDFs (7 files)",
+          "pdfs": [
+            "435949428-The-Ultimate-Guide-To-Order-Flow-Trading.pdf",
+            "Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf",
+            "Cracking the Spoofing Code_Inside the World of Market Manipulation.pdf",
+            "698793566-Institutional-Order-Flow-Trading.pdf"
+          ],
+          "extract": [
+            "Aggressor exhaustion patterns",
+            "Iceberg stacking (fake walls vs real liquidity)",
+            "Spoofing detection (fake orders)",
+            "Volume profile interpretation",
+            "Delta divergence signals",
+            "Absorption vs rejection patterns"
+          ],
+          "output_file": "outputs/pdf_extracts/orderflow_fake_vs_real_patterns.json"
+        },
+        {
+          "step": "1.3",
+          "action": "Read Quarterly Theory PDF (1 file)",
+          "pdfs": ["841225157-Quarterly-Theory.pdf"],
+          "extract": [
+            "Quarterly timeframe bias rules",
+            "Macro directional context",
+            "Seasonal patterns",
+            "How quarterly theory validates/invalidates moves"
+          ],
+          "output_file": "outputs/pdf_extracts/quarterly_theory_macro_context.json"
+        },
+        {
+          "step": "1.4",
+          "action": "Read Bookmap PDFs (5 files - prioritize User Guides)",
+          "pdfs": [
+            "430196357-Bookmap-User-Guide-6-1.pdf",
+            "789789011-Bookmap-Masterclass.pdf"
+          ],
+          "extract": [
+            "Absorption indicator interpretation",
+            "Heatmap fake vs real liquidity",
+            "Volume dots significance",
+            "Large lot tracker patterns",
+            "Microstructure analysis"
+          ],
+          "output_file": "outputs/pdf_extracts/bookmap_interpretation_guide.json"
+        },
+        {
+          "step": "1.5",
+          "action": "Read Stops & Icebergs PDFs (2 files)",
+          "pdfs": [
+            "Stops and Icebergs_ How to Detect Hidden Orders Using MBO Data.pdf",
+            "Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf"
+          ],
+          "extract": [
+            "Iceberg detection algorithms",
+            "Stop run patterns (fake moves)",
+            "Hidden order identification",
+            "Iceberg stacking reversal signals"
+          ],
+          "output_file": "outputs/pdf_extracts/stops_icebergs_fake_vs_real.json"
+        }
+      ],
+      "estimated_duration": "30-45 minutes for all critical PDFs"
+    },
+
+    "phase_2_knowledge_structuring": {
+      "status": "PENDING",
+      "objective": "Structure extracted knowledge into actionable fake vs real move rules",
+      "deliverables": [
+        "Fake move pattern library (JSON schema)",
+        "Real move confirmation criteria (JSON schema)",
+        "Signal confidence scoring system",
+        "Pattern matching algorithms",
+        "Database schema for trading_knowledge table"
+      ]
+    },
+
+    "phase_3_database_setup": {
+      "status": "PENDING",
+      "objective": "Create TimescaleDB schema for permanent PDF knowledge storage",
+      "tasks": [
+        "Create trading_knowledge table",
+        "Create fake_move_patterns table",
+        "Create real_move_confirmations table",
+        "Create pattern_library table with pattern matching logic",
+        "Populate tables with extracted PDF content",
+        "Create indexes for fast retrieval"
+      ]
+    },
+
+    "phase_4_dashboard_integration": {
+      "status": "PENDING",
+      "objective": "Integrate PDF knowledge into dashboard for fake vs real signals",
+      "focus": "FAKE vs REAL MOVE DETECTION",
+      "integration_points": [
+        {
+          "component": "AbsorptionConsumer",
+          "enhancement": "Fake absorption (spoofing) vs Real absorption (institutional buying)",
+          "pdf_knowledge": "Bookmap absorption theory + Order flow spoofing detection",
+          "signal_output": "'Fake Move Alert: Absorption detected but order flow shows spoofing pattern' vs 'Real Move Confirmed: Absorption with institutional volume confirmation'"
+        },
+        {
+          "component": "StopsIcebergsConsumer",
+          "enhancement": "Stop hunt (fake move) vs Iceberg accumulation (real move)",
+          "pdf_knowledge": "ICT stop hunt patterns + Iceberg stacking patterns",
+          "signal_output": "'Fake Move: Stop hunt detected at liquidity level' vs 'Real Move: Iceberg stacking indicates institutional accumulation'"
+        },
+        {
+          "component": "CBDR Window Analysis",
+          "enhancement": "ICT expansion (fake) vs retracement (real entry)",
+          "pdf_knowledge": "ICT methodology expansion/retracement/reversal",
+          "signal_output": "'Fake Move: Expansion phase - expect retracement' vs 'Real Move: Retracement complete - institutional entry confirmed'"
+        },
+        {
+          "component": "HTF Analysis",
+          "enhancement": "Quarterly theory bias validation",
+          "pdf_knowledge": "Quarterly theory macro context",
+          "signal_output": "'Fake Move: Counter-trend to quarterly bias' vs 'Real Move: Aligned with quarterly bias'"
+        },
+        {
+          "component": "Pattern Recognition",
+          "enhancement": "Aggressor exhaustion (fake continuation) vs reversal confirmation",
+          "pdf_knowledge": "Order flow reversal patterns",
+          "signal_output": "'Fake Move: Aggressor exhaustion signals reversal incoming' vs 'Real Move: Reversal confirmed with volume + structure break'"
+        },
+        {
+          "component": "Overall Signal Synthesis",
+          "enhancement": "Multi-factor fake vs real scoring",
+          "pdf_knowledge": "All PDFs combined",
+          "signal_output": "'FAKE MOVE PROBABILITY: 85% (3/5 indicators show manipulation)' vs 'REAL MOVE PROBABILITY: 92% (4/5 indicators confirm institutional intent)'"
+        }
+      ]
+    },
+
+    "phase_5_testing_validation": {
+      "status": "PENDING",
+      "objective": "Test OCR, validate extractions, benchmark performance",
+      "tests": [
+        "OCR accuracy on scanned charts",
+        "Large PDF handling (500+ pages)",
+        "Extraction completeness verification",
+        "Pattern matching accuracy",
+        "Signal generation validation"
+      ]
+    }
+  },
+
+  "fake_vs_real_move_framework": {
+    "definition": {
+      "fake_move": "Price movement designed to trigger stops, hunt liquidity, or deceive retail traders before reversing. Often created by spoofing, iceberg manipulation, or stop runs.",
+      "real_move": "Institutional price movement with genuine intent to establish position. Characterized by sustained volume, absorption of supply/demand, and market structure confirmation."
+    },
+
+    "key_indicators": {
+      "fake_move_signals": [
+        "Expansion phase in ICT methodology (overextension before retracement)",
+        "Spoofing patterns detected (large orders disappearing)",
+        "Stop runs at key liquidity levels",
+        "Aggressor exhaustion without follow-through",
+        "Fake absorption (small lots appearing as large)",
+        "Counter-trend to quarterly bias",
+        "Low volume on breakouts",
+        "Lack of market structure confirmation"
+      ],
+      "real_move_signals": [
+        "Retracement complete in ICT methodology (institutional entry)",
+        "Iceberg stacking (hidden accumulation)",
+        "Genuine absorption with institutional volume",
+        "Market structure break confirmed",
+        "Aligned with quarterly bias",
+        "Sustained aggressor volume",
+        "Multiple timeframe confirmation",
+        "Order flow delta supporting direction"
+      ]
+    },
+
+    "signal_output_format": {
+      "fake_move_example": {
+        "timestamp": "2025-10-29 14:45:23",
+        "price": 26180.0,
+        "signal_type": "FAKE_MOVE_ALERT",
+        "confidence": 0.87,
+        "indicators": [
+          "Expansion phase detected (ICT)",
+          "Aggressor exhaustion pattern",
+          "Spoofing detected at resistance"
+        ],
+        "recommendation": "DO NOT CHASE - Expect retracement to 26150.0",
+        "sources": ["ICT-Mentorship.pdf p.23", "Order-Flow-Trading.pdf p.87", "Spoofing-Code.pdf p.45"]
+      },
+      "real_move_example": {
+        "timestamp": "2025-10-29 15:12:45",
+        "price": 26155.0,
+        "signal_type": "REAL_MOVE_CONFIRMED",
+        "confidence": 0.94,
+        "indicators": [
+          "Retracement complete (ICT)",
+          "Iceberg stacking detected",
+          "Absorption with institutional volume",
+          "Market structure break confirmed",
+          "Aligned with quarterly bullish bias"
+        ],
+        "recommendation": "HIGH PROBABILITY ENTRY - Institutional accumulation confirmed",
+        "sources": ["ICT-Full-Course.pdf p.156", "Quarterly-Theory.pdf p.34", "Icebergs.pdf p.12"]
+      }
+    }
+  },
+
+  "immediate_next_steps": {
+    "step_1": "Start reading ICT PDFs to extract fake vs real move concepts",
+    "step_2": "Read Order Flow PDFs for pattern library",
+    "step_3": "Create structured JSON knowledge files",
+    "step_4": "Build database schema",
+    "step_5": "Integrate with dashboard consumers"
+  },
+
+  "status": "READY TO BEGIN PHASE 1 - DOCUMENTATION REVIEW"
+}

@@ -1,0 +1,2 @@
+date,symbol,prev_day_high,prev_day_low,prev_day_open,prev_day_close,prev_day_eq,prev_day_range,prev_day_volume,open_price,opening_zone,first_30_high,first_30_low,first_30_close,first_30_range,first_30_volume,first_move_direction,first_move_size,judas_swing,real_direction
+2025-10-03,MNQZ5,25252.75,24890.5,25063.75,25124.25,25071.625,362.25,22733838,25133.25,PREMIUM,25480.0,24653.25,25043.75,826.75,2327997,DOWN,480.0,True,UP

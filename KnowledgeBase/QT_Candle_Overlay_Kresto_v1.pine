@@ -1,0 +1,596 @@
+// QT Candle Overlay - Kresto v9 (With Macros & True Opens)
+// Complete Quarterly Theory with Macro Quarters and True Open Levels
+// © Kresto - ICT Quarterly Theory Implementation
+
+//@version=5
+indicator("QT Candle Overlay - Macros & True Opens", overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// Quarter Type Selection - Added Macro Quarters option
+quarterType = input.string("Session Quarters", "Quarter Type", options=["Yearly Quarters", "Monthly Quarters", "Weekly Quarters", "Daily Quarters", "Session Quarters", "Macro Quarters"], group="QUARTERLY THEORY SETTINGS", tooltip="Yearly: 3-month | Monthly: Weekly | Weekly: Daily | Daily: 6-hour | Session: 90-min | Macro: 22-min quarters")
+    
+numCandles = input.int(12, "No. of quarter candles", minval=1, maxval=20, group="QUARTERLY THEORY SETTINGS")
+startOffset = input.int(25, "Start Offset", minval=0, maxval=100, group="QUARTERLY THEORY SETTINGS", tooltip="Spacing from current price (bars)")
+candleSpacing = input.float(2.0, "Candle spacing", minval=0.1, maxval=5.0, step=0.1, group="QUARTERLY THEORY SETTINGS", tooltip="Gap between candles in bars")
+candleWidth = input.int(2, "Candle Width", minval=1, maxval=30, group="QUARTERLY THEORY SETTINGS", tooltip="Width of each candle in bars")
+
+// ICT Session Times
+useICTTimes = input.bool(true, "Use ICT Session Times (NY Time)", group="SESSION SETTINGS", tooltip="Use standard ICT session times in New York timezone")
+sessionTimezone = input.string("America/New_York", "Session Timezone", options=["America/New_York", "America/Chicago", "Europe/London", "Asia/Tokyo", "Australia/Sydney"], group="SESSION SETTINGS")
+
+// Candle Body Colors
+bullBodyColor = input.color(color.new(color.green, 50), "Candle Body", group="QUARTERLY THEORY SETTINGS", inline="body")
+bearBodyColor = input.color(color.new(color.black, 0), "  ", group="QUARTERLY THEORY SETTINGS", inline="body")
+
+// Wick Color
+wickColor = input.color(color.black, "Wick", group="QUARTERLY THEORY SETTINGS")
+
+// Open Line
+showOpenLine = input.bool(false, "Open line", group="QUARTERLY THEORY SETTINGS", inline="open")
+openLineStyle = input.string("sol", "", options=["sol", "dash", "dot"], group="QUARTERLY THEORY SETTINGS", inline="open")
+openLineColor = input.color(color.blue, "", group="QUARTERLY THEORY SETTINGS", inline="open")
+
+// True Open Settings - NEW
+showTrueOpen = input.bool(true, "True Open Lines", group="TRUE OPEN SETTINGS", inline="trueopen")
+trueOpenStyle = input.string("dash", "", options=["sol", "dash", "dot"], group="TRUE OPEN SETTINGS", inline="trueopen")
+trueOpenColor = input.color(color.new(color.orange, 0), "", group="TRUE OPEN SETTINGS", inline="trueopen")
+trueOpenWidth = input.int(1, "True Open Width", minval=1, maxval=5, group="TRUE OPEN SETTINGS")
+trueOpenExtend = input.bool(true, "Extend True Opens", group="TRUE OPEN SETTINGS", tooltip="Extend true open lines across all candles")
+
+// Sweep Line Settings
+showSweepLine = input.bool(true, "Sweep line", group="QUARTERLY THEORY SETTINGS", inline="sweep")
+sweepLineStyle = input.string("sol", "", options=["sol", "dash", "dot"], group="QUARTERLY THEORY SETTINGS", inline="sweep")
+sweepLineColor = input.color(color.red, "", group="QUARTERLY THEORY SETTINGS", inline="sweep")
+sweepLineWidth = input.int(1, "Sweep Line Width", minval=1, maxval=5, step=1, group="QUARTERLY THEORY SETTINGS", tooltip="Width of sweep lines")
+onlyValidSweeps = input.bool(true, "Only Valid ICT Sweeps", group="QUARTERLY THEORY SETTINGS", tooltip="Only show sweeps where candle closed back inside previous candle's range")
+
+// Labels
+showQLabel = input.bool(true, "Quarter label", group="QUARTERLY THEORY SETTINGS", tooltip="Show Q1, Q2, Q3, Q4 labels")
+showPeriodLabel = input.bool(true, "Period label", group="QUARTERLY THEORY SETTINGS", tooltip="Show period name (Month/Week/Day/Session)")
+showTimeLabel = input.bool(true, "Time label", group="QUARTERLY THEORY SETTINGS", inline="time")
+timeLabelFormat = input.string("HH:mm", "Time Format", options=["HH:mm", "HH:mm ET", "HH:mm UTC"], group="QUARTERLY THEORY SETTINGS", inline="time")
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// QUARTER TIMEFRAME CALCULATION
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+getQuarterTimeframe() =>
+    string tf = ""
+    if quarterType == "Yearly Quarters"
+        tf := "3M"
+    else if quarterType == "Monthly Quarters"  
+        tf := "W"
+    else if quarterType == "Weekly Quarters"
+        tf := "D"
+    else if quarterType == "Daily Quarters"
+        tf := "360"
+    else if quarterType == "Session Quarters"
+        tf := "90"
+    else if quarterType == "Macro Quarters"
+        tf := "22"  // 22-minute macro quarters
+    tf
+
+effectiveQTF = getQuarterTimeframe()
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// FETCH QUARTER DATA
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+[q0_o, q0_h, q0_l, q0_c, q0_t] = request.security(syminfo.tickerid, effectiveQTF, [open, high, low, close, time], lookahead=barmerge.lookahead_off)
+[q1_o, q1_h, q1_l, q1_c, q1_t] = request.security(syminfo.tickerid, effectiveQTF, [open[1], high[1], low[1], close[1], time[1]], lookahead=barmerge.lookahead_on)
+[q2_o, q2_h, q2_l, q2_c, q2_t] = request.security(syminfo.tickerid, effectiveQTF, [open[2], high[2], low[2], close[2], time[2]], lookahead=barmerge.lookahead_on)
+[q3_o, q3_h, q3_l, q3_c, q3_t] = request.security(syminfo.tickerid, effectiveQTF, [open[3], high[3], low[3], close[3], time[3]], lookahead=barmerge.lookahead_on)
+[q4_o, q4_h, q4_l, q4_c, q4_t] = request.security(syminfo.tickerid, effectiveQTF, [open[4], high[4], low[4], close[4], time[4]], lookahead=barmerge.lookahead_on)
+[q5_o, q5_h, q5_l, q5_c, q5_t] = request.security(syminfo.tickerid, effectiveQTF, [open[5], high[5], low[5], close[5], time[5]], lookahead=barmerge.lookahead_on)
+[q6_o, q6_h, q6_l, q6_c, q6_t] = request.security(syminfo.tickerid, effectiveQTF, [open[6], high[6], low[6], close[6], time[6]], lookahead=barmerge.lookahead_on)
+[q7_o, q7_h, q7_l, q7_c, q7_t] = request.security(syminfo.tickerid, effectiveQTF, [open[7], high[7], low[7], close[7], time[7]], lookahead=barmerge.lookahead_on)
+[q8_o, q8_h, q8_l, q8_c, q8_t] = request.security(syminfo.tickerid, effectiveQTF, [open[8], high[8], low[8], close[8], time[8]], lookahead=barmerge.lookahead_on)
+[q9_o, q9_h, q9_l, q9_c, q9_t] = request.security(syminfo.tickerid, effectiveQTF, [open[9], high[9], low[9], close[9], time[9]], lookahead=barmerge.lookahead_on)
+[q10_o, q10_h, q10_l, q10_c, q10_t] = request.security(syminfo.tickerid, effectiveQTF, [open[10], high[10], low[10], close[10], time[10]], lookahead=barmerge.lookahead_on)
+[q11_o, q11_h, q11_l, q11_c, q11_t] = request.security(syminfo.tickerid, effectiveQTF, [open[11], high[11], low[11], close[11], time[11]], lookahead=barmerge.lookahead_on)
+[q12_o, q12_h, q12_l, q12_c, q12_t] = request.security(syminfo.tickerid, effectiveQTF, [open[12], high[12], low[12], close[12], time[12]], lookahead=barmerge.lookahead_on)
+[q13_o, q13_h, q13_l, q13_c, q13_t] = request.security(syminfo.tickerid, effectiveQTF, [open[13], high[13], low[13], close[13], time[13]], lookahead=barmerge.lookahead_on)
+[q14_o, q14_h, q14_l, q14_c, q14_t] = request.security(syminfo.tickerid, effectiveQTF, [open[14], high[14], low[14], close[14], time[14]], lookahead=barmerge.lookahead_on)
+[q15_o, q15_h, q15_l, q15_c, q15_t] = request.security(syminfo.tickerid, effectiveQTF, [open[15], high[15], low[15], close[15], time[15]], lookahead=barmerge.lookahead_on)
+[q16_o, q16_h, q16_l, q16_c, q16_t] = request.security(syminfo.tickerid, effectiveQTF, [open[16], high[16], low[16], close[16], time[16]], lookahead=barmerge.lookahead_on)
+[q17_o, q17_h, q17_l, q17_c, q17_t] = request.security(syminfo.tickerid, effectiveQTF, [open[17], high[17], low[17], close[17], time[17]], lookahead=barmerge.lookahead_on)
+[q18_o, q18_h, q18_l, q18_c, q18_t] = request.security(syminfo.tickerid, effectiveQTF, [open[18], high[18], low[18], close[18], time[18]], lookahead=barmerge.lookahead_on)
+[q19_o, q19_h, q19_l, q19_c, q19_t] = request.security(syminfo.tickerid, effectiveQTF, [open[19], high[19], low[19], close[19], time[19]], lookahead=barmerge.lookahead_on)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// HELPER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+getQuarterData(idx) =>
+    float o = na
+    float h = na
+    float l = na
+    float c = na
+    int t = na
+    
+    if idx == 0
+        o := q0_o, h := q0_h, l := q0_l, c := q0_c, t := q0_t
+    else if idx == 1
+        o := q1_o, h := q1_h, l := q1_l, c := q1_c, t := q1_t
+    else if idx == 2
+        o := q2_o, h := q2_h, l := q2_l, c := q2_c, t := q2_t
+    else if idx == 3
+        o := q3_o, h := q3_h, l := q3_l, c := q3_c, t := q3_t
+    else if idx == 4
+        o := q4_o, h := q4_h, l := q4_l, c := q4_c, t := q4_t
+    else if idx == 5
+        o := q5_o, h := q5_h, l := q5_l, c := q5_c, t := q5_t
+    else if idx == 6
+        o := q6_o, h := q6_h, l := q6_l, c := q6_c, t := q6_t
+    else if idx == 7
+        o := q7_o, h := q7_h, l := q7_l, c := q7_c, t := q7_t
+    else if idx == 8
+        o := q8_o, h := q8_h, l := q8_l, c := q8_c, t := q8_t
+    else if idx == 9
+        o := q9_o, h := q9_h, l := q9_l, c := q9_c, t := q9_t
+    else if idx == 10
+        o := q10_o, h := q10_h, l := q10_l, c := q10_c, t := q10_t
+    else if idx == 11
+        o := q11_o, h := q11_h, l := q11_l, c := q11_c, t := q11_t
+    else if idx == 12
+        o := q12_o, h := q12_h, l := q12_l, c := q12_c, t := q12_t
+    else if idx == 13
+        o := q13_o, h := q13_h, l := q13_l, c := q13_c, t := q13_t
+    else if idx == 14
+        o := q14_o, h := q14_h, l := q14_l, c := q14_c, t := q14_t
+    else if idx == 15
+        o := q15_o, h := q15_h, l := q15_l, c := q15_c, t := q15_t
+    else if idx == 16
+        o := q16_o, h := q16_h, l := q16_l, c := q16_c, t := q16_t
+    else if idx == 17
+        o := q17_o, h := q17_h, l := q17_l, c := q17_c, t := q17_t
+    else if idx == 18
+        o := q18_o, h := q18_h, l := q18_l, c := q18_c, t := q18_t
+    else if idx == 19
+        o := q19_o, h := q19_h, l := q19_l, c := q19_c, t := q19_t
+    
+    [o, h, l, c, t]
+
+// Get Macro Quarter Info (22-minute quarters within 90-minute sessions)
+getMacroQuarterInfo(t) =>
+    ny_hour = hour(t, sessionTimezone)
+    ny_minute = minute(t, sessionTimezone)
+    total_minutes = ny_hour * 60 + ny_minute
+    
+    string session = ""
+    string qLabel = ""
+    int macroNum = 0
+    
+    // Determine which 90-minute session and which macro within it
+    if ny_hour >= 18 or ny_hour < 0  // Asian Session (18:00-00:00)
+        if total_minutes >= 1080 and total_minutes < 1102  // 18:00-18:22
+            session := "Asian", qLabel := "Q1", macroNum := 1
+        else if total_minutes >= 1102 and total_minutes < 1125  // 18:22-18:45
+            session := "Asian", qLabel := "Q2", macroNum := 1
+        else if total_minutes >= 1125 and total_minutes < 1148  // 18:45-19:08
+            session := "Asian", qLabel := "Q3", macroNum := 1
+        else if total_minutes >= 1148 and total_minutes < 1170  // 19:08-19:30
+            session := "Asian", qLabel := "Q4", macroNum := 1
+        else if total_minutes >= 1170 and total_minutes < 1192  // 19:30-19:52
+            session := "Asian", qLabel := "Q1", macroNum := 2
+        else if total_minutes >= 1192 and total_minutes < 1215  // 19:52-20:15
+            session := "Asian", qLabel := "Q2", macroNum := 2
+        else if total_minutes >= 1215 and total_minutes < 1237  // 20:15-20:37
+            session := "Asian", qLabel := "Q3", macroNum := 2
+        else if total_minutes >= 1237 and total_minutes < 1260  // 20:37-21:00
+            session := "Asian", qLabel := "Q4", macroNum := 2
+        else if total_minutes >= 1260 and total_minutes < 1282  // 21:00-21:22
+            session := "Asian", qLabel := "Q1", macroNum := 3
+        else if total_minutes >= 1282 and total_minutes < 1305  // 21:22-21:45
+            session := "Asian", qLabel := "Q2", macroNum := 3
+        else if total_minutes >= 1305 and total_minutes < 1327  // 21:45-22:07
+            session := "Asian", qLabel := "Q3", macroNum := 3
+        else if total_minutes >= 1327 and total_minutes < 1350  // 22:07-22:30
+            session := "Asian", qLabel := "Q4", macroNum := 3
+        else if total_minutes >= 1350 and total_minutes < 1372  // 22:30-22:52
+            session := "Asian", qLabel := "Q1", macroNum := 4
+        else if total_minutes >= 1372 and total_minutes < 1395  // 22:52-23:15
+            session := "Asian", qLabel := "Q2", macroNum := 4
+        else if total_minutes >= 1395 and total_minutes < 1417  // 23:15-23:37
+            session := "Asian", qLabel := "Q3", macroNum := 4
+        else  // 23:37-00:00
+            session := "Asian", qLabel := "Q4", macroNum := 4
+    else if ny_hour >= 0 and ny_hour < 6  // London Session
+        // Similar 22-minute breakdown for London
+        int minutesInSession = total_minutes
+        macroNum := (minutesInSession / 90) + 1
+        int minutesInMacro = minutesInSession % 90
+        
+        if minutesInMacro < 22
+            qLabel := "Q1"
+        else if minutesInMacro < 45
+            qLabel := "Q2"
+        else if minutesInMacro < 67
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+        session := "London"
+    else if ny_hour >= 6 and ny_hour < 12  // NY Session
+        int minutesInSession = total_minutes - 360
+        macroNum := (minutesInSession / 90) + 1
+        int minutesInMacro = minutesInSession % 90
+        
+        if minutesInMacro < 22
+            qLabel := "Q1"
+        else if minutesInMacro < 45
+            qLabel := "Q2"
+        else if minutesInMacro < 67
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+        session := "NY"
+    else if ny_hour >= 12 and ny_hour < 18  // PM Session
+        int minutesInSession = total_minutes - 720
+        macroNum := (minutesInSession / 90) + 1
+        int minutesInMacro = minutesInSession % 90
+        
+        if minutesInMacro < 22
+            qLabel := "Q1"
+        else if minutesInMacro < 45
+            qLabel := "Q2"
+        else if minutesInMacro < 67
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+        session := "PM"
+    
+    [session, qLabel, macroNum]
+
+// Get ICT session and quarter for regular sessions
+getICTSessionInfo(t) =>
+    ny_hour = hour(t, sessionTimezone)
+    ny_minute = minute(t, sessionTimezone)
+    total_minutes = ny_hour * 60 + ny_minute
+    
+    string session = ""
+    string qLabel = ""
+    
+    if ny_hour >= 18 or ny_hour < 0
+        session := "Asian"
+        if total_minutes >= 1080 and total_minutes < 1170
+            qLabel := "Q1"
+        else if total_minutes >= 1170 and total_minutes < 1260
+            qLabel := "Q2"
+        else if total_minutes >= 1260 and total_minutes < 1350
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+    else if ny_hour >= 0 and ny_hour < 6
+        session := "London"
+        if total_minutes < 90
+            qLabel := "Q1"
+        else if total_minutes < 180
+            qLabel := "Q2"
+        else if total_minutes < 270
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+    else if ny_hour >= 6 and ny_hour < 12
+        session := "NY"
+        if total_minutes >= 360 and total_minutes < 450
+            qLabel := "Q1"
+        else if total_minutes >= 450 and total_minutes < 540
+            qLabel := "Q2"
+        else if total_minutes >= 540 and total_minutes < 630
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+    else if ny_hour >= 12 and ny_hour < 18
+        session := "PM"
+        if total_minutes >= 720 and total_minutes < 810
+            qLabel := "Q1"
+        else if total_minutes >= 810 and total_minutes < 900
+            qLabel := "Q2"
+        else if total_minutes >= 900 and total_minutes < 990
+            qLabel := "Q3"
+        else
+            qLabel := "Q4"
+    
+    [session, qLabel]
+
+// Determine if this candle is a True Open
+isTrueOpen(t) =>
+    ny_hour = hour(t, sessionTimezone)
+    ny_minute = minute(t, sessionTimezone)
+    ny_dayofweek = dayofweek(t, sessionTimezone)
+    ny_dayofmonth = dayofmonth(t, sessionTimezone)
+    ny_month = month(t, sessionTimezone)
+    
+    bool isOpen = false
+    
+    if quarterType == "Daily Quarters" or quarterType == "Session Quarters" or quarterType == "Macro Quarters"
+        // Daily True Open = Midnight EST
+        if ny_hour == 0 and ny_minute == 0
+            isOpen := true
+        // Asian Session True Open = 7:30 PM EST
+        else if ny_hour == 19 and ny_minute == 30
+            isOpen := true
+        // London Session True Open = 1:30 AM EST
+        else if ny_hour == 1 and ny_minute == 30
+            isOpen := true
+        // NY Session True Open = 7:30 AM EST
+        else if ny_hour == 7 and ny_minute == 30
+            isOpen := true
+    else if quarterType == "Weekly Quarters"
+        // Weekly True Open = 6:00 PM EST Monday
+        if ny_dayofweek == dayofweek.monday and ny_hour == 18 and ny_minute == 0
+            isOpen := true
+    else if quarterType == "Monthly Quarters"
+        // Monthly True Open = 2nd Monday of month
+        if ny_dayofweek == dayofweek.monday and ny_dayofmonth >= 8 and ny_dayofmonth <= 14
+            isOpen := true
+    else if quarterType == "Yearly Quarters"
+        // Yearly True Open = 1st Monday of April
+        if ny_month == 4 and ny_dayofweek == dayofweek.monday and ny_dayofmonth <= 7
+            isOpen := true
+    
+    isOpen
+
+// Get quarter label and period
+getQuarterInfo(idx, t) =>
+    string qLabel = ""
+    string period = ""
+    
+    if quarterType == "Macro Quarters"
+        [s, q, mNum] = getMacroQuarterInfo(t)
+        period := s + " M" + str.tostring(mNum)
+        qLabel := q
+    else if quarterType == "Session Quarters" or (quarterType == "Daily Quarters" and useICTTimes)
+        [s, q] = getICTSessionInfo(t)
+        period := s
+        qLabel := q
+    else if quarterType == "Yearly Quarters"
+        int monthNum = month(t)
+        if monthNum <= 3
+            qLabel := "Q1", period := "Jan-Mar"
+        else if monthNum <= 6
+            qLabel := "Q2", period := "Apr-Jun"
+        else if monthNum <= 9
+            qLabel := "Q3", period := "Jul-Sep"
+        else
+            qLabel := "Q4", period := "Oct-Dec"
+    else if quarterType == "Monthly Quarters"
+        int weekOfMonth = math.ceil(dayofmonth(t) / 7.0)
+        qLabel := "Q" + str.tostring(math.min(weekOfMonth, 4))
+        period := "Week " + str.tostring(math.min(weekOfMonth, 4))
+    else if quarterType == "Weekly Quarters"
+        int dow = dayofweek(t)
+        if dow == dayofweek.monday
+            qLabel := "Q1", period := "Monday"
+        else if dow == dayofweek.tuesday
+            qLabel := "Q2", period := "Tuesday"
+        else if dow == dayofweek.wednesday
+            qLabel := "Q3", period := "Wednesday"
+        else if dow == dayofweek.thursday
+            qLabel := "Q4", period := "Thursday"
+        else if dow == dayofweek.friday
+            qLabel := "Q4+", period := "Friday"
+        else
+            qLabel := "Weekend", period := "Weekend"
+    else if quarterType == "Daily Quarters"
+        int hourNum = hour(t)
+        if hourNum >= 18 or hourNum < 0
+            qLabel := "Q1", period := "Asian"
+        else if hourNum < 6
+            qLabel := "Q2", period := "London"
+        else if hourNum < 12
+            qLabel := "Q3", period := "NY"
+        else if hourNum < 18
+            qLabel := "Q4", period := "PM"
+    
+    [qLabel, period]
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DRAWING SETUP
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+var boxList = array.new_box(0)
+var lineList = array.new_line(0)
+var labelList = array.new_label(0)
+
+// Clear old drawings
+if barstate.islast
+    if array.size(boxList) > 0
+        for i = 0 to array.size(boxList) - 1
+            box.delete(array.get(boxList, i))
+        array.clear(boxList)
+    
+    if array.size(lineList) > 0
+        for i = 0 to array.size(lineList) - 1
+            line.delete(array.get(lineList, i))
+        array.clear(lineList)
+    
+    if array.size(labelList) > 0
+        for i = 0 to array.size(labelList) - 1
+            label.delete(array.get(labelList, i))
+        array.clear(labelList)
+
+getLineStyle(styleStr) =>
+    styleStr == "dash" ? line.style_dashed : styleStr == "dot" ? line.style_dotted : line.style_solid
+
+getXPosition(i) => 
+    bar_index + startOffset + ((numCandles - 1) - i) * (candleWidth + math.floor(candleSpacing))
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// MAIN DRAWING LOGIC
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+if barstate.islast
+    // Track valid sweeps
+    var int[] highSweepFrom = array.new_int(numCandles, -1)
+    var int[] lowSweepFrom = array.new_int(numCandles, -1)
+    
+    // Check for valid ICT sweeps
+    if onlyValidSweeps
+        for i = 0 to numCandles - 2
+            [currO, currH, currL, currC, currT] = getQuarterData(i)
+            [prevO, prevH, prevL, prevC, prevT] = getQuarterData(i + 1)
+            
+            if na(currO) or na(prevO)
+                continue
+            
+            bool validHighSweep = currH > prevH and currC < prevH and currC > prevL
+            bool validLowSweep = currL < prevL and currC > prevL and currC < prevH
+            
+            if validHighSweep
+                array.set(highSweepFrom, i + 1, i)
+                
+            if validLowSweep
+                array.set(lowSweepFrom, i + 1, i)
+    
+    // Track min/max for label positioning and true opens
+    float minLow = na
+    float maxHigh = na
+    var float[] trueOpenLevels = array.new_float(0)
+    
+    // Draw candles
+    for i = 0 to numCandles - 1
+        [o, h, l, c, t] = getQuarterData(i)
+        
+        if na(o) or na(h) or na(l) or na(c) or na(t)
+            continue
+        
+        // Track min/max
+        if na(minLow) or l < minLow
+            minLow := l
+        if na(maxHigh) or h > maxHigh
+            maxHigh := h
+        
+        // Check if this candle is a True Open
+        if showTrueOpen and isTrueOpen(t)
+            array.push(trueOpenLevels, o)
+        
+        int xCenter = getXPosition(i)
+        
+        // Properly center the candle body
+        int xLeft = 0
+        int xRight = 0
+        
+        if candleWidth == 1
+            xLeft := xCenter
+            xRight := xCenter
+        else
+            int halfWidth = math.floor(candleWidth / 2)
+            xLeft := xCenter - halfWidth
+            xRight := xCenter + halfWidth - (candleWidth % 2 == 0 ? 1 : 0)
+        
+        if na(xLeft) or na(xRight)
+            continue
+        
+        isBull = c >= o
+        bodyColor = isBull ? bullBodyColor : bearBodyColor
+        
+        bodyTop = math.max(o, c)
+        bodyBottom = math.min(o, c)
+        
+        if bodyTop == bodyBottom
+            bodyTop := bodyTop + (h - l) * 0.001
+            bodyBottom := bodyBottom - (h - l) * 0.001
+        
+        // Draw candle body
+        b = box.new(xLeft, bodyTop, xRight, bodyBottom, border_color=bodyColor, bgcolor=bodyColor, border_width=1, xloc=xloc.bar_index)
+        array.push(boxList, b)
+        
+        // Draw wicks
+        upperWick = line.new(xCenter, math.max(o, c), xCenter, h, color=wickColor, width=1, xloc=xloc.bar_index)
+        array.push(lineList, upperWick)
+        
+        lowerWick = line.new(xCenter, l, xCenter, math.min(o, c), color=wickColor, width=1, xloc=xloc.bar_index)
+        array.push(lineList, lowerWick)
+        
+        // Draw open line
+        if showOpenLine
+            openLine = line.new(xLeft, o, xRight, o, color=openLineColor, style=getLineStyle(openLineStyle), width=1, xloc=xloc.bar_index)
+            array.push(lineList, openLine)
+        
+        // Draw sweep lines
+        if showSweepLine
+            if onlyValidSweeps
+                int highSweptBy = array.get(highSweepFrom, i)
+                if highSweptBy >= 0
+                    sweepByX = getXPosition(highSweptBy)
+                    sweepLineHigh = line.new(xCenter, h, sweepByX, h, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                    array.push(lineList, sweepLineHigh)
+                
+                int lowSweptBy = array.get(lowSweepFrom, i)
+                if lowSweptBy >= 0
+                    sweepByX = getXPosition(lowSweptBy)
+                    sweepLineLow = line.new(xCenter, l, sweepByX, l, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                    array.push(lineList, sweepLineLow)
+            else
+                if i > 0
+                    rightExtX = bar_index + startOffset + numCandles * (candleWidth + math.floor(candleSpacing)) + 20
+                    sweepLineHigh = line.new(xCenter, h, rightExtX, h, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                    array.push(lineList, sweepLineHigh)
+                    
+                    sweepLineLow = line.new(xCenter, l, rightExtX, l, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                    array.push(lineList, sweepLineLow)
+        
+        // Get quarter and period info
+        [qLabel, period] = getQuarterInfo(i, t)
+        
+        // Quarter labels
+        if showQLabel
+            float labelYOffset = (h - l) * 0.15
+            qLabelObj = label.new(xCenter, h + labelYOffset, text=qLabel, style=label.style_none, color=color.new(color.black, 100), textcolor=color.blue, size=size.small, xloc=xloc.bar_index)
+            array.push(labelList, qLabelObj)
+        
+        // Period labels
+        if showPeriodLabel
+            float periodYOffset = (h - l) * 0.3
+            periodLabelObj = label.new(xCenter, h + periodYOffset, text=period, style=label.style_none, color=color.new(color.black, 100), textcolor=color.gray, size=size.tiny, xloc=xloc.bar_index)
+            array.push(labelList, periodLabelObj)
+        
+        // Time labels
+        if showTimeLabel and not na(t)
+            string timeText = ""
+            if useICTTimes and (quarterType == "Daily Quarters" or quarterType == "Session Quarters" or quarterType == "Macro Quarters")
+                ny_hour = hour(t, sessionTimezone)
+                ny_minute = minute(t, sessionTimezone)
+                timeText := str.format("{0,number,00}:{1,number,00}", ny_hour, ny_minute)
+                if timeLabelFormat == "HH:mm ET"
+                    timeText := timeText + " ET"
+            else
+                if quarterType == "Yearly Quarters"
+                    timeText := str.format("{0,time,MMM yyyy}", t)
+                else if quarterType == "Monthly Quarters"
+                    timeText := str.format("{0,time,MMM dd}", t)
+                else if quarterType == "Weekly Quarters"
+                    timeText := str.format("{0,time,EEE dd}", t)
+                else
+                    timeText := str.format("{0,time,HH:mm}", t)
+            
+            float labelYOffset = (h - l) * 0.3
+            timeLabel = label.new(xCenter, l - labelYOffset, text=timeText, style=label.style_none, color=color.new(color.black, 100), textcolor=color.black, size=size.tiny, xloc=xloc.bar_index)
+            array.push(labelList, timeLabel)
+    
+    // Draw True Open lines
+    if showTrueOpen and array.size(trueOpenLevels) > 0
+        for level in trueOpenLevels
+            if not na(level)
+                int leftX = getXPosition(0)
+                int rightX = trueOpenExtend ? getXPosition(numCandles - 1) : getXPosition(0) + candleWidth
+                
+                trueOpenLine = line.new(leftX, level, rightX, level, color=trueOpenColor, style=getLineStyle(trueOpenStyle), width=trueOpenWidth, xloc=xloc.bar_index)
+                array.push(lineList, trueOpenLine)
+    
+    // Draw quarter type label
+    if showQLabel and numCandles > 0
+        int leftmostX = getXPosition(0)
+        
+        string qtDisplay = quarterType
+        if quarterType == "Macro Quarters"
+            qtDisplay := "Macro Quarters (22m)"
+        else if useICTTimes and (quarterType == "Daily Quarters" or quarterType == "Session Quarters")
+            qtDisplay := qtDisplay + " (ICT)"
+        
+        float labelY = na(minLow) ? low : minLow - (maxHigh - minLow) * 0.1
+        tfLabel = label.new(leftmostX - 10, labelY, text=qtDisplay, style=label.style_label_right, color=color.new(color.blue, 80), textcolor=color.white, size=size.normal, xloc=xloc.bar_index)
+        array.push(labelList, tfLabel)

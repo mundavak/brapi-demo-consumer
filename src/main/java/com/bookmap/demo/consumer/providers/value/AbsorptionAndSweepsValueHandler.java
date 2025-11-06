@@ -3,7 +3,6 @@ package com.bookmap.demo.consumer.providers.value;
 import com.bookmap.addons.broadcasting.api.view.Event;
 import com.bookmap.addons.broadcasting.api.view.EventFilter;
 import com.bookmap.addons.broadcasting.implementations.base.CastUtilities;
-import com.bookmap.addons.broadcasting.implementations.base.FailedToCastObject;
 import velox.api.layer1.data.InstrumentInfo;
 import velox.indicators.absorption.broadcasting.module.EventInterface;
 import velox.indicators.absorption.broadcasting.module.ProviderSettings;
@@ -13,8 +12,11 @@ import velox.indicators.absorption.broadcasting.module.implementations.TradeEven
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AbsorptionAndSweepsValueHandler implements ProviderValueHandler{
+    private static final Logger LOGGER = Logger.getLogger(AbsorptionAndSweepsValueHandler.class.getName());
+
     @Override
     public String[] getTextualVisualizationOfEvent(Event event, InstrumentInfo instrumentInfo) {
         velox.indicators.absorption.broadcasting.module.EventInterface eventInterface =
@@ -55,21 +57,41 @@ public class AbsorptionAndSweepsValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        return CastUtilities.castObject(o, TradeEvent.class);
+        try {
+            return CastUtilities.castObject(o, TradeEvent.class);
+        } catch (Throwable t) {
+            LOGGER.warning("Failed to cast event to TradeEvent: " + t.getMessage());
+            return null;
+        }
     }
 
     @Override
     public List<Event> castEventsInOurClassLoader(List<Object> o) {
-        return new LinkedList<>(CastUtilities.castObjects(o, TradeEvent.class));
+        try {
+            return new LinkedList<>(CastUtilities.castObjects(o, TradeEvent.class));
+        } catch (Throwable t) {
+            LOGGER.warning("Failed to cast events list to TradeEvent: " + t.getMessage());
+            return new LinkedList<>();
+        }
     }
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        return CastUtilities.castObject(o, Filter.class);
+        try {
+            return CastUtilities.castObject(o, Filter.class);
+        } catch (Throwable t) {
+            LOGGER.warning("Failed to cast filter to Filter: " + t.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        try {
+            return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        } catch (Throwable t) {
+            LOGGER.warning("Failed to cast settings to ProviderSettingsProxy: " + t.getMessage());
+            return null;
+        }
     }
 }

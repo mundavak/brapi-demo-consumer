@@ -1,0 +1,62 @@
+{
+  "analysis_metadata": {
+    "generated_date": "2025-10-29T19:04:47.600397",
+    "data_period": "2025-08-25 to 2025-10-27",
+    "total_sessions": 18,
+    "market": "E-mini NASDAQ Futures (MNQ)",
+    "data_source": "Professional MBO Data",
+    "methodology": "Inner Circle Trader (ICT) Killzones"
+  },
+  "key_findings": {
+    "judas_swing_success_rate": "76.5%",
+    "total_successful_sessions": 13,
+    "average_risk_reward_ratio": "7.88:1",
+    "median_risk_reward_ratio": "0.70:1"
+  },
+  "zone_performance": {
+    "DISCOUNT": {
+      "sessions": 8,
+      "success_rate": "71.4%",
+      "percentage_of_total": "44.4%",
+      "average_rr": "0.46:1"
+    },
+    "PREMIUM": {
+      "sessions": 8,
+      "success_rate": "87.5%",
+      "percentage_of_total": "44.4%",
+      "average_rr": "9.09:1"
+    },
+    "EQUILIBRIUM": {
+      "sessions": 2,
+      "success_rate": "50.0%",
+      "percentage_of_total": "11.1%",
+      "average_rr": "0.54:1"
+    }
+  },
+  "temporal_analysis": {
+    "Monday": {
+      "sessions": 10,
+      "success_rate": "88.9%"
+    },
+    "Thursday": {
+      "sessions": 1,
+      "success_rate": "100.0%"
+    },
+    "Wednesday": {
+      "sessions": 3,
+      "success_rate": "100.0%"
+    },
+    "Tuesday": {
+      "sessions": 4,
+      "success_rate": "25.0%"
+    }
+  },
+  "trading_recommendations": {
+    "best_performing_zone": "PREMIUM",
+    "best_trading_day": "Thursday",
+    "minimum_risk_reward": "10:1 (conservative estimate)",
+    "recommended_risk_per_trade": "1% of account",
+    "primary_strategy": "Fade initial moves in Premium zones",
+    "secondary_strategy": "Wait for direction in Equilibrium zones"
+  }
+}

@@ -1,0 +1,310 @@
+Source: 484567392-traderunner-pro-A-Complete-BookMap-Review-pdf.pdf
+Pages: 14
+Characters: 18926
+Processing Time: 0.01s
+================================================================================
+
+--- Page 1 ---
+TradeRunner Articles , Reviews , Technology , Tools
+10/11/2015
+A Complete BookMap Review
+traderunner.pro/complete-bookmap-review/
+5
+There’s a huge industry in creating software for traders and much of it is frankly an expensive waste of time.
+However, every so often, a software developer comes along and brings something entirely new to the table.
+Something of genuine intrigue. VeloxPro seem to have done just that. So let’s take a look at it in this complete
+BookMap review.
+Over the past few months, I’ve been fortunate enough to get to grips with this new piece of software that holds real
+promise to those willing to invest the time and eﬀort required to learn it. BookMap X-Ray is a tool for visualizing the
+current and historical orderbook – something that day traders have had to do by memory until now.
+BookMap X-Ray is a great piece of software, but for those of you who aren’t quite ready to make the leap just yet, I
+want to run through the features of this still very new software and suggest to you some uses for it.
+Great Software Comes From Great Developers
+Since I ﬁrst came across BookMap, I’ve met some of the people from VeloxPro who are behind the software. What
+this did for me apart from giving me the belief that they are a genuine bunch of decent chaps, was tell me where it
+all began for them.
+Many trading tool developers come from the place they look to serve – day traders develop tools for day trading for
+example. And this perhaps explains why BookMap oﬀers a unique market perspective.
+The background of the team seems to universally be one stemming from the world of HFT. These are the guys
+who write the sort of algorithms that instruct computers to send order instructions based on predeﬁned rules. They
+come from part of the trading world where millisecond timeframes are no longer fast enough. Where algos
+constantly search for liquidity and press direction using limit orders as their tools.
+HFT has changed the game for day traders and now, perhaps, some canny software developers from the world of
+HFT are helping to swing the pendulum back to some extent.
+But one good idea doesn’t make a great piece of software does it? Nope. In fact, it can make an infuriatingly useless
+piece of software which, consistently ﬂatters to deceive. Developers who fail to implement their software properly
+and fail to listen to the customers they serve, usually end up losing out to someone else who eventually “does it
+right”.
+Having already worked with some of the guys behind BookMap, I’m pretty sure they are the polar opposite of this
+kind of developer.
+The Orderbook X-Rayed
+Okay, so I’ve already said that BookMap is a tool for visualizing the current and historical orderbook. But how is
+that useful? Well, it makes reading market activity and orderﬂow much simpler.
+1/14
+
+
+--- Page 2 ---
+Before we go any further, I really should point out another
+feature that in my opinion, is absolutely critical to making
+this software incredibly useful instead of being just
+another chocolate teapot. The feature I’m referring to is
+Volume Dots – these are conﬁgurable visualizations of
+trade size and intensity.
+In reality, it’s this symbiosis of the orderbook heatmap and
+volume dots, which creates such a powerful visual tool for
+traders to read and understand trading activity and
+orderﬂow. The way BookMap X-Ray translates how the
+market is set and how it reacts to volume trading at
+particular prices is invaluable.
+Going back to the heatmap itself, it’s the historical element that makes it so powerful. Traditionally, if you wanted
+to read the DOM or orderbook, you’d have to memorize what was queuing and where at any given time. You’d also
+need to have a rough idea of what traded there – at least any sizeable trades that went through anyway. Of course,
+you could look at the tape/time & sales for this, but that’s not exactly an intuitive approach to getting the information
+you need.
+If you had a decent memory and a superb attention span, you might be able to create a kind of mental orderbook
+heatmap. And whilst that’s certainly possible to do, it takes some time to get decent at it. When it comes down to
+it though, it’s just not that easy at all.
+The thing is, it’s important to realise that there are all kinds of movements in the orderbook happening all the time.
+2/14
+
+
+--- Page 3 ---
+So you still need to interpret what the tool is showing you. The information has to be put into the context of what
+the market has done and what your setups are.
+Some Simple Applications to Consider
+I can certainly see that there are going to be a lot of people who will love this product. Prop traders to start with
+(probably why they support TT X-Trader). But there will also be plenty of guys who will think it looks fantastic, but
+don’t really know what to do with it.
+I want to highlight some basic ways of using BookMap, but I’d also point out that there are live webinars that
+VeloxPro run all the time and plenty of YouTube videos that cover a variety of ideas on how to use it.
+Real volume
+The ﬁrst and perhaps most obvious application is seeing where real volume is and how the market reacts to it.
+There’s plenty of market making, spread trading and various other activity in the markets that makes you think
+there’s decent volume interest in the orderbook, yet when the market gets anywhere close to the order, it gets
+moved and so never actually executes.
+Volume that sits there is a diﬀerent matter though. It shows intent to execute for whatever the reason might be.
+Of course, seeing this kind of thing happen at a level that you were already interested in trading, might just give you
+more conﬁdence to take the trade.
+Spotting algos in action
+Algos are prevalent in electronic markets – or at least, that’s what we are led to believe. I don’t disagree, although I
+don’t believe that there are anywhere near the amount of algos making trading decisions without any sort of active
+3/14
+
+
+--- Page 4 ---
+human input.
+However, BookMap does do a good job of highlighting nefarious activity in the markets, algorithmic or otherwise.
+Quickly spotting this kind of activity can help you to recognize it for what it really is .
+Feel and ﬂow of the market
+Seeing how the market is ﬂowing is a great way to judge its current mood. It can, in combination with proper
+analysis, give you excellent clues to what the market might be trying to do and how it might react to certain prices.
+Some might believe that there’s a fantastic indicator out there that’ll give you a reliable read on this, but to me, the
+feel of the market is far more subjective and when it comes down to it, reading subtle diﬀerences is something the
+human brain is very good at (if you can see it in the ﬁrst place) – although clearly, not everyone is brilliant at deciding
+how to act based on this information!
+If you’re not convinced of the value of being in sync with the ﬂow of the market, consider it from a diﬀerent angle.
+When you’re clearly out of sync with market ﬂow, what does your performance generally look like? Mine personally,
+isn’t fantastic. BookMap not only helps you stay in sync by its very nature, but it also allows for session recording
+and playback to go over a session after the fact, if you feel like you’re on the wrong end of every reversal.
+Core BookMap Features
+For a new piece of software envisioned and built from scratch, BookMap already has a whole host of great features.
+Here are a few of them that I think you’d potentially ﬁnd useful.
+Historical Orderbook Heatmap
+This is the number 1 feature. The heatmap is based on the number of orders on each price at any given
+4/14
+
+
+--- Page 5 ---
+moment in time. The intensity automatically updates by default, but like the brightness and contrast, it’s user
+deﬁnable.
+It should be noted how the software updates price and the
+orderbook. It’s not based on new quotes and trades coming
+in via your datafeed, but rather by time. Each pixel is an
+amount of time and you can zoom in or out to view smaller
+or larger amounts of time per pixel (use mouse scroll wheel
+as a handy shortcut for doing this).
+So each pixel is eﬀectively a snapshot of the market
+data at that point in time.
+Because the heatmap intensity is displayed based on the
+number of orders at any given time, there is a slight inherent
+weakness in BookMap. If someone places an order of much
+greater size (but clearly fake) than any other price, the map
+will fade and the heatmap intensity at all other prices will
+become useless. You could adjust this so the large size
+isn’t the benchmark value, but then you’d lose its deﬁnition
+too. Also, in a product where the diﬀerence in resting orders
+over the whole book is much smaller in terms of
+percentage, you’ll get a display that doesn’t provide you
+with much deﬁnition.
+VeloxPro have built in extra features here to make the
+necessary adjustments, but just be aware that there will be
+some tweaking required in some situations.
+Volume Dots
+Because of the time-based updating, it’s important to
+recognize that volume dots are the volume per pixel, not
+per trade. It’s fairly natural to assume that a discrete dot represents a single trade and it’s a mistake I initially made.
+This however, is not the case.
+Because of this, the price the dot is centred on is based on the VWAP of the pixel’s volume . So a pixel that
+trades 28 at 2028.75, 12 at 2029.00, 3 at 2029.25 and 4 at 2029.50 will show a price of 2028.91. This becomes far
+more important the more you are zoomed out where there’s likely to be a greater spread of traded prices within each
+pixel.
+5/14
+
+
+--- Page 6 ---
+There are a number of settings you can change for the dots. You can ﬁlter trade size and dot size separately,
+meaning there must be a minimum size of a single trade and/or total pixel volume for the dot to show up at all. Great
+if you’re trying to spot bigger players perhaps…
+You can also change the size and transparency of the dots. Finally, you can opt to hide a dot when it reaches a
+certain density (although I’m not 100% sure of why you’d do this).
+The other crucial point to the volume dots is that you can select the buy and sell colours. By default these are set to
+yellow for buy and red for sell. I’ve changed the sell colour to blue though. The reason for this is that when a dot
+has a combination of buys and sells, the colours blend and I was ﬁnding the various shades of orange not
+especially distinguishable. Mine changes to diﬀerent shades of green. But that’s just me and your eyes are almost
+certainly diﬀerent to mine – so play with the colour settings and see what works for you.
+Diﬀerentiation between buy/sell volume dots might be easier with a third colour and/or a diﬀerent shape entirely –
+that’s probably one for the roadmap though.
+NEED DATA? For a 14 day fully featured 100% FREE trial of S5 Trader, click here
+Info column
+The info columns are designed to be ﬂexible. There are a number of options to show per column and you can
+6/14
+
+
+--- Page 7 ---
+choose how many columns you want to display. The options are: – orderbook, volume, trades, quotes, quotes delta,
+custom notes.
+Having the option to add custom notes is something that you might ﬁnd helpful if
+you wish to note down particular prices – an NFP high and low for example might
+be worth adding a note for.
+Another possible way of conﬁguring a map is to be zoomed in and display the
+current volume – this can give you a very nice clue to how the very recent action
+has developed.
+For each item, there’s the ability to show numbers and/or bars, bid/ask/both, split
+the bid/ask display, choose a custom justiﬁcation and display data in view/session
+accumulated/since last user reset.
+Trading
+Trading is possible directly from a map (paid add-on). To enable trading you must
+click on the cog icon at the top of the map, check “Enable One-Click Trading” and
+then select your default order size.
+7/14
+
+
+--- Page 8 ---
+Clicks to the right of the price line will send orders. A left mouse click will send
+a buy limit and a right mouse click will send a sell limit. A middle click at a
+price level will cancel the last order at that price and ctrl + middle mouse
+button click will cancel all orders at that price. Clicking on the big X at the top
+of the map next to your P&L will cancel all orders and clicking on the exit icon
+to the right of that will close an open position.
+8/14
+
+
+--- Page 9 ---
+I’m not a big fan of the way BookMap currently handles trading if I’m being honest. I’m not against it in principle as
+not having to ﬂick your eyes between various diﬀerent platforms is deﬁnitely something I’d prefer.
+Although I don’t think the trading options are particularly well covered (e.g. diﬀerent order types, dragging to move
+orders), probably the main reason that I wouldn’t use it is that it still doesn’t have a ﬁxable price scale – meaning at
+any given point, the price that you thought you were clicking on can move. What I’d like to see is an option to
+make it move like a normal DOM.
+I have been informed that this has been added to product roadmap, but I honestly don’t know when it will be
+available.
+There is one current beneﬁt however. BookMap will link into your trade account and show you where your orders are
+even if you’ve placed them in S5 Trader for example. So this way, it’s easy to see if your orders are well placed
+relative to current liquidity in the orderbook.
+Market Playback
+If you’ve used Linnsoft IRT, Market Delta or Sierra Chart extensively, you’ll probably at the very least, come across
+their market playback functionality. Futurestrader71 is a big advocate of using playback as a method of getting in
+sync with the markets, especially after a week or so of not trading.
+BookMap also has the ability to playback market data once it’s been recorded.
+9/14
+
+
+--- Page 10 ---
+In the latest version (I’m using 4.3.0 beta 101), you have the option to playback data at various steps between 1/8x
+and 128x.
+The one big problem with this is that it doesn’t currently have a way of rewinding or skipping forward like you’d see
+on a video player. This would be a HUGE improvement to the feature.
+Add-on Studies
+There are various other studies which may or may not be especially useful to you depending on your strategy. They
+are as follows (Iceberg, Large Lot Tracker and Imbalance are paid add-ons): –
+Hand tool
+10/14
+
+
+--- Page 11 ---
+This tool is way, way more useful than I initially realised. What it basically does is allow you to scroll the chart back.
+Whilst it might have been easier to just add a scroll bar for this functionality, the best part of the hand tool more than
+makes up for its slightly awkward implementation.
+What happens when you scroll back is that not only do you see the historical orderbook, but you also see exactly
+what your info columns were at that moment in time. So you’d see what the session volume proﬁle was up to
+that point for example. You’d also see exactly what the orderbook was at that time. So it’s incredibly fast and easy to
+go back and see how a market behaved if you missed it at the time. Very nice indeed!
+Tooltip
+The tooltip tool is just a far easier way of viewing the orderbook and trade info of a particular pixel. Before it was a
+feature, you’d have to hover over the pixel, keep your mouse steady and then look to the info bar at the bottom of the
+map.
+Time Slices
+This feature allows you to quickly select a few diﬀerent timeframes for the entire map to display (not time per pixel).
+It’s pretty useful as it allows you to switch between views quickly. The problem comes however,
+when you have volume dots conﬁgured for a speciﬁc view. You might want to have them set to
+display a higher minimum pixel volume when zoomed out than when you’re zoomed in.
+There doesn’t seem to be an easy way around this. You can’t even open more than one map of
+the same instrument in the version that I’m reviewing. Still, this software is constantly evolving.
+Sign up to stay informed.
+Datafeed Connectivity
+In terms of datafeed requirements, you have several options. S5 Trader, which is an OEC (now
+Futures Online) white label, is able to connect and Stage 5 Trading do have exclusive rights for
+this feed at the moment. You can also connect via CQG, DTN IQFeed (you’ll need level 2
+data though), TT X-Trader Pro, NinjaTrader and Interactive Brokers.
+One word of warning though – you can’t currently use it with any supported feed if like many traders, you have more
+than one of the ones they support. You can swap feeds, but you must contact them in order to change this rather
+than being able to switch between feeds yourself (as far as I know).
+One other point about data is that they don’t support historical data even if you save your data as historical. This
+might not seem like much of an issue, but when the program crashes (although it’s generally very stable) or more
+likely Windows or Java crash (which BM runs on), you lose all your live session data and must start the data ﬁle
+11/14
+
+
+--- Page 12 ---
+again. So even though you’ve been running and recording BookMap, you’ll not see initially anything on your maps
+when you restart the software.
+BookMap Reviewed
+There are bits and pieces that could have probably be done a little bit better and I’m sure new useful features will
+come in the future too. The one other issue that I’ve not mentioned yet is that the colour settings leave something to
+be desired. Although there are several options, there aren’t enough for the bid and ask colours. If you want a
+diﬀerent colour proﬁle to your bid/ask lines for example, you’re out of luck.
+That said, the guys at VeloxPro are very responsive and they are constantly working to improve their software. They
+should be extremely proud of what they’ve achieved so far.
+BookMap X-Ray is a cutting edge trading tool and although there is established orderﬂow software competition in
+the form of IRT (with the new “Trail of Intentions” feature), Jigsaw Trading, Market Delta (footprint) and Sierra Chart
+(numbers bars), this is in my opinion the one to watch.
+It’s a very cool bit of software and I’d go as far as saying that it’s a game changer.
+ 
+BookMap’s pricing model has now changed. They
+now charge $49 per month for BookMap Basic and
+$99 per month for BookMap Advanced (BM Basic +
+add-ons) both billed quarterly.
+Remember that you can also use S5 BookMap with
+other datafeeds if you contact their support.
+To gain access to a fully functional 100% FREE 14
+day trial of S5 BookMap, please click on the banner
+below.
+NEED DATA? For a 14 day fully featured 100% FREE trial of S5 Trader, click here
+You may also like:
+12/14
+
+
+--- Page 13 ---
+Dumb Trades, Bad Beats and Going “On Tilt” – part 2
+CTS T4 Trade History Tick Chart
+Dumb Trades, Bad Beats and Going “On Tilt
+FT71 Trade Wisdom: Success In Trading
+A Better App Than Evernote?
+Big ES Delta - Excel Analysis
+A Little Bit of Lateral Excel Thinking
+Ridiculous Trading Algos Gone Wild!
+13/14
+
+
+--- Page 14 ---
+14/14

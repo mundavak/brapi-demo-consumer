@@ -1,0 +1,355 @@
+//@version=5
+indicator("HTF Candle Overlay - Kresto (ICT Sweeps) Final", overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Manual Timeframe Settings
+htfInput = input.timeframe("240", "Timeframe", group="HIGHER TIMEFRAME CANDLES")
+numCandles = input.int(12, "No. of candles", minval=1, maxval=20, group="HIGHER TIMEFRAME CANDLES")
+startOffset = input.int(25, "Start Offset", minval=0, maxval=100, group="HIGHER TIMEFRAME CANDLES", tooltip="Spacing from current price (bars)")
+candleSpacing = input.float(2.0, "Candle spacing", minval=0.1, maxval=5.0, step=0.1, group="HIGHER TIMEFRAME CANDLES", tooltip="Gap between candles in bars")
+candleWidth = input.int(2, "Candle Width", minval=1, maxval=30, group="HIGHER TIMEFRAME CANDLES", tooltip="Width of each candle in bars")
+
+// Candle Body Colors
+bullBodyColor = input.color(color.new(color.green, 50), "Candle Body", group="HIGHER TIMEFRAME CANDLES", inline="body")
+bearBodyColor = input.color(color.new(color.black, 0), "  ", group="HIGHER TIMEFRAME CANDLES", inline="body")
+
+// Wick Color
+wickColor = input.color(color.black, "Wick", group="HIGHER TIMEFRAME CANDLES")
+
+// Open Line
+showOpenLine = input.bool(false, "Open line", group="HIGHER TIMEFRAME CANDLES", inline="open")
+openLineStyle = input.string("sol", "", options=["sol", "dash", "dot"], group="HIGHER TIMEFRAME CANDLES", inline="open")
+openLineColor = input.color(color.blue, "", group="HIGHER TIMEFRAME CANDLES", inline="open")
+
+// Sweep Line Settings
+showSweepLine = input.bool(true, "Sweep line", group="HIGHER TIMEFRAME CANDLES", inline="sweep")
+sweepLineStyle = input.string("sol", "", options=["sol", "dash", "dot"], group="HIGHER TIMEFRAME CANDLES", inline="sweep")
+sweepLineColor = input.color(color.red, "", group="HIGHER TIMEFRAME CANDLES", inline="sweep")
+sweepLineWidth = input.int(1, "Sweep Line Width", minval=1, maxval=5, step=1, group="HIGHER TIMEFRAME CANDLES", tooltip="Width of sweep lines")
+sweepLineExtension = input.int(30, "Sweep Extension (bars)", minval=0, maxval=200, step=1, group="HIGHER TIMEFRAME CANDLES", tooltip="How far sweep lines extend to the right")
+onlyValidSweeps = input.bool(true, "Only Valid ICT Sweeps", group="HIGHER TIMEFRAME CANDLES", tooltip="Only show sweeps where candle closed back inside previous candle's range")
+showSweepAlert = input.bool(true, "🔔", group="HIGHER TIMEFRAME CANDLES", inline="sweep", tooltip="Alert on sweep")
+
+// Labels
+showTFLabel = input.bool(true, "TimeFrame label", group="HIGHER TIMEFRAME CANDLES")
+showTimeLabel = input.bool(true, "Time label", group="HIGHER TIMEFRAME CANDLES", inline="time")
+timeLabelZone = input.string("UTC-4", "", group="HIGHER TIMEFRAME CANDLES", inline="time")
+
+// Auto Timeframe Selection
+enableAutoTF = input.bool(false, "Auto", group="AUTO TIME FRAMES", tooltip="Automatically select HTF based on chart timeframe")
+autoTF_5m = input.timeframe("15", "If current TF < 5m", group="AUTO TIME FRAMES")
+autoTF_15m = input.timeframe("60", "If current TF < 15m", group="AUTO TIME FRAMES")
+autoTF_1h = input.timeframe("240", "If current TF < 1H", group="AUTO TIME FRAMES")
+autoTF_4h = input.timeframe("D", "If current TF < 4H", group="AUTO TIME FRAMES")
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// AUTO TIMEFRAME SELECTION
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+getAutoTimeframe() =>
+    string selectedTF = htfInput
+    
+    if enableAutoTF
+        int currentTFSeconds = timeframe.in_seconds()
+        
+        if currentTFSeconds < 300  // Less than 5 minutes
+            selectedTF := autoTF_5m
+        else if currentTFSeconds < 900  // Less than 15 minutes
+            selectedTF := autoTF_15m
+        else if currentTFSeconds < 3600  // Less than 1 hour
+            selectedTF := autoTF_1h
+        else if currentTFSeconds < 14400  // Less than 4 hours
+            selectedTF := autoTF_4h
+    
+    selectedTF
+
+// Use auto-selected or manual timeframe
+effectiveHTF = getAutoTimeframe()
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// FETCH HTF DATA
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+[htf0_o, htf0_h, htf0_l, htf0_c, htf0_t] = request.security(syminfo.tickerid, effectiveHTF, [open, high, low, close, time], lookahead=barmerge.lookahead_off)
+[htf1_o, htf1_h, htf1_l, htf1_c, htf1_t] = request.security(syminfo.tickerid, effectiveHTF, [open[1], high[1], low[1], close[1], time[1]], lookahead=barmerge.lookahead_on)
+[htf2_o, htf2_h, htf2_l, htf2_c, htf2_t] = request.security(syminfo.tickerid, effectiveHTF, [open[2], high[2], low[2], close[2], time[2]], lookahead=barmerge.lookahead_on)
+[htf3_o, htf3_h, htf3_l, htf3_c, htf3_t] = request.security(syminfo.tickerid, effectiveHTF, [open[3], high[3], low[3], close[3], time[3]], lookahead=barmerge.lookahead_on)
+[htf4_o, htf4_h, htf4_l, htf4_c, htf4_t] = request.security(syminfo.tickerid, effectiveHTF, [open[4], high[4], low[4], close[4], time[4]], lookahead=barmerge.lookahead_on)
+[htf5_o, htf5_h, htf5_l, htf5_c, htf5_t] = request.security(syminfo.tickerid, effectiveHTF, [open[5], high[5], low[5], close[5], time[5]], lookahead=barmerge.lookahead_on)
+[htf6_o, htf6_h, htf6_l, htf6_c, htf6_t] = request.security(syminfo.tickerid, effectiveHTF, [open[6], high[6], low[6], close[6], time[6]], lookahead=barmerge.lookahead_on)
+[htf7_o, htf7_h, htf7_l, htf7_c, htf7_t] = request.security(syminfo.tickerid, effectiveHTF, [open[7], high[7], low[7], close[7], time[7]], lookahead=barmerge.lookahead_on)
+[htf8_o, htf8_h, htf8_l, htf8_c, htf8_t] = request.security(syminfo.tickerid, effectiveHTF, [open[8], high[8], low[8], close[8], time[8]], lookahead=barmerge.lookahead_on)
+[htf9_o, htf9_h, htf9_l, htf9_c, htf9_t] = request.security(syminfo.tickerid, effectiveHTF, [open[9], high[9], low[9], close[9], time[9]], lookahead=barmerge.lookahead_on)
+[htf10_o, htf10_h, htf10_l, htf10_c, htf10_t] = request.security(syminfo.tickerid, effectiveHTF, [open[10], high[10], low[10], close[10], time[10]], lookahead=barmerge.lookahead_on)
+[htf11_o, htf11_h, htf11_l, htf11_c, htf11_t] = request.security(syminfo.tickerid, effectiveHTF, [open[11], high[11], low[11], close[11], time[11]], lookahead=barmerge.lookahead_on)
+[htf12_o, htf12_h, htf12_l, htf12_c, htf12_t] = request.security(syminfo.tickerid, effectiveHTF, [open[12], high[12], low[12], close[12], time[12]], lookahead=barmerge.lookahead_on)
+[htf13_o, htf13_h, htf13_l, htf13_c, htf13_t] = request.security(syminfo.tickerid, effectiveHTF, [open[13], high[13], low[13], close[13], time[13]], lookahead=barmerge.lookahead_on)
+[htf14_o, htf14_h, htf14_l, htf14_c, htf14_t] = request.security(syminfo.tickerid, effectiveHTF, [open[14], high[14], low[14], close[14], time[14]], lookahead=barmerge.lookahead_on)
+[htf15_o, htf15_h, htf15_l, htf15_c, htf15_t] = request.security(syminfo.tickerid, effectiveHTF, [open[15], high[15], low[15], close[15], time[15]], lookahead=barmerge.lookahead_on)
+[htf16_o, htf16_h, htf16_l, htf16_c, htf16_t] = request.security(syminfo.tickerid, effectiveHTF, [open[16], high[16], low[16], close[16], time[16]], lookahead=barmerge.lookahead_on)
+[htf17_o, htf17_h, htf17_l, htf17_c, htf17_t] = request.security(syminfo.tickerid, effectiveHTF, [open[17], high[17], low[17], close[17], time[17]], lookahead=barmerge.lookahead_on)
+[htf18_o, htf18_h, htf18_l, htf18_c, htf18_t] = request.security(syminfo.tickerid, effectiveHTF, [open[18], high[18], low[18], close[18], time[18]], lookahead=barmerge.lookahead_on)
+[htf19_o, htf19_h, htf19_l, htf19_c, htf19_t] = request.security(syminfo.tickerid, effectiveHTF, [open[19], high[19], low[19], close[19], time[19]], lookahead=barmerge.lookahead_on)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// HELPER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Get candle data by index
+getCandleData(idx) =>
+    float o = na
+    float h = na
+    float l = na
+    float c = na
+    int t = na
+    
+    if idx == 0
+        o := htf0_o, h := htf0_h, l := htf0_l, c := htf0_c, t := htf0_t
+    else if idx == 1
+        o := htf1_o, h := htf1_h, l := htf1_l, c := htf1_c, t := htf1_t
+    else if idx == 2
+        o := htf2_o, h := htf2_h, l := htf2_l, c := htf2_c, t := htf2_t
+    else if idx == 3
+        o := htf3_o, h := htf3_h, l := htf3_l, c := htf3_c, t := htf3_t
+    else if idx == 4
+        o := htf4_o, h := htf4_h, l := htf4_l, c := htf4_c, t := htf4_t
+    else if idx == 5
+        o := htf5_o, h := htf5_h, l := htf5_l, c := htf5_c, t := htf5_t
+    else if idx == 6
+        o := htf6_o, h := htf6_h, l := htf6_l, c := htf6_c, t := htf6_t
+    else if idx == 7
+        o := htf7_o, h := htf7_h, l := htf7_l, c := htf7_c, t := htf7_t
+    else if idx == 8
+        o := htf8_o, h := htf8_h, l := htf8_l, c := htf8_c, t := htf8_t
+    else if idx == 9
+        o := htf9_o, h := htf9_h, l := htf9_l, c := htf9_c, t := htf9_t
+    else if idx == 10
+        o := htf10_o, h := htf10_h, l := htf10_l, c := htf10_c, t := htf10_t
+    else if idx == 11
+        o := htf11_o, h := htf11_h, l := htf11_l, c := htf11_c, t := htf11_t
+    else if idx == 12
+        o := htf12_o, h := htf12_h, l := htf12_l, c := htf12_c, t := htf12_t
+    else if idx == 13
+        o := htf13_o, h := htf13_h, l := htf13_l, c := htf13_c, t := htf13_t
+    else if idx == 14
+        o := htf14_o, h := htf14_h, l := htf14_l, c := htf14_c, t := htf14_t
+    else if idx == 15
+        o := htf15_o, h := htf15_h, l := htf15_l, c := htf15_c, t := htf15_t
+    else if idx == 16
+        o := htf16_o, h := htf16_h, l := htf16_l, c := htf16_c, t := htf16_t
+    else if idx == 17
+        o := htf17_o, h := htf17_h, l := htf17_l, c := htf17_c, t := htf17_t
+    else if idx == 18
+        o := htf18_o, h := htf18_h, l := htf18_l, c := htf18_c, t := htf18_t
+    else if idx == 19
+        o := htf19_o, h := htf19_h, l := htf19_l, c := htf19_c, t := htf19_t
+    
+    [o, h, l, c, t]
+
+// Format timeframe display
+formatTimeframe(tf) =>
+    tfInt = str.tonumber(tf)
+    result = tf
+    
+    if not na(tfInt)
+        if tfInt < 60
+            result := str.tostring(tfInt) + "m"
+        else if tfInt == 60
+            result := "1H"
+        else if tfInt == 120
+            result := "2H"
+        else if tfInt == 180
+            result := "3H"
+        else if tfInt == 240
+            result := "4H"
+        else if tfInt == 480
+            result := "8H"
+        else if tfInt == 720
+            result := "12H"
+        else if tfInt == 1440
+            result := "D"
+        else
+            hours = tfInt / 60
+            result := str.tostring(math.round(hours)) + "H"
+    else
+        if tf == "D" or tf == "1D"
+            result := "D"
+        else if tf == "W" or tf == "1W"
+            result := "W"
+        else if tf == "M" or tf == "1M"
+            result := "M"
+    
+    result
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DRAWING ARRAYS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+var boxList = array.new_box(0)
+var lineList = array.new_line(0)
+var labelList = array.new_label(0)
+
+// Clear old drawings
+if barstate.islast
+    if array.size(boxList) > 0
+        for i = 0 to array.size(boxList) - 1
+            box.delete(array.get(boxList, i))
+        array.clear(boxList)
+    
+    if array.size(lineList) > 0
+        for i = 0 to array.size(lineList) - 1
+            line.delete(array.get(lineList, i))
+        array.clear(lineList)
+    
+    if array.size(labelList) > 0
+        for i = 0 to array.size(labelList) - 1
+            label.delete(array.get(labelList, i))
+        array.clear(labelList)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DRAW HTF CANDLES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Convert line style string to Pine Script style
+getLineStyle(styleStr) =>
+    styleStr == "dash" ? line.style_dashed : styleStr == "dot" ? line.style_dotted : line.style_solid
+
+// Calculate X position for each candle
+getXPosition(i) => 
+    bar_index + startOffset + ((numCandles - 1) - i) * (candleWidth + math.floor(candleSpacing))
+
+if barstate.islast
+    // Track sweeps - ONLY CHECK IMMEDIATELY ADJACENT CANDLES
+    var bool[] highSwept = array.new_bool(numCandles, false)
+    var bool[] lowSwept = array.new_bool(numCandles, false)
+    
+    if onlyValidSweeps
+        // Check each pair of adjacent candles only
+        for i = 0 to numCandles - 2
+            sweepIdx = i      // The sweeping candle (newer)
+            sweptIdx = i + 1  // The swept candle (older, immediately before)
+            
+            [sweepO, sweepH, sweepL, sweepC, sweepT] = getCandleData(sweepIdx)
+            [sweptO, sweptH, sweptL, sweptC, sweptT] = getCandleData(sweptIdx)
+            
+            if na(sweepO) or na(sweptO)
+                continue
+            
+            // Check for valid HIGH sweep between adjacent candles
+            if sweepH > sweptH
+                if sweepC < sweptH and sweepC >= sweptL
+                    array.set(highSwept, sweptIdx, true)
+            
+            // Check for valid LOW sweep between adjacent candles
+            if sweepL < sweptL
+                if sweepC > sweptL and sweepC <= sweptH
+                    array.set(lowSwept, sweptIdx, true)
+    
+    // Variables for TF label positioning
+    int newestCandleX = na
+    int secondNewestCandleX = na
+    float newestCandleH = na
+    float secondNewestCandleH = na
+    
+    // Draw all candles
+    for i = 0 to numCandles - 1
+        // Get candle data
+        [o, h, l, c, t] = getCandleData(i)
+        
+        // Skip invalid data
+        if na(o) or na(h) or na(l) or na(c) or na(t)
+            continue
+        
+        // Calculate candle position
+        int xCenter = getXPosition(i)
+        int xLeft = xCenter - math.floor(candleWidth / 2)
+        int xRight = xCenter + math.floor(candleWidth / 2)
+        
+        // Skip if positions are invalid
+        if na(xLeft) or na(xRight)
+            continue
+        
+        // Track positions for TF label - need both newest and second newest
+        if i == 0
+            newestCandleX := xCenter
+            newestCandleH := h
+        if i == 1
+            secondNewestCandleX := xCenter
+            secondNewestCandleH := h
+        
+        // Determine colors
+        isBull = c >= o
+        bodyColor = isBull ? bullBodyColor : bearBodyColor
+        
+        // Draw candle body
+        bodyTop = math.max(o, c)
+        bodyBottom = math.min(o, c)
+        
+        // Handle doji
+        if bodyTop == bodyBottom
+            bodyTop := bodyTop + (h - l) * 0.001
+            bodyBottom := bodyBottom - (h - l) * 0.001
+        
+        b = box.new(xLeft, bodyTop, xRight, bodyBottom, border_color=bodyColor, bgcolor=bodyColor, border_width=1, xloc=xloc.bar_index)
+        array.push(boxList, b)
+        
+        // Draw wicks
+        upperWick = line.new(xCenter, math.max(o, c), xCenter, h, color=wickColor, width=1, xloc=xloc.bar_index)
+        array.push(lineList, upperWick)
+        
+        lowerWick = line.new(xCenter, l, xCenter, math.min(o, c), color=wickColor, width=1, xloc=xloc.bar_index)
+        array.push(lineList, lowerWick)
+        
+        // Draw open line
+        if showOpenLine
+            openLine = line.new(xLeft, o, xRight, o, color=openLineColor, style=getLineStyle(openLineStyle), width=1, xloc=xloc.bar_index)
+            array.push(lineList, openLine)
+        
+        // Draw sweep lines
+        if showSweepLine
+            if onlyValidSweeps
+                if array.get(highSwept, i)
+                    if i > 0
+                        sweepByX = getXPosition(i - 1)
+                        sweepLineHigh = line.new(xCenter, h, sweepByX, h, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                        array.push(lineList, sweepLineHigh)
+                
+                if array.get(lowSwept, i)
+                    if i > 0
+                        sweepByX = getXPosition(i - 1)
+                        sweepLineLow = line.new(xCenter, l, sweepByX, l, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                        array.push(lineList, sweepLineLow)
+            else
+                rightExtensionX = getXPosition(0) + sweepLineExtension
+                sweepLineHigh = line.new(xCenter, h, rightExtensionX, h, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                array.push(lineList, sweepLineHigh)
+                
+                sweepLineLow = line.new(xCenter, l, rightExtensionX, l, color=sweepLineColor, style=getLineStyle(sweepLineStyle), width=sweepLineWidth, xloc=xloc.bar_index)
+                array.push(lineList, sweepLineLow)
+        
+        // Draw time labels
+        if showTimeLabel and not na(t)
+            adjustedTime = t
+            if timeLabelZone == "UTC-4"
+                adjustedTime := t - (4 * 60 * 60 * 1000)
+            
+            timeText = str.format("{0,time,HH:mm}", adjustedTime)
+            timeLabel = label.new(xCenter, l, text=timeText, style=label.style_label_up, color=color.new(color.white, 100), textcolor=color.black, size=size.tiny, xloc=xloc.bar_index, yloc=yloc.price)
+            array.push(labelList, timeLabel)
+    
+    // Draw timeframe label - FIXED: Position above current candle area
+    if showTFLabel and not na(newestCandleX) and not na(secondNewestCandleX)
+        tfDisplay = formatTimeframe(effectiveHTF)
+        
+        // Calculate midpoint X position between candle 0 and candle 1
+        midpointX = math.round((newestCandleX + secondNewestCandleX) / 2)
+        
+        // Use the higher of the two newest candles for Y positioning
+        labelYPosition = math.max(newestCandleH, secondNewestCandleH)
+        
+        // Place label at midpoint horizontally, above the newest candles vertically
+        tfLabel = label.new(midpointX, labelYPosition, text=tfDisplay, style=label.style_label_down, color=color.new(color.white, 100), textcolor=color.black, size=size.normal, xloc=xloc.bar_index, yloc=yloc.price)
+        array.push(labelList, tfLabel)

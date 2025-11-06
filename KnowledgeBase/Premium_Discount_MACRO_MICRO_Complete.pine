@@ -1,0 +1,465 @@
+// Premium/Discount Delta Volume - Complete System
+// Based on ICT (Inner Circle Trader) theory with MACRO/MICRO analysis
+// Tells you WHERE to trade (Premium = SELL zone, Discount = BUY zone)
+// Works with Judas Swing indicator for complete confluence trading
+// © BigBeluga - Enhanced with Complete Trading System Features
+
+//@version=5
+indicator('Premium/Discount Delta Volume - Complete System', shorttitle='P/D Delta', overlay=true, max_lines_count=5, max_boxes_count=10, max_labels_count=20)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INPUTS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// MICRO Settings (Scalp Trades - 1-5 minute holds)
+microShow = input.bool(true, "Show MICRO", inline="micro", group="MICRO Settings (Scalp Trades)")
+microPeriod = input.int(50, "Lookback Period", minval=25, maxval=100, inline="micro", group="MICRO Settings (Scalp Trades)", tooltip="Analyzes last 50 bars for fast-moving zones and scalping signals")
+microThreshold = input.float(30.0, "Delta Threshold %", minval=10.0, maxval=50.0, step=5.0, group="MICRO Settings (Scalp Trades)", tooltip="Signals fire when delta volume > 30%. Lower = more signals, higher = stronger signals")
+
+// MACRO Settings (Intraday Swings - 30 min to 4 hour holds)  
+macroShow = input.bool(true, "Show MACRO", inline="macro", group="MACRO Settings (Intraday Swings)")
+macroPeriod = input.int(200, "Lookback Period", minval=100, maxval=300, inline="macro", group="MACRO Settings (Intraday Swings)", tooltip="Analyzes last 200 bars for slower-moving zones and swing trade signals")
+macroThreshold = input.float(60.0, "Delta Threshold %", minval=40.0, maxval=80.0, step=5.0, group="MACRO Settings (Intraday Swings)", tooltip="Signals fire when delta volume > 60%. Higher = only extreme buying/selling triggers signal")
+
+// Visual Settings
+discountColor = input.color(#79c1f1, "Discount Color", group="Visual Settings", tooltip="Blue shaded box color for DISCOUNT zone (buy area)")
+premiumColor = input.color(#f19579, "Premium Color", group="Visual Settings", tooltip="Orange shaded box color for PREMIUM zone (sell area)")
+tablePos = input.string("Top Right", "Info Table Position", options=["Top Left", "Top Right", "Bottom Left", "Bottom Right"], group="Visual Settings", tooltip="Position of information table - recommend Top Left for P/D, Top Right for Judas Swing")
+lbl_size = input.string("Normal", "Label Size", options=["Tiny", "Small", "Normal", "Large"], group="Visual Settings", tooltip="Size of all labels")
+txt_color = input.color(color.white, "Text Color", group="Visual Settings", tooltip="Color of all text labels")
+
+// ICT Reference Levels (PDH/PDL/PWH/PWL)
+showPDH = input.bool(true, "Show PDH/PDL", inline="PD", group="ICT Reference Levels", tooltip="Previous Day High/Low - Key liquidity levels")
+showPWH = input.bool(false, "Show PWH/PWL", inline="PW", group="ICT Reference Levels", tooltip="Previous Week High/Low - Major swing reference")
+pdColor = input.color(color.blue, "Day Color", inline="PD", group="ICT Reference Levels")
+pwColor = input.color(#089981, "Week Color", inline="PW", group="ICT Reference Levels")
+levelStyle = input.string("Dotted", "Level Style", options=["Solid", "Dotted", "Dashed"], group="ICT Reference Levels")
+levelWidth = input.int(1, "Level Width", 1, 3, group="ICT Reference Levels")
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// ARRAYS FOR STORING DATA
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Arrays to store high/low data for MICRO levels
+var array<float> microHighs = array.new_float(microPeriod, 0.)
+var array<float> microLows = array.new_float(microPeriod, 0.)
+// Arrays to store high/low data for MACRO levels
+var array<float> macroHighs = array.new_float(macroPeriod, 0.)
+var array<float> macroLows = array.new_float(macroPeriod, 0.)
+// Arrays to store delta volume data
+var array<float> posVolMicro = array.new_float(microPeriod, 0.)
+var array<float> negVolMicro = array.new_float(microPeriod, 0.)
+var array<float> posVolMacro = array.new_float(macroPeriod, 0.)
+var array<float> negVolMacro = array.new_float(macroPeriod, 0.)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// VARIABLES FOR DELTA VOLUME & BOX MANAGEMENT
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Variables to store delta volume percentages
+var float microDelta = na
+var float macroDelta = na
+
+// Variables for box indices
+int microStartIdx = bar_index - microPeriod
+int microEndIdx = bar_index + 50
+int macroStartIdx = bar_index - macroPeriod
+int macroEndIdx = bar_index + 70
+
+// Variables for box drawing
+var box microUpperBox = na
+var box microLowerBox = na
+var box macroUpperBox = na
+var box macroLowerBox = na
+var box midBox = na
+
+// Variables for equilibrium lines
+var line microEqLine = na
+var line macroEqLine = na
+
+// ATR for dynamic box scaling
+float atrValue = ta.atr(200) * 0.8
+
+// ICT Reference Level Variables
+var float pdh = na
+var float pdl = na
+var float pwh = na
+var float pwl = na
+var line pdhLine = na
+var line pdlLine = na
+var line pwhLine = na
+var line pwlLine = na
+var label pdhLabel = na
+var label pdlLabel = na
+var label pwhLabel = na
+var label pwlLabel = na
+
+// Get line style from string
+get_line_style(string style) =>
+    result = switch style
+        'Solid' => line.style_solid
+        'Dotted' => line.style_dotted
+        'Dashed' => line.style_dashed
+        => line.style_dotted
+
+// Get label size from string
+get_label_size(string size_str) =>
+    result = switch size_str
+        'Tiny' => size.tiny
+        'Small' => size.small
+        'Normal' => size.normal
+        'Large' => size.large
+        => size.normal
+        
+label_size = get_label_size(lbl_size)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DELTA VOLUME CALCULATIONS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Calculate the delta volume for MACRO period
+if barstate.islast and macroShow
+    for int i = 0 to macroPeriod - 1 by 1
+        array.push(macroHighs, high[i])
+        array.push(macroLows, low[i])
+        if close[i] > open[i]
+            posVolMacro.set(i, volume[i])
+        if close[i] < open[i]
+            negVolMacro.set(i, -volume[i])
+    macroDelta := (negVolMacro.avg() / posVolMacro.avg() + 1) * 100
+    macroDelta := math.min(math.max(macroDelta, -100), 100)
+    macroDelta
+
+// Calculate the delta volume for MICRO period  
+if barstate.islast and microShow
+    for int i = 0 to microPeriod - 1 by 1
+        array.push(microHighs, high[i])
+        array.push(microLows, low[i])
+        if close[i] > open[i]
+            posVolMicro.set(i, volume[i])
+        if close[i] < open[i]
+            negVolMicro.set(i, -volume[i])
+    microDelta := (negVolMicro.avg() / posVolMicro.avg() + 1) * 100
+    microDelta := math.min(math.max(microDelta, -100), 100)
+    microDelta
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// ICT REFERENCE LEVELS (PDH/PDL/PWH/PWL)
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Update Previous Day High/Low
+if timeframe.change("D")
+    pdh := high[1]
+    pdl := low[1]
+    
+    if showPDH
+        if na(pdhLine)
+            pdhLine := line.new(bar_index, pdh, bar_index, pdh, 
+             style=get_line_style(levelStyle), width=levelWidth, color=pdColor)
+            pdhLabel := label.new(bar_index, pdh, "PDH", 
+             style=label.style_label_left, color=color.new(color.white, 100), 
+             textcolor=txt_color, size=label_size)
+        else
+            line.set_xy1(pdhLine, bar_index, pdh)
+            line.set_xy2(pdhLine, bar_index, pdh)
+            label.set_xy(pdhLabel, bar_index, pdh)
+            
+        if na(pdlLine)
+            pdlLine := line.new(bar_index, pdl, bar_index, pdl, 
+             style=get_line_style(levelStyle), width=levelWidth, color=pdColor)
+            pdlLabel := label.new(bar_index, pdl, "PDL", 
+             style=label.style_label_left, color=color.new(color.white, 100), 
+             textcolor=txt_color, size=label_size)
+        else
+            line.set_xy1(pdlLine, bar_index, pdl)
+            line.set_xy2(pdlLine, bar_index, pdl)
+            label.set_xy(pdlLabel, bar_index, pdl)
+
+// Update Previous Week High/Low
+if timeframe.change("W")
+    pwh := high[1]
+    pwl := low[1]
+    
+    if showPWH
+        if na(pwhLine)
+            pwhLine := line.new(bar_index, pwh, bar_index, pwh, 
+             style=get_line_style(levelStyle), width=levelWidth, color=pwColor)
+            pwhLabel := label.new(bar_index, pwh, "PWH", 
+             style=label.style_label_left, color=color.new(color.white, 100), 
+             textcolor=txt_color, size=label_size)
+        else
+            line.set_xy1(pwhLine, bar_index, pwh)
+            line.set_xy2(pwhLine, bar_index, pwh)
+            label.set_xy(pwhLabel, bar_index, pwh)
+            
+        if na(pwlLine)
+            pwlLine := line.new(bar_index, pwl, bar_index, pwl, 
+             style=get_line_style(levelStyle), width=levelWidth, color=pwColor)
+            pwlLabel := label.new(bar_index, pwl, "PWL", 
+             style=label.style_label_left, color=color.new(color.white, 100), 
+             textcolor=txt_color, size=label_size)
+        else
+            line.set_xy1(pwlLine, bar_index, pwl)
+            line.set_xy2(pwlLine, bar_index, pwl)
+            label.set_xy(pwlLabel, bar_index, pwl)
+
+// Extend PDH/PDL lines to current bar
+if showPDH and not na(pdhLine)
+    line.set_x2(pdhLine, bar_index)
+    line.set_x2(pdlLine, bar_index)
+    label.set_x(pdhLabel, bar_index)
+    label.set_x(pdlLabel, bar_index)
+
+// Extend PWH/PWL lines to current bar
+if showPWH and not na(pwhLine)
+    line.set_x2(pwhLine, bar_index)
+    line.set_x2(pwlLine, bar_index)
+    label.set_x(pwhLabel, bar_index)
+    label.set_x(pwlLabel, bar_index)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// BOX HANDLING AND UPDATING
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Update and manage boxes based on crossover conditions
+if ta.crossover(low, microUpperBox.get_top()) or ta.crossunder(high, microLowerBox.get_bottom()) or bar_index % 100 == 0
+    microUpperBox.set_top(microHighs.max() + atrValue)
+    microUpperBox.set_bottom(microHighs.min())
+    microLowerBox.set_top(microLows.min())
+    microLowerBox.set_bottom(microLows.min() - atrValue)
+
+    macroUpperBox.set_top(macroHighs.max() + atrValue)
+    macroUpperBox.set_bottom(macroHighs.min())
+    macroLowerBox.set_top(macroLows.min())
+    macroLowerBox.set_bottom(macroLows.min() - atrValue)
+
+    box.delete(microUpperBox[1])
+    box.delete(microLowerBox[1])
+    box.delete(macroUpperBox[1])
+    box.delete(macroLowerBox[1])
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// PRICE ZONE DETERMINATION
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+microZone = na(microUpperBox) or na(microLowerBox) ? "EQUILIBRIUM" : close > microUpperBox.get_bottom() ? "PREMIUM" : close < microLowerBox.get_top() ? "DISCOUNT" : "EQUILIBRIUM"
+macroZone = na(macroUpperBox) or na(macroLowerBox) ? "EQUILIBRIUM" : close > macroUpperBox.get_bottom() ? "PREMIUM" : close < macroLowerBox.get_top() ? "DISCOUNT" : "EQUILIBRIUM"
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// SIGNAL GENERATION
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+macroInDiscount = macroZone == "DISCOUNT" 
+macroInPremium = macroZone == "PREMIUM"
+macroPositiveDelta = macroDelta > macroThreshold
+macroNegativeDelta = macroDelta < -macroThreshold
+
+macroLongSignal = macroShow and macroInDiscount and macroPositiveDelta
+macroShortSignal = macroShow and macroInPremium and macroNegativeDelta
+
+microInDiscount = microZone == "DISCOUNT"
+microInPremium = microZone == "PREMIUM" 
+microPositiveDelta = microDelta > microThreshold
+microNegativeDelta = microDelta < -microThreshold
+
+microLongSignal = microShow and microInDiscount and microPositiveDelta
+microShortSignal = microShow and microInPremium and microNegativeDelta
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// ZONE TRANSITION DETECTION
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+var string prevMacroZone = "EQUILIBRIUM"
+var string prevMicroZone = "EQUILIBRIUM"
+
+macroZoneChanged = macroZone != prevMacroZone
+microZoneChanged = microZone != prevMicroZone
+
+if macroZoneChanged
+    prevMacroZone := macroZone
+if microZoneChanged  
+    prevMicroZone := microZone
+
+enteredPremium = macroZoneChanged and macroZone == "PREMIUM"
+enteredDiscount = macroZoneChanged and macroZone == "DISCOUNT" 
+enteredEquilibrium = macroZoneChanged and macroZone == "EQUILIBRIUM"
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// DRAW AND UPDATE ZONE BOXES
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Draw and update MICRO lower box (DISCOUNT zone)
+if na(microLowerBox) and barstate.islast and microShow
+    microLowerBox := box.new(microStartIdx, microLows.min(), microEndIdx, microLows.min() - atrValue, discountColor, 1, bgcolor=color.new(discountColor, 85), text='MICRO DISCOUNT: ' + str.tostring(posVolMicro.sum(), format.volume), text_size=size.small, text_color=chart.fg_color, force_overlay=true)
+    microLowerBox
+else
+    microLowerBox.set_text('MICRO DISCOUNT: ' + str.tostring(posVolMicro.sum(), format.volume))
+    box.set_left(microLowerBox, microStartIdx)
+    box.set_right(microLowerBox, microEndIdx)
+    array.clear(microLows)
+
+// Draw and update MICRO upper box (PREMIUM zone)
+if na(microUpperBox) and barstate.islast and microShow
+    microUpperBox := box.new(microStartIdx, microHighs.max() + atrValue, microEndIdx, microHighs.max(), premiumColor, 1, bgcolor=color.new(premiumColor, 85), text='MICRO PREMIUM: ' + str.tostring(negVolMicro.sum(), format.volume), text_size=size.small, text_color=chart.fg_color, force_overlay=true)
+    microUpperBox
+else
+    microUpperBox.set_text('MICRO PREMIUM: ' + str.tostring(negVolMicro.sum(), format.volume))
+    box.set_left(microUpperBox, microStartIdx)
+    box.set_right(microUpperBox, microEndIdx)
+    array.clear(microHighs)
+
+// Draw and update MACRO upper box (PREMIUM zone)
+if na(macroUpperBox) and barstate.islast and macroShow
+    macroUpperBox := box.new(macroStartIdx, macroHighs.max() + atrValue, macroEndIdx, macroHighs.max(), premiumColor, 0, bgcolor=color.new(premiumColor, 60), text='MACRO PREMIUM: ' + str.tostring(negVolMacro.sum(), format.volume), text_size=size.small, text_color=chart.fg_color, text_halign=microShow ? text.align_right : text.align_center, force_overlay=true)
+    macroUpperBox
+else
+    macroUpperBox.set_text('MACRO PREMIUM: ' + str.tostring(negVolMacro.sum(), format.volume))
+    box.set_left(macroUpperBox, macroStartIdx)
+    box.set_right(macroUpperBox, macroEndIdx)
+    array.clear(macroHighs)
+
+// Draw and update MACRO lower box (DISCOUNT zone)
+if na(macroLowerBox) and barstate.islast and macroShow
+    macroLowerBox := box.new(macroStartIdx, macroLows.min(), macroEndIdx, macroLows.min() - atrValue, discountColor, 0, bgcolor=color.new(discountColor, 60), text='MACRO DISCOUNT: ' + str.tostring(posVolMacro.sum(), format.volume), text_size=size.small, text_color=chart.fg_color, text_halign=microShow ? text.align_right : text.align_center, force_overlay=true)
+    macroLowerBox
+else
+    macroLowerBox.set_text('MACRO DISCOUNT: ' + str.tostring(posVolMacro.sum(), format.volume))
+    box.set_left(macroLowerBox, macroStartIdx)
+    box.set_right(macroLowerBox, macroEndIdx)
+    array.clear(macroLows)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// EQUILIBRIUM LINE - PDH/PDL PATTERN (Create once, extend every bar)
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+// Create MICRO equilibrium line (only once)
+if na(microEqLine) and microShow and not na(microUpperBox) and not na(microLowerBox)
+    float mid = math.avg(microLowerBox.get_top(), microUpperBox.get_bottom())
+    if not na(mid)
+        microEqLine := line.new(microStartIdx, mid, microStartIdx, mid, 
+                               color=chart.fg_color, style=line.style_dashed, width=1)
+
+// Extend MICRO equilibrium line every bar (keeps it anchored and centered)
+if microShow and not na(microEqLine) and not na(microUpperBox) and not na(microLowerBox)
+    float mid = math.avg(microLowerBox.get_top(), microUpperBox.get_bottom())
+    if not na(mid)
+        line.set_xy1(microEqLine, microStartIdx, mid)
+        line.set_xy2(microEqLine, microEndIdx, mid)
+
+// Clean up MICRO line if turned off
+if not microShow and not na(microEqLine)
+    line.delete(microEqLine)
+    microEqLine := na
+
+// Draw midBox for delta volume display (only on last bar)
+if barstate.islast and microShow and not na(microUpperBox) and not na(microLowerBox)
+    if not na(midBox)
+        box.delete(midBox)
+    midBox := box.new(microStartIdx, microUpperBox.get_bottom(), microEndIdx, microLowerBox.get_top(), na, 0, 
+                      bgcolor=color.new(microDelta > 0 ? discountColor : premiumColor, 93), 
+                      text='Delta Volume\n' + str.tostring(microDelta, format.percent), 
+                      text_size=size.normal, text_color=microDelta > 0 ? discountColor : premiumColor, 
+                      text_halign=text.align_right, text_valign=text.align_bottom, force_overlay=true)
+
+// Create MACRO equilibrium line (only once)
+if na(macroEqLine) and macroShow and not na(macroUpperBox) and not na(macroLowerBox)
+    float midMacro = math.avg(macroLowerBox.get_top(), macroUpperBox.get_bottom())
+    if not na(midMacro)
+        macroEqLine := line.new(macroStartIdx, midMacro, macroStartIdx, midMacro, 
+                               color=chart.fg_color, style=line.style_dashed, width=2)
+
+// Extend MACRO equilibrium line every bar (keeps it anchored and centered)
+if macroShow and not na(macroEqLine) and not na(macroUpperBox) and not na(macroLowerBox)
+    float midMacro = math.avg(macroLowerBox.get_top(), macroUpperBox.get_bottom())
+    if not na(midMacro)
+        line.set_xy1(macroEqLine, macroStartIdx, midMacro)
+        line.set_xy2(macroEqLine, macroEndIdx, midMacro)
+
+// Clean up MACRO line if turned off
+if not macroShow and not na(macroEqLine)
+    line.delete(macroEqLine)
+    macroEqLine := na
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// VISUAL ELEMENTS - SIGNAL ARROWS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+plotshape(macroLongSignal, title="MACRO BUY", style=shape.triangleup, location=location.belowbar, 
+          color=color.blue, size=size.normal, text="MACRO\nBUY", textcolor=color.white)
+          
+plotshape(macroShortSignal, title="MACRO SELL", style=shape.triangledown, location=location.abovebar,
+          color=color.red, size=size.normal, text="MACRO\nSELL", textcolor=color.white)
+
+plotshape(microLongSignal, title="MICRO BUY", style=shape.circle, location=location.belowbar,
+          color=color.blue, size=size.small, text="μ", textcolor=color.white)
+          
+plotshape(microShortSignal, title="MICRO SELL", style=shape.circle, location=location.abovebar, 
+          color=color.red, size=size.small, text="μ", textcolor=color.white)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// INFORMATION TABLE
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+tablePosition = tablePos == "Top Left" ? position.top_left : tablePos == "Top Right" ? position.top_right : tablePos == "Bottom Left" ? position.bottom_left : tablePos == "Bottom Right" ? position.bottom_right : position.top_right
+
+var table infoTable = table.new(tablePosition, 2, 6, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.gray)
+
+if barstate.islast
+    table.cell(infoTable, 0, 0, "Trade Type", bgcolor=color.new(color.gray, 80), text_color=color.white, text_size=size.small)
+    table.cell(infoTable, 1, 0, "Delta Vol", bgcolor=color.new(color.gray, 80), text_color=color.white, text_size=size.small)
+    
+    macroColor = macroDelta > 0 ? color.green : color.red
+    table.cell(infoTable, 0, 1, "MACRO", bgcolor=color.new(color.gray, 90), text_color=color.white, text_size=size.small)
+    table.cell(infoTable, 1, 1, str.tostring(macroDelta, "#.##") + "%", bgcolor=color.new(macroColor, 80), text_color=color.white, text_size=size.small)
+    
+    table.cell(infoTable, 0, 2, "(Intraday)", bgcolor=color.new(color.gray, 90), text_color=color.gray, text_size=size.tiny)
+    table.cell(infoTable, 1, 2, "", bgcolor=color.new(color.gray, 90))
+    
+    microColor = microDelta > 0 ? color.green : color.red
+    table.cell(infoTable, 0, 3, "MICRO", bgcolor=color.new(color.gray, 90), text_color=color.white, text_size=size.small)
+    table.cell(infoTable, 1, 3, str.tostring(microDelta, "#.##") + "%", bgcolor=color.new(microColor, 80), text_color=color.white, text_size=size.small)
+    
+    table.cell(infoTable, 0, 4, "(Scalp)", bgcolor=color.new(color.gray, 90), text_color=color.gray, text_size=size.tiny) 
+    table.cell(infoTable, 1, 4, "", bgcolor=color.new(color.gray, 90))
+    
+    zoneColor = macroZone == "PREMIUM" ? premiumColor : macroZone == "DISCOUNT" ? discountColor : color.yellow
+        
+    table.cell(infoTable, 0, 5, "Price Zone:", bgcolor=color.new(color.gray, 90), text_color=color.white, text_size=size.small)
+    table.cell(infoTable, 1, 5, macroZone, bgcolor=color.new(zoneColor, 70), text_color=color.white, text_size=size.small)
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// ALERTS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+alertcondition(enteredPremium, title="🔴 Entered PREMIUM Zone", 
+               message="🔴 ENTERED PREMIUM ZONE - Consider SELLING/SHORTING. Price crossed UP into premium zone. Look for short entries.")
+
+alertcondition(enteredDiscount, title="🔵 Entered DISCOUNT Zone",
+               message="🔵 ENTERED DISCOUNT ZONE - Consider BUYING/LONG. Price crossed DOWN into discount zone. Look for long entries.")
+               
+alertcondition(enteredEquilibrium, title="🟡 Entered EQUILIBRIUM Zone", 
+               message="🟡 ENTERED EQUILIBRIUM ZONE - Stand aside, no directional bias. Price entered fair value zone.")
+
+alertcondition(macroLongSignal, title="🔵 MACRO BUY Signal",
+               message="🔵 MACRO BUY SIGNAL - LONG entry (intraday swing). Price in discount + high positive delta volume. Hold time: 30 min - 4 hours.")
+
+alertcondition(macroShortSignal, title="🔴 MACRO SELL Signal", 
+               message="🔴 MACRO SELL SIGNAL - SHORT entry (intraday swing). Price in premium + high negative delta volume. Hold time: 30 min - 4 hours.")
+
+alertcondition(microLongSignal, title="🟢 MICRO BUY Signal",
+               message="🟢 MICRO BUY SIGNAL - LONG entry (scalp). Price rejecting discount + positive delta. Hold time: 1-5 minutes.")
+               
+alertcondition(microShortSignal, title="🟠 MICRO SELL Signal",
+               message="🟠 MICRO SELL SIGNAL - SHORT entry (scalp). Price rejecting premium + negative delta. Hold time: 1-5 minutes.")
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// PLOT OUTPUTS FOR EXTERNAL ACCESS
+// ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+plot(macroLongSignal ? 1 : 0, title="MACRO Long Signal", display=display.none)
+plot(macroShortSignal ? 1 : 0, title="MACRO Short Signal", display=display.none) 
+plot(microLongSignal ? 1 : 0, title="MICRO Long Signal", display=display.none)
+plot(microShortSignal ? 1 : 0, title="MICRO Short Signal", display=display.none)
+
+plot(macroDelta, title="MACRO Delta %", color=color.new(color.gray, 100), display=display.none)
+plot(microDelta, title="MICRO Delta %", color=color.new(color.gray, 100), display=display.none)

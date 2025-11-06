@@ -28,7 +28,11 @@ public class SimpleDemoProviderValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        return CastUtilities.castObject(o, SimpleDemoProviderEvent.class);
+        try {
+            return CastUtilities.castObject(o, SimpleDemoProviderEvent.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override

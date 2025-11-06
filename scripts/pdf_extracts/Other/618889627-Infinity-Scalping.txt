@@ -1,0 +1,1234 @@
+Source: 618889627-Infinity-Scalping.pdf
+Pages: 58
+Characters: 44389
+Processing Time: 0.05s
+================================================================================
+
+--- Page 1 ---
+INTRODUCTION TO 
+SCALPING 
+By MARCO BERTUGLIA 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 2 ---
+Trading Futures, Options on Futures, and retail off-exchange foreign 
+currency transactions involves substantial risk of loss and is not 
+suitable for all investors. You should carefully consider whether 
+trading is suitable for you in light of your circumstances, knowledge, 
+and financial resources. You may lose all or more of your initial 
+investment. Past performance is not indicative of future results. 
+RISK DISCLAIMER 
+
+
+--- Page 3 ---
+Coaching offered in collaboration with Savius (www.saviusllc.com). 
+ 
+All text, pictures, charts, and materials in this presentation are copyrighted in 
+accordance with International Law©.  
+ 
+Copying in any known media, or by any known method, without express 
+written permission is strictly prohibited. 
+ 
+The views and opinions expressed in this presentation are those of the 
+authors and do not necessarily reflect the official position of Infinity Futures. 
+ 
+Charts courtesy of CQG© and SierraChart. 
+ 
+ 
+INTRODUCTION TO 
+SCALPING 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 4 ---
+WHAT MOVES PRICES INTRADAY? 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 5 ---
+YOU COULD SAY, DEMAND/SUPPLY FUELED BY NEWS… 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 6 ---
+ 
+THE TRUTH IS THAT NO NEWS CAN CHANGE AND FLIP -FLOP THIS OFTEN.THESE 
+MOVES ARE DRIVEN AND NOT REALLY MOTIVATED BY SUPPLY-DEMAND. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 7 ---
+Note: this presentation will touch on the basics of Order Flow and scalping trading. We 
+will discuss market action dynamics and provide our insight as well as offer some basic 
+scalping strategies.   
+ 
+The techniques included in this guide need to be further studied, back-tested and 
+forward-tested before you can trade them live. If you wish to move beyond this and 
+become a professional Scalper, please contact us and we will assist you from there. 
+ 
+For now, this guide should offer you a pretty solid foundation and show you some 
+effective set-ups that you can start testing and using on a simulator right away. 
+Successful scalping requires, in fact, a different set of skills and a lot of time spent in 
+front of your monitors. 
+ 
+PRELIMINARY CONSIDERATIONS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 8 ---
+The current high volatility environment caused in part by the FED aggressive monetary 
+policy, recent global macro events, and by the price action (“noise”)  created by HFTs 
+and other Algorithmic programs (Algos) has forced many retail traders to adapt. In 
+particular, those able to adapt have chosen primarily one of the 3 following paths: 
+a) Increase the time frame of reference, hence focusing on fewer set ups, away from 
+the current trading range (especially for a momentum/ break out trade) 
+b) Focus exclusively on the most trending markets (such as Crude oil) 
+c) Engage primarily in Scalping Trading. 
+ 
+Both a) and b) usually require larger capital and risk than you may be currently using 
+while scalping does not. When you scalp, you no longer avoid the noise, you learn how 
+to take advantage of the noise and basically become part of it. 
+PRELIMINARY CONSIDERATIONS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 9 ---
+The term “Scalping” is very common among traders, especially after the rise in 
+popularity of high frequency trading, however we feel that as a trading style it’s often 
+misused and misunderstood. Scalping is a very specific technique that requires its own 
+separate study. Let’s start by bringing some clarity. Below some introductory notes: 
+-
+Scalping is a form of High Frequency Trading that is commonly executed manually 
+rather than by algorithmic programs. 
+-
+Scalping is a pretty general term but it usually means putting a large size trade for 
+a very short time (seconds or minutes) and for a fast profit (3-5 ticks on average). 
+-
+Scalping focuses on “order flow” and the interaction between bid and offer 
+dynamics and volumes. 
+ 
+ 
+ 
+DEFINITION 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 10 ---
+Given the recent increased volatility environment that has been affecting primarily 
+equity markets, a day trader, in our opinion, has 2 main options to cope with the wild 
+trading swings: 
+a) Automate or semi automate  a set of predefined rules and be very selective with 
+entry triggers (using a higher time frame or trend/bias filters); 
+b) Lower dramatically the time frame and focus her/his attention on micro 
+accelerations of prices through a scalping methodology. 
+ 
+ 
+ 
+DAY TRADING CHALLENGES 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 11 ---
+A BRIEF HISTORY 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 12 ---
+Scalping is nothing new or recent. It’s been performed by the so called “locals” of the 
+Nymex, CME or Ecbot floors since pit trading started (and other exchanges around the 
+world). Now that pit trading is virtually gone and trading is mostly electronically 
+executed, scalping has moved to the screens (traders off the floor). The only 
+difference is the so called “edge” that successful former floor traders used to have 
+and that now is no longer present or at least has changed in nature. This edge was 
+especially in the hands of the biggest traders, those with the best pit location who 
+could immediately see “paper” coming to the floor and therefore front run those 
+orders. We want you to pay attention to this point because it’s crucial and we will 
+revisit it later. 
+ 
+ 
+A BRIEF HISTORY 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 13 ---
+Have you ever wondered why sometimes the market stops you out of a position by 1 
+or 2 ticks? Or maybe it’s falling hard, like the world is about to end, and then it stops 
+and makes a V shape reversal out of nowhere? Or it shoots up through a crucial 
+resistance level by a few ticks only to collapses shortly after? 
+ 
+The answer to all these questions it’s the same: price manipulation. 
+ 
+We are not talking about a conspiracy theory or a master plot to  purposely chase the 
+retail traders out, we are simply pointing out a natural consequence of institutional 
+players moving massive quantities through their fight for liquidity which invariably 
+washes our most of the small traders. 
+ 
+ 
+THE PLAYING FIELD 
+The fight for liquidity 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 14 ---
+The object of the scalping game run buy the big boys is making a large amount of 
+money, in the shortest period of time and with the smallest possible exposure (risk). 
+They achieve this by fighting for liquidity through constant price manipulation. 
+ 
+LIQUIDITY 
+The big players will always seek out the biggest contracts in terms of volume. Liquidity 
+is key for successful scalping, even though it’s counterintuitive. Generally speaking, the 
+less liquid the market, the easier to manipulate it and move prices. However, these 
+players only need to move the market for a few ticks at a time and once they bought 
+for ex. 3000 contracts they need to make sure they will be able to easily unload them 
+higher (again keeping the smallest risk). 
+ 
+ 
+THE PLAYING FIELD 
+The fight for liquidity 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 15 ---
+You may be familiar with some of these concepts but we wish to revisit them because 
+they are the key behind being able to scalp profitably. 
+ 
+The market is just a global playing field, it’s like a giant soccer field where professionals 
+are playing against each other and the retail traders are getting in the way and 
+trampled…sure once in a while small traders manage to get the ball but overall they 
+are playing a game that isn’t under their control.  
+ 
+ 
+THE PLAYERS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 16 ---
+The only way that you and I can participate without getting killed is by staying away 
+from the same playing field (no trading inside the same range), sitting on the bench 
+(ex. increasing the time frame) or acquiring the same (or similar) skills/tools they have. 
+ 
+•
+BANKS AND OTHER INSTITUTIONS> they have the deepest pockets; the biggest 
+misunderstanding surrounding them is that they only trade on fundamental 
+analysis and they only invest in the long term…not true at all. They are the biggest 
+price action players of all (money  moves markets). 
+ 
+•
+PRIVATE PROFESSIONAL TRADERS> under this category you will find big individual 
+traders (see the infamous Paul “the flipper” Rotter) or large Prop-houses (HFT) 
+around the globe (Chicago, NY, London, Tokyo, etc.). 
+ 
+ 
+THE PLAYERS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 17 ---
+•
+RETAIL TRADERS> belongs to this group any private trader that generally trades 
+anywhere from 1 to 99 lots per clip; when represented as an aggregate the 
+combined retail’s volume can be very significant but as individuals they don’t have 
+the clout or ability to move prices. Invariably retail traders get caught in the noise 
+of the small range and end up being nothing more than collateral damage in the 
+fight for liquidity. 
+THE PLAYERS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 18 ---
+THE ORDER FLOW 
+WHAT IS ORDER FLOW? 
+ 
+Scalpers don’t usually use chart reading or technical analysis, they don’t rely much on 
+indicators or oscillators. At least not as their main decision tool (see later on section 
+dedicated to filters and confirmations). In reality, most professional scalpers focus on 
+price action. This is very true for professional Prop-traders and big players, who 
+primarily devote their attention to the interactions between bid and offers and 
+relative volume shifts. You have heard before that indicators and charts tell you, for 
+the most part, what happened in the past. They offer a statistical reference point 
+(pattern based) to help you make a prediction of future price movement. 
+This is not true for order flow. Order flow gives you the “now”, the price action that is 
+happening right in front of your eyes in this particular moment. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 19 ---
+BEHIND THE CURTAIN 
+WHAT IS HIDING BEHIND ORDER FLOW? 
+ 
+A very important factor in scalping and order flow reading stems from the ability to 
+successfully interpreting the information that is appearing on your screen right now. 
+ 
+In order for you to being able to effectively read price action (or lack thereof), it’s 
+crucial that you are first familiar with the basic dynamics of a depth of market window 
+(also called order book or vertical ladder). Most traders don’t have access to the entire 
+depth of market but most liquid markets offer a 10 level depth view (10 best bids and 
+10 best offers). 
+See next window (Infinity AT DOM). 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 20 ---
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 21 ---
+BEHIND THE CURTAIN 
+We are not going to delve too much on the basics of price action and the interaction 
+between bid and offer. It’s important instead that you are aware that what you see is 
+not the entire and true market picture. 
+ 
+SPOOFING AND ICEBERGS 
+There has been a lot of talk in recent years about some questionable and often illegal 
+price manipulations, purposely created by large players with the objective of creating 
+an altered market reality. Price manipulation happens at very many different levels 
+and it’s not per se illegal. Spoofing however, has been labeled as such because of the 
+deceitful intent and consequences it causes. Spoofing is not other than placing large 
+working order quantities in the market with the goal of luring in buyers or sellers in a 
+specific market direction (basically a trading ambush). See next slide. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 22 ---
+Step/possible spoofing 
+When you see an order whose 
+size is much larger than the 
+others be suspicious, 
+especially if it’s near the best 
+bid or offer (see picture). This  
+order in jargon is called “step” 
+in the ladder and it could be an 
+indication of possible 
+spoofing. An “iceberg”, on the 
+other hand, is an order that 
+when hit, continues to absorb 
+trades without disappearing. 
+That’s due to the fact that the 
+hidden quantity (underlying 
+actual size) is much larger. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 23 ---
+BEHIND THE CURTAIN 
+The Spoofer, generally a Prop firm or Institution using sophisticated HFT algos, will try to 
+move prices in the desired direction by placing and quickly cancelling large orders. 
+Another popular HFT activity is “layering” which is basically placing large bid and offers 
+by spreading them at different market levels. 
+Another note worth mentioning is regarding Iceberg orders which are not illegal and are 
+allowed by many professional trading platforms. Icebergs are large orders hidden 
+behind a smaller quantity. They take the name from the natural ice formations because 
+they allow the trader to hide his entire order size. As you can see, yet another way of 
+covering the true price action. 
+ 
+ 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 24 ---
+THE FLIPPER 
+Sometimes,  not often, the biggest players are not HFTs or Hedge Funds. This is the case 
+of the famous Eurex trader Paul Rotter aka the Flipper. Rotter rise to fame arrived 
+around the early 2000s when he was very successfully scalping massive volumes on 
+Eurex bonds futures (Bobl, Schatz and Bund). Rumor has it that he was accounting for a 
+large % of the total intraday Eurex volume, by trading an average of 100-200,000 lots a 
+day. 
+ 
+The nickname the Flipper is derived  from his technique which consisted in placing very 
+large bids or offers, and attract traders in the desired direction only to then pull (cancel) 
+the original order and flip his side, placing massive sizes in the opposite direction.  
+Not everybody can create similar market action and manipulate the order book but if 
+you start recognizing these patterns you can follow these manipulations and use them 
+to your advantage. To do so you will need speed and advanced skills. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 25 ---
+FOLLOWING THE SHARKS 
+Advanced scalping set up example 
+It’s not the objective of this manual to provide advanced set ups but we believe it’s 
+worth it and interesting for aspiring scalpers to see what scalp- trading looks at the 
+highest levels. 
+Let’s say, you are watching the Bund, and the market is moving up and you see a fairly 
+large bid at 15656 for 1000 lots . 
+BIDS 
+LAST 
+OFFERS 
+  
+15659 
+350 
+  
+15658 
+300 
+  
+15657 
+150 
+1000 
+15656 
+  
+550 
+15655 
+  
+200 
+15654 
+  
+320 
+15653 
+  
+ 450 
+15652 
+  
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 26 ---
+FOLLOWING THE SHARKS 
+Advanced scalping set up 
+Then the 1000 disappears and, seconds later, a much smaller size trades at 56 (ex. 200 
+lots). The smaller size is represented by all those buyers (retail mostly) that got excited 
+by the large bid and jumped in a little too soon… the market immediately cracks 1 tick 
+and a large size offer shows at 56. 
+ 
+ 
+BIDS 
+LAST 
+OFFERS 
+  
+15659 
+650 
+  
+15658 
+600 
+  
+15657 
+450 
+  
+15656 
+1500 
+450 
+15655 
+  
+500 
+15654 
+  
+520 
+15653 
+  
+450  
+15652 
+  
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 27 ---
+FOLLOWING THE SHARKS 
+Advanced scalping set up 
+Once you see this action, and you start getting the feeling the buyers are getting rolled 
+over you can jump on board, waiting for an acceleration and the ultimate longs 
+capitulation. When the buyers give up easily and the bids are thinning out, you know 
+you have a good trade in your hands. It doesn’t mean that it will last very long, 
+therefore, as soon as you see consolidation, you may want to bail or tighten your risk. 
+ 
+ 
+ 
+ 
+BIDS 
+LAST 
+OFFERS 
+  
+15659 
+350 
+  
+15658 
+600 
+  
+15657 
+500 
+  
+15656 
+1000 
+  
+15655 
+1500 
+200 
+15654 
+  
+320 
+15653 
+  
+500 
+15652 
+  
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 28 ---
+We could spend hours talking about the ideal set up to successfully scalp. We are going to focus 
+our attention on a few basic but important tips only: 
+1.
+Equipment 
+a)
+You need a fast computer, with plenty or RAM, possibly not older than 2 years and 
+dedicated to trading only – 2 Monitors - no Skype, no other software or platform other 
+than what you are trading on. 
+b)
+Hard wire connection, possibly cable or fiber. 
+2.
+Platform 
+a.
+You want a fast, light, reliable platform with a good DOM. Infinity AT, of course, is a 
+great starting point. 
+b.
+1 click entry is a must (absolutely no confirmation window or double click) 
+c.
+Low or zero transaction fee or monthly costs  
+d.
+Catastrophic kill switch (auto-liquidation), especially necessary for advanced scalping. 
+ 
+ 
+GETTING THE PROPER SET UP 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 29 ---
+1.
+Intraday Margins 
+a.
+If you scalp you are not worried about holding anything overnight. You should focus on 
+markets that can be traded with very small intraday margins so that you can afford 
+multiple lots (try to stay away from brokers that don’t offer at least 25% margin). 
+2.
+Market 
+a)
+Focus on the most liquid markets such as ES, Bonds, Tnotes, Eurofx, Crude Oil. You can 
+also trade Eurex, both bonds (Bund, Bobl and Schatz) and indices (Fesx and Fdax) are 
+great and have lower costs (. Focus also on the relationship between commission and 
+tick size (for ex. Tbonds have a big tick but low fees, the Mini Dow doesn’t). 
+3.
+Commissions and fees 
+1.
+Cost of business will be a key factor behind your success when you start trading large 
+intraday volumes. Getting a super low commission will be hard, especially if you are just 
+starting and don’t have a big account. Try to get a commission below $2.50 per rt + fees. 
+Once you regularly trade a large volume (200+ lots/day) you should look into membership 
+options and negotiate with your broker lower commissions. 
+ 
+ 
+GETTING THE PROPER SET UP 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 30 ---
+A successful scalping approach needs to be necessarily based on a solid risk 
+management foundation and, generally speaking, on a positive risk reward ratio. 
+For a scalping strategy, however, the average risk reward is usually not very large. 
+The goal is to move a larger number of contracts, for a small amount of ticks. 
+Again 3-5 ticks is a very standard target. The goal is to not get crushed while 
+attempting to get those few ticks. A successful scalper and order flow reader will 
+be able to identify good opportunities that will give him a very favorable win ratio. 
+It’s not uncommon to have a high win ratio if you are able to spot the profitable 
+price patterns. This will be your edge. The key for you will be to always have a stop 
+loss and catastrophic exit and to keep trading costs to a minimum because of the 
+large number of trades you will be involved in. Many times, when the trade doesn’t 
+develop as planned, you may just need to be ready to exit at b.e. or with 1 tick loss. 
+ 
+ 
+ 
+RISK MANAGEMENT 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 31 ---
+The edge for a local on the SP 500 floor was being able to enter the market 1 tick 
+better than the so called “public”. He/she could buy the bid before it became the 
+bid and vice versa; without much sweat, he could make at least 1 tick; when you 
+multiply it by 500 contracts it’s a lot of money… 
+ 
+Your goal is to learn to spot on your screen similar price patterns and simply to 
+jump on board to participate in that move…that break out -  most of the time - will 
+be a false break out but even if it’s not, your job will be done after just taking a few 
+ticks off the table. The key, once again, is to identify high probability set-ups and 
+manage your risk effectively. 
+ 
+ 
+ 
+ 
+THE SCALPER’S EDGE 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 32 ---
+When you scalp, the idea is to spot momentum accelerations, at least as a beginner or 
+intermediate trader. Even for longer day trades, we try to be in the direction of the 
+current market wave. For Scalping, given the shorter duration of the trade, it’s even 
+more important because most of the times you will not be able to pick a top or a 
+bottom to the tick. The pros are able to do better than that: they anticipate these 
+momentum accelerations before they happen. Similarly to what used to happen on 
+the floor of the CME when the big locals used to spot the big Goldman Sachs’ or JP 
+Morgan’s orders (“paper”) approaching the floor, a professional scalper uses his 
+ability to read the order flow to her/his advantage. The edge is different but the idea 
+is exactly the same. Professional scalpers don’t usually buy or sell break outs. They 
+use break outs to unload their positions. They anticipate those breaks by front-
+running the orders and liquidating at the extreme of the move. The really big players 
+not only front- run but actually cause those moves. 
+ 
+THE SCALPER’S EDGE 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 33 ---
+Scalping strategies can be divided in 2 categories: 
+•
+BASIC 
+•
+ADVANCED  
+The basic set ups will need the combined  use of the DOM and the chart. 
+Professional scalpers, even those who don’t move the market, are able to ignore 
+almost completely the chart and focus exclusively on the DOM action. To get to that 
+level you will need many hours of screen time.  
+ 
+The advanced approach will require deep understanding of order flow, and risk and 
+trade management. There is not just one scalping method but, as far as we are 
+concerned, advanced scalping is less about the entry price and much more about the 
+management of the trade and its exit. 
+SCALPER’S TRADING ARSENAL 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 34 ---
+As a Scalper and as day trader in general, you will need to be familiar with 2 major 
+concepts: 
+•
+MARKET STRUCTURE 
+•
+ORDER FLOW 
+ 
+We already briefly discussed order flow. Market Structure will help you primarily with 
+identifying the trend, areas of support and resistance (swings and pivots) and chart 
+patterns that could trigger a possible market entry (or re-entry with the flow). 
+ 
+Understanding market structure is key for any trader. For a scalper, especially, it 
+represents his/her compass, providing him/her not only with a possible market 
+direction but also with profit target areas. 
+SCALPER’S TRADING ARSENAL 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 35 ---
+As a first approach, we therefore recommend, to use the following simple set up: 
+-
+Open the DOM of the market you intend to trade on (focus on 1 market only to 
+start) 
+-
+Open a 1 minute, a 5 minute and a 10 minute chart (bars or candles) 
+-
+You can also open a volume by price chart (VBP study in Sierra) to show the 
+vertical representation of volumes traded (on some software this study is an add 
+on, on our Sierra package is included for free). You should have all this on the same 
+monitor to better toggle back and forth. 
+ 
+A very helpful tool for the intermediate and advanced scalper is the Number Bars, 
+critical for spotting volume shifts and price reversals. 
+ 
+SCALPER’S TRADING ARSENAL 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 36 ---
+Generally speaking, the basic entries will be mostly based on momentum set ups. 
+The advanced entries will be focused more on a “fade” approach, where the set up 
+requires more patience, a better market feel and a stronger risk management.  This 
+is important. A lot of amateurs fail because they are trying to use Fading strategies 
+with small accounts or weak risk/trade management. On momentum trades you 
+follow the current wave. With fade trades you need to be able to accurately work a 
+specific area and wait for the market reaction (if you are not surgical about your 
+entry and don’t have the skill to know when to add, your risk of getting hurt with a 
+fade approach is higher). 
+ 
+ 
+SCALPER’S TRADING ARSENAL 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 37 ---
+ 
+If you are just starting with scalping, we recommend to simply focus on the most basic 
+momentum set ups. These technique are very similar to our longer momentum trades 
+with 2 major differences, aside from the smaller objective: 
+-
+When scalping, you don’t place a chart stop or wait for the bar to complete; if the 
+trade doesn’t develop immediately, you exit quickly 
+-
+You want to use the DOM bids, offers and volume as confirmation of the move. 
+The following slides will show the dynamics of some basic set ups. 
+SCALPER’S TRADING ARSENAL 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 38 ---
+We believe momentum Scalping strategies tend to be easier to manage, if one 
+approaches them as a simple binary outcome (break or fake). 
+ 
+In this regards, the Reversal Bar (RB) is key. The RB is a typical high momentum bar 
+that anticipates a break in the opposite direction. 
+ 
+La RB is simply a bar that either opens on the lows and closes near the highs (bullish) or 
+that opens on the highs and closes near the lows (bearish).  
+ 
+In the slide that follows some different types of RB. 
+THE REVERSAL BAR 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 39 ---
+ 
+
+The shape of the reversing bars will give us  more details: 
+ 
+The reversal type a) is the most common. It is interesting only if accompanied by extraordinary - large volumes. 
+ 
+The b) type (also known as BDBs, or Bullish hammers, or hanging men) they are quite meaningful especially if 
+occurring after the test of an important low/high and with volumes. 
+ 
+The c) type are a peculiar type. Normally the low (high) is tested twice. The two bars have the same bottom/top 
+(low or high).  
+ 
+ VOLUME FOLLOW-THROUGH on the DOM will need to be present to tell us this is just not a fake movement or 
+a “trap”. 
+a 
+b 
+c 
+(previous or new low) 
+REVERSAL BAR EXAMPLES 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 40 ---
+A Fractal is a recognizable geometrical formation that tends to repeat in the market on 
+different time frames (Bill Williams, renown trader and author, uses various techniques 
+based on fractal break outs). 
+This forms a pattern, a recognizable imagine that can be spotted as support and resistance 
+points on the charts. 
+Specifically, in the case  of a break out  buy, is a bar with a new high proceeded by and 
+followed by two bars with lower highs (vice versa for a sell fractal set up).  
+ 
+MARKET STRUCTURE 
+What is a fractal? 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 41 ---
+Professional day traders are aware of the fact that very often, in absence of real news 
+and high volume, the market will tend to converge to a  mean, or a point of balance. 
+These areas of balance can be spotted on a charts by understanding market structure 
+and identifying fractals and swing points. In absence of news driven volume, price will 
+more often than not regress to a mean and revisit a neutral area of prices. 
+ 
+By being able to spot these areas and divergences, we are able to take advantage of 
+reversals of prices and use those swing points, not only to understand the new market 
+direction but also the targets of our trades. 
+MARKET STRUCTURE AND 
+REGRESSION TO MEAN 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 42 ---
+Declining ADX 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+MARKET STRUCTURE ANALYSIS 
+
+
+--- Page 43 ---
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+MARKET STRUCTURE ANALYSIS 
+
+
+--- Page 44 ---
+EMINI SP (OR RESISTANCE/ SUPPORT) 
+BUY STOP ABOVE THE HIGH 
+OF THE DOUBLE TOP OR OF THE  FRACTAL 
+TTH 1242 50 
+ 
+STH 1238.50 
+ 
+TH 122500**** 
+ 
+BH 1218.25/19.50 
+ 
+PIVOT  VOL  121500 
+ 
+RL 121000 
+ 
+BL 1204.50 
+ 
+TL 1199.50**** 
+ 
+STL 1185.50 
+DOUBLE TOP (or FRACTAL) 
+SCALPING BASIC STRATEGY:  
+SIMPLE BREAKOUT (EX. B/O OF DOUBLE TOP) 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 45 ---
+Classic momentum technique based on anticipation. Its goal is to anticipate 
+the big price movement before it happens. On the 10 minute chart look for a 
+critical break out area or pivot that will soon be challenged. 
+THE “FORERUNNER” 
+- WAIT FOR A CORRECTION AND A REVERSAL BAR APPROACING THE LEVEL. 
+ 
+ - WAIT FOR TRIGGER  ON THE DOM (EX.SHIFT OF VOLUME TO THE BID) 
+ 
+-  BUY BEFORE PRICES BREAK THE LEVEL – YOU WILL NEED THE BREAK OUT TO EXIT 
+ 
+-  LIQUIDATE AS SOON AS THE BREAK HAPPENS (WHEN RETAIL ARE BUYING) 
+BUY 
+ 
+ 
+ 
+122000 
+ 
+121500 
+ 
+121000 
+ 
+120500 
+ 
+120000 
+ 
+119500 
+LIQUIDATE 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 46 ---
+THE “FORERUNNER” 
+BUY  R.B.  BEFORE 
+FULL BREAK  OUT 
+FORERUNNING 
+This strategy tries to anticipate an explosive move in one direction by entering 
+ before the public enters. The target is the break out area where other traders (retail or  
+Swing traders) are entering long. Once again, the target should only be a few ticks. 
+POSSIBLE AREA FOR  
+RESTING  BUY STOPS 
+A variation of the same technique. This set up anticipates a break-out in the 
+direction of a strong trend but after a correction. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 47 ---
+FOLLOWING THE SHARKS 
+Advanced scalping set up example 
+Right before the break of the R.B. 
+BUY  RB BEFORE 
+FULL BREAK  OUT 
+FORERUNNING 
+BIDS 
+LAST 
+OFFERS 
+  
+15659 
+150 
+  
+15658 
+200 
+15657 
+190 
+170 
+15656 
+  
+250 
+15655 
+  
+200 
+15654 
+  
+120 
+15653 
+  
+ 250 
+15652 
+  
+POSSIBLE AREA FOR  
+RESTING  BUY STOPS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 48 ---
+FOLLOWING THE SHARKS 
+Advanced scalping set up example 
+After… 
+RESTING  BUY STOPS 
+FORERUNNING 
+BUY  RB BEFORE 
+FULL BREAK  OUT 
+BIDS 
+LAST 
+OFFERS 
+  
+15659 
+150 
+  
+15658 
+30 
+ 450 
+15657 
+350 
+15656 
+  
+250 
+15655 
+  
+200 
+15654 
+  
+120 
+15653 
+  
+ 250 
+15652 
+  
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 49 ---
+When everybody is looking for a break out, the big players are looking for a 
+fake out…If you want to be a scalper, you should too. This set up is betting 
+on a reversal right after a break out of a high/low or a common pivot. 
+ 
+ 
+THE “REVERSAL” SET UP 
+ 
+- WAIT FOR PRICE TO BREAK (even barely) ABOVE A COMMON LEVEL OR PIVOT 
+ 
+ - WAIT FOR TRIGGER  ON THE DOM (EX.SHIFT OF VOLUME TO THE OFFER) 
+ 
+-  SELL AS SOON AS MOMENTUM SHIFTS TO THE DOWNSIDE (LOOK FOR DOM VOLUME SHIFTS 
+   AND A REVERSAL BAR ON THE 1 MINUTE OR 3 MINUTE CHART). 
+Sell break out of R.B. or as soon as 
+Volume shift to the offer. 
+ 
+ 
+ 
+122000 
+ 
+121500 
+ 
+121000 
+ 
+120500 
+ 
+120000 
+ 
+119500 
+NO UPSIDE FOLLOWTHROUGH + R.B. 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 50 ---
+This technique is advanced, and requires the monitoring of a larger time frame (ex. 30 or 60 
+mm). It’s based on the break out of an important fractal (say on the 30 mm) but it waits for a 
+subsequent failure and correction of that move, and then for the trend to resume in the 
+direction of the break out. 
+ 
+“BREAK & FAKE” (ADVANCED) 
+ 
+- WAIT FOR PRICE TO BREAK ABOVE (OR BELOW) AN IMPORTANT FRACTAL OR HIGH/LOW 
+ 
+ - WAIT FOR A CORRECTION  (EX.SHIFT OF VOLUME TO THE OFFER) 
+ 
+-  ENTER EITHER ON THE BREAK OUT OF A 3 MM REVERSAL BAR IN THE DIRECTION OF THE TREND OR  
+    AS SOON AS THE VOLUMES ON THE DOM SHIFT TO THE BID. 
+BUY 
+ 
+ 
+ 
+122000 
+ 
+121500 
+ 
+121000 
+ 
+120500 
+ 
+120000 
+ 
+119500 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 51 ---
+ 
+“BREAK & FAKE” 
+ 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 52 ---
+If you are a beginner scalper, you should first spend sometime testing these set ups 
+and, when you are ready to jump in the water, you should start trading only 1 lot.   
+When trading 1 lot, your trade management should be fairly straightforward: 
+-
+Shoot for a risk reward of 1:1 
+-
+Establish your target first, and from there your risk (don’t risk more than 5-6 ticks) 
+-
+Always place a catastrophic stop equal to your risk + a few tick buffer (this will 
+allow you flexibility to move around but not get crushed if you get a violent move 
+against your position). 
+-
+Exit when: 
+-
+Your target is reached 
+-
+Your risk is reached 
+-
+The market is not reacting as fast as expected. 
+ 
+ 
+ 
+ 
+ 
+TRADE MANAGEMENT 
+SINGLE LOT 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 53 ---
+As soon as you show some consistency with 1 lot, and you are starting to get 
+familiar with order flow dynamics, you can quickly ramp up to 2 or 3 lots. 
+When trading 2 or more contracts you will have a much greater flexibility and you 
+can start hitting some runners. 
+-
+Shoot for a risk reward of at least 1:1.5 (total average) 
+-
+Cover your first lot at an amount of ticks close to your risk (equal or 90%). 
+-
+Move your catastrophic stop close to break even  to reduce risk 
+-
+Let your second and third lot run a bit longer (if you can trade 3 lots, the third 
+should be your runner – if you trade only 2, the second should be liquidated 
+either at 2 times the risk or close. Don’t get greedy with the second lot, more 
+often than not you will get trapped in the market noise and get a correction 
+against you). 
+ 
+ 
+ 
+ 
+TRADE MANAGEMENT 
+MULTIPLE LOTS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 54 ---
+If you are committed to become a professional scalper, it’s crucial that you start 
+thinking and trading like one. 
+2 things you want to avoid when you scalp: 
+-
+Catch a falling knife 
+-
+Staying in a trade too long waiting for a reversal 
+ 
+As a beginner scalper, try to favor momentum trades. Don’t try to be the cool guy/gal 
+who picks tops and bottoms. If you are a true scalper you cannot afford to stand the 
+heat of even a few ticks’ move against you. By the same token, if the move you were 
+looking for is not happening and the volumes are just not confirming your original 
+idea, you’d better jump off the train.  You are better off losing 2 ticks on 5 wrong 
+trades than 50 ticks on 1 stubborn one. This is especially true for anybody at the 
+beginning stage who does not have the leverage to move a market in their favor. 
+ 
+THE SCALPER’S MENTALITY 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 55 ---
+1.
+Get the proper set up (low costs, right platform, good pc and connection). 
+2. Plan your trading arsenal (start with some basic set ups). 
+3. Spend a few continuous sessions, even a month, in front of the DOM, simply 
+getting familiar. 
+4. Spend at least 1 full week on simulator. 
+5. Study Market Structure by looking at critical weekly, daily and hourly levels. 
+6. Learn as much as possible about the markets you plan to trade. 
+7. Select 2/3 markets to focus on (consider liquidity, cost and tick value parameters). 
+8. Calculate your risk for the day ahead of time, and always have a catastrophic stop. 
+9. Start with 1-2 lots max, increase leverage only when consistently profitable. 
+ 
+SUMMARY OF KEY POINTS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 56 ---
+As we stressed several times already, scalping requires a special feel and read of the 
+market which will be acquired with hours spent in front of the monitor. The only 
+advantage is that your initial risk, as a beginner, should only be a few ticks. Your 
+objective is to get to a level where you can trade 10-20 lots at a clip. Once you get 
+there remember to ask your broker for a commission break since cost of business will 
+start getting out of hand quickly. 
+ 
+Stay away from big economic reports (stay flat between 2 minutes before and 2 
+minutes after). You can jump in right at the release time in the direction of the move. 
+More advanced set ups involve entering right before and following a particular 
+management method that is not recommended for beginner or intermediate traders.  
+YM and NQ are 2 excellent markets to start testing the water, not ideal as a final 
+trading vehicles as they lack the volumes of the ES, FESX or T-notes (also small tick). 
+FINAL THOUGHTS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 57 ---
+ONCE YOU ARE FAMILIAR WITH THE BASIC CONCEPTS, DEEPLY UNDERSTAND 
+MARKET DYNAMICS, HAVE SPECIALIZED IN 1 SPECIFIC MARKET AND HAVE 
+STARTED TO GENERATE A DECENT AND STEADY CASH FLOW ON YOUR LIVE 
+ACCOUNT (NOT JUST ON DEMO), YOU CAN START THINKING ABOUT STEPPING UP 
+YOUR TRADING IN 3 WAYS: 
+A) ADOPT A MORE ADVANCED TRADE MANAGEMENT METHOD 
+B) USE ADDITIONAL, MORE COMPLEX ENTRY SET UPS  
+C) USING A BIGGER CAPITAL AND/OR LEVERAGE TO BETTER WITHSTAND MARKET 
+NOISE AND NEGATIVE CASH FLUCTUATIONS. 
+ 
+SCALPING FOR PROS 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors 
+
+
+--- Page 58 ---
+To begin your professional scalping journey we suggest you start spending a few 
+sessions in front of a simulator or a demo. Pick 2-3 markets you want to focus on 
+(following the liquidity parameters we discussed earlier) and begin getting familiar 
+with their contract specifications (tick size, hours, etc.), average volume sizes and 
+behavior. Don’t get tempted to trade live until you have a grasp of the market you 
+are planning to trade. 
+Some of the institutional platforms out there carry a hefty monthly fee and 
+therefore require a large account balance (also the basic version does not offer a 
+flexible auto-liquidation feature).  
+To get started you should simply request a demo of Infinity AT, which is a very solid 
+stepping stone: click here InfinityAT demo 
+(http://www.infinityfutures.com/practiceaccount.aspx?ref=mber). 
+ 
+ 
+ 
+ 
+ 
+Good Trading! 
+ 
+ 
+ 
+ 
+Marco Bertuglia 
+GETTING STARTED 
+Trading Futures, Options on Futures, and retail off-exchange 
+foreign currency transactions involves substantial risk of loss and is 
+not suitable for all investors

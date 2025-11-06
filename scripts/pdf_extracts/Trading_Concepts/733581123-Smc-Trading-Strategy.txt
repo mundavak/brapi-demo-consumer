@@ -1,0 +1,446 @@
+Source: 733581123-Smc-Trading-Strategy.pdf
+Pages: 27
+Characters: 25004
+Processing Time: 0.02s
+================================================================================
+
+--- Page 1 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+SMC TRADING STRATEGY
+BEGINNERS GUIDE PDF
+
+
+--- Page 2 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Topics
+SMC Trading Strategy Beginners Guide
+Introduction:
+What is SMC Trading Strategy?
+Basic Terms Used in SMC Trading Strategy
+Change of Character (CHOCH)
+Break of Structure (BOS):
+Unmitigated Demand Zone:
+Unmitigated Supply Zone
+Order Blocks
+Liquidity in SMC Trading
+How to trade using SMC Trading Strategy
+Entry Methods:
+What is the meaning of Change of character (CHOCH)
+Change of Character (CHOCH) Entry Setups:
+Frequently Asked Questions (FAQ) on SMC Trading Strategy
+Which time frame is best for SMC trading?
+Who is the founder of the SMC trading strategy?
+Does SMC work in Crypto?
+What are the best indicators for the smart money concept?
+Conclusion:
+
+
+--- Page 3 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+SMC Trading Strategy Beginners Guide
+Introduction:
+Trading, in general, requires a lot of techniques, experience, and expertise, as there
+are several factors that lead to successful trades, these factors range from technical
+analysis to the market fundamentals, to traders’ sentiments and economic conditions.
+Most traders are therefore overwhelmed on many occasions while trading the market
+that they fail to cope with the market noise as they are unable to filter this noise out
+but rather get carried away by the endless buzzing sounds of charts, price movements,
+and so on that they end up losing themselves first before losing their equity.
+This is one of the major reasons why we give in-depth articles here on Dipprofit to
+help guide traders on their journey and provide them with as much information and
+knowledge as they need, so as to make their trading journey easier, more focused, and
+more successful.
+In this article, we would be looking at one of the best trading strategies every trader
+should know about and it is called the SMC trading strategy. The full meaning of
+SMC is Smart Money Concept, the SMC trading strategy is in a way similar to the
+supply and demand zones trading strategy we have also written about in one of our
+articles here because it helps the trader to easily determine the entry and exit positions
+of the big boys’ trades. By big boys, I mean institutional traders, hedge funds, and
+banks.
+Understanding where these sets of traders take positions is one of the key factors to
+taking a successful trade and that is why the SMC trading strategy is revered amongst
+many other trading strategies.
+So the questions that I guess should already be in your minds are: What really is SMC
+trading strategy? How can I apply the SMC trading strategy to my trade and how
+profitable would I become using the SMC trading strategy? All these questions will
+be answered in this article, so grab a cup of coffee, your notepad, and your mt4/mt5
+interface, as we begin.
+
+
+--- Page 4 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+What is SMC Trading Strategy?
+SMC trading strategy is a straightforward and traditional trading approach that relies
+on basic concepts like supply and demand, price action trading strategies, and support
+and resistance techniques to properly analyze entry and exit trade positions.
+It is a process in which traders pay more attention to the actions of market makers
+(institutional traders, hedge funds, banks, etc) while analyzing the market structure.
+Through the use of the SMC trading strategy, traders can gain an edge in the Forex
+market.
+While this trading strategy might seem unfamiliar at first, Smart Money Concept as it
+is mostly called is built upon traditional trading concepts such as supply and demand,
+price patterns, and support and resistance. The difference lies in its unique
+terminology which the SMC traders call them, SMC traders use concepts like
+“liquidity grabs” “market structure” and “mitigation blocks” while using the SMC
+trading strategy.
+Despite this seemingly novel approach, SMC is, at its core, a more conventional
+trading method than you might expect. Rather than relying on complicated algorithms
+or advanced technical analysis, SMC’s trading strategy is founded upon a simple
+philosophy about how markets operate.
+SMC asserts that market makers, entities such as banks, and hedge funds are
+manipulative by nature and that they actively work against retail traders, which seems
+to be true from my years of trading experience. As an SMC trader, you should
+therefore base your trading strategy on the actions of these “smart money” that is the
+money the market makers bring in and take from the market.
+Essentially, the idea is to mirror the trades of market makers. By analyzing supply and
+demand zones, and market structure, you can gain insight into how these entities are
+trading and make informed decisions about your own trades.
+In summary, while SMC may sound foreign due to its unique terminology, it is in fact
+a very simple and easy-to-understand strategy.
+Now that we understand what SMC trading strategy is, we will be looking at how we
+can apply the SMC trading strategy to our trading, as I will be sharing valuable
+insights and techniques that will help you identify the best entry and exit points in the
+financial market using the SMC trading strategy and reducing risk exposure.
+Before we learn how to trade using the SMC trading strategy, we would also need to
+understand some of the terms that SMC traders use, as we would be using them a lot
+in this article:
+See Also: The Best Forex Brokers in USA 2023
+
+
+--- Page 5 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Basic Terms Used in SMC Trading Strategy
+
+Change of Character (CHOCH): Change of character means, the market has
+changed its trend or order flow over a period of time.
+
+Break of Structure (BOS): “break of structure” is used to describe a
+significant price movement that surpasses a crucial level of support or
+resistance on a chart. This level is usually predetermined by institutional
+traders or other significant investors, who establish it as a critical threshold
+for market movement.
+
+Unmitigated Demand Zone: In the context of SMC trading strategy,
+“unmitigated demand zones” refer to price levels in a market where there is
+a high level of buying interest without significant selling pressure.
+
+Unmitigated Supply Zone: Unmitigated supply zones are the opposite as they
+refer to price levels in a market where there is a high level of selling interest
+without any significant buying pressure. To further understand how to
+identify demand and supply zones, you can read my article on that.
+
+Order Blocks: This is a trading block or a trading zone/point, that has massive
+buy or sell orders, they are what make up demand and supply zones. These
+order blocks are created by institutional traders and large investors and they
+form a significant point in the market.
+
+Liquidity in SMC Trading: “What does liquidity mean in SMC Forex? Liquidity
+signifies the degree to which an asset can be rapidly bought and sold,
+maintaining stable prices and facilitating its conversion into cash. It
+essentially represents the speed and cost associated with selling an asset,
+whether it’s a financial instrument like a stock or a tangible asset like a
+commercial property.”
+
+
+--- Page 6 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+How to Trade Using the SMC Trading Strategy:
+We would learn Smart money entry patterns and methods such as:
+
+SMC Reversal Entries
+
+How to identify valid CHOCH.
+
+Major and Minor change of character (CHOCH)
+
+Aggressive Entry setup
+See Also: Common Terms in Forex: Spread, Pip, Lot size and Leverage
+Entry Methods:
+Firstly let us examine the entry method we can use in the SMC trading strategy. Smc
+entry methods are divided into two major subcategories namely:
+1. The reversal entry method
+2. The continuation entry method
+The reversal entry method can further be divided into two namely:
+1. Change of character (CHOCH) or change of market structure.
+2. Flip entry setup.
+In this article, I will use the reversal entry method to illustrate how to use the SMC
+trading strategy, and under the reversal method, we will be using the change of
+character (CHOCH) method, as it is easier to understand and is the one I am most
+familiar with.
+It is important to note before we continue that this entry method should only be used
+in the higher timeframes demand and supply zones because these areas are seen to
+have high probability due to the sponsorship of the higher timeframe anything outside
+these zones immediately increases risk exposure.
+Now let’s look at the reversal entry method using the Change of character (CHOCH)
+or market structure shift as it is called in the conventional trading.
+What is the meaning of Change of character (CHOCH)
+
+
+--- Page 7 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Change of character means the market has changed its trend or order flow over a
+period of time. Change of character can be further divided into two types namely:
+
+
+--- Page 8 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+
+Minor CHOCH
+
+Major CHOCH.
+Identifying a valid change of character is a must-have for smart money traders as you
+would incur some losses if you fail to identify a valid CHOCH.
+
+
+--- Page 9 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Let’s assume we have a bullish market, the price makes a series of higher highs and
+higher lows, as the diagram above, in this case, each high and low is the market
+structure level.
+
+
+--- Page 10 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Looking at the diagram above, the most recent higher high and higher low is the one
+we monitor, when the price breaks the most recent high and low to the downward side,
+it means the price wants to start going downwards and wants to change its primary
+direction which has been the upside previously, this is what we consider a change of
+character.
+
+
+--- Page 11 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+The key point is this, for it to be considered a valid change of character (CHOCH), we
+need price to break and close a candle below the previous market structure level with
+a full body candlestick as shown in the diagram above.
+
+
+--- Page 12 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+If price breaks the most recent structure with a shadow, and closes in the most recent
+structures range, this means the change of character is invalid as shown in the diagram
+above. The same concept applies to the bearish scenerio.
+Pro Tip: You should always remember that, in the SMC trading strategy, Change of
+character (Choch) is valid only on one condition, that price reversed and came from a
+supply or demand zone, before breaking the recent structure and creating the CHOCH.
+If price, without mitigating a supply or demand zone creates a change of character
+even with a valid candlestick pattern, we cannot consider it a valid change of
+character(CHOCH).
+
+
+--- Page 13 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+For example, in the diagram above, we have a bullish market, where price makes its
+higher highs and higher lows, we can also see in the diagram that price created a
+change of structure (CHOCH) after it mitigated the higher timeframe supply zone,
+after confirming that price mitigated a supply or demand zone, the next thing to look
+at is the candlestick, we would see if the candlestick closes below the last higher low
+in the diagram above with the body of a bearish candle and not the wick.
+
+
+--- Page 14 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+If the candlestick pattern is valid, then we can assume that price wants to change its
+direction and the change of character is safe to trade, as shown in the diagram above.
+
+
+--- Page 15 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+However, if price did not mitigate the upper-level supply zone, we would have a
+structure like shown in the diagram above. In this case, if price gets to a higher low
+level, it would be rejected when it gets to the unmitigated order block and start a fresh
+impulsive wave to the upside instead of changing direction.
+As I have mentioned earlier, the change of character in SMC trading strategy occurs
+in two ways which are minor and major character changes. Let’s take a look at what
+the minor and major CHOCH are.
+
+
+--- Page 16 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Looking at the structures above, on the left side of the diagram, we have the figure of
+the major CHOCH, and on the right corner, we have the figure of the minor CHOCH.
+The next thing that comes to our mind is, what is the difference between them?
+
+
+--- Page 17 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+The major change of structure occurs when price breaks a structure that has created a
+BOS. As you can see in the chart above, the price has broken down below the
+structure, which already creates a BOS, on the other side as you can see, price has
+broken the minor structure, but that cannot be called a BOS, as price needs to break
+the major structure just below the minor structure before we can confirm price is
+about to change directions.
+Why I had to illustrate this, is because I have seen many SMC traders eagerly or
+nervously consider a minor change of character a valid change of character, and end
+up losing their trades.
+Now that we have a basic knowledge of the change of structure technique in the SMC
+trading strategy, let’s move to some practical examples using real-time charts and
+applying the principles we have learned.
+
+
+--- Page 18 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+So in the above diagram, we are on a 15 mins timeframe for the Eur/Usd pair on the
+charts. As you can see price created a series of BOS to the downside until it got to the
+unmitigated demand zone which was created in a higher timeframe and then reverse
+to the upside.
+
+
+--- Page 19 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+In the next diagram above, we can see that price has broken out of the structure to the
+upside in the diagram above, so we spot a CHOCH, but before taking action, we have
+to ask ourselves a question, can we consider this Change of character a sign of a valid
+market shift? The answer is No because price has broken out of a structure that
+couldn’t create a BOS.
+Therefore, we cannot be sure that a market shift is going to happen, as what we
+spotted in the diagram above is a minor CHOCH, so we need to wait for price to make
+a major change of character (CHOCH).
+
+
+--- Page 20 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+In other to have a major change of character (CHOCH), the market needs to close
+above the market structure which has created a bearish BOS as indicated by the green
+line in the diagram above with a full body bullish candlestick.
+
+
+--- Page 21 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Now as we can see from the diagram above, we have a major CHOCH here that
+indicates the downtrend is over and the market structure shift is going to happen.
+
+
+--- Page 22 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+There is a crucial point I want to draw your attention to, as you can see in the above
+diagram, price has changed its direction to the opposite after creating a CHOCH, but
+did price respect the minor CHOCH demand zone which is indicated by the lower
+Order Block (OB) in the diagram above, or did it respect the major CHOCH demand
+zone indicated by the upper Order Block (OB).
+It is obvious that price did not respect the minor change of character demand zone,
+and if you had a buy order in the minor CHOCH demand zone, you would have
+missed out on such a great opportunity, because price always has more tendency to
+respect the major change of characters instead of the minor CHOCH.
+Let’s move on to the second example:
+
+
+--- Page 23 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Looking at the chart above, we can also see that we are in a strong downtrend with
+price creating several BOS, we can see from the chart above that price has touched the
+higher timeframe demand zone, reacted to it, and went to the upside.
+In the following price movement, we can see that price has broken the market
+structure with a little body candlestick at the green line and created a minor CHOCH,
+because the last lower high couldn’t make a BOS to the downside.
+Most SMC traders consider this movement in the above chart diagram a market
+structure shift, they expect to price to change its direction to the upside so that they
+would place their buy order at the highest point of the area which is created by the
+CHOCH.
+
+
+--- Page 24 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+But as you can see in the diagram above, a market shift did not happen, as price did
+not respect the demand area, and STOP LOSS of traders who have entered the
+market for a buy would be hit by the price movement making them end up with some
+losses.
+In summary, this change of character analysis increases your chances of getting more
+successful trades instead of just taking any trades without confirmation.
+Now that we have seen how the change of character works, we will examine how we
+can use the change of character patterns to enter and exit trades with great risk-to-
+reward ratios.
+Change of Character (CHOCH) Entry Setups:
+There are two different types of entry you can make use of while using the CHOCH
+entry setup namely: Aggressive Entry and Conservative Entry.
+I would only be using the Aggressive entry in my illustration as that is what I use in
+my trading, as I stated earlier in this article.
+
+
+--- Page 25 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+Let’s imagine price has created a bullish pattern to the upside, as shown in the
+diagram above, after reaching the higher timeframe supply zone, price is then rejected
+downwards and forms a major CHOCH by breaking and closing below the structure,
+i.e below the green line in the above chart, which has created a bullish BOS.
+So using the Aggressive entry method in the SMC trading strategy, the next step
+would be to set a sell limit order at the lowest point of the supply zone, which is
+created by the CHOCH wave to the downside, as shown in the diagram above.
+
+
+--- Page 26 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+We should then place our STOP LOSS a couple of pips above the supply zone, then
+target the most recent unmitigated demand to place our TAKE PROFIT point. You
+can see the illustration in the above diagram.
+This is the general idea of using the aggressive entry for CHOCH in the SMC trading
+strategy.
+Read Also: 7 Candlestick Patterns Every Trader Should Know
+Frequently Asked Questions (FAQ) on SMC Trading Strategy
+Which time frame is best for SMC trading?
+The most suitable timeframe for SMC trading strategy might vary due to several
+factors, but the general opinion from several SMC traders is that “The SMC trading
+strategy works better when employing a longer time frame (4 hours) for technical
+
+
+--- Page 27 ---
+This document is the property of dipprofit.com, therefore any attempt to duplicate and reproduce for promotional
+purpose without the consent of dipprofit is illegal and will be penalized.
+analysis and a shorter time frame (15 minutes) to get your entry points, this timeframe
+has the potential to enhance the precision of trading decisions.
+Who is the founder of the SMC trading strategy?
+SMC trading strategy is alleged to be the creative brainchild of Michael J. Huddleston
+the founder of the ICT Program, a program he uses to teach the Smart Money
+Concepts strategy to a large community.
+Does SMC work in Crypto?
+SMC means Smart Money Concept and it is a trading strategy that can be used across
+the financial market, as long as it involves the use of charts and technical analysis.
+Therefore, when trading crypto futures or spot markets, SMC strategy can be very
+helpful in determining key zones as well as entry and exit points.
+What are the best indicators for the smart money concept?
+SMC Structures, Supply and Demand zones, and the FVG indicator are very good
+indicators when used for SMC trading strategy. FVG means Fair Money Gap and in
+my other article on Smart money concept trading, I was able to display how to use the
+fair money gap indicator effectively when using the SMC strategy.
+Conclusion:
+Something else to note is there are several ways in which SMC traders trade using the
+Smart Money Concept, and the pattern I used is just one of them, which relies mainly
+on the Change of character (CHOCH) and the market structure.
+Another point to take note of is that this way of using the SMC trading strategy relies
+heavily on using the sell limit, buy stop, sell stop, and buy limit, as you cannot
+instantly execute a trade except you are sure of the valid CHOCH and also confirmed
+a BOS.
+Finally, as there are several strategies lots of traders use for themselves, but it is
+important to understand that the SMC trading strategy is one of the few that stands out,
+as it is able to cover several aspects of the market, with its dynamic styles that
+encompass, lots of price action strategies, making its analysis, more accurate and clear.
+I hope you have been able to learn something from this article, and that you now have
+a basic knowledge of what the smart money concept is in trading. Please do well to
+leave a comment and a like, and you can also help share this article to enlighten more
+traders.

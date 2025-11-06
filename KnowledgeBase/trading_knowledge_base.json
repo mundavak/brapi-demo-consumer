@@ -1,0 +1,179 @@
+{
+    "metadata": {
+        "created": "2025-10-31T12:00:00",
+        "description": "Organized trading knowledge base extracted from institutional resources",
+        "categories": ["market_structure", "order_flow", "psychology", "strategy"]
+    },
+    "market_structure": {
+        "order_types": {
+            "market_orders": {
+                "description": "Consume liquidity, execute immediately",
+                "characteristics": [
+                    "Take available liquidity",
+                    "Show urgency/aggression",
+                    "Impact price immediately"
+                ]
+            },
+            "limit_orders": {
+                "description": "Provide liquidity at specific price",
+                "characteristics": [
+                    "Add to order book depth",
+                    "Show patient positioning",
+                    "Create support/resistance"
+                ]
+            },
+            "stop_orders": {
+                "description": "Convert to market orders at trigger",
+                "characteristics": [
+                    "Form clusters at key levels",
+                    "Create forced directional pressure",
+                    "Attract predatory trading"
+                ]
+            }
+        },
+        "liquidity_dynamics": {
+            "creation": "Limit orders provide liquidity",
+            "consumption": "Market orders consume liquidity",
+            "imbalance": "Price moves toward available liquidity",
+            "clusters": "Large orders accumulate at key levels"
+        }
+    },
+    "order_flow_analysis": {
+        "key_patterns": {
+            "absorption": {
+                "description": "Large players absorbing aggressive flow",
+                "indicators": [
+                    "Bids/offers remain despite pressure",
+                    "Volume increases but price stable",
+                    "Multiple price levels involved"
+                ]
+            },
+            "fading": {
+                "description": "Aggressive flow diminishing",
+                "indicators": [
+                    "Decreasing trade frequency",
+                    "Smaller trade sizes",
+                    "Failed attempts at level"
+                ]
+            },
+            "institutional_activity": {
+                "description": "Large player positioning",
+                "indicators": [
+                    "Iceberg orders",
+                    "Large hidden size",
+                    "Multi-level activity"
+                ]
+            }
+        },
+        "confirmation_signals": {
+            "volume": {
+                "clusters": "3x normal volume at level",
+                "fade": "Volume decreases 2-4 ticks after cluster",
+                "retest": "Volume behavior on return to level"
+            },
+            "price_action": {
+                "absorption": "Price stable despite flow",
+                "breakout": "Clean move through level",
+                "failure": "Unable to maintain direction"
+            }
+        }
+    },
+    "market_psychology": {
+        "emotional_framework": {
+            "fear": {
+                "indicators": ["Panic selling", "Quick reversals", "Volume spikes"],
+                "zones": "Below -2 standard deviations"
+            },
+            "greed": {
+                "indicators": ["FOMO buying", "Extended moves", "Declining volume"],
+                "zones": "Above +2 standard deviations"
+            },
+            "equilibrium": {
+                "indicators": ["Balanced flow", "Normal volume", "Two-way trade"],
+                "zones": "Within ±1 standard deviation"
+            }
+        },
+        "behavioral_patterns": {
+            "retail": {
+                "characteristics": [
+                    "Chase momentum",
+                    "Buy high, sell low",
+                    "Emotional decisions"
+                ]
+            },
+            "institutional": {
+                "characteristics": [
+                    "Patient positioning",
+                    "Fade extremes",
+                    "Multi-timeframe view"
+                ]
+            }
+        }
+    },
+    "trading_strategy": {
+        "entry_confirmation": {
+            "order_flow": [
+                "Volume cluster formation",
+                "Seller/buyer fade pattern",
+                "Large player activity"
+            ],
+            "market_structure": [
+                "Key level reaction",
+                "Previous high/low test",
+                "Support/resistance quality"
+            ],
+            "psychology": [
+                "Sentiment extremes",
+                "Trapped player behavior",
+                "FOMO conditions"
+            ]
+        },
+        "risk_management": {
+            "position_sizing": {
+                "factors": [
+                    "Market volatility",
+                    "Order book depth",
+                    "Level strength"
+                ]
+            },
+            "stop_placement": {
+                "considerations": [
+                    "Institutional stop zones",
+                    "Volume cluster support",
+                    "Order flow shift"
+                ]
+            },
+            "trade_management": {
+                "monitoring": [
+                    "Post-entry flow",
+                    "Level holding quality",
+                    "Trapped player status"
+                ]
+            }
+        }
+    },
+    "institutional_knowledge": {
+        "key_concepts": {
+            "liquidity": "Major players need significant liquidity for positioning",
+            "stop_zones": "Institutions target stop clusters for liquidity",
+            "manipulation": "Price moved to force weaker players out",
+            "accumulation": "Patient building of positions at value"
+        },
+        "trading_windows": {
+            "london_session": {
+                "start": "2:00 AM EST",
+                "end": "5:00 AM EST",
+                "characteristics": "Major institutional activity"
+            },
+            "ny_session": {
+                "start": "8:30 AM EST", 
+                "end": "11:00 AM EST",
+                "characteristics": "Highest volume, key moves"
+            },
+            "killzones": {
+                "timing": ["2-5 AM EST", "8:30-11 AM EST"],
+                "significance": "Institutional position building/distribution"
+            }
+        }
+    }
+}

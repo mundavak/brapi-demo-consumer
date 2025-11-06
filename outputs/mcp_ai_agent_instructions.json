@@ -1,0 +1,493 @@
+{
+  "document_metadata": {
+    "title": "MCP PDF Reader - AI Agent Instructions",
+    "purpose": "Standardized instructions for AI agents to effectively use MCP PDF Reader",
+    "target_audience": "AI assistants (GitHub Copilot, Claude, GPT-4, etc.)",
+    "version": "1.0",
+    "date": "2025-10-29"
+  },
+
+  "core_principle": "MCP PDF Reader enables AI agents to access PDF content programmatically. Always prefer using MCP tools over asking users to manually read PDFs.",
+
+  "when_to_use_mcp_pdf_reader": {
+    "primary_triggers": [
+      "User mentions a PDF file by name",
+      "User asks about content that might be in a PDF",
+      "User requests analysis of trading concepts (likely in KnowledgeBase PDFs)",
+      "User asks to 'read', 'extract', 'analyze', or 'summarize' a PDF",
+      "User references Bookmap, ICT, order flow, or trading methodology (probably in PDFs)",
+      "User asks about documentation (check for PDF versions)",
+      "User mentions 'KnowledgeBase' folder"
+    ],
+    
+    "secondary_triggers": [
+      "User provides a file path ending in .pdf",
+      "User asks 'what PDFs do we have?'",
+      "User wants to compare information across multiple documents",
+      "User needs baseline knowledge for dashboard improvements",
+      "User asks about trading patterns, concepts, or strategies"
+    ],
+    
+    "do_not_use_when": [
+      "User explicitly wants to read PDF manually",
+      "PDF is not accessible or doesn't exist",
+      "User is asking about PDF metadata only (use analyze tool, not extract)",
+      "Question can be answered without PDF content"
+    ]
+  },
+
+  "tool_selection_decision_tree": {
+    "step_1_identify_need": {
+      "question": "What does user need from PDF?",
+      "options": {
+        "full_text_extraction": "→ Use extract_text()",
+        "ocr_from_scan": "→ Use ocr()",
+        "metadata_only": "→ Use analyze()",
+        "discover_pdfs": "→ Use list_pdfs()",
+        "multiple_pdfs": "→ Use extract_text() sequentially or suggest batch command"
+      }
+    },
+    
+    "step_2_determine_tool": {
+      "extract_text_when": [
+        "PDF has native selectable text (born-digital)",
+        "User wants full content extraction",
+        "User needs to search/analyze text",
+        "Default choice for most PDFs"
+      ],
+      "ocr_when": [
+        "PDF is scanned (image-based)",
+        "PDF contains diagrams/charts with text",
+        "extract_text returns empty/minimal text",
+        "User specifically mentions 'OCR' or 'scanned'"
+      ],
+      "analyze_when": [
+        "User asks 'how many pages?'",
+        "User wants metadata (author, title, creation date)",
+        "User needs structure overview before reading",
+        "Exploratory: understanding PDF before extracting"
+      ],
+      "list_pdfs_when": [
+        "User asks 'what PDFs are available?'",
+        "User wants to discover PDFs in a directory",
+        "User needs to choose from available PDFs"
+      ]
+    },
+    
+    "step_3_path_handling": {
+      "relative_paths": {
+        "rule": "If user provides relative path (e.g., 'KnowledgeBase/file.pdf'), MCP server auto-resolves to DEFAULT_PDF_DIR",
+        "example": "extract_text('KnowledgeBase/ICT.pdf') → resolves to F:/TradingAgent/.../KnowledgeBase/ICT.pdf",
+        "best_practice": "Use relative paths for files in project directory"
+      },
+      "absolute_paths": {
+        "rule": "If user provides absolute path (e.g., 'C:/Docs/file.pdf'), use as-is",
+        "example": "extract_text('C:/Users/User/Documents/report.pdf')",
+        "best_practice": "Use absolute paths for files outside project"
+      },
+      "filename_only": {
+        "rule": "If user provides filename only (e.g., 'report.pdf'), try DEFAULT_PDF_DIR first",
+        "fallback": "If not found, ask user for full path",
+        "best_practice": "First call list_pdfs() to verify file exists"
+      }
+    }
+  },
+
+  "standard_workflows": {
+    "workflow_1_read_single_pdf": {
+      "scenario": "User asks to read a specific PDF",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Acknowledge request",
+          "example": "I'll read the ICT Mentorship PDF for you."
+        },
+        {
+          "step": 2,
+          "action": "Call MCP tool",
+          "tool": "extract_text(file_path='KnowledgeBase/443878056-ICT-Mentorship-Month-1-Notes.pdf')",
+          "visible_to_user": "Using tool: extract_text"
+        },
+        {
+          "step": 3,
+          "action": "Process response",
+          "parse": "Extract total_text, word_count from JSON response",
+          "validate": "Check if extraction successful (word_count > 0)"
+        },
+        {
+          "step": 4,
+          "action": "Provide summary",
+          "format": "Concise summary of PDF content, highlighting key sections user asked about",
+          "include": "Word count, page count (if available)"
+        },
+        {
+          "step": 5,
+          "action": "Offer follow-up",
+          "example": "I've extracted 12,450 words from the ICT PDF. Would you like me to focus on specific sections like expansion patterns or reversal setups?"
+        }
+      ],
+      "error_handling": {
+        "file_not_found": "Inform user, call list_pdfs() to show available files",
+        "extraction_failed": "Try analyze() to check if PDF is readable, suggest OCR if needed",
+        "empty_content": "Explain PDF might be scanned, suggest using ocr() instead"
+      }
+    },
+
+    "workflow_2_ocr_scanned_pdf": {
+      "scenario": "User has scanned PDF or extract_text returns minimal content",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Detect need for OCR",
+          "triggers": ["User mentions 'scan'", "extract_text returns < 100 words", "PDF is image-based"]
+        },
+        {
+          "step": 2,
+          "action": "Inform user about OCR",
+          "example": "This PDF appears to be scanned. I'll use OCR to extract text (this may take longer)."
+        },
+        {
+          "step": 3,
+          "action": "Call OCR tool",
+          "tool": "ocr(file_path='scanned_chart.pdf')",
+          "note": "OCR is ~10x slower than text extraction"
+        },
+        {
+          "step": 4,
+          "action": "Provide extracted text",
+          "warning": "Mention potential OCR inaccuracies for low-quality scans"
+        }
+      ]
+    },
+
+    "workflow_3_analyze_pdf_structure": {
+      "scenario": "User wants to understand PDF before reading",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Call analyze tool",
+          "tool": "analyze(file_path='document.pdf')"
+        },
+        {
+          "step": 2,
+          "action": "Present summary",
+          "include": ["Page count", "Metadata (author, title, creation date)", "Pages info (dimensions, image count)"]
+        },
+        {
+          "step": 3,
+          "action": "Suggest next action",
+          "example": "This PDF has 342 pages. Would you like me to extract specific pages or the full document?"
+        }
+      ]
+    },
+
+    "workflow_4_discover_available_pdfs": {
+      "scenario": "User wants to know what PDFs exist",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Call list_pdfs tool",
+          "tool": "list_pdfs(directory='KnowledgeBase')"
+        },
+        {
+          "step": 2,
+          "action": "Present organized list",
+          "group_by": "Category (ICT, Bookmap, Order Flow, Technical, etc.)",
+          "format": "Markdown list with categories"
+        },
+        {
+          "step": 3,
+          "action": "Highlight relevant PDFs",
+          "based_on": "User's likely interests or current task"
+        }
+      ]
+    },
+
+    "workflow_5_multiple_pdfs_sequential": {
+      "scenario": "User wants content from multiple PDFs",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Identify relevant PDFs",
+          "method": "Call list_pdfs(), filter by user criteria"
+        },
+        {
+          "step": 2,
+          "action": "Process sequentially",
+          "loop": "foreach PDF: call extract_text(), aggregate content",
+          "progress": "Inform user: 'Reading PDF 3 of 7...'"
+        },
+        {
+          "step": 3,
+          "action": "Synthesize information",
+          "combine": "Merge content from all PDFs, identify common themes",
+          "cite_sources": "Reference which PDF each fact came from"
+        }
+      ],
+      "optimization": {
+        "limit_count": "For >10 PDFs, ask user to narrow scope",
+        "smart_filtering": "Use PDF analysis to prioritize most relevant files"
+      }
+    },
+
+    "workflow_6_content_retention": {
+      "scenario": "User wants to retain PDF content permanently",
+      "recommendation_flow": [
+        {
+          "step": 1,
+          "assess_need": "How often will this content be referenced?",
+          "options": {
+            "one_time": "Conversation context is sufficient",
+            "occasional": "Suggest file-based storage",
+            "frequent": "Recommend database storage",
+            "production": "Suggest RAG with vector store"
+          }
+        },
+        {
+          "step": 2,
+          "provide_instructions": {
+            "file_based": "mcp-pdf extract 'file.pdf' > outputs/pdf_extracts/file.json",
+            "database": "Provide SQL schema and insertion commands",
+            "rag": "Explain vector store setup and embedding process"
+          }
+        },
+        {
+          "step": 3,
+          "implement_if_requested": "Execute commands to store content as instructed"
+        }
+      ]
+    }
+  },
+
+  "content_integration_best_practices": {
+    "principle_1_always_cite_sources": {
+      "rule": "When using PDF content in responses, always mention source PDF",
+      "example": "According to the Bookmap User Guide (p. 87), absorption indicates...",
+      "format": "[Fact] (Source: [PDF Name], page [N] if available)"
+    },
+    
+    "principle_2_preserve_context": {
+      "rule": "Keep PDF content in conversation context for follow-up questions",
+      "implementation": "After extract_text(), content is automatically in context",
+      "best_practice": "Remind user: 'I've read the PDF, feel free to ask follow-up questions'"
+    },
+    
+    "principle_3_structured_extraction": {
+      "rule": "When extracting specific information, structure it clearly",
+      "methods": {
+        "key_concepts": "Extract as bulleted list or table",
+        "definitions": "Format as glossary",
+        "procedures": "Format as numbered steps",
+        "patterns": "Format as pattern library with criteria"
+      }
+    },
+    
+    "principle_4_error_transparency": {
+      "rule": "If PDF extraction fails, explain why and suggest alternatives",
+      "examples": {
+        "file_not_found": "I couldn't find [file]. Here are available PDFs: [list]",
+        "ocr_needed": "This PDF appears to be scanned. I can try OCR, but it may be slower and less accurate.",
+        "corrupted": "This PDF seems corrupted. Can you verify the file is readable?"
+      }
+    },
+    
+    "principle_5_progressive_disclosure": {
+      "rule": "For large PDFs, don't dump entire content - provide summaries first",
+      "workflow": "Extract → Analyze → Summarize → Offer details on request",
+      "example": "I've read the 342-page manual. Here are the key sections: [summary]. Which would you like me to explore in detail?"
+    }
+  },
+
+  "dashboard_integration_instructions": {
+    "when_dashboard_task_mentioned": {
+      "recognize_triggers": [
+        "User mentions 'dashboard', 'absorption', 'stops', 'icebergs', 'CBDR', 'HTF', 'trading bias'",
+        "User asks to improve analysis or signal accuracy",
+        "User wants to integrate trading methodology"
+      ],
+      "action": "Proactively suggest reading relevant PDFs"
+    },
+    
+    "pdf_to_dashboard_mapping": {
+      "absorption_enhancement": {
+        "pdfs": ["Bookmap-User-Guide-6-1.pdf", "7.6.0.1 absorption indicator docs"],
+        "extract": "Absorption theory, significance calculation, interpretation rules",
+        "apply": "Enrich absorption events with methodology context"
+      },
+      "ict_methodology": {
+        "pdfs": ["ICT-Mentorship-Month-1-Notes.pdf"],
+        "extract": "Expansion, retracement, reversal patterns, bias determination",
+        "apply": "Validate dashboard signals against ICT criteria"
+      },
+      "order_flow_patterns": {
+        "pdfs": ["The-Ultimate-Guide-To-Order-Flow-Trading.pdf", "Order-Flow-Patterns.pdf"],
+        "extract": "Pattern library, detection criteria, reversal signals",
+        "apply": "Build pattern matching engine"
+      },
+      "spoofing_detection": {
+        "pdfs": ["Cracking-the-Spoofing-Code.pdf", "Stops-and-Icebergs-How-to-Detect.pdf"],
+        "extract": "Spoofing algorithms, iceberg detection patterns",
+        "apply": "Enhance stops/icebergs consumer logic"
+      }
+    },
+    
+    "integration_workflow": {
+      "step_1": "User mentions dashboard improvement need",
+      "step_2": "AI identifies relevant PDFs from mapping above",
+      "step_3": "AI extracts knowledge using extract_text()",
+      "step_4": "AI structures knowledge for code integration",
+      "step_5": "AI suggests specific code changes with PDF citations",
+      "step_6": "AI recommends retention strategy for permanent access"
+    }
+  },
+
+  "performance_optimization": {
+    "guideline_1_batch_when_possible": {
+      "rule": "For >5 PDFs, suggest mcp-pdf batch command instead of sequential tool calls",
+      "reason": "Faster, more efficient, better error handling",
+      "example": "For processing all 78 PDFs, I recommend using: mcp-pdf batch KnowledgeBase/"
+    },
+    
+    "guideline_2_analyze_before_extract": {
+      "rule": "For unknown PDFs, call analyze() first to check size/structure",
+      "reason": "Avoid extracting huge PDFs unnecessarily",
+      "example": "Let me first check the PDF structure... [analyze()] ...this is 500 pages, would you like specific sections?"
+    },
+    
+    "guideline_3_cache_large_extractions": {
+      "rule": "For large/frequently accessed PDFs, suggest saving to file",
+      "implementation": "After extract_text(), offer: 'Would you like me to save this extraction for future use?'",
+      "storage": "mcp-pdf extract 'file.pdf' > outputs/pdf_extracts/file.json"
+    },
+    
+    "guideline_4_smart_filtering": {
+      "rule": "When user requests multiple PDFs, intelligently filter before extracting",
+      "method": "Use list_pdfs() + analyze() to prioritize, extract only most relevant",
+      "example": "Found 20 PDFs. Based on your query, these 3 are most relevant: [list]. Shall I read these first?"
+    }
+  },
+
+  "error_handling_protocols": {
+    "error_type_file_not_found": {
+      "detect": "MCP returns {error: 'File not found'}",
+      "response": "I couldn't find [file]. Let me show you available PDFs in that directory.",
+      "recovery": "Call list_pdfs(), present options to user"
+    },
+    
+    "error_type_ocr_failure": {
+      "detect": "MCP returns {error: 'Tesseract not found'} or OCR produces gibberish",
+      "response": "OCR processing failed. This might be due to: [reasons]",
+      "recovery": "Suggest: (1) Check Tesseract installation, (2) Try different PDF, (3) Manually read if critical"
+    },
+    
+    "error_type_empty_extraction": {
+      "detect": "extract_text() returns word_count: 0 or minimal text",
+      "response": "Text extraction returned minimal content. This PDF might be image-based.",
+      "recovery": "Suggest: 'Would you like me to try OCR instead?'"
+    },
+    
+    "error_type_permission_denied": {
+      "detect": "MCP returns permission error",
+      "response": "I don't have permission to access [file]. Please check file permissions.",
+      "recovery": "Ask user to move file to accessible location or adjust permissions"
+    },
+    
+    "error_type_corrupted_pdf": {
+      "detect": "MCP returns PDF parsing error",
+      "response": "This PDF appears to be corrupted or password-protected.",
+      "recovery": "Ask user to verify file integrity or provide decrypted version"
+    }
+  },
+
+  "advanced_usage_patterns": {
+    "pattern_1_comparative_analysis": {
+      "scenario": "User wants to compare content across multiple PDFs",
+      "workflow": [
+        "Extract text from all relevant PDFs",
+        "Create comparison matrix or table",
+        "Highlight similarities and differences",
+        "Cite specific PDFs for each point"
+      ],
+      "example": "Comparing ICT methodology (ICT PDF) vs traditional order flow (Order Flow PDF)"
+    },
+    
+    "pattern_2_knowledge_synthesis": {
+      "scenario": "User wants synthesized knowledge from multiple sources",
+      "workflow": [
+        "Extract from multiple PDFs",
+        "Identify common themes and conflicts",
+        "Create unified knowledge representation",
+        "Provide citations for each synthesized fact"
+      ],
+      "example": "Building comprehensive absorption indicator guide from multiple PDFs"
+    },
+    
+    "pattern_3_incremental_learning": {
+      "scenario": "User learning complex topic across multiple sessions",
+      "workflow": [
+        "Session 1: Extract foundational PDFs, provide overview",
+        "Session 2: Extract advanced PDFs, build on previous knowledge",
+        "Session 3: Extract specialized PDFs, create expert-level synthesis"
+      ],
+      "note": "Content doesn't persist across sessions - re-extract if needed or save to files"
+    },
+    
+    "pattern_4_rag_preparation": {
+      "scenario": "User setting up RAG system for permanent PDF knowledge",
+      "workflow": [
+        "Extract all PDFs to JSON files",
+        "Chunk text into semantic units",
+        "Generate embeddings for each chunk",
+        "Store in vector database with metadata",
+        "Provide retrieval interface for dashboard"
+      ],
+      "example": "Setting up Pinecone/Chroma for trading knowledge base"
+    }
+  },
+
+  "checklist_before_using_mcp": {
+    "verify_conditions": [
+      "☑ User request involves PDF content",
+      "☑ PDF is likely accessible (in KnowledgeBase or user-specified path)",
+      "☑ Appropriate tool selected (extract/ocr/analyze/list)",
+      "☑ Path handling considered (relative vs absolute)",
+      "☑ Error handling strategy in place",
+      "☑ Ready to cite source in response"
+    ]
+  },
+
+  "ai_agent_self_assessment_questions": {
+    "before_tool_call": [
+      "Q1: Is MCP tool call necessary or can I answer without PDF?",
+      "Q2: Which tool is most appropriate for user's request?",
+      "Q3: Do I have correct file path?",
+      "Q4: What will I do if extraction fails?",
+      "Q5: How will I present extracted content to user?"
+    ],
+    
+    "after_tool_call": [
+      "Q1: Did extraction succeed? (word_count > 0)",
+      "Q2: Is content relevant to user's question?",
+      "Q3: Did I cite the PDF source?",
+      "Q4: Should I offer follow-up questions?",
+      "Q5: Should I suggest saving this content?"
+    ]
+  },
+
+  "summary_for_ai_agents": {
+    "core_message": "MCP PDF Reader makes PDFs accessible to you. Use it whenever users mention PDFs or need trading knowledge from KnowledgeBase. Always cite sources, handle errors gracefully, and offer retention strategies for important content.",
+    
+    "golden_rules": [
+      "1. Default to extract_text() for most PDFs",
+      "2. Always cite PDF sources in responses",
+      "3. Handle errors gracefully with helpful recovery suggestions",
+      "4. For large batches, suggest mcp-pdf batch command",
+      "5. Proactively offer PDF knowledge for dashboard improvements",
+      "6. Structure extracted content clearly (lists, tables, glossaries)",
+      "7. Save important extractions to JSON files for retention",
+      "8. Use analyze() first for unknown/large PDFs",
+      "9. Try OCR if extract_text() returns minimal content",
+      "10. Keep PDF content in conversation context for follow-ups"
+    ]
+  }
+}

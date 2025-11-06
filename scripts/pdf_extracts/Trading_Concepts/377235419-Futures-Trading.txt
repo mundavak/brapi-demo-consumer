@@ -1,0 +1,1966 @@
+Source: 377235419-Futures-Trading.pdf
+Pages: 74
+Characters: 103574
+Processing Time: 0.06s
+================================================================================
+
+--- Page 1 ---
+NetPicks
+Futures
+Tutorials
+The basics of Futures
+Trading
+
+
+--- Page 2 ---
+
+
+--- Page 3 ---
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+Futures 1, 2, 3
+Futures Trading
+Futures Trading Charts
+How do Futures Contract Rollover Days Work
+Choosing the Best Time to Trade Futures
+Charting the Right Session Times in Futures
+Futures trading software for your trading business
+The New Mini DAX Futures
+Trade Management Lessons from the FTSE
+Futures
+Learn How to Trade Grain Futures
+Crude Oil Futures Trading Basics
+Day Trading Crude Oil Futures Explained
+
+
+--- Page 4 ---
+13.
+14.
+15.
+16.
+Day Trading eMini & S&P 500 Futures
+Learn To Trade Futures
+Futures Trading Systems
+4 Tips to Create a Winning Strategy for Futures
+Day Traders
+
+
+--- Page 5 ---
+We wanted to develop a course that can take someone who is a brand new
+trader and teach them everything they need to know about Futures
+Trading, so they will be comfortable with possibly trading in this market.
+You will discover that there are many different types or classes of futures
+contracts, as they can cover many different markets that can be traded.
+Here is an overview of the topics we will cover:
+What is a Futures Contract
+Where are they traded
+How does Futures Trading Work
+Margin Requirements
+Understanding Ticks and Contract Value and Leverage
+How Futures Differ from Other Financial Instruments
+How to know which Futures Contract Month to Trade
+Up Down Limits on Contracts
+Spreads and Bid-Ask Price and Slippage
+Order Types
+Final Steps, Selecting a Broker and Account Size
+Let’s start out with the definition of what a futures contract is and give you
+a few terms that will help you understand and then give you a history of
+how these contracts came into existence.
+In finance, a futures contract (more colloquially, futures) is a standardized
+Futures 1, 2, 3
+
+
+--- Page 6 ---
+agreement between a buyer and a seller to exchange an amount and grade
+of an item at a specific price and future date. The item or underlying asset
+may be an agricultural commodity, metal, mineral or energy commodity, a
+financial instrument or even a foreign currency. Because futures contracts
+are derived from these underlying assets, they belong to a family of
+financial instruments called derivatives.
+History of Futures Trading
+Futures are among the oldest derivatives contracts. They were originally
+designed to allow farmers to hedge against changes in the prices of their
+crops between planting and when crops could be harvested and brought to
+market. As such, many futures contracts focus on things such as livestock
+(cattle) and grains (wheat). Since these beginnings, the futures market has
+expanded to include contracts linked to a wide variety of assets, including
+precious metals (gold), industrial metals (aluminum), energy (oil), bonds
+(Treasury bonds) and stocks (S&P 500).
+Now that you have a basic idea of what futures contracts are let’s take a
+look at where it all started. The first futures exchange market was the
+Dojima Rice Exchange in Osaka, Japan in 1710. It came to meet the needs
+of samurai who were paid in rice, and after a series of bad harvests, they
+needed a stable conversion to money. Their main purpose was to help
+provide stability to price and reduce risk to the producer and the consumer
+of these goods.
+In 1864 the Chicago Board of Trade (CBOT) listed the first-ever
+standardized 'exchange traded' forward contracts, which were called
+futures contracts. This contract was based on grain trading and started a
+trend that saw contracts created on a number of different commodities as
+well as a number of futures exchanges set up in countries around the world.
+In 1898 the Chicago Mercantile Exchange (CME) was founded as the
+Chicago Butter and Egg Board, an agricultural commodities exchange.
+Originally, the exchange was a non-profit organization. The CME went
+private in November 2000, and went public in December 2002, and merged
+with the CBOT in July 2007 to become the largest Exchange and Market
+Maker for most all Futures Contracts. They also merged with the New York
+Exchanges (NYMEX, and COMEX) for Oil and Gold contract trading. This is
+now all owned by the CME Group. There headquarters is on 20 South
+Wacker Drive in Chicago, and you can visit this exchange in person.
+
+
+--- Page 7 ---
+I went to the exchange when I was in Chicago and saw the “pits” as they
+call them, where people yell out prices and buy and sell contracts on the
+floor of the exchange. They had a welcome video that gives you a very
+simple view of futures trading and what the exchange does. It is well worth
+watching, and you should visit the exchange some time if you want to see it
+firsthand.
+http://bcove.me/f4fm35st
+Where are Futures Traded
+Here is a list of some names of the Exchanges and many of the popular
+Futures Contracts so you can get a feel of the exchange you will be dealing
+with and these various instruments.
+Chicago Mercantile Exchange (CME)- S&P 500, Nasdaq 100
+New York Mercantile Exchange (NYMEX)- Crude Oil, Natural Gas, Heating
+Oil (COMEX)- Gold, Silver, Copper
+Chicago Board of Trade (CBOT)- Dow, Corn, Soybeans, Cattle, Wheat
+Intercontinental Exchange(ICE)-Russell 2000 index
+Eurex Exchange (EUREX)-DAX, EURO Bund, EURO Bobl
+Futures trading is regulated. Here in the United States, the Commodity
+Futures Trading Commission (CFTC) is the independent government agency.
+The National Futures Association (NFA) is an independent, self-regulating
+organization and watchdog of the commodities and futures industry. They
+oversee and protect investors from fraudulent commodities and futures
+activities.
+How does Futures Trading Work
+Futures traders are traditionally placed in one of two groups: hedgers, who
+have an interest in the underlying asset and are seeking to hedge out the
+risk of price changes; and speculators, who seek to make a profit by
+predicting market moves and opening a derivative contract related to the
+asset "on paper."
+Some examples of Hedgers are Farmer's manufactures, importers, and
+
+
+--- Page 8 ---
+exporters. They buy or sell in the market to secure the future price of a
+commodity. This helps protect against price risk. Speculators typically fall
+into three categories: position traders, day traders and swing traders. They
+are just trying to profit from the price of the commodity going up or down.
+They have no interest in taking delivery of the commodity once the contract
+expires.
+These investors or Speculators are required to put up funds or a Margin to
+control this contract they are purchasing. This is to minimize the risk to the
+exchange and to make sure that the contract will be covered. Usually, the
+margin is 5% to 15% of the contract's value.
+To minimize the risk to traders, trades executed on regulated futures
+exchanges are guaranteed by a clearing house. The clearing house
+becomes the buyer to each seller, and the seller to each Buyer, so that in
+the event of a counterparty default the clearer assumes the risk of loss. This
+insures that trades will be executed at a price listed on the exchange.
+Margin Requirements
+The initial margin is the equity required to initiate a futures position. It is a
+type of performance bond. The maximum exposure is not limited to the
+amount of the initial margin; however, the initial margin requirement is
+calculated based on the maximum estimated change in contract value
+within a trading day. Initial margin is set by the exchange. So, your broker
+will give you your minimum account balance that is required to trade
+various markets.
+It is possible that if the value of your contract goes down, you might be
+required to add funds to your account to bring the balance up to the
+minimum margin required. You can always sell the contract for a loss;
+however, if you are holding a position longer than a day, the brokers want
+you to have a larger margin. So, there are two margins, day trading margin,
+which assumes that you will close the trade out the same day; and
+overnight margin, which assumes that you will hold the position overnight.
+That carries more risk so that the margin will be higher.
+In most cases, when we trade we don’t hold the trade for very long (day
+trade) and we teach you to use just a very small amount of risk or leverage
+on each trade. So it would be very rare that you would ever get a margin
+call unless you are trading a very small account and the broker is letting
+
+
+--- Page 9 ---
+you use more leverage than you should. We just wanted to let you know
+that there is risk in trading and that margin calls are possible if you are
+overtrading for your size account. We will go over account size and risk
+later in the education.
+Let’s talk about Leverage. When you buy or sell a futures contract, you
+don’t need to pay for the entire contract at the time the trade is initiated.
+Instead, the individual makes a small up-front payment to initiate a
+position. For example, one gold contract controls 100 troy ounces of Gold.
+Let’s say Gold is trading at $1200 you are controlling $120,000 worth of
+Gold, but only have to have about $5000 for an initial margin on your
+account to trade the one contract.
+Understanding Ticks and Contract Value and
+Leverage
+Now that you know how much gold you are controlling let’s take a look at
+how the value of the contract will change with each tick of price movement.
+So, a tick is the smallest amount of price movement on that market. I am
+sure that most of you are familiar with stocks and how they trade. They
+move in cents, so the smallest tick on a stock is .01 or one cent. The value of
+each tick, in the case of a stock, is dependent upon how much stock you
+own, right? If you have 100 shares and it moves one tick (or .01 one cent),
+then you have made 100X.01 or a Dollar.
+With futures, the value of each tick depends on upon the commodity that
+you are trading. For gold, each tick has a value of $10 and the tick size is
+.10 (Ten Cents). Other markets have smaller Tick Values so that they can be
+traded with smaller accounts. For example, the Nasdaq is $5 a tick, and it
+moves in .25 increments per tick. So, if the Nasdaq moves up four ticks
+(4X.25), the value of the contract would increase by four times $5 or $20.
+All of this information is listed on the CMEGroup for each instrument so
+don’t worry if it seems complex. You will want to learn more about the
+Futures market that you are looking to trade so that it will become second
+nature, and it will be as easy as trading something like a stock if you are
+familiar with that. Here is the page on gold at the CMEGroup with all of the
+specifications.
+http://www.cmegroup.com/trading/metals/precious/gold_contract_specific
+ations.html
+
+
+--- Page 10 ---
+How Futures Differ from Other Financial
+Instruments
+There are some other key differences in Futures markets as compared to
+other financial instruments. For starters, the value of a futures contract is
+determined by the movement of something else (the underlying asset) and
+the futures contract itself has no inherent value. Secondly, futures have a
+finite life. Unlike stocks, which can stay in existence forever, a futures
+contract has a set expiration date after which the contract ceases to exist.
+This is not a major factor in the contract you will be trading is almost always
+the one with the most volume, and so it is very liquid, but you need to know
+which contract you should be trading.
+Let’s take a look at some contracts and volumes on these contracts, so you
+know which one to trade. Again all of this information is on the Exchange
+website here, but I will put it in a screen shot for example.
+http://www.cmegroup.com/trading/metals/precious/gold_quotes_volume_v
+oi.html
+If you look at the website on Gold, you will see that the contract you should
+be trading is February 2015. It has the most volume. You also see that it
+changes each month. Some Futures contracts like the S&P 500 or Soybeans
+change quarterly, but you will know which one by the most volume.
+As you get towards the end of the month or quarter, you will see that
+volume goes down on the current month contract and increases on the next
+month contract. It is very simple, switch to the next month contract once
+the volume is greater on that contract.
+Here is a great example on Oil on December 16th.
+You see that there is more volume on the January contract, but that Feb is
+getting higher, so keep trading January. This next shot shows volume split
+almost equal, the next day. So that would be your last day of trading the
+January contract, move to the February Contract on Dec 18th. See how
+easy that is!
+Also, you see there is some volume on March contract, but those are just
+some Hedgers, all of the Speculators (day traders) are on the February
+contract. They also have the information on the last day the contact will
+
+
+--- Page 11 ---
+expire, so you know in advance when to start watching the volume. Like I
+tell everyone in the trade room, you should know your market.
+I can tell you that you will switch Oil contracts around the 19th of every
+month. The exact date is listed on the Exchange site and so you know if it
+will happen a few days before the 19th or a few days after. In the case
+below, it happened a few days before as the Settlement date was listed as
+Dec 19th. Most brokers will not let you trade a day before settlement date,
+but that is the last day possible. It also gives you the Symbol to trade for
+each month.
+How to know which Futures Contract Month
+to Trade
+That is another question we get all the time. What symbol are we trading?
+So, if you know where the volume is and look it up on the site you have all
+this information, but why is the Symbol or Product Code in this example
+CLF15. We can break that down for you. CL gives you the base Contract
+name in this case Crude Oil, and the 15 is the year 2015. What about that
+Letter in the middle. Why is F used for January? Why not A for the first letter
+of the Alphabet and the first month of the year? I am not sure why, but
+there is a table that shows you what letter is used for each month, as they
+never change you can refer to it.
+Sometimes, you will skip letters and some markets like I mentioned earlier
+don’t trade each month, but the contracts change each quarter. I have
+attached a picture of the S&P Emini; you will see that the contracts trade
+each quarter. I have also attached a picture that shows you the table of the
+letter used for each calendar month of the contracts.
+Up Down Limits on Markets
+Some futures markets have a maximum price advance or decline in a
+contract from the previous day’s settlement price permitted during one
+trading session. This is usually only on the Agricultural products that can
+have some extreme moves in a one-day session. Here is a screen shot of
+Corn Futures from the CME website, showing you the Limit up and down
+price allowed for the session. It rarely comes into play, but you need to be
+aware of it, if you are trading on one of those days and the market has
+moved very closely to the up or down limit. Trading will not be allowed to go
+
+
+--- Page 12 ---
+past those limits for that day.
+Spreads and Bid-Ask Price and Slippage
+Most every market has a Bid and an Ask price. The bid is the price you can
+buy the contract, and the asking price is the price you can sell the contract.
+The difference between these two prices is called the spread. In most all
+futures contacts the spread is very small, maybe one tick of price
+movement. Other markets like Heating Oil Futures, the spread, is larger,
+because there is less volume and it is thinly traded. Also, if you trade
+outside of the normal market hours, there is less volume and the spread
+can get larger. In most of the trading we do with Oil or the S&P Emini, there
+is a lot of volumes and the spread is the smallest it can be, 1 tick.
+When you place an order, you might not get filled at that exact price. The
+price might shoot up quickly, and so you get your order filled at a higher
+price than you wanted, usually just a tick or two more than your price, this is
+called slippage. Slippage is quite common and can’t be avoided in trading,
+so you just have to accept it as a cost of doing business.
+You can try and minimize it by, using a Stop Limit Order. This tells your
+broker that you only want to enter that market at that exact price. The
+problem is that your order might not get filled and the market moves up to
+your target, and you miss the trade. This is the only way to control slippage
+on the entry price, but like we said, it is normal to get zero to 2 ticks of
+slippage on a fast moving market. It is possible to get “positive slippage”
+where you get a better price than you asked, maybe on the entry or the
+target, but that is not as common as “regular negative slippage.”
+Order Types
+I mentioned Stop Limit Orders before when I talked about limiting spread.
+Here is a listing of the various order types and what they do. In most cases,
+you enter the position with a limit order, and you exit the order at a limit
+order or a stop order. I just wanted to tell you what the other order types
+mean.
+Market Order- This is executed immediately at best possible price at the
+market. You don’t know what it might be, but is should be close to the
+current market price. You don’t use this much unless you want to quickly
+enter or exit the market, due to some situation.
+
+
+--- Page 13 ---
+Stop Order- This is used on the Entry and the exit for the trade. The Stop
+Order converts to a Market Order once price reaches the Stop Order price.
+However, you are not guaranteed to fill at that exact price.
+Limit Order- This is used to set an exact price you want to enter or exit the
+trade. You can still have slippage on this type of order.
+Stop Limit Order- This is a combination of a Stop and Limit order. On the
+Entry price, once price reaches the Limit entry, you can specify how much
+slippage you want to take on the trade, one or two ticks or more. You never
+want to use this as the stop on your trade, because price can go through
+your stop price and you don’t fill. So, you wanted to be out of the trade, but
+you are still in.
+Final Steps, Selecting a Broker and Account
+Size
+There are many futures brokers out there, and so you should do some
+research on your own. Make sure they are regulated; they can be the US or
+Overseas Broker as Futures is traded on global markets. Each broker will
+have a different minimum account size to open. Also, as we discussed, you
+will need a certain minimum margin in the account to trade different
+contracts. Beware of some Metatrader 4 brokers. Metatrader is mostly used
+for the Spot Forex market and so they don’t specialize in futures trading. I
+think that you will find that the spreads are much larger than a dedicated
+futures broker. This will cost you money on every trade. Finally, some MT4
+brokers don’t trade the most liquid contracts, so make sure you check with
+the exchange and look up the volume on the contract they are offering.
+You account size will vary by the market you are looking to trade. We talked
+about different contracts and leverage and value of each market. The
+exchange has a minimum margin on each market, and the broker will also
+have one for day and swing trades. You need at least 5,000 to open and
+trade 1 contract on some of the smaller value contracts and larger amounts
+on other markets like Oil, or the DAX. This is because the Nasdaq is $5 a
+tick, and Oil is $10 a tick, and the DAX is $25 Euros. Here is a chart of the
+account minimums for some of the markets.
+Now that you know most everything you need to get started, you will want
+to find a company with a trading strategy that you can use to give you high
+probability trades. Then open a demo account and practice. Learn about
+
+
+--- Page 14 ---
+the particular market that you are going to trade and then once you have
+proven to yourself that you can make money in the demo and execute the
+trades. Then start out trading a very small amount of money and make sure
+you can stick to the trade rules with real money.
+We here at Netpicks pride ourselves on teaching new traders. We give you a
+sound trading strategy, a live room to demo, practice and learn. Exact trade
+plans that guide you in each trade and tell you exactly when and when not
+to trade. With these tools, you should be able to become a successful
+trader. You can learn more at www.netpicks.com.
+
+
+--- Page 15 ---
+Futures trading has been a long time favorite at NetPicks.
+In fact, when we started back in 1996 one of the first futures markets we
+traded and taught was trading the S&P futures contract - full-size.
+These days, futures trading has advanced significantly.:
+Near instant execution
+Low-cost trading
+Multiple market choices
+Individual traders, in particular, are well served with the E-Mini futures
+contracts.
+You can choose from the S&P, Nasdaq, Dow, Russell, and more.
+Futures trading of commodity contracts such as the Energies, Agricultural,
+Futures Trading
+
+
+--- Page 16 ---
+Metals and Financial instruments are all available and highly liquid.
+Perhaps our favorite aspect of futures trading is they tend to fit our mantra
+"Get in, Get out, Get done" when it comes to our futures trading.
+Primarily day trading, we look to reach what we call our Power of Quitting
+and finish most trading days as quickly as possible.
+With set hours, and small periods of the best volatility you'll find futures
+trading can be ideal for the active individual trader.
+Learn Futures Trading
+To learn futures trading, it's important to realize you have several areas
+that you'll need to learn and master.
+Futures contracts are different than your typical stock shares, in particular
+because you are trading a future price, and these are all expiring contracts.
+It's important to know both how to chart the futures contract, trade the
+correct front month contract (always where we day trade) and understand
+the numerous nuances to futures trading.
+The learning curve can be shortened with the right
+education.
+Beginning Futures Trading
+For those brand new to trading Futures, we recommend you start here:
+What Is Futures Trading?
+Online Future Trading
+What is Options Trading?
+Learn To Trade Futures Online
+How To Trade Futures
+For The Intermediate Futures Trader
+Intermediate Futures traders are those with some experience under their
+belts and looking to expand their knowledge:
+Learn How To Trade Grain Futures
+
+
+--- Page 17 ---
+Crude Oil Trading Basics
+Futures Trading Charts
+Future Trading Software
+Learn How To Auto Trade With Optimized Trading Systems
+Advance Futures Trading
+Even after trading for years, it is always a good idea to continue to grow
+your knowledge base.
+Automated Futures Trading Systems
+Day Trading Crude Oil Futures Explained
+3 Tips To Improve Your Trading Performance Now
+When Do Candlestick Patterns Really Work?
+Learn To Trade Futures With the M6E
+Futures Trading Videos
+Futures Trading
+Systems
+Online Futures
+Trading
+Day Trading Crude Oil Futures
+Explained
+Futures Trading Strategies
+Futures trading strategies tend to be highly technically bases. We typically
+find that developing a complete trade plan is key.
+A trading plan consists of an exact futures trading strategy. These futures
+trading strategies are typically made up of a set of indicators along with
+clear cut rules to ensure we always know our exact entry, stop and target
+on every trade we place in the futures markets.
+This is essential because you will be utilizing leverage in the futures markets,
+and that must be clearly defined.
+You'll want a combination of software, trade plans and training including
+ongoing live support to master trading these markets.
+
+
+--- Page 18 ---
+Future Trading Systems
+If you want to be an active day trader, futures are really the way to go.
+But to some, the world of futures trading is a dangerous business – a world
+where fast money and blown up accounts often go hand-in-hand.
+And the simple fact is that this is not an unusual reality in the industry.
+But there’s another reality for those who understand the risks involved and
+maintain appropriate safeguards: trading futures markets is one of the
+most efficient ways to use your capital.
+There are at least 3 highly compelling reasons to trade and moreover day
+trade futures markets. Read more
+Crude Oil Futures Trading Basics
+Any trader can learn how to trade crude oil futures. Just make sure you
+respect the risk and realize that you have to treat this as a very serious and
+professional endeavor
+Crude oil is a very volatile market that most newcomers to trading should
+avoid.
+However, it's good to understand this trading instrument so you can see the
+potential opportunities in trading it once you become more skilled as a
+trader..
+Treat it like a business and approach it with the same due diligence that
+you would apply to any business opportunity. Read more.
+3 Tips to Improve Trading Performance Now
+In a world where the information available to us is growing at an
+exponential rate, we must be mindful of the fact that we have a limited
+capacity to receive, process and incorporate ideas into our own lives.
+So as a principle, it’s wise to reserve your effort for those things that are
+likely to make the biggest difference to whatever it is that you’re trying to
+achieve.
+
+
+--- Page 19 ---
+Here are 3 tips to improve trading performance that will make a genuine
+difference. Read more
+
+
+--- Page 20 ---
+If you do a search for “futures trading charts” or “commodity trading
+charts” on the internet you will be presented with millions of results,
+obviously too many to check out individually.  This article will present you
+with a few of the major options available to you.
+The first place to look for futures trading charts is with your broker.  Almost
+every broker will offer some kind of charting capability, and if they don’t
+provide their own charting software then they will give you access to third
+party charting software.  One very powerful and popular charting software
+package used by many futures brokers is NinjaTrader.  You can go to their
+website, ninjatrader.com, to see a list of their brokerage partners which at
+this time includes over sixty names.
+The NinjaTrader software can plot a wide variety of chart types and time
+frames and includes a long list of technical indicators.  One limitation of the
+software is that the amount and quality of available data is limited by the
+broker.  Most brokers do not offer more than a few days or weeks of
+historical data, while others offer no historical tick data at all, severely
+limiting the technical analyst’s ability to back test his trading ideas and
+systems.  This problem can be obviated by the use of a third party data
+provider such as CQG or Kinetic (which is owned by NinjaTrader).  In Figure
+1 you can see a simple chart of the light crude oil Jan. 2014 futures contract
+on a NinjaTrader chart.  A pair of exponential moving averages, Volume and
+RSI were added to the chart.
+Futures Trading Charts
+
+
+--- Page 21 ---
+Figure 1 - NinjaTrader
+If your broker is TradeStation then you already have one of the most
+powerful charting software packages available to individual customers. 
+TradeStation was a charting software provider before it became a broker
+and this shows in the depth and breadth of features supported by the
+software.  Compared to other options it can be expensive although often
+new customers can obtain good deals when signing up.  It provides all of
+the flexibility and power in charting that NinjaTrader does, and you can see
+an example in Figure 2.
+Figure 2 - TradeStation
+
+
+--- Page 22 ---
+The TradeStation charting software can also be leased without a
+TradeStation brokerage account however that becomes relatively
+expensive.  You can find out more at tradestation.com.
+Perhaps you don’t have a futures account yet and would simply like to learn
+more about commodity futures price action.  In that case there are many
+free resources out there.  You can start out by simply obtaining a demo
+account at one of the NinjaTrader brokerage partners.  These accounts will
+be of limited duration but will allow you to use the software and decide
+whether commodities are for you.
+The futures exchanges provide their own charting.  Compared to the
+charting software available through your broker this charting is much more
+limited and also is usually based on delayed data, typically delayed by 10 to
+30 minutes.  Obviously because of the time delay these charts cannot be
+used to make day trading decisions, however they can be quite adequate
+for daily swing trading.  Probably the most comprehensive source of
+commodities futures data and free charting is the CME website at
+cmegroup.com.  Figure 3 lists some of the commodities data available
+through this.
+Figure 3 - CME Group Data
+Charts are available for each of the futures listed in the CME site.  As
+already stated, these charts use delayed data but otherwise can be quite
+useful for technical analysis.  They come with a set of technical analysis
+studies that can be customized.  Unfortunately these studies cannot be
+
+
+--- Page 23 ---
+combined and only one can be viewed at a time.  Figure 4 shows a typical
+CME chart.
+Figure 4 - CME Group Chart
+The major internet portals (Yahoo, AOL, MSN, Google, etc.) each have their
+own finance or investment area and may provide commodity futures
+charts.  Yahoo has one of the better offerings as far as charting is
+concerned.  Use finance.yahoo.com/futures as a starting point.  The charts
+here also use delayed data, however unlike the CME charts you can
+combine different technical indicators on the same chart.  Figure 5 shows a
+sample chart from finance.yahoo.com.
+
+
+--- Page 24 ---
+Figure 5 - Yahoo Chart
+Besides the portals there are other sites dedicated to providing free charts
+including commodity futures charts.  One of the oldest and best is
+Barchart.com.  Their charts are highly customizable and offer a large set of
+technical indicators for application.  The data is delayed but they also offer
+real time data for a price.  Figure 6 shows a sample Barchart.com chart.
+
+
+--- Page 25 ---
+Figure 6 - Barchart.com Chart
+There are many more sites that you can explore, but the above should be
+enough to get you started.  The key factor in deciding which commodity
+futures charting solution is best for you is whether or not you already have
+a futures trading account.  Start with your broker’s charting solution.  If it
+does not meet your needs consider licensing a third party charting software
+like NinjaTrader or eSignal and paying for a historical data feed. 
+Alternatively you can always consider switching to a broker that has a
+better charting package for you.  Regardless of your choice, good luck in
+your commodity futures trading.
+The rollover day for a Futures contract is one of the most misunderstood
+features in trading these contracts.
+Quite simply, Rollover Day is when traders start to exit the expiring contract
+and begin trading the front month contract that expires some time in the
+future.
+As part of your job as a trader, you must understand when the contracts
+expire and ensure you buy/sell out of the existing contract before the date
+of expiration.
+Liquidity And Rollover
+The expiring contract can still be traded, as it is still available up to the
+expiration day, but the liquidity will suffer and you are best advised, if you
+want to continue in this position, to change to the new contract.
+Liquidity: The degree to which an asset or security can be bought or sold in
+the market without affecting the asset's price
+This will avoid the problems associated with reduced trading volume which I
+will highlight later in this article
+The word "contract" when referring to the Futures market is an actual
+contract complete with obligations for both the buyer and the seller.
+The buyer agrees to take delivery, if trading in commodities such as cattle,
+and the seller agrees to deliver the product.
+Trading in financials, the Futures contracts would be settled in cash.
+The fact is that for the majority of traders, actual delivery never takes place
+How do Futures Contract
+Rollover Days Work
+
+
+--- Page 26 ---
+as they are speculating on prices and not actually buying the product itself.
+Futures Contract Rollover Days Can Differ
+The instrument you are trading has a specific day that rollover occurs. All
+instruments are not created equal though as some expire quarterly and
+others expire monthly.
+Some of the most popular e-mini contracts are the ES, Dow, and the Russell
+and they are known as stock index instruments. These expire quarterly in
+the months of March, June, September, and December on the third Friday of
+the month at 9:30 EST.
+Note: Each expiration month is represented by the following
+letters: March (H), June (M), September (U), December (Z)
+Let's use the ES for an example highlighting the March 2015 expiration:
+ESH15
+The March 2015 contract expires on March 20, 2015. The rollover to the
+June Futures contract (ESM15) is 8 days before expiry which is March 12,
+2015. This is when you want to monitor the volume in your market as many
+traders begin to exit that current contract.
+Most traders that I speak with will either change contracts on rollover or
+will trade the front month the next day.
+Another popular Futures instrument to trade
+is Crude Oil or CL
+Instead of a quarterly rollover, Crude Oil Futures rolls on a month to month
+interval.
+Keeping with March 2015, you'd be trading CLH15 but rolling over to the
+
+
+--- Page 27 ---
+April contract CLJ15 in the following manner:
+1. Trading the current month CLH15 will stop on the third business day
+prior to the 25 day of the month.
+2. If the twenty-fifth calendar day of the month is a non-business day,
+trading shall cease on the third business day prior to the last business
+day preceding the twenty-fifth calendar day.
+(http://is.gd/clcontract)
+Ensure that for any Futures market you trade that you are fully educated on
+the rollover particulars to avoid any issues with your trading positions.
+EFFECTS OF ROLLOVER
+You may have heard about difficulties with liquidity, and increased volatility
+associated with rollover days. These result from the changeover that
+happens. Most traders move from trading the current contract into the next
+contract, and that means that the volume of the expiring contract becomes
+less, usually resulting in larger spreads, and the trading volume for the next
+period increases.
+Volume: Total amount of futures contracts bought and sold during trading
+day (other time frame)
+Here we have a comparison of volume between the expiring month and the
+front month.
+
+
+--- Page 28 ---
+You can see the gradual decline of volume plus the incline of volume in the
+front month. If you are not paying attention to rollover, you may start
+seeing its effects in terms of liquidity.
+The increasing spreads on the expiring contract can be harmful to you if
+you day-trade, and the new contract will usually have very tight spreads on
+the rollover day. This is also important if you are a longer-term trader who
+wants to carry the contract past the expiration date, as the small spreads
+mean that you will pay the least to do the transfer.
+If you are considering opening a position within a few days of rollover day,
+then you may find it better to use the new contract at the start.
+Don't Fear Contract Rollover
+Futures Contract Rollover is not complex but it is something you should be
+extremely aware of. While most markets rollover at the same time, as we
+
+
+--- Page 29 ---
+have seen with crude oil, there can be differences.
+Just ensure you are checking the calendar and unless you are holding long
+term positions, begin trading the front month contract when most of the
+players change over.
+Thanks for reading and you are welcome to download our free version of
+Trend Jumper. A scaled down version of our most popular (and successful)
+trading system to date!
+Free Trend Jumper Trading System - Click Here
+One big issue that I’ve found frequently comes up when talking to traders, is
+when they are tracking market behavior they fail to differentiate between
+primary sessions and overnight sessions for futures products. Now of
+course,
+it can be useful to chart a 24-hour or full electronic exchange session.
+However, charting the right session times in futures for the primary session
+of the market you are trading can go a long way towards figuring out what
+it’s trying to do.
+Why non-primary hours are different
+Non-primary or “electronic” trading hours have two major differences to
+the main session for an instrument. The first is that because a futures
+product is a contract traded on an underlying market (for example a stock
+index future on a basket of stocks), any trading going on in the future when
+the underlying market is not fully open is going to be a proxy to the real
+market. In other words, the trading that goes on in futures outside of
+primary hours, isn’t always going to be an accurate reflection of what the
+underlying market wants to do.
+The second point is that the volume traded is generally much lower in the
+electronic session than it is in the primary session. This tends to result in
+either far tighter trading ranges when interest is lower or accentuated
+moves due to the thinner book when there’s something that needs to be
+priced in. Another really great example of this is in sessions where the
+market is open but there’s a major holiday somewhere in the world. Many
+times there’s very little movement, but sometimes the thinner market leads
+to significant directional movement.
+Masking the important activity
+Choosing the Best Time to
+Trade Futures
+
+
+--- Page 30 ---
+As a result of these differences, what you see on a full session chart has the
+potential to mask important technical features of a market. Which moves
+have happened as a result of changes in the price to the underlying market
+for example, are likely to be far more indicative of future movement and yet
+it might not be immediately clear which these are on a full session chart.
+The actual volume traded is also likely to have an impact on your charts. If
+you use volume profiles, although the additional less important data is far
+smaller in comparison to the primary RTH data, it will still have an impact
+on the overall distribution calculated by your platform.
+But perhaps of greater impact is felt by traders who use either tick or
+volume-based charts for their timeframe which in turn is used to generate
+setups. Many trade plans used in Trend Jumper and Counterpunch use tick
+charts for example. The result of using overnight data is that setups have
+the potential to be artificially large due to the fact that markets can move
+directionally on far fewer trades/less volume outside of their primary
+sessions.
+Additionally, it’s easier to identify session derived extremes in price, which
+markets are likely to retest and respect in the future. Although it is possible
+to find indicators on some platforms that allow you to specify the times for
+the open/high/ low/close you wish to have automatically drawn based on,
+it’s far more common to only have the option to show this for the current
+session. Fortunately however, most platforms do allow you to change the
+session displayed.
+Selecting your session
+Selecting the correct primary session is usually fairly straight forward. You
+can look at the product’s exchange webpage where it often gives the pit or
+
+
+--- Page 31 ---
+open outcry session. You could also find the information for the primary
+session by doing a web search on the primary market hours for the
+underlying market. For example, the E-mini S&P 500 (ES) is a US stock index
+product. The primary market hours for the NYSE are 9:30 am-4:00 pm EST
+and so this is the primary session for the ES (although 9:30 am-4:15 pm EST
+are frequently used).
+When looking at Forex futures it’s not quite as straight forward. You could
+chart sessions based on the hours of the major Forex centers globally (from
+forexmarkethours.com):
+But equally if you were to do a volume analysis on a product (I’ve used the
+British Pound futures here) you might see that there’s a more relevant time
+window to use that spans across several of these.
+Charting the Right Session Times in Futures
+
+
+--- Page 32 ---
+Many traders still don’t differentiate between primary and non- primary
+market sessions in futures trading and it’s my belief that they are missing a
+trick with this. If you don’t already do so, why not at least take a look at
+primary session only futures charts as a way to compliment your technical
+analysis.
+Trade well.
+Below are other excellent free
+trading and invesing guides.
+Choose as many as you like with
+our compliments today only:
+Free Book:
+Options Trading
+
+
+--- Page 33 ---
+One big issue that I’ve found frequently comes up when talking to traders, is
+when they are tracking market behavior they fail to differentiate between
+primary sessions and overnight sessions for futures products. Now of
+course, it can be useful to chart a 24-hour or full electronic exchange
+session. However, charting the right session times in futures for the primary
+session of the market you are trading can go a long way towards figuring
+out what it’s trying to do.
+Why non-primary hours are different
+Non-primary or “electronic” trading hours have two major differences to
+the main session for an instrument. The first is that because a futures
+product is a contract traded on an underlying market (for example a stock
+index future on a basket of stocks), any trading going on in the future when
+the underlying market is not fully open is going to be a proxy to the real
+market. In other words, the trading that goes on in futures outside of
+primary hours, isn’t always going to be an accurate reflection of what the
+underlying market wants to do.
+The second point is that the volume traded is generally much lower in the
+electronic session than it is in the primary session. This tends to result in
+either far tighter trading ranges when interest is lower or accentuated
+moves due to the thinner book when there’s something that needs to be
+priced in. Another really great example of this is in sessions where the
+market is open but there’s a major holiday somewhere in the world. Many
+Charting the Right Session
+Times in Futures
+
+
+--- Page 34 ---
+times there’s very little movement, but sometimes the thinner market leads
+to significant directional movement.
+Masking the important activity
+As a result of these differences, what you see on a full session chart has the
+potential to mask important technical features of a market. Which moves
+have happened as a result of changes in the price to the underlying market
+for example, are likely to be far more indicative of future movement and yet
+it might not be immediately clear which these are on a full session chart.
+The actual volume traded is also likely to have an impact on your charts. If
+you use volume profiles, although the additional less important data is far
+smaller in comparison to the primary RTH data, it will still have an impact
+on the overall distribution calculated by your platform.
+But perhaps of greater impact is felt by traders who use either tick or
+volume-based charts for their timeframe which in turn is used to generate
+setups. Many trade plans used in Trend Jumper and Counterpunch use tick
+charts for example. The result of using overnight data is that setups have
+the potential to be artificially large due to the fact that markets can move
+directionally on far fewer trades/less volume outside of their primary
+sessions.
+Additionally, it’s easier to identify session derived extremes in price, which
+markets are likely to retest and respect in the future. Although it is possible
+to find indicators on some platforms that allow you to specify the times for
+the open/high/low/close you wish to have automatically drawn based on,
+it’s far more common to only have the option to show this for the current
+session. Fortunately however, most platforms do allow you to change the
+
+
+--- Page 35 ---
+session displayed.
+Selecting your session
+Selecting the correct primary session is usually fairly straight forward. You
+can look at the product’s exchange webpage where it often gives the pit or
+open outcry session. You could also find the information for the primary
+session by doing a web search on the primary market hours for the
+underlying market. For example, the E-mini S&P 500 (ES) is a US stock index
+product. The primary market hours for the NYSE are 9:30 am-4:00 pm EST
+and so this is the primary session for the ES (although 9:30 am-4:15 pm EST
+are frequently used).
+When looking at Forex futures it’s not quite as straight forward. You could
+chart sessions based on the hours of the major Forex centers globally (from
+forexmarkethours.com): -
+But equally if you were to do a volume analysis on a product (I’ve used the
+British Pound futures here) you might see that there’s a more relevant time
+window to use that spans across several of these.
+
+
+--- Page 36 ---
+Charting the Right Session Times in Futures
+Many traders still don’t differentiate between primary and non-primary
+market sessions in futures trading and it’s my belief that they are missing a
+trick with this. If you don’t already do so, why not at least take a look at
+primary session only futures charts as a way to compliment your technical
+analysis.
+Trade well.
+More posts by Coach James can be found here
+ 
+
+
+--- Page 37 ---
+Trading is a business and like many businesses, you need tools to help you
+in your business. If you are a Futures trader, you have no doubt looked into
+Futures trading software and wondered exactly what it is you require.
+The trading software you will need will depend on what type of trader you
+are. Swing traders may need different trading software than a scalper.
+Assuming you have the basics such as the best trading platform and order
+entry programs covered, I want to touch on a few pieces of software and
+services you may find useful for not only Futures trading but any market or
+instrument.
+These are not endorsements but are gleaned from the many traders I speak
+with on a weekly basis.
+Data Feed For Futures Trading
+If your trading strategies call for intra-day trading volatile markets such as
+crude oil futures, you will want to ensure you are trading with an extremely
+reliable data feed.
+Futures trading software
+for your trading business
+
+
+--- Page 38 ---
+While data is not futures trading software per se, without it, other
+important trading software would be useless.
+Kinetick- Many of the traders use the Ninja Trader trading charting
+software for futures so this is no surprise. Quotes are not sacrificed for
+unfiltered delivery speed so the price you are getting is straight from the
+exchange. When trading fast markets, the last thing you want to worry
+about is the quality and speed of your price quotes.
+Their price point is in reason compared to other data companies. Data feed
+is not a glamorous topic however speed, reliability and costing are variables
+you should keep in mind.
+Just as you turn on the light at home and expect a constant stream of
+electricity, you should expect the same from you data provider.
+On the topic of backtesting, ensure your data feed has enough historical
+data to allow a large sample of market conditions to test. Kinetick offers
+180 days of tick data, 2 years of minute data and 10+ years of daily data.
+That may be enough to give you a solid glimpse into the viability of your
+trading plan and system if you are interested in trading futures for a living.
+Breaking News Software
+What if your futures trading strategy relies on up to the minute news and
+insights to help define a trade setup?
+Yep, that’s right. Eurex have just announced the introduction of a new
+product to their already successful futures lineup – the new Mini DAX
+Futures.
+On the rare occasions when an exchange releases a new contract of
+genuine importance, there is always likely to be a degree of anticipation
+and perhaps even some excitement. However, when a great product like the
+DAX gets a new set of specs, things get really interesting.
+Contract Specifications
+So let’s not dally about. Let’s get straight to what the new contract specs
+are.
+The new Mini DAX Futures (FDXM) will be traded in 1 point tick increments
+and be €5/point versus the full DAX Futures (FDAX) which is traded in 1/2
+point tick increments and is €25/point or €12.50/tick. They will be listed in
+the same quarterly cycle, roll at the same time and also be cash settled.
+At this point, I do not know what the round trip cost of the new contract will
+be, but given the way the DAX moves, it’s unlikely to be too much of a
+sticking point even if it’s the same as the big DAX contract. I’d love it if the
+cost of an RT was 50% or lower, but realistically I’m not sure that this is
+likely to be the case. We shall see. I will update this post when I know more.
+The New Mini DAX Futures
+
+
+--- Page 39 ---
+How about software that allows you to monitor and analyze many different
+securities at once?
+One very powerful piece of future trading software for traders is:
+Bloomberg Terminal- A trader I know that trades for a fund said he would
+not turn on the charts until Bloomberg was fired up. That is how important
+this trading software is to his business.
+Global coverage is their hallmark and while they produce their own content,
+they have 1000+ other news sources plus the ability to harness the power of
+social media for instant and in the moment news broadcasting.
+We've all seen how a misplaced word from a govt leader can affect the
+market to the tune of 400 points in a hearbeat. Fast delivery of news
+content for those whose futures trading strategies rely on news and errant
+spikes to be effective is vital.
+Economic releases can shake the market and having the important releases
+front and center and the results of the release can be an exceptional asset
+to certain types of traders. I personally know a trader who will only start
+trading when a highly volatile releases such as NFP (Non-Farm Payroll)
+occur.
+You can imagine that having up to the second information on these events
+is part of his trading edge.
+Tracking the main markets such as Dow, S&P, NASDAQ, and even gold
+futures can help traders have a birds eye view on the risk on/off situation
+for the trading day.
+It does come with a cost and this type of software for futures trading may
+be out of your reach. There are many benefits to the investment that will all
+Who Cares?
+Well you might think that taking a big contract and making it much smaller
+is a bit of a waste of time. But the truth of it is just the opposite.
+A single full DAX Futures contract has a notional value of €25 x 10,000
+(point value times by the current price, give or take) = €250,000 and as
+recently as April this year, it was getting towards €312,500!! So if you need
+to hedge a long-term cash market position for example, it’s tough to do so
+on such a large product. So ETF’s might be the way you’d go instead.
+Then of course there are the smaller guys like day traders. The DAX is a
+great market but just moves so much and is already expensive per tick. It’s
+not rare for it to move 300 points in a day – that’s €7,500 per contract in
+range!! Some days it will move 500 points.
+For a day trader with a smaller account who wanted to trade the DAX, one
+of the few options available was to trade a DAX future CFD (note: DAX
+index CFD which many brokers offer, is not the same thing). But this hasn’t
+been available to traders in all countries and has inherent risks such as it
+not being a centralized exchange regulated market.
+Hedgers or day traders are just a couple of examples of participants who
+are likely to be interested in the new Mini DAX Futures. If it works, it is going
+to be more liquid, slightly slower and it will be easier to accurately manage
+risk on positions.
+Will it Even Work?
+But will it even work? There are plenty of products that are launched and
+fail. Indeed there was a mini-sized US dollar-denominated DAX introduced
+by the now defunct USFE exchange back in ’08. This product unfortunately
+went the way of the dodo for various reasons which I won’t get into right
+now.
+
+
+--- Page 40 ---
+depend on your goals and how much overhead you want to have.
+Trading Automation Software
+Automated Futures Trading Software - Whether you are trading oil futures
+or your business is e-mini futures trading, this type of software can do much
+of the heavy lifting for you.
+If you have done any
+trading at all, you know the battle you have with your trading emotions.
+Paper trading (demo trading) can sometimes give you an insight of the
+greed/fear emotions but nothing takes the place of live trading with actual
+money on the line.
+ANY_CHARACTERS_HERE
+Automated trading software can do everything from locating and triggering
+trades to trailing and exiting your positions.
+ANY_CHARACTERS_HERE
+There are two huge benefits to this type of software:
+1. No emotional trading - It's a mechanical strategy that has been tested
+out over time. When variables line up, the trade is triggered regardless of
+your personal bias. If you were starting at your trading charts, you may
+find reasons to sit out "this trade". You may decide to lighten up the
+position.That brings me to the Turtle Traders and the heating oil
+example. Only 1 trader, Curtis Faith, followed the trade plan and reaped
+a windfall for his mentors. The others found reasons to not follow the
+plan and paid a hefty price for doing so.Objective trading at its finest is
+what this type of trading software can do for you.
+2. Have a life outside of trading - Unlike the standard approach to futures
+trading, you don't have to be glued to your computer screen out of fear
+of missing a trade. Since markets are basically in play 24 hrs a day, your
+prime setup may occur while you are on vacation or sleeping. Automated
+software is online around the clock ready to execute your backtested
+and proven trading plan.
+This is just some of the trading software that is available for those
+Then of course there was the E-mini S&P 500 Futures. It was introduced by
+the CME in the late 90’s and was initially 1/10th the value of the big S&P
+contract (which itself was later halved).
+It was also listed with a quarter point tick increment instead of the one
+tenth of a point tick increment which the full contract had.
+People laughed at it.
+I really don’t believe there’s any more I need to say about the E-mini S&P
+500 Futures!
+Eurex is a solid exchange and has been about since the beginning of
+screen-based futures trading. They have done their homework on the Mini
+DAX Futures. In fact, there’s been talk of a mini DAX for a good few years
+now. And there’s a genuine need for it too, as we see higher prices and
+greater market volatility.
+The Mini DAX Futures are very likely to succeed and be a big hit.
+What to Expect
+Eurex have announced that the Mini DAX Futures will be available from 28
+October 2015 in addition to the existing FDAX.
+The trouble is whether or not people will initially trade them. Whilst it
+remains to be seen just how liquid they will initially be, even if the daily
+volume levels are relatively low there should be reasonable liquidity due to
+the designated market maker schemes they will be running until at least the
+end of March 2016. Market makers will have the obligation to quote.
+If you’re going to trade it, I would strongly suggest just watching it and not
+trading it for at least a couple of weeks to begin with.
+
+
+--- Page 41 ---
+interested in trading futures. Software also comes with different qualities
+and price ranges so ensure what you are using is aiding your trading...not
+hindering it.
+Even those that make their living currency trading online can benefit from
+employing a strong data feed, news wire and automated trading programs.
+For those traders that love the "thrill" of day trading, they can still utilize
+the automation in regards to trade management or even locating and
+entering swing/position trades. Anything that helps us stick to our trade
+plans and protect our trading accounts is always worth consideration.
+The fact is that it’s a new contract and although the liquidity might look to
+be reasonable, it might not always behave as you expect. Plus you can’t be
+certain that there won’t be any teething problems given the fact that it’s a
+brand new product.
+I’d also suggest you chart the full product too. If you’re a Netpicks owner
+(such as Trend Jumper or Counter Punch), your trade plan will be tested on
+the full product and more than likely be using tick or volume (share) bars.
+Given the vast difference in contract specs, setups won’t be what they
+should. So chart the FDAX and (if you choose to) trade the FDXM.
+Let's see where the new Mini DAX Futures take us and just maybe they'll
+bring some great opportunities to those who trade them!
+Trade well.
+More posts by Coach James can be found here
+ 
+
+
+--- Page 42 ---
+No one trade is ever quite the same. But there are similarities between
+them and by learning trade management lessons from each trade we take,
+we can improve the way we manage future trades.
+Let’s take a look at an example of a FTSE futures trade using Trend Jumper,
+which occurred in the EU Trade Room session…
+If you’d like to see it first, here is the video: -
+https://youtu.be/JsPFCzuDIUc
+Market Open & Potential Energy
+The opening position is always important. It tells us how much “potential
+energy” the market has.
+The basic key elements to note are: -
+Where the market is opening relative to yesterday’s range
+Where the market is opening relative to yesterday’s cash and full
+session close
+The reason for this is to identify the level of change between yesterday’s
+perception of value and today’s initial idea of value.
+For example, opening near the close and the middle of the range, might
+Trade Management
+Lessons from the FTSE
+Futures
+
+
+--- Page 43 ---
+show no change in perception of value and therefore no urgency from the
+market. On the other hand, a move away from these could suggest either a
+change and perhaps a directional continuation or a rejection of the
+movement and the onset of responsive activity to bring the market back to
+where it was yesterday.
+In the example, the FTSE opened up inside but towards the top of the prior
+day’s range. It also opened very close to the prior day’s European cash
+session closing price.
+Now the opening position wasn’t predicting huge amounts of early
+potential. But if you take into account that the prior day was a breakout
+day of a 3-day balance area, it’s should be clear that there’s still some
+exploration of value to be done – especially early on in the session.
+
+
+--- Page 44 ---
+So it’s important to take into account some slightly broader auction context
+than just the opening position relative to yesterday’s range and close.
+Doing so should have suggested to a trader that there was decent potential
+for an early directional move.
+Early Tests
+The FTSE futures then went on to test up and test down (to the prior day’s
+cash close) to form an opening balance range which held for several
+minutes.
+
+
+--- Page 45 ---
+Market participants weren’t going “all in” right off the bar, but bearing in
+mind the potential energy, a breakout from this balance could see a
+directional move take hold.
+As the FTSE started to move above the balance high, Trend Jumper gave us
+a Jump Line Crossover long setup – right on cue!
+The logic that I apply to whether the trade fits or not with market structure,
+is based on whether I can at least get to the money management target
+(T1) without the need to break the nearest level of any significance. In this
+case, you can see that you could get that as well as your fixed scale-out
+
+
+--- Page 46 ---
+(T2).
+The trade was taken for 2 contracts and the market moved up to T1 fairly
+easily.
+Now, I hear you ask why did I sacrifice 2 ticks on the fixed target here when
+it rolled on straight to T2?!
+2 points.
+First point - Your scale is risk management gold
+Once you take half your position off (in this case), the breakeven for the
+entire trade moves dramatically away from the current price. Even the
+6.5pts taken at 5934.5 here changes the breakeven price from 5928.0 (the
+original entry price) to 5921.5 – i.e. 13pts from the current price!
+Second point – A historical chart rarely fully reflects the actual flow of the
+market observed at the time
+Get the free version of the Trend Jumper system I use
+in this example: -
+Free Trend Jumper
+Trading System - Click Here
+The conditions for taking a trade off when it’s short of its target, are that: -
+
+
+--- Page 47 ---
+It gets close to the target (to within 1 – a handful of ticks depending on
+the product you are trading)
+The target is at or close to a key level (this should be used at a trader’s
+discretion)
+The market is showing signs of support or resistance as it moves to the
+target price.
+You don’t see it in the chart, but close to T2 and a key zone, it did show
+something of a pause – and when a market reverses here, as it’s a key zone
+and the competition to get in or out of a position will be greater, there’s
+often not much time to react.
+So you either take what you can with the possibility of the market
+continuing anyway or you hold tight for an extra couple of ticks.
+Because of the risk management implications, I always work on the basis of
+the first option – taking it off with the risk of missing out on a couple of
+extra ticks, but guaranteeing my breakeven price moving very favorably in
+the process.
+How to Trail
+In some cases I trail the Jump Line 9 (JL9) and in other I trail the Jump Line
+4 (JL4). This is based largely on how much of a move has already occurred,
+whether a key price level has already been tested, how much potential for a
+continuation move I think there is and how big the gap between the JL9 and
+the JL4 is.
+I also often switch between the two mid-trade. This is because as the
+market moves further, I want to give it more room.
+Whatever scheme I’m using, I always want to work within the current
+market structure. So in the FTSE trade example, when T1 is hit, I wouldn’t
+normally lock in at entry +1 tick. I’d move it to a couple of ticks below the
+breakout point (location #1 on the chart). As it happened, I was able to trail
+the JL4 soon after.
+
+
+--- Page 48 ---
+The FTSE did then continue past the first key price target and before it
+reached the second, some 2-way trading halted the advance.
+The question was whether to trail the JL4, JL9 or market structure.
+Given that the market had moved a decent amount, the JL9 was now
+becoming more appealing, but it had to fit with market structure. As you
+can see, the trade stopped out anyway and the extra room given to it cost
+3.5pts. But the potential for a further move up was high.
+Unfortunately, and this is just part of the game (so long as it doesn’t
+happen on every trade!), the stop-out was the low of that swing and the
+market did continue on to test close to the upper key price level (5961.5).
+Takeaway Points
+
+
+--- Page 49 ---
+Whilst you can’t get trade management on every single trade you take
+100% perfect, actively managing trades like this can help increase your
+bottom line. It can also improve the consistency of results and give you a
+more valid reason to exit a trade when it’s moving against your position.
+Active trade management techniques like the ones used in this example,
+aren’t easy to use to begin with. But with practice, they do become much
+easier and even second nature. If this is something you’re interested in, I
+suggest you start off by back-testing it and then by assessing how each
+trade you take would have turned out using these methods.
+ 
+Trade well.
+More posts by Coach James can be found here
+PREVIOUS ARTICLE:
+Online Futures Trading
+NEXT ARTICLE:
+Crude Oil Trade Basics
+Gain futures have some very unique properties that make them very good
+to day trade.  However, many people don’t understand the market or are so
+locked into the typical markets that they are familiar with.  For example,
+everyone seems to want to trade The ES or S & P Emini or the NQ (Nasdaq)
+or YM (Dow).  This is because they hear and see about how it does each
+day.   The nightly news tells you if the DOW went down 100 points or that
+the S&P gained 1 %.  You don’t hear how much Corn, or Soybeans or Wheat
+when up, unless it is dealing with a related story about food costs going up
+because the Grain prices are going up.
+How are grain futures trades?  They are traded almost exactly like all of
+those other futures I mentioned and that you are familiar with.  They are
+traded on the same Exchange the CME out of Chicago.  They are traded in
+5,000 bushels and move in ¼ tick increments at $12.5 a tick.  This price
+Learn How to Trade Grain
+Futures
+
+
+--- Page 50 ---
+action is exactly the same as the ES.  One contract per point (4 ticks) is
+worth $50.  So, you see it can be traded just like a market that you are
+familiar with.  However, there are some major differences in how it trades
+that make it very nice for the retail trader.  These are some of the key
+differences.
+1.  The Market does not respond to the typical US market news like a Jobs
+report or the Fed statement.  This means that it is not correlated with the
+US market and so you can trade it and not worry about someone giving
+a speech or many of the news events that move the US market up or
+down.
+2. Diversified markets.  You can trade Corn, Soybeans or Wheat.  You can
+pick the best one that is giving you the best trading signals.  They trade
+differently and respond more to weather news or crop reports.  So, you
+want to get educated on the market you are looking to trade and know
+which contract month to trade.
+3. Trading hours.  They use to start trading at 0830 CST and end about
+2:00 CST.  However, now with electronic trading.  They trade from 5 PM
+CST to 2 PM.  They still have the big surge of traders at the old “Pit
+Open” at 0830 CST, but now the market is only closed for about 3 hours
+in the afternoon and they are open all night and all morning.
+I talked about getting to know your market.  Everything you need to know
+about the market and volume and current contracts are on the CME site. 
+www.cmegroup.com   Look at the chart above from the CME site and you
+can see that Corn is trading the March 2014 contract and the volume is
+about 55,000.  This way you know the exact symbol to use for each market
+and then the current month with the most volume.
+You will also want to pay attention to some of the Agriculture news, unlike
+the standard US market or world news.  Often the market will start a nice
+trend, based upon expect crop reports or if there are some major storms
+that might affect the harvest of various crops.  That is one of the very nice
+things about Grains.  They trend very well and move in large waves.  This is
+a good site for news on Crop reports and Harvest reports.  www.agweb.com
+
+
+--- Page 51 ---
+So, take a look at a market that gives you great diversification, non
+correlated with US markets, and one that trends better than many of the
+standard US Markets.  It is easy to trade and with a little bit of education
+on the market.  I think you will find that you can make a great living just
+trading the Grains.
+PREVIOUS ARTICLE:
+Online Futures Trading
+NEXT ARTICLE:
+Crude Oil Trade Basics
+
+
+--- Page 52 ---
+Crude oil futures are one of my favorite day trade markets to trade.
+For years now, it has offered enormous profit opportunity due to its highly
+active price action and range.
+As dynamic as this market is, there are aspects that are important to be
+aware of if you want to succeed at crude oil futures trading.
+Crude oil futures, and more specifically, ‘light sweet crude oil futures’ are
+traded on the NYMEX Exchange (New York Mercantile exchange).  The
+trade pit opens at 9 am est and trades until 2:30 pm, but there is also a very
+active electronic market which trades on globex from 6 pm est, Sunday
+through Friday.
+Like all major commodities futures contracts, crude oil futures contracts
+are standardized. 
+The front month contract is what we want to focus on because that is
+where the majority of the volume is.
+Each contract consists of 1,000 barrels.
+The prices move in 1 tick increments.
+Each tick is equal to .01, or one cent, US.
+Crude Oil Futures Trading
+Basics
+
+
+--- Page 53 ---
+Therefore the value of each tick is $10, making very small moves in price
+a very lucrative and/or risky proposition.
+For example, if one were to trade a single contract of crude oil futures that
+moves just .10 in price, $100 would be made or lost, plus trade costs
+(commission, exchange fees and slippage).
+ 
+Crude Oil Contract Rollover
+Each month, around the 18th, or the closest Friday to the 18th, we typically
+‘roll’ to the next front month contract.
+During the Thursday and Friday around these monthly dates, you will notice
+the trade volume begins to migrate from the old month to the new.
+We always want to focus our trading on the contract with the most trade
+volume.
+There are also mini contracts of crude oil futures traded on the CME.
+At first appearance, you might be drawn to these because they require
+much smaller capital levels to safely trade.
+The only problem is that most traders have not really taken to these smaller
+contracts and the trade volume is just not sufficient for us to attempt
+trading these products.
+Focus on the full size NYMEX contract for better
+trading.
+I have personally called live trades in a virtual trade room for many years
+and crude oil futures has been one of the best, most consistently active
+markets that I have focused on throughout my trade room experience. 
+Because of this price action, we can look forward to lots of great trade
+opportunities.
+ 
+How To Trade Crude Oil Futures
+
+
+--- Page 54 ---
+All the best strategies that I have found the most success with, are rule
+based methods that tend to focus on momentum style trade setups, or
+reversal trades.
+They are very controlled, with specific targets, entries and stops.
+For me, the best strategies utilize multiple positions and for that,  you do
+have to be adequately capitalized.  If not, then begin with a single position
+and trade it to a specific target.
+With two positions, which is my preferred method, I like to exit at a specific
+target with one position, and then trail the 2nd position per my trade plan
+rules and techniques.
+I also like to move my stop to lock in a little profit or to eliminate the risk on
+the trade as quickly as possible, also per the rules and techniques of my
+trade plan.
+Your tradeplan should also be quite specific as to when to start each
+session and when to quit.  This is the kind of market that you probably do
+not want to over trade.
+My Personal Trading Plan Is As Follows
+I begin at 8:50 am each session.
+My quitting goals are dynamic and typically require one or two winning
+trades and a positive result.
+If the session begins with losses, then we have to keep trading until we get
+positive or, until we reach a designated stopping time.
+Many traders have a hard time knowing when to stop trading and that
+usually leads to problems.  Each trader is different, and typically requires
+personalized rules to accommodate them so figuring out the proper
+quitting time requires some initial research.
+Some traders only trade for 30 minutes and 3 trades maximum for
+example, while others will just power through the entire session or until they
+hit their winning goals.
+Still others, and this is something I would suggest one focuses on, will
+
+
+--- Page 55 ---
+research by back testing, all the trades that their strategy produces
+throughout several months of trading, and then isolate the most productive
+and least productive windows of time.
+An interesting trade plan can then be applied that treats each session as 2
+to 4 mini sessions, each with its own start and stop time, only focusing on
+what has been historically shown to be the most productive time slots to
+trade crude with their specific trade method.
+I personally like using the PTU Trend Jumper strategy which has a very
+specific approach to this market.  It’s the perfect strategy to set up mini
+sessions because it produces excellent setups.
+When you combine these setups with smart trade plan rules, you can
+consistently produce profitable results.
+ 
+Vital Key To Any Trade Strategy
+There are other effective strategies too, but regardless of the strategy, I
+have found the most consistent success by trading it the same way each
+and every session, with a purely mechanical approach.
+In other words, there is very little room for discretionary trading. 
+I’m not saying one couldn’t be successful trading crude oil futures by ‘touch
+and feel.’  I just haven’t known anyone that has succeeded at it.
+This market offers up the same type of price action and price patterns over
+and over again so, armed with that information, I prefer to use a rule based
+mechanical strategy that takes advantage of that and in so doing, puts the
+odds in my favor on each and every setup.
+Winning at futures trading is all about odds.
+There is no such thing as perfection.
+The good news is, we don’t need perfection to
+succeed.
+We just need to put the house odds on our side.  The strategies we use give
+
+
+--- Page 56 ---
+us ‘better than house odds,’ in fact.
+I don’t need to win every trade to make a lot of money trading crude oil
+futures.
+Winning every trade isn’t possible anyway.
+So I focus on quitting positive on most sessions and staying consistent with
+my approach.  As long as your strategy offers up a positive average profit
+per trade, net of all winners and losers, you can be successful trading crude
+oil.
+Of course, you also need to couple that up with very smart and conservative
+risk exposure and money management.  In other words, you have to be
+adequately capitalized to trade crude oil futures.
+You never want to risk more than 2% over your trade capital on any given
+trade and you should apply the philosophical concept that less is more.
+Focus on quality of the trading opportunity and not
+quantity.
+Give you plan a chance to produce for you.  By letting the odds do all the
+heavy lifting for you, your account will ultimately ‘ramp up,’ and as it does,
+you can increase your position size while still sticking to the quality vs
+quantity concept.
+Those that over trade, that is, trade for quantity, tend to have lower net
+profit results per trade or worse, can’t find a way to quit positive on most
+sessions.  They give their profits back to the market as they keep pushing
+the buttons and entering order after order.
+Just like the gambler who overstays his welcome at the blackjack tables. 
+You don’t want to be a gambler.  You want to be a smart business
+man/woman who has pre-calculated the risks and knows when to walk
+away each session.
+ 
+What Variables Go Into Successful Crude Oil
+Trading
+
+
+--- Page 57 ---
+There are the elements that are required to succeed at crude oil futures
+trading
+Method
+Tradeplan and rules
+Quality vs. quantity
+Smart risk and money management
+Discipline to execute the plan, each and every session
+Research and knowledge of what to expect from the tradeplan – this is
+critical to success!
+Adequate capitalization
+Don't forget about the news releases.
+Another important aspect to crude oil trading is the weekly Inventory
+Report that comes out every Wednesday or Thursdays on holiday shortened
+trade weeks.  On Wednesday, it is released at 10:30 am.
+If it is a holiday week, then expect its release on Thursday at 11:00.
+Make sure to not try to execute new trades around this report. 
+We typically stop taking trades 5 minutes before the release.  More
+conservative traders will even go flat and close out positions that happen to
+still be open prior to the report.
+The problem with trying to execute trades through this report is that it will
+produce wild volatility and liquidity momentarily dries up at many price
+points.  In other words, the price will hit your targets but you won’t get filled
+until some other unpredictable price level is reached.
+In short, you lose control of your trade!  That is never
+good!
+While trading through the report is not the wisest thing to do, I like treating
+the after report trading as an entirely different trade session; almost like a
+6th session each week, with its own start times and quitting goals.  I like to
+begin looking for trades a fast 2 minutes after the release.  I will typically
+trade for one good winner and then I’ll quit for the session.  Some traders
+like to wait 5 minutes.
+ 
+
+
+--- Page 58 ---
+Crude Oil Trading Can Be Lucrative
+Crude oil futures is one of the most dynamic and lucrative day trading
+markets there is.  It is critical though that you do a lot of preliminary
+research before risking real money.
+It is wise to back test your intended approach in a pre-programmed
+spreadsheet so that you can see what your chosen trade plan has produced
+in the past.  Then continue testing it forward in real time, while practicing it
+in a simulation account.
+You want to establish a positive expectancy (average net profit per trade)
+as well as a plan that wins on most sessions and has a strong weekly win
+rate as well.  I use a spreadsheet called the UTA (Ultimate Trade Analyzer)
+to track all my live trades and to back test each and every market, method
+and trade plan prior to risking real money.
+Any trader can learn how to trade crude oil futures.  Just make sure you
+respect the risk and realize that you have to treat this as a very serious and
+professional endeavor.
+Treat it like a business and approach it with the same due diligence that
+you would apply to any business opportunity.  With opportunity comes risk
+so you have to manage the risk exposure with intention and eyes wide
+open.
+Free Trend Jumper
+Trading System - Click Here
+
+
+--- Page 59 ---
+PREVIOUS ARTICLE:
+Crude Oil Trade Basics
+NEXT ARTICLE:
+Automated Futures Trading Systems
+View Our Futures Trading Video
+Live Crude Oil Futures Trades With Trend Jumper
+Crude light (CL) is a fantastic product to day trade. It has great liquidity and
+you soon know whether you’re right or wrong in a trade as it moves quite a
+bit. Because of this it’s one of those highly profitable products that
+discipline is a must to trade it. It’s a fast moving market and at $10 a tick,
+you can see relatively large p/l swings just trading a single contract.
+SOME BASIC STATS
+Whilst trading CL on the CME Globex is actually open for nearly 24 hours a
+day during the week (6:00pm – 5:15pm EST) the primary pit session is just
+5½ hours long (9:00am to 2:30pm EST). Focusing on the latter, you
+Day Trading Crude Oil
+Futures Explained
+
+
+--- Page 60 ---
+generally get somewhere in the region of 100-250 ticks in range and 100-
+250k contracts traded and frequently it can be considerably more active.
+This is for the closest contract to expiration before contract roll (trading
+volume tips over into next contract month). Crude trades monthly contracts
+and in fact many traders look to profit from spreading different contract
+months against each other, looking to profit from changing expectations of
+the value of the commodity over time. It’s important to know when to roll
+into the new front month as crude oil is a future that is settled by delivery –
+if you’re long and you let the future expire on you, an oil tanker will show
+up!
+Volatility in fact varies not only from week to week and month to month,
+but is also dependent on the day of the week. Volume tends to pick up
+throughout the week and volatility is usually elevated around the weekly
+crude oil inventory report on Wednesdays. In fact, this report has the
+potential to whip the market back and forth so dramatically that many oil
+traders step back for a few minutes to let the dust settle before taking
+further trades.
+ 
+Would you like to Receive the Seven Secrets to Crude Oil Trading Success?
+ Grab It Here for Immediate Download - Crude Oil Futures Success
+ 
+ 
+PRICE DRIVERS
+But it’s not just inventories that move oil prices. Crude oil can see good
+trends in part due to speculation. Indeed when oil spiked to record highs in
+2008, speculators were blamed for pushing prices higher. Whilst it is
+
+
+--- Page 61 ---
+certainly a speculator driven market to an extent, there are other factors to
+take into account.
+Same goes for the plummet in 2014 and 2015.
+From a demand aspect, the impact of the level of growth in countries such
+as China, India and Brazil must be considered. The better the global
+economy, the greater the demand from these countries will be. This is also
+why oil tends to move in tandem with the stock market. But there comes a
+point where higher prices become seen as a hindrance to growth. It’s also
+important to assess the way the value of the dollar impacts oil prices.
+Crude oil is priced in dollars and it has an intrinsic value. So any strength or
+weakness in the dollar has the potential to inversely affect oil prices - i.e. if
+you want to buy something but your money is worth less, the cost in terms
+of your money goes up. And this goes for inflation too.
+Over time as currency devalues, anything with intrinsic value should rise in
+price in terms of the currency. So the varying degree of inflation (or
+deflation) will impact oil prices too. Then of course comes the issue of global
+tensions and particularly those in the Middle East.
+The simple fact is that the world is dependent on oil and a vast amount of it
+
+
+--- Page 62 ---
+comes from this highly volatile region. Any conflict that hints at the possible
+disruption to crude oil supply can quickly send prices higher.
+Why do you need to know this information to day trade crude then?
+Because economic reports also affect oil prices and when an important
+figure is released out of line (differing from analyst pre-release estimates),
+markets must reprice to account for this. Middle East tensions might be
+ongoing, but there are specific points in time when important developments
+take place and the market moves quickly.
+Crude oil is a great market to trade as a day trader. Because the market
+has a good number of influences driving price and because when a lot of
+business needs to be done the level of liquidity can move the market
+quickly, crude oil is a market where there’s lots of action for a day trader to
+profit from.
+If you’d like to learn more about day trading crude oil futures and pick up a
+few tips, why not take a look at Seven Secrets to Crude Oil Futures Trading
+Success by Mark Soberman, the founder of NetPicks.com.
+PREVIOUS ARTICLE:
+Crude Oil Trade Basics
+NEXT ARTICLE:
+Automated Futures Trading Systems
+
+
+--- Page 63 ---
+PREVIOUS ARTICLE:
+Currency Day Trading
+You might have heard of a popular market called the E-mini S&P 500, aka
+the ES. But this market remains a mystery to many people – and not just
+beginners.
+WHAT IS THE ES ANYWAY?
+The ES is a futures contract on the S&P 500 cash market. The S&P 500 is an
+index of 500 large cap stocks in the US. It is made up of individual stocks
+from all the main industry sectors – from energy, financial, health care to
+industrial stocks and many more, the S&P 500 covers the lot! The ES is a
+futures market that has four quarterly expiry contracts per year, trades in
+quarter points and each quarter point, or tick is worth $12.50.
+YOU’LL PROBABLY THINK YOU LOVE IT THEN WANT TO HATE IT
+Many beginners are drawn to the ES because of its great liquidity, low
+intraday margins and daily ranges that are about right – not too crazy to
+start out trading, but also it still has a pulse. But then they start to trade it
+and begin to hate it. “It never just goes!!” or “It always stops me out to the
+tick before heading to my target!!” you’ll hear them cry. And these views
+aren’t without merit at all. Because the S&P 500 is an aggregated product –
+i.e. it’s made up of lots of other products (the stocks) – its movements are
+muddied and an average of all the stocks that make it up. This feeds
+straight into the ES. The ES is a mean-reverting product. It likes to trade
+back on itself. It likes to check and recheck levels. And it can be hellishly
+stubborn at times when it does trend. So the kinds of psychological
+torments that traders and especially new traders go through are often
+amplified by the ES. If you’re stubborn in nature, you’ll likely get torn to
+shreds.
+Day Trading eMini & S&P
+500 Futures
+
+
+--- Page 64 ---
+THE MARKET THAT LOVES CONTEXT
+The product is just like any other you might choose to trade – find your
+niche and you’ll make a lot of money. One thing that this market loves is
+context. It loves to see levels or a trendlines tested and fail for example. It
+loves to see yesterday’s high broken briefly then fall back below. It loves to
+know that more buyers didn’t enter when that high broke, so that sellers
+can confidently step it up. No new buyers above high = trapped longs =
+opportunity to profit from trapped longs liquidating. True it’s an art as
+much as a science to knowing when to pull the trigger in scenarios like this
+and when to lay off as things aren’t quite right. You’ve also got to have a
+good handle on what the ES is viewing as technical levels as you’ll be able
+to better control your risk by knowing where to enter as much as knowing
+when you have your cue. Once you know which direction you have your cue
+in, you could trade it with a something like the PTU Trend Jumper for
+example.
+IT WOULD TRY THE PATIENCE OF A SAINT
+According to my googling, there is apparently no genuinely designated
+patron saint of patience. Shame. But if there was, the ES would surely try
+the patience of said saint and certainly of all the rest. The fact is that
+because most of the time, given its aggregated mean-reverting nature, the
+ES undulates back and forth looking for buyers and sellers. When you’re
+wrong it makes you think you’re right and when you’re right you know to
+your core that you’re wrong. And then you see what actually happens after
+you exit the trade. It’s a tricky little fellow the ES and so having a well
+thought out trading plan that you religiously stick to through thick and thin
+will likely serve you better than any gut instinct you have whilst you’re in a
+trade. You must yield to the trading (and trade plan) gods and have the
+patience to see the trade through whatever the outcome may be.
+The ES is just another market. So don’t love it or hate it – use it if it fits the
+type of strategy you like to trade. At the end of the day, while those reasons
+why beginners first start trading it still hold true, the ES is a fantastic
+product to trade and it is very possible to make considerable amounts of
+money with it.
+PREVIOUS ARTICLE:
+Currency Day Trading
+
+
+--- Page 65 ---
+PREVIOUS ARTICLE:
+How to Trade Futures?
+NEXT ARTICLE:
+Futures Trading Strategies
+Trading futures online has become more and more popular in recent years
+and although the standards available to the internet retail trader have
+dramatically increased in this time, there are still potential pitfalls.
+Additionally there are many considerations that a trader must make that
+many have had to learn by experience alone. Here are some of them to give
+you a head start.
+Brokers
+If you want to trade futures you’ll need an Introducing Broker (IB) or a
+Futures Commission Merchant (FCM) (and a clearer), in order to trade. A
+broker is really just the middleman but in some cases the services that they
+offer do justify the slightly higher commission rates that they tend to
+charge. When you setup your account with an IB, you’ll also have to fill out
+forms for a clearer too.
+Trading and Charting Platforms
+There are many different charting and trading platforms out there that
+offer a plethora of features to the modern trader. More and more it’s
+commonplace to see a combination of the two. Some are built for
+functionality, some are built for speed, some are built for reliability and
+some are built for cost. Some cost a lot of money, some are more
+reasonable and some are offered ‘free’ (though generally there’s a levy on
+commissions for no cost platforms). It’s also important to note that many
+vendors (software and data) who charge for their products do give a
+discount for services paid for in advance (normally up to a max of 1 year).
+But it’s really important that you think very carefully about what exactly it is
+Learn To Trade Futures
+
+
+--- Page 66 ---
+that you require for your style of trading.
+Data
+Not all data is made equal. The issue that data providers have is that the
+greater the amount of data and the higher the accuracy of this data, the
+higher the overhead on their servers and the greater the bandwidth
+required to deliver this data is. So you tend to get two different types of
+data. The first is typically a “broker feed” which is the data your broker
+provides in order for you to trade. This can often be filtered (meaning you
+won’t actually see every trade) as the most important factor is that it keeps
+up with live prices. It typically won’t provide you with much historical data
+and often won’t be especially accurate (although in some cases these feeds
+are dramatically improving). The second type is a pure data vendor. These
+types of data feed tend to give you much more historical data and be more
+accurate (although this is variable in extent). Your charting platform must
+support your chosen feed whichever way you go and you must have a feed
+with order routing if you intend to trade through it.
+Trading PC & Internet Connection
+People often think it’s a good idea to fire up their family pc and internet
+connection to trade with. But this isn’t necessarily a great idea I’m afraid.
+The chances are you’ll have many programs installed and a cluttered up
+operating system. Your internet connection might not be the best either.
+And the truth is that latency is an internet-based retail trader’s nemesis. If
+the market is moving faster than your trading platform can keep up, you
+could end up making trading decisions that are costly ones. Traders can
+also run strategy orders with some software, where their platform
+generates orders based on market data and for many platforms these
+orders are generated client side – meaning trades are placed based on the
+data coming into your PC. If this data is lagging behind the market to a
+great extent then you could have a problem.
+What can go wrong will go wrong
+It’s not just latency that’s a concern though. You need to have a plan for
+what you’ll do if your PC fails you. Then what would you do if your internet
+connection goes down in the middle of a trade? How will you handle a
+power outage during the trading session? Then there’s also the possibility
+that your data provider has outages. Market volatility can massively spike
+
+
+--- Page 67 ---
+causing latency issues for your platform. There are so many things that can
+go wrong with trading online and as you trade more you’ll inevitably come
+across these issues from time to time.
+Self-Starting and Taking Responsibility
+Trading futures involves a high degree of risk and this is perhaps even more
+relevant when trading futures online. Trading online means you need to
+have strong motivation and be a self-starter as there are many things you
+need to do in order to give yourself the best chance of success in this
+business. Taking responsibility for your trading decisions is a really
+important factor that when you’re trading in this isolated way, can seem
+like a difficult task. But it’s also important to take responsibility for
+situations like for example where your internet goes down in the middle of a
+trade. If you haven’t planned for this possibility and don’t have a backup
+connection or the number for the trading desk at your broker, then any loss
+because you couldn’t access your platform is down to you and you alone.
+Online futures trading is a booming business. Many firms offer access to
+exchanges and futures products throughout the world. The level of
+sophistication of the products on offer is rapidly improving and the standard
+of internet connectivity available to a retail customer far exceeds what it
+once was. If you’re a day trader, futures are a fantastic way to trade and
+it’s an industry which is ever-evolving. If you’re interested in futures trading,
+take a look at some of the ways you can trade them with Netpicks.
+PREVIOUS ARTICLE:
+How to Trade Futures?
+NEXT ARTICLE:
+Futures Trading Strategies
+
+
+--- Page 68 ---
+Many traders I come across seem to start off by trying to day trade stocks
+or Forex and for many years this concept was pretty alien to me.
+If you want to be an active day trader, futures are really the way to go. But
+to some, the world of futures trading is a dangerous business – a world
+where fast money and blown up accounts often go hand-in-hand.
+The simple fact is that this is not an unusual reality in the industry. But
+there’s another reality for those who understand the risks involved and
+maintain appropriate safeguards: trading futures markets is one of the
+most efficient ways to use your capital.
+ 
+LEVERAGE In The Futures Market
+Leverage certainly has the potential to be a case of Dr. Jekyll and Mr. Hyde.
+I don’t think it’s too hard to find horror stories of traders being over-
+leveraged and blowing up their accounts. It’s not uncommon for a trader
+who has taken a few “bad beats” to go “on tilt”, trade erratically and
+double up (or perhaps worse) on their losing positions.
+Futures Trading Systems
+
+
+--- Page 69 ---
+But even without this very real aspect of trading, many traders just don’t
+realise what the odds of them having a sustained period of draw down are
+and so they are less likely to fully appreciate the need to address how much
+capital they should risk over how much capital they can risk.
+Let’s look at some figures to put into perspective just how much leverage
+you can get as a trader of futures.
+The E-mini S&P 500 (ES) trading at a level of 1600 gives a trader control of
+$80,000 of product (index level x $50 per point for this product). Current
+CME exchange margin is $3,850 per contract which equates to a leverage
+of roughly 20:1.
+Whilst that’s pretty high it’s not exceptionally so. Enter the brokers.
+For day trading, brokers offer a much lower intraday margin rate. In theory
+a low intraday margin is useful for a well-capitalized account if you don’t
+want to leave all of your capital sitting in your account.
+However, in practice many traders will use these low margins to trade with
+much less capital than is realistically required. Typically a broker will offer
+you $500 intraday margin and I’ve seen as low as $400 per contract for the
+ES.
+At the same 1600 level that’s a leverage of 200:1.
+That’s 8 points to zero or a 0.5% move in a product that typically has a
+primary session range of 10-20 points. And it’s important to note that
+margined accounts can fall below zero, meaning that if the market moves
+sharply against you and losses are greater than the capital in your account,
+you will be liable for the difference.
+But just like everything else in trading, it’s an individual’s responsibility to
+ensure that they fully comprehend the risks involved and act in their own
+best interests. If you take account of the risks, the ability to highly leverage
+your trading capital can be a powerful ally.
+If you have a genuine edge in the market that has demonstrated will make
+money over time, then being able to trade more contracts than you would
+normally with the capital you have is a distinct advantage. If you stick to a
+1-2% risk per trade with a 2-3 point stop in the ES, you only need $5,000-
+15,000 per contract for example.
+
+
+--- Page 70 ---
+Clearly there’s the opportunity to turn a relatively small amount of capital
+into a great return.
+ 
+Futures Markets Have Great LIQUIDITY
+In fairness, there are plenty of futures instruments that have poor liquidity
+just as anything else could that you might look to trade. But there are
+reasonably high numbers of really great products to trade, with a variety of
+different behavioral features and risk profiles that also have fantastic
+liquidity.
+Many instruments don’t even have a bid-ask spread in the front month
+contract.
+An important point is that futures contracts are agreements to deliver (or
+take delivery of) the underlying product at a certain date and therefore they
+expire. So if you hold a long (buy) position in Crude Oil into expiry, you will
+be expected to take delivery and pay for a whole load of barrels of Crude
+Oil.
+Some products are cash settled instead like the ES for example. It’s for this
+very reason that a futures trader will never normally want to hold a position
+into expiry. The front month is the nearest expiring futures contract (except
+when approaching the expiration date) and this is where the liquidity for an
+instrument is normally found.
+The main point about liquidity though, is that you’ll never really have a
+problem getting into or out of a position in the markets.
+ 
+CENTRALIZED REGULATED EXCHANGES
+The futures industry is highly regulated and whilst there are those who try
+to get away with nefarious activities, they are often identified swiftly and
+dealt with appropriately. Regulatory requirements are stringent and are
+there to protect traders.
+And because the exchanges are centrally cleared, effectively meaning that
+all trades goes through the exchange (although this isn’t 100% accurate it is
+
+
+--- Page 71 ---
+true for the most part), there is accountability for all trades that take place.
+Simply put, you get what you see in most cases when you trade. Direct
+market access means no funny business from your broker too. Your trading
+platform links into the exchange.
+Because of this, the quality of futures markets is high.
+The bottom line is that if you are a sensible, responsible trader who treats
+this as a business, futures markets offer a fantastic way to trade. They are
+efficient, cost effective and properly regulated. Sure, like any other product
+there are a few nuances to learn.
+But if you’re serious about trading and day trading in particular, you should
+seriously consider trading futures.
+
+
+--- Page 72 ---
+We all want to win and be successful traders. Why is it that so many of us
+fail? What is the difference between the traders that succeed and those
+that don’t? There is no one answer, but a number of elements that work
+against us as traders. Some of them are:
+1. Emotions: Failure to learn to control emotion when faced with losses,
+gains, luck and indecision, which leads to poor decision making.
+2. Timing: Market timing is a factor you must master to become a
+successful trader. This is where the majority of traders fall by the
+wayside.
+3. Capital: Under capitalization or external pressure to make money. In this
+do or die situation traders will often feel that the market must produce
+‘regular’ and ‘consistent’ profits for them or they’ll be put into a financial
+bind. This introduces trade psychology issues and sets a trader up for
+failure.
+4. Seeking the Golden System: Failure to stick to one system. Most traders
+typically take a few losses and then they start trying to change things,
+tweak things, and then ultimately find something else. They jump from
+one system to the next without ever really learning the system’s rules
+and methodology. They think they can find a no-fail trading system right
+away, before they give the system a real trial. The problem with this is
+4 Tips to Create a Winning
+Strategy for Futures Day
+Traders
+
+
+--- Page 73 ---
+there are no “no-fail” trade systems and unless you truly learn the
+system you’ll never find success.
+Now, how many of these have wreaked havoc in your trading? Personally,
+I’m probably guilty of making all of these mistakes at one point or another.
+So, let’s focus on how to avoid these and come up with a plan and strategy
+to help you develop into a successful Futures Day Trader.
+I’m focusing on Futures as this is where I spend most of my time trading.
+You may have heard some of this before, but this time it will sink in. Go
+ahead, tell yourself. This time I will apply what I hear and learn. Ok, now
+that you are ready to absorb, I’m ready to teach.
+First and foremost, pick a market that you like or are familiar with. Keep in
+mind it should be one that suits your trade style. You need to make sure
+you have enough capital to trade that market as well. For example, if you
+have a $5,000 account you don’t want to start trading the ES or Oil since
+they are beyond 2% risk per trade on that size of an account. The NQ or
+Dow has smaller risk per point, so you and your account can handle a few
+losses without putting you on that emotional roller coaster.
+Now that you have picked a market, you create a plan. If you don’t want to
+create a plan from scratch, there are several resources through NetPicks to
+help you. You can request one from our traders/coaches, ask for additional
+help from a coach, or follow along in the Trade Rooms to develop your own
+plan based on what is traded in the room.
+You will need to test this tradeplan yourself, but some of the work can be
+eliminated if you choose to go with something you know works for others.
+It’s best to backtest the plan for at least 6 months. This will give you
+anticipated results, so you know what to expect when you start to trade. It
+is important to know, how many wins and losses in a row your market
+usually gives you, so that you can be prepared mentally and emotionally to
+trade it.
+Next, learn how to manage your trades on the platform you will be trading
+live. This way you can make certain tweaks, such as perfecting your trailing
+stop. Remember, trade your plan, and don’t deviate from it. If you can
+execute 25 trades in a row with no errors then you are ready to trade live.
+Notice I said 25 trades with no errors, I didn’t say 25 trades without losses.
+
+
+--- Page 74 ---
+You will have losses. They are a part of trading. Expect them and get used
+to them. This will build your confidence, strengthen your emotions and show
+you that the system you have works. You can see from these 3 steps, I have
+covered all of the issues above.
+Finally, it is time to trade the plan in the live market. This will give you the
+feel of the market. You’ll see how fast it moves and how it responds to
+news.
+Now, you will make mistakes, but don’t let them stop you. Learn from each
+one. Journal after each trade and then look at your results and emotions as
+you were trading. Did you skip a trade because you did not feel good about
+it or that you expected the market to go the other way? You can skip a
+trade if it falls into the parameters of a filter in your trade plan, but if it
+doesn’t you know moving forward that is an issue you’ll need to work on. If
+you find yourself making too many mistakes, then stop trading and
+reevaluate what you are doing wrong and why. Talk to a coach or mentor.
+Everyone has been where you are now and the coaches at NetPicks are
+here to help make you successful.
+In a nutshell, what are the keys to becoming a successful Futures Day
+Trader or really any Day Trader? Take these steps to heart and you will be a
+better trader!
+1. Have a plan, backtest the market and then practice till you have it down
+cold.
+2. Use that plan and backtest data to help get your emotions and psyche
+under control. If you know what to expect from your testing, the actual
+trading will be easy and much less emotional.
+3. Keep your risk low and don’t use too much margin. This will keep you in
+the game. You’ll be able to take the next trade after a few losses to
+come back positive or at least close to it.
+4. Test the system and know the win percentage. Prove to yourself that it
+works before risking a dime.
+5. Finally, share your success and lessons with others. Give back to others,
+success breeds success!
+- Ron Weiland: Known as "Coach Ron" has mastered the art of forex swing
+trading

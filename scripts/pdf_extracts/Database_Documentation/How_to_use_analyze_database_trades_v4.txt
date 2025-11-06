@@ -1,0 +1,40 @@
+Source: How_to_use_analyze_database_trades_v4.pdf
+Pages: 1
+Characters: 1587
+Processing Time: 0.00s
+================================================================================
+
+--- Page 1 ---
+How To Use analyze_database_trades_v4.py
+Explained Step by Step (Like Teaching a Child)
+I What Is This Script For?
+This script is like a detective for your trading database. It looks inside a file full of trades
+and finds patterns that show what big players (institutions) are doing. It helps you understand
+where smart money is moving and when.
+II What You Need Before Running:
+1. Python 3 (download from python.org)
+2. Pip (comes with Python)
+3. Install required libraries:
+   pip install sqlite3 pandas numpy matplotlib
+4. A database file (example: F:/TradingAgent/institutional_trades.db)
+I Paths You May Need to Change:
+Inside the script, find the DB_PATH line:
+   DB_PATH = r'F:/TradingAgent/institutional_trades.db'
+Change this to your own file location if your database is elsewhere.
+I How To Run It:
+1. Open Command Prompt or Terminal
+2. Move to the folder with the script: cd F:/Bookmap/Python
+3. Run: python analyze_database_trades_v4.py
+I What You’ll See:
+- The script connects to your database
+- Reports on institutional moves
+- Saves alerts (JSON or CSV)
+- Can create graphs of volume and trades
+I Common Errors and Fixes:
+Error: No such file → Fix the DB_PATH in the script.
+Error: No such column: timestamp → Your database needs a schema update.
+Error: Module not found → Run pip install for the missing library.
+I Simple Analogy:
+Think of the database as a school library. Every book is a trade.
+This script is the librarian detective who checks which books (trades) were
+most popular and when, so you know what the smart kids (institutions) are up to!

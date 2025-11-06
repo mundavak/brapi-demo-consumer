@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "analysis_timestamp": "2025-10-31T13:27:57.029192",
+    "symbols_analyzed": [
+      "MNQU5",
+      "MNQZ5",
+      "MNQH6"
+    ],
+    "methodology": "ICT Killzones Analysis - Previous Day Comparison",
+    "time_windows": {
+      "previous_day_session": "9:30-16:00",
+      "london_killzone": "2:00-5:00",
+      "ny_killzone": "8:30-11:00",
+      "first_30_min": "9:30-9:60"
+    }
+  },
+  "summary": {
+    "total_days_processed": 1,
+    "total_events_analyzed": 26326667,
+    "judas_swings_detected": 1,
+    "successful_reversals": 0
+  },
+  "daily_sessions": [
+    {
+      "date": "2025-10-03",
+      "symbol": "MNQZ5",
+      "previous_day": {
+        "high": 25252.75,
+        "low": 24890.5,
+        "open": 24993.75,
+        "close": 25105.5,
+        "equilibrium": 25071.625,
+        "range": 362.25,
+        "volume": 23264062
+      },
+      "opening": {
+        "price": 25180.0,
+        "zone": "PREMIUM"
+      },
+      "first_30_minutes": {
+        "high": 25480.0,
+        "low": 24653.25,
+        "close": 25043.75,
+        "range": 826.75,
+        "volume": 2327997
+      },
+      "ict_pattern": {
+        "first_move_direction": "DOWN",
+        "first_move_size": 526.75,
+        "judas_swing_detected": true,
+        "real_move_direction": "UP"
+      }
+    }
+  ],
+  "ict_patterns": []
+}

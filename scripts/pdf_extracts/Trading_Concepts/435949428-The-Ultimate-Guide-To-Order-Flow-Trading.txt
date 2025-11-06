@@ -1,0 +1,1547 @@
+Source: 435949428-The-Ultimate-Guide-To-Order-Flow-Trading.pdf
+Pages: 45
+Characters: 79215
+Processing Time: 0.04s
+================================================================================
+
+--- Page 1 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+1/45
+This guide here is about  Order Flow Trading  and mind you, I think this is the ultimate
+guide to forex order flow trading you are ever going to read.
+It really has some solid nuggets of order flow trading wisdom in it including:
+how to read order flows
+order flow trading strategies and techniques
+how to analyse market sentiment and combine that with order flow trading
+how to use price action with order flow trading
+how to understand market micro structure and use that with order flow trading
+and lots of other goodies as well.
+I have been searching about order flow trading in forex market because it is one subject
+that used to arouse my curiosity and there appears to be very little information about how
+to actually apply order flow knowledge into real live trading situation.
+Fortunately I stumbled upon a work by a trader called Dali who started a Order Flow
+Trading Thread at babypips.com.
+The order flow trading thread itself is about 40 pages long so I’ve gone through the entire
+thread and extracted all the necessary information Dali wrote and what I’ve done here is
+simply re-wrote(to explain the concepts a bit more), re-arrange them,  put titles, subtitles
+etc to make it easier to “digest” in one place without going  through 40 pages of thread
+(content) and reading all the other unnecessary stuff in that thread  as well.
+So what you are going to read is not my work, its Dali’s.
+(Thanks Dali for the great order flow trading information…if you ever happen to visit
+forextradingstrategies4u.com)
+Warning:
+Some bits and pieces of content may be missing or not look connected in this order flow
+trading guide…I’m just warning you, you may come across a few.
+ Articles
+The Ultimate Guide To Order Flow Trading
+
+
+--- Page 2 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+2/45
+Table Of Contents [hide]
+What Is Order Low Trading And What It Is Not
+Order Flow Trading Is A Mindset
+Think About What Other Market Participants Might Do
+What Are The Steps To Learn Order Flow Trading?
+Types of Orders And How Price Changes
+Liquidity
+How Liquidity Is Created In The Market
+Types Of Orders
+Market Orders
+Limit Orders
+How Price Changes
+Stop Orders
+Additional Information About Stop Orders
+Stop Hunting
+How to Use Order Flow Information
+How to Use This Information
+Participants In The Forex Market
+Dealers
+Sovereign Names
+Large Speculators
+Real Money
+Commercials
+Retail Traders
+Some questions to think about …
+Think about the stops of other participants
+Reading Order Flow
+So what is Order Flow Trading about and how is it different?
+Sentiment Analysis
+1. Key Themes in the Market
+2. Keep Track of Sentiment/Price Action relationship
+3. Price Action Can Influence Sentiment
+Conclusion
+Barrier Options
+Market Psychology
+On a personal note…
+Applying Order Flow Techniques on the Charts – Part I
+What Is Order
+Low Trading
+And What It Is
+Not
+The definition of order flow
+trading tends to cause a lot
+of confusion.  Here are 3
+potential definitions of what
+order flow trading is:
+Some people think that
+when you trade directly
+from the information
+flow provided by the
+banks, that is
+considered order flow
+trading. To be quite
+honest, that
+information would only
+be available to a very
+small number of people
+and they won’t be
+sharing that on the
+internet or with you.
+Other people think that
+order flow trading is  is
+tape reading.
+And  there are other
+traders that also think
+that order flow trading
+is a form or price action
+trading.
+So which of these definition
+is correct for order flow
+trading?
+None.
+
+
+--- Page 3 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+3/45
+How to Mark Large Stop Clusters on your Charts
+Applying Order Flow Techniques on the Charts – Part II
+How To Analyse  Market Sentiment
+Sentiment Analysis Example
+Market Squeezes
+How A Market Squeeze Can Happen
+How To Take Advantage Of Market Squeeze
+Tools for Market Positioning:
+You see, there is no clear
+definition-all these
+mentioned methods are
+based on anticipation of
+future order flows in the
+markets.
+Order Flow
+Trading Is A
+Mindset
+The way I see it is that order flow trading is a mindset.
+What does this mean?
+Well, instead of just looking for technical patterns, a trader should go a step further and
+think about what other market participants might do.
+ 
+Think About What Other Market Participants Might
+Do
+This is a very important concept in order flow trading-thinking about what order market
+participants might do.
+And when you think along that line, you can anticipate what kind of actions they will be
+taking in the market.
+You see the forces of fear and greed play out in the market everyday.
+If you are a new trader and you are a 100% technical analysis trader, this can be big change
+because you would have relied so much on technical analysis.
+But like anything else in life, once you continue to study it, learn it and over time, it starts
+to become easier and you can start to view the forex market with a completely different
+eyes and you’ll start to:
+be aware aware how price is moving
+in which manner it moves (not as good as bank flow info, but price action gives some
+good insights)
+your knowledge about other participants helps you avoid common mistakes
+
+
+--- Page 4 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+4/45
+and finally, your knowledge about market inefficiencies will help you combine all this
+and exploit those opportunities in live trading.
+Traders can argue a lot about the term order flow trading but for me:
+order flow trading is simply is a way of thing.
+order flow trading is a different approach to trading the markets than the common
+ones and it is not limitted to a particular method.
+You see, I do not have any private bank flow information, nor do I have any insider
+information but here’s the thing-my knowledge about market microstrucuture and I don’t
+have any private bank flow information, but still, my knowledge about:
+1. market microstructure
+2. and other market participants
+are giving me an edge to trade the markets.
+What Are The Steps To Learn Order Flow Trading?
+There are 3 basic steps to learn about order flow trading and here they are:
+Step 1: Learn about market microstructure (how price change, type of orders, liquidity etc.)
+Step 2: Learn about the other market participants (commercials, banks/dealers, real
+money, sovereigns, large speculators)
+Step 3: Exploit market inefficiencies
+Types of Orders And How Price Changes
+In this article, I will cover:
+the three main type of orders used in trading
+and how price changes.
+We will take a look what really happens and what is moving price.
+Liquidity
+To understand order flow trading you also need to know about this term called liquidity.
+
+
+--- Page 5 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+5/45
+So what is the definition of liquidity then? Well, let me give you an example:
+If you want to buy an asset (you are the buyer), there must also be seller that is willing to to
+sell that asset to you as well.
+Now if you are the seller, you also need a buyer looking to buy whatever that you are
+wanting to sell.
+As long as the transaction can be done by both the buyer and the seller, then you can say
+that there’s is liquidity available for both the buyer and the seller to carry out the
+transaction.
+Now, that’s the most simplest explanation of liquidity you are ever going to get.
+So on trading, how is liquidity created?
+How Liquidity Is Created In The Market
+Liquidity is created when traders place orders in the market and these orders are called the
+bid and offer.
+These are the definition of a bid order and offer order:
+A bid is a limit order to buy an asset at a specific price (better than the current
+market rate)
+An offer is a limit order to sell an asset at the determined price (better than the
+current market rate).
+Bids and offers create liquidity in a market, they provide it to participants which trade via
+market orders.
+If you are a large trader, liquidity is a very important factor. Large traders cannot simply
+think about how much price will move, but also how they will get out of their trade when
+the time has come.
+Why?
+Well, if you are a large trader and you wan’t to close your large trading positions but if
+there’s no liquidity, you are really stranded.
+This is not a problem for us retail trader, but definitely a key factor for those trading big
+amounts of money-size is a big problem.
+
+
+--- Page 6 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+6/45
+The more liquid a market is, the more it will attract other traders.
+Types Of Orders
+Market Orders
+Market orders consume liquidity provided by limit orders.
+They are orders issued to buy/sell a specific asset at the current market price.
+A buy market order will be filled against the best offer and a sell market order will be filled
+versus the best bid available.
+Market orders take away liquidity from the market as the participant that issues them
+wants to trade immediately and eats available liquidity via limit orders.
+Limit Orders
+Limit orders provide liquidity because they give other traders the option to trade against
+them.
+If I issue a 1 million bid (buy limit order) at 1.31000 for EUR/USD, I provide liquidity to
+other participants looking to sell at the market at this price.
+They are called limit orders because they cannot be filled at a price worse than specified.
+This means my bid at 1.31000 can be filled AT or BELOW (positive slippage) the rate, but
+not above.
+Order books or DOMs (Depth of Market) are mostly used in Futures trading, as the
+FX market has no aggregated volume data. Example:
+Order Flow Trading-dom1-png
+In this asset, we have no orders at 44 and 45, which means you can currently buy at 46
+(the best available offer) and sell at 43 (the best available bid).
+If I decide 45 is a good price to sell at and issue an offer at that rate, the spread will narrow
+and buyers will be able to buy from me at 45 the amount I offer to sell.
+Let’s say there is an impatient buyer that moves his bids to 44.
+He will again reduce the spread and now sellers are able to sell at a better price than
+before. The order book looks now like this:
+
+
+--- Page 7 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+7/45
+Order Flow Trading-dom2-png
+How Price Changes
+Scenario 1: Trader „A“ buys 20 contracts of the asset at the market.
+The order book above shows the availaible liquidity and it is visible that he will not be
+filled at 45 as there is insufficient liquidity.
+He will get filled as follows: 10 at 45, 8 at 46 and 2 at 47.
+As he consumed ALL liquidity at 45 and 46, the order book will now look like this:
+Order Flow Trading-dom3-png
+The order book will stay this way until there are new bids created below 47 OR there is
+even more buying at the market price (at the best offer) which drives price higher and
+further consumes offers.
+DOMs are not used in FX (or at least, shouldn’t be used, as there is no aggregated volume
+data for FX), but the mechanism of price change is the same in all markets.
+Limit orders are providing liquidity, while market orders are consuming them.
+Stop Orders
+Stop orders are orders to buy above the current market price/sell below the current market
+price.
+The term „stop order“ is used because the order is „stopped“ from being executed until it
+hits the determined price.
+It is being stopped because otherwise, if you create a bid at the price where offers already
+exist or above, it would become marketable order and would be executed immediately.
+Most of the time, a buy stop order will be executed when it’s price has hit the market „offer
+price“ and a sell stop order will be triggered when it’s price has hit the market „bid“ price.
+They will be converted into market orders and will consume liquidity.
+But there is something unique about stop orders.
+They can also provide liquidity.
+
+
+--- Page 8 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+8/45
+Let’s say I’m a large trader looking to sell an asset (please forget about the above order
+book for this example). Market price is currently 44/46 (I can buy at 46 and sell at 44).
+I don’t want to sell at 44 because liquidity is not good enough for the amount of contracts I
+intend to sell.
+I’m aware that there are a lot of buy stops above the price of 50 from participants that are
+already short.
+Other participants are also aware of this and price will be attracted to those levels.
+I will therefore set my offers above 50 (let’s say 51 and 52) and gain advantage from the
+stops.
+How?
+Chances are good there are not many buyers at those levels, as price will be perceived as
+high and liquidity is a bit thin.
+But there are forced buyers above 50 and they will have to take my liquidity.
+My shorts will be filled and price is likely to move quickly in my favor as most buying came
+from shorts that were stopped out.
+Price is not attractive for buyers and will likely drop quickly.
+Stop hunting is a common activity in ALL markets, not just the FX market.
+Retail traders are aware of this, but mostly in the wrong way.
+I’m not talking about your retail broker widening spreads to take some few more stops out,
+but stop hunting on a larger scale.
+Large traders need it for liquidity as above described and bank dealers will also use it also
+to control their book better.
+But let’s leave that for later…
+Additional Information About Stop Orders
+Stops are not technically providing liquidity, but in an indirect way.
+
+
+--- Page 9 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+9/45
+Let’s again take the above mentioned example. I’m looking to sell an asset which is
+currently at 44/46 (I can sell at 44 and buy at 46).
+I do not find this a good rate to sell at, so I will issue a limit order.
+I know there are stops above 50 and those will likely get the attention of predatory traders
+which will push price into the direction of stops.
+I therefore issue two a sell limit order at 51 and 52.
+Let’s assume sentiment for the asset is rather mixed and there are not many bulls.
+With this, there likely won’t be any buyers at 51 and 52 and price will not even reach those
+levels.
+But with the buy stops above 50 we have forced buyers.
+Those traders determined that they want to get out of their short position at those rates
+and their demand will accelerate the move and trigger my offers.
+I provided liquidity to them, but I exploited the weaker side of the market and got into a
+position at a better rate. Without the forced buyers, they likely wouldn’t get trigered at all.
+Regarding your second question: You do not need the DOM to predict order flow.
+Even if you have the DOM for i.e. futures, it shows you only orders for the upper and lower
+five price levels and with those markets being so liquid and fast-changing, you won’t be
+able to extract any useful information from it.
+I used the DOM above to visually explain the process of price change.
+I will cover the topic of projecting future flow also at a later point
+There are two ways the stops can help me:
+1) the presence of the stop loss orders above will attract the attention of so-called stop
+hunters.
+It can be speculators, model funds (algos) buying into short-term momentum or dealers
+who do it to manage their books.
+
+
+--- Page 10 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+10/45
+I will cover this activity in a later article, but the key is that a larger cluster of stop loss
+orders will have the attention of other traders, especially when they are near.
+2) the stop loss buying that will happen above 50, will accelerate upside momentum for a
+short period and get my offers triggered.
+However, as they were forced buyers and there are little “real buyers” up here, price will
+quickly drop.
+I may explain this better in a real market example:
+GBP bias is clearly negative and we saw a sharp drop down to 150.80 on the Sunday
+opening.
+As price declined, there were traders who lowered their stops to protect their gains and in
+general, more buy stops were building above.
+It is a common practice of retail traders (but not only them) to put their stops slightly
+above the big figure (big figure = every 100 pip price level – i.e. 1.50, 1.51, 1.52) when they
+are short.
+As GBP/USD recovered, first stops above 1.5150 got the attention of stop hunters and then
+those above 1.52.
+Take a look at the chart below and you will see what I described happened twice!
+First stops above 1.5150 were taken out and the pair traded up to 1.5160. However, up
+momentum disappeared and price quickly dropped below.
+The 1.5090 support level held and as price marched towards 1.52, stops above were in
+focus. Do you see what happened?
+Stops above 1.52 were triggered, offers were filled, little buyers left after the forced one’s
+were done and price dropped!
+
+
+--- Page 11 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+11/45
+Stop Hunting
+Retail traders are generally aware of stop hunting, but have a wrong idea what it really is.
+It is not your retail broker slipping you for a few pips to get your stop.
+Those brokers do not have the size to move market in such a way!
+As I covered in the previously, large traders cannot simply accumulate or distribute a large
+position whenever they wish.
+They have to look for liquidity and stops are helping them in an indirect way, like I
+explained in the example above.
+That is why stop hunts tend to be quickly faded: The large bids or offers got filled and with
+the stops triggered, there are no buyers left in a buy stop-hunt scenario and no sellers in a
+sell stop-hunt scenario.
+Those bids and offers tend to stabilize the market.
+If there were little of them available as the stops get triggered, it would result into an event
+called a stop cascade – there is insufficient liquidity for the stop loss orders and price gets
+pushed into the next area of large stops until bids/offers in good size appear.
+
+
+--- Page 12 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+12/45
+There are also traders that anticipate such moves and look to take profit near the level
+where stops are rumored to be.
+Those are mostly short-term speculators and model funds (which buy/sell on momentum).
+They will take advantage of the forced buyers/sellers and liquidate their position as price
+hits into the stops.
+We will cover the topic of how to identify levels of concentrated stop loss orders later.
+Dealers also participate in this activity.
+While there are looking to make some profit from short-term trading, their main task is to
+provide clients with liquidity and get them filled with less as possible slippage.
+Let’s go through a scenario:
+EUR/USD is trading at 1.3050 and Dealer “A” sees many of his clients have buy stop
+orders from 1.3100 up to 1.3110. This means those clients want to get out of their position
+once price breaks above the determined rate.
+If he does nothing and waits for price to break above 1.31, he will have trouble filling his
+clients without slippage. There will be stops from other market participants above 1.31 and
+other dealers will be acting similar, pushing price higher fast.
+READ  20 Losing Trades In A Row? No Problem If You Do These 2 Things
+He would fill his clients at a bad rate, earn nothing from it and his reputation would be
+seriously hit if this would happen several times.
+So what can he do?
+He can gradually start to accumulate a long position and anticipate a break of 1.31 into the
+stops.
+Dealers tend to have a great feeling for short-term moves and are skilled for having “a feel
+for the market”.
+If he gradually buys EUR/USD all the way up to 1.31, he will be able to fill his clients
+without slippage and will make a nice profit from it.
+
+
+--- Page 13 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+13/45
+More detailed example:
+DEALERS ORDER BOOK:
+Buy Stops from 1.3100 – 1.3110 worth $100 million
+DEALERS ACTION:
+Buy 20 million @ 1.3060
+Buy 20 million @ 1.3075
+Buy 20 million @ 1.3080
+Buy 20 million @ 1.3085
+Buy 20 million @ 1.3090
+Net position = Long 100 million @ 1.3079
+So he will distribute his position as price breaks above 1.31 and fill his customers stop loss
+orders.
+This can of course go wrong if price fails to maintain the upside momentum and turns
+lower.
+The dealer must then quickly get out of his position.
+But again, those traders are skilled at managing their positions and while they can’t be
+right all the time, like other traders cannot too, they have a good feel for the short-term
+moves.
+ 
+How to Use Order Flow Information
+Again, banks do not open their order books directly to just any outsider, one would need
+good connections.
+So people claiming they have some software that shows the order books for the FX market
+are scammers.
+As volume is not concentrated and FX is an OTC market, there is no real ‘Depth of Market’
+for the whole market.
+
+
+--- Page 14 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+14/45
+The one you maybe see in your trading platform is only the DOM of your broker and retail
+brokers have a small role in this huge market.
+However, discretionary flow information is something different.
+There are a few sites that provide this information for free and I’ve been using them long
+enough to tell they are quite reliable.
+Those are people that have some connections in the trading industry, mostly as they
+worked as traders too in the past.
+One needs to distinguish between discretionary information like shown below and people
+claiming to have DOM’s for the FX market.
+Flow information often looks like this:
+Example:
+EUR/USD
+Bids at 1.30, 1.2980, 1.2950
+Offers at 1.3080, 1.31, 1.3120
+Buy stops above 1.31
+Sell stops below 1.30
+So again, bids are limit orders to buy at a determined price.
+Bids mentioned in the flow info providers will be levels where good buying interest is
+noted.
+Offers are limit orders to sell at a determined price.
+The mentioned Offers will be where decent selling interest is noted.
+Market participants always look for the weaker side of the market, so both buy and sell
+stops will be targeted. Be aware that you shouldn’t just enter a trade and “gun for the
+stops”.
+You need to have other factors that support your trade idea.
+When using this, it is very important to keep in mind that this is additional information
+that may help you in your trading, but you should not trade off this information
+alone – that is, using them as trade signals.
+
+
+--- Page 15 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+15/45
+A few reasons:
+Orders get cancelled all the time.
+We cannot know the size of the mentioned orders. E.g. if there is a lot of demand for
+EUR/USD and rather small offers ahead, it will absorb those rather easy and continue
+to move up.
+If price stops after hitting the cluster of orders, it is not a sign that it will reverse
+immediately. Watch for additional signals.
+Price action and sentiment comes first!
+There are always bids and offers, smaller and large ones, but in the end it depends on the
+power of the bulls or the bears.
+As I mentioned, if there is strong demand for EUR/USD, offers will do little on the way up
+until the accumulation has finished.
+How to Use This Information
+First, determine the current sentiment.
+Example: The market bias for the Pound is currently very negative and GBP/USD is clearly
+trading in a downtrend. I therefore will only look for opportunities to sell the pair.
+Second, note key price levels. These include bids and offers from the resources I will post
+below and key technical levels (standard support/resistance levels).
+Third, watch for price action to give you a high probability opportunity to enter short. I will
+cover later some of the various Order Flow techniques I learnt.
+For now, I just want to note that you should always use flow information like bids and
+offers with caution. You want the market bias to be in your favor and wait to see a reaction
+to those levels, not enter ahead.
+I hope I have emphasized enough how important it is not to use them as trade signals, so I
+will post now the resources I use for the flow information (they are free):
+Forex News | Currency News by ForexLive
+The Thomson Reuters IFR feed also includes good flow information and Oanda offers it for
+free to clients.
+
+
+--- Page 16 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+16/45
+If you dont have access to it, dont worry, there is enough info from the free sources.
+The subscription from Reuters costs something like $150 a month, which is way too much
+and definitely not worth the price, especially for retail traders.
+I use the Daily, 4H and 1H chart, but trade on the 5M to execute my trade idea.
+Depends on what type of strategy you are concentrating.
+If you decide to apply the stop hunt strategy, you can either enter on momentum (e.g.
+break of intraday S/R level -> target stops below next level) or wait for a retracement into
+a support/resistance level to get a better entry.
+Make sure you concentrate on the high probability opportunities. Clear sentiment (i.e.
+currently negative GBP and JPY bias) will give you the best edge.
+Technical factors include price action around the specific support/resistance level (i.e. if it
+bounced several times of a support level, stops below will grow larger).
+If you want to fade a stop hunt, the entry should be pretty clear (near the stops).
+The set up will give you the opportunity to use a tight stop, but here it is even more
+important to only apply it when sentiment is clear.
+You don’t want to go against the flow, as it will just take out your stop and move on.
+A good example is EUR/JPY. There were larger stops above 123, but sentiment was clearly
+JPY-negative and there was real momentum building in EUR/JPY, not just some stop
+hunting.
+Obviously, someone who would have applied the strategy here and went short, would have
+got stopped out.
+On the other side, GBP-sentiment was negative and GBP/USD provided a few good
+opportunities to fade stop hunts
+I agree that large participants certainly will look to hide their intentions, but the
+bids/offers mentioned in the feeds that provide flow info are rather levels where a larger
+amount of different limit orders reside.
+Sometimes, more detailed flow info can be leaked (i.e. “x” has large offer @ 1.30), but
+those were mostly from corporations (hedgers).
+
+
+--- Page 17 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+17/45
+We certainly won’t find info like “Large hedge fund has offers at 1.30”.
+I also agree with your 2nd statement and this is why I strongly advised against using such
+info as trading signals. Sentiment has always priority to order info and traders should wait
+for a reaction to the reported levels, not acting ahead.
+Participants In The Forex Market
+Before we dive further into the world of Order Flow Trading, we must be aware who
+participates in the FX market. While not all groups have the same characteristics, there are
+some most have in common. I will split the groups up and explain them all in more detail.
+1. Dealers
+2. Sovereign Names
+3. Large Speculators
+4. Real Money
+5. Commercials
+6. Retail Traders
+Dealers
+Dealers are the main market makers for the FX market as they operate on the “Tier 1” level
+– the interbank market. A dealer quotes his customers a bid and an ask price and the
+difference (the Spread) will be his profit.
+As a transaction with his customer takes place, he takes the other side of the trade and can
+either get rid of his exposure via the interbank market or he can hold the trade if he thinks
+it will benefit him.
+Dealers therefore can hold trades for speculation, but they usually close them in a short
+time period. They mostly finish their trading day without any open positions.
+Dealers are well-informed traders and have a good sense for short-term market
+movements, so it only makes sense for the banks to let them also do some discretionary
+trading beside handling customer trades.
+They participate in stop hunts, as I explained earlier in the thread, because they look to
+manage their book.
+The network of dealers working for the top FX market-making banks build the “Interbank
+Market”, the highest tier in the FX market.
+
+
+--- Page 18 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+18/45
+Sovereign Names
+This group includes central banks and institutions like the Bank of International
+Settlements (BIS).
+Central banks operate in the FX market on a daily basis and when other participants
+become aware of their presence, they will pay a lot of attention to what they do.
+Asian Central Banks are one group within the Sovereigns that are often identified in the
+marketplace and news providers like Reuters are reporting about their business.
+Especially if things are rather quiet, they can have a strong influence, so keep that in mind!
+The “BIS” is an institution that handles transaction for other banks.
+The idea is basically that other CB’s can operate in the market without being identified.
+Nevertheless, any mention of “BIS” or “Basel name” in the news feed is worth paying
+attention to.
+Large Speculators
+Those are hedge funds, model funds (algo & HFT trading) and large traders.
+They are in this game for the profit and are the group with the greatest variety amongst
+members.
+
+
+--- Page 19 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+19/45
+Some trade intraday, some exclusively long-term and some combine all of this together.
+Model funds mostly focus on automated trading and volatility is something they love.
+Most of the hedge funds however, will look for stable trends to ride, like the current GBP
+and JPY downtrends. As they are leveraged players, they can feel the pain sooner when a
+squeeze is happening in the market.
+It is certainly not just the retail traders getting stopped out, large specs can be caught with
+a vulnerable stop loss too.
+Real Money
+They are called that way because they do not use leverage. Included in this group are
+mutual funds, classical investment funds and sovereign wealth funds.
+They are conservative and will generally either look to manage their currency exposure or,
+if speculating, look for stable trends.
+Hedge funds do too look for trends, but they have the ability to leverage up and switch to
+short-term trading if they wish to.
+As you’ll understand, real money funds that do not operate on leverage and cannot get
+aggressive, will not be able to operate that way.
+Real Money will be usually a bit late in a move, but their presence is still worth noting, as
+they look to accumulate positions.
+Example: Real Money accounts were quite present sellers in GBP/USD the past few weeks.
+Commercials
+Commercials (or corporations/businesses) are looking to hedge their currency exposure
+they have through their business operations, mostly due international business.
+Managing their risk is the number 1 task for them and not profits from speculation.
+Their activities can have an impact on the markets if they are trading in a big size, but they
+are not participants one should follow, as they are not profit-motivated in the first place.
+Retail Traders
+The number of retail traders that lose is hard to guess, but it is definitely high.
+
+
+--- Page 20 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+20/45
+The popularity of Technical Analysis (TA) led them to place their stops at predictable
+places and this can be exploited by Order Flow Traders.
+Even as the number of proven trading strategies shared free has increased over time, most
+retail traders lack the consistency and discipline to make it in this business.
+I hope that gave you a good insight who’s operating in this market and some of their
+common characteristics.
+You are competing against other traders in the market and some of them are powerful
+players with a lot of experience and capital.
+Without losers, there would be no winners. Start thinking about how could you exploit the
+characteristics of other participants.
+Markets are all about fear and greed. As price moves, some will start to feel pain and will
+have to cover at some point.
+Hunting stops and initiating squeezes in the market place is not just about retail traders,
+professional traders also get stopped out or are forced to cover as the position moves
+against them.
+One of the most important thing is that Order Flow Trading is a mindset that teaches you
+to exploit the weaker side of the market.
+You want to take the high prob opportunities and go with the flow.
+Some questions to think about …
+1) What are the key themes in the market currently?
+2) Pick a currency and write down if current sentiment is positive, negative or mixed. What
+are the main factors driving current sentiment? You don’t have to be an analyst and you
+certainly don’t have to make it complicated. Follow a news feed or get some headlines from
+either Reuters, Bloomberg or Financial Times website. Keep it short in form of notes.
+3) What is price action telling you? As prices moves further, compare it to your sentiment
+analysis.
+Think about the stops of other participants
+Think about the characteristics of other participants.
+Don’t just see simple “Support/Resistance levels” … there is nothing magical about them,
+
+
+--- Page 21 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+21/45
+orders drive price action. Think about what it means for bulls if a key support level holds.
+Will they be accumulating further?
+Does PA indicates decent demand or are the upmoves quickly running into further selling?
+What if the level breaks, where does the pain start for the bulls?
+I don’t want to make this complicated or confuse anyone, but in my opinion thinking more
+deeply about these topics is useful, especially for newbies.
+Eventually, I will cover this in more detail through the thread, but take some time to see
+the markets in a different way than you did before.
+When I just started with OFT, I thought about these themes and made a lot of notes and
+observed the markets.
+It was of tremendous help, but I over complicated things a bit.
+Just make sure you don’t over complicate things!
+Reading Order Flow
+There are several services that provide real-time flow information like the one’s I
+mentioned above.
+Again, they have to be used with caution as orders can get cancelled or can have little or no
+impact. Also, we don’t want to get too dependent on them.
+Imagine a service get’s discontinued – you want to be able to do your own order flow
+analysis and not let yourself be distracted by this.
+Reading order flow is possible on charts and you don’t need the flow info services
+necessary.
+This is how the standard flow info looks like:
+Bids at 1.3000, 1.2980, 1.2950
+Offers at 1.3050, 1.3080, 1.3100
+Most of the reported levels are one’s that have cluster of orders at or near it.
+From the above mentioned info we could say that there is buying interest (demand) at
+1.30, 1.2980 and 1.2950.
+
+
+--- Page 22 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+22/45
+The further the level, the more interest we can expect, as traders will feel comfortable
+buying “very low” or selling “very high”.
+Remember that price action can influence sentiment too.
+If we see EUR/USD breaking below a key psychological and technical level, some traders
+will sell on the break (i.e. momentum funds) and with stops getting triggered on the way,
+this will drive price further lower.
+Orders can either:
+1. Get “eaten” along with little or none impact (this is common during a stop
+cascade/squeeze)
+2. Cause a slow down in momentum; price will consolidate
+3. Cause a reversal (common during times of low liquidity)
+When trading of reported orders, I recommend waiting for a reaction and not putting a
+limit order ahead.
+See how price reacts to the level and how it behaves it after it hits it.
+Let’s say price trades down to 1.2950, where we have reported large bids from various
+participants. We see price stops at the level and retraces back up.
+Now, how does it behave on the way up?
+Does it seems that there is real momentum building to the upside or are rallies hitting
+quickly into fresh selling?
+Reading the order flow directly is a bit tough in the beginning and it is hard to explain it in
+words. You have to monitor price action as it happens and take notes.
+Combine this with sentiment and you have a real advantage.
+Sentiment will give you the biggest advantage. Like I mentioned in my last post, you don’t
+have to make it complicated.
+Note key factors that are driving price action currently, analyze price action itself and keep
+track of how they correlate.
+Let’s take the Aussie Dollar as an example. Sentiment is positive as the RBA indicated it
+will not cut rates in the near future and on better economic data.
+
+
+--- Page 23 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+23/45
+Price action confirms this, so we want to look for reported bids and wait for a reaction.
+Nothing works all the time, but with sentiment on your side, you’ll go with the side of least
+resistance.
+What really turned my trading into a profitable business was focusing on the high
+probability trades.
+They don’t require a huge stop and the reward is clearly worth the risk.
+Market profile is another factor.
+During times of low volatility, playing the range is the best strategy.
+Let’s say we are trading in a 1.2950/1.3020 range in EUR/USD and there is no clear
+sentiment.
+You can anticipate a reaction to the reported levels and fade any rally or drop back to the
+mid range level.
+When volatility is high, bids/offers can get consumed along the way quickly and that is an
+environment where you definitely don’t want to pick a top/bottom.
+When there is real strength behind the move, look to join the momentum and not fade it.
+In combination with the reported levels, you can identify key supply/demand levels on the
+charts.
+Previous day high/low, previous week’s high/low, previous week’s close level and
+psychological levels (big figures – i.e. 1.30, 1.31). Start to “read the flow” on the charts and
+you’ll get better at it with time.
+Stops are also easily identified on the charts.
+Just think what the technical analysis guides taught you.
+They taught you to place your buy stop above the big figure (i.e. 1.30 -> stop at 1.3010) or
+your sell stop below the big figure (i.e. 1.30 -> stop at 1.2990). Or, above resistance/below
+support.
+READ  8 Amazing Facts About Forexfactory (Not Many Forex Traders
+Know)
+
+
+--- Page 24 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+24/45
+Order Flow Trading-eurusd-01-jpg
+Above is an EUR/USD chart that will serve as an example.
+Demand at 1.2920 was large and there were first sovereign names reported as buyers and
+leveraged funds later joined the move.
+Obviously, sell stops were building above 1.30 and 1.3080, which flow info services later
+confirmed. As we moved up, they came more and more to the attention of other traders
+and of dealers, so it was only a matter of time.
+In my opinion, it is better to enter on momentum and push into the stops, than try pick a
+perfect entry when you have missed the chance.
+Obviously, some of those concepts will be familiar to you from some of the technical
+analysis concepts.
+So what is Order Flow Trading about and
+how is it different?
+What I learnt is that I have to think differently about the market.
+It is a mindset that will give you a real advantage in the market as you focus on the core
+mechanism of the markets and on sentiment.
+As I mentioned, markets are a great deal about psychology.
+I will be honest in saying that my capabilities in explaining some of those specific concepts
+are not that wide but I hope you get something from these.
+Order Flow Trading can be applied in many ways and the above mentioned are just the
+basic examples.
+I have some more article coming soon, then I will try to make the concept more
+understandable through trade examples and similar.
+Price action patterns can be traded successfully without the knowledge about order flow,
+but knowing the OFT concepts will give you an advantage, as you are more aware why is it
+happening and you will understand better the factors driving PA.
+
+
+--- Page 25 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+25/45
+As I mentioned, it is part a collection of methods based on market microstructure, but also
+part a mindset.
+It encourages you to think more about other participants and how they may act.
+My path was the following: Technical analysis (the common indicator-loaded stuff) ->
+Price Action -> Order Flow Trading
+I see OFT as the final step that helped me transform my trading into a successful endeavor.
+It might seem a bit complicated to some in the beginning, but IMO it is worth the effort.
+However, it is important to suit your trading strategy to yourself.
+If you’re doing fine with your PA strategy and are building consistency, stick with it and
+only modify your approach if you are feeling comfortable with it.
+When using the order info, I would concentrate on the reported levels and combine it with
+your PA analysis and sentiment analysis, rather than focusing too much on who
+bought/sold.
+When there is talk of sovereign (i.e. BIS, ACB) buying/selling during illiquid times, it can
+have an impact, but most of the times it is already old news.
+If we hear a large hedge fund has bought EUR/USD this morning, it won’t matter much for
+us.
+We do not know what the size was, what is the trade idea behind it and it is already old
+news.
+Regarding your 2nd question: I can only reference back to my previous response to you.
+What changed OFT for me, was that I could better determine the forces that were causing
+the PA pattern.
+Together with sentiment analysis, I can focus on the high probability opportunities and
+learning OFT also improved my skills in reading PA.
+There are a lot of inefficiencies one can exploit in the market once we get more familiar
+with market microstructure.
+ 
+
+
+--- Page 26 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+26/45
+Sentiment Analysis
+Sentiment analysis is an important part of the Order Flow Analysis.
+One could focus only on the technical stuff, but incorporating sentiment reading into your
+analysis will help you to focus on the higher probability trades.
+One has not to go to deep into fundamental analysis to apply it.
+I do not in-depth analysis about the global economy or specific countries, but rather focus
+on the key themes in markets and follow news.
+There are a lot of free news feeds out there and most brokers offer the one from Dow
+Jones.
+I personally use only the IFR Markets feed from Reuters, but again, the one from Dow
+Jones or websites like ForexLive will also serve you well.
+So what should you be looking for?
+1. Key Themes in the Market
+What are the key themes everyone is talking about in the markets?
+This should not be too difficult to identify, as news services will report about them
+frequently. Currently, we have:
+a) Cyprus bailout
+b) BoJ Inflation Target
+c) UK’s stagnating economy
+d) The Fed’s response to the improving US economy
+There are themes that will have a long-term impact like the Fed’s future policy and those
+with short-term impacts like a worse than expected economic data release of lower
+importance or some temporary political fights.
+The short-term impact events often cause inefficiencies, which the OF trader can fade.
+The long-term impact themes are the ones that are driving flows and even if you are day
+trading, going with the flow will give you an edge in the market.
+Order Flow Trading-bullbear-png
+
+
+--- Page 27 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+27/45
+2. Keep Track of Sentiment/Price Action
+relationship
+I will always look for obvious sentiment (like currently e.g. AUD-positive) and keep track
+of the price action.
+If bias for a currency is positive, because of e.g. improving economic data and good
+chances of a rate hike, I will look for price action to deviate from this and enter long on a
+favorable opportunity.
+This can be caused by a short-term impact event or it can be a “natural” retracement
+(profit-taking, short-term market participants).
+One of my favorite patterns is the counter-sentiment stop hunt, which I explained earlier
+in this thread.
+If we take again the example of the currency with positive sentiment, we want to look for a
+stop hunt down into sell stops and fade it.
+Especially when there is no specific event/reason driving prices, just a “random” stop hunt,
+this will offer great opportunities.
+3. Price Action Can Influence Sentiment
+It’s a two-way relationship. Like I mentioned in one of my earlier articles and Minotaur
+wrote about a few posts above, price action also influences market bias.
+Let’s take an example from today: Shorts were worried keeping their position open over
+the weekend as any improvements in the Cyprus bailout deal could lead to a larger spike
+on the Sunday opening.
+Even as market bias for the Euro is negative, the risks are too high for shorts.
+There is a short-term base at 1.2880 and the level was respected.
+Once buying picked above 1.2940, shorts got even more worried and probably felt there is
+a squeeze ahead.
+Stops above 1.2950 were eventually triggered and it attracted further buying until we
+finally hit stops above 1.30. Guess what?
+
+
+--- Page 28 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+28/45
+We had reports of large offers sitting at 1.30 during the whole week, so short-term
+participants took advantage of weak shorts by pushing into their stops and some other
+participants got themselves good short entries at 1.30.
+The situation in Cyprus is still bad, but given the lack of concrete news, the market
+“cleared” the weak side of the market.
+Order Flow Trading-pit-jpg
+Conclusion
+Don’t make it complicated and keep your sentiment analysis simple!
+Note key themes in the market, follow the news (focus on one feed and key headlines, don’t
+become a victim of analysis paralysis) and study the relationship between your sentiment
+analysis and price action.
+Think about your opponents in the market and try to identify the weak side of the market.
+Finally, combine it with technical order flow (key levels, stops) and keep in mind that price
+action can influence sentiment too! 
+Here is one trade example, it is a position I still have running.
+I shorted CL (Crude Oil Futures contract) at an average price of 95.30 as the stop hunt
+above 95.50 was completed. Sentiment turned negative pretty quickly in FX markets, but
+US markets were still trading in a tight range.
+The choppy price action in the indices and my strong conviction about current negative
+sentiment in the markets gave me a good reason to stalk a short set-up in CL. Why CL?
+Stop hunts occur in every market, but in CL it just tends to “stick out”.
+I watched stops getting consumed on the way up and waited for price to lose momentum.
+Stops above 95.50 were done and everything indicated CL hit into decent selling interest at
+95.50. While upside momentum was quickly regained on the previous move, this was not
+the case after it hit 95.50.
+So, price action combined with my view of negative sentiment, made me short CL at 95.30
+and I’ll leave it open for a stop run below 94.
+I’ll trail my stop on the way down.
+
+
+--- Page 29 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+29/45
+It’s important that I note that it is sentiment that made me anticipate the set-up.
+I do not advise going against momentum unless you have sentiment in your favor.
+Order Flow Trading-cl-jpg
+Barrier Options
+Barrier options are exotic derivates and an option on the price of the underlying asset.
+The option writer(typically banks) sell options to the option buyers.
+FX Options are traded over-the-counter and not on exchanges.
+If the option expires worthless, the option writer has earned the premium (similar to a
+comission as you enter a trade) and the option buyer has lost.
+If the option is in-the-money, the option writer has to pay out the option buyer the
+specified amount.
+There are:
+Knock-In Options – the option is worthless until the underlying asset hits the specified
+barrier price in the set time period. Example: EUR/USD spot price is 1.28 and I buy a 1.30
+knock-in option. The option is worthless until it breaks above the 1.30 level.
+Knock-Out Options – the option becomes worthless if the specified barrier level is hit.
+Example: GBP/USD spot price is 1.51. I think the pair is heading higher, but do not expect
+much volatility. If I buy a G/U option with a barrier at 1.53 and it does not reach the price
+level in the specified time period, I get paid. However, if price breaks above 1.53, the
+option will become worthless.
+Double No-Touch Options -Just like the knock-out option, but it has two specified
+barrier levels. Example: DNT option for 1.26 / 1.34 in EUR/USD. If price stays within the
+set range during the stated time period, the option writer has to pay me the specified
+amount. However, if price breaches any of these two barrier levels, the option will become
+worthless.
+Double One-Touch Option – Knock-in option with two set barrier levels. Example:
+GBP/USD 1.46 / 1.54. I will get paid on the option if it reaches either of the two set barrier
+levels during the specified time period. If it does not, it expires worthless.
+
+
+--- Page 30 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+30/45
+Why does it matter?
+Barrier options can trade in decent size, there are sometimes ones in the value range of
+500 million up to 1.5 billion. Let’s use an example for the Knock-Out barrier option, as it
+the more common used one.
+Put yourself in the position of the option writer.
+You sold a 1.27 / 1.34 DNT barrier option to a customer with a 500 million $ payout.
+Price is approaching the 1.27 level and that is exactly what you want to see.
+Once it hits 1.27, you have pocketed the premium and will keep the half billion.
+This is why option desks will gun for these barriers and try to get them triggered. Similar
+to the FX spot dealer, you want establish a short position and increase downside
+momentum.
+As there are often stops located above/below barriers, this will help to attract the attention
+of Spot dealers and of predatory traders gunning for the stops.
+On the other side, there is the option buyer that has great interest to keep price away from
+the 1.27 level.
+Not everyone can buy a option in that size ($500m), so you can be sure he’s got some
+firepower too.
+He will try to buy ahead of the level and hope there will be also other bids in decent size. A
+good example is the 1.28 barrier option in EUR/USD that got triggered today.
+The option buyer was lucky yesterday, as there was decent demand from Asian Sovereign
+names and corporates that kept the pair above the barrier level.
+However, EUR-negative sentiment led to fresh selling this morning and the pair broke
+below 1.28.
+When we talk about barrier options in decent size (at least, larger than $50M), they
+certainly can have an impact on markets.
+However, I don’t want this to look like there is a battle whenever a barrier option appears.
+Just to mention one reason, there are participants that simply don’t care about some
+barrier option, they are gonna execute their trade idea nevertheless.
+
+
+--- Page 31 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+31/45
+Some things to keep in mind:
+The “battle” will be more intense if the expiry is near. If the 1.27 barrier option in
+EUR/USD expires in two days and we are approaching the level, there will be very
+likely some effort from the option writer to get price down there and from the option
+buyer to keep price above for these two days. On the other side, if the option expires in
+two months, but it seems very likely we will break below 1.27, defence from the option
+buyer will be minimal.
+Sentiment & Market Profile! If we get bad news from Europe, there will be a lot of
+selling coming in and nobody’s gonna care about some barrier option. The option
+buyer will most likely also see that it is not worth defending the barrier – why
+additionally waste money?
+How to use this?
+Note reported barrier options (IFR, ForexLive,  I mentioned earlier) and establish a
+position to push into the barrier level.
+Preferably, go with sentiment.
+Example: There were 1.28, 1.2775 and 1.2750 barrier options reported and sell stops
+reported below them.
+One could not have a more beautiful OF trade: Establish a short position and gun for the
+barrier and stops below. Given the average daily range of EUR/USD, 1.2750 would’ve been
+a realistic target.
+But a good approach would also be to establish a position and take partial profits as each
+of the barrier gets triggered to your final target.
+In general, it is more preferable to go with the option writer and attack the knock-out
+barrier, especially when sentiment favors such price action.
+However, in a market environment with little volatility and tight ranges, barrier protection
+can be stronger.
+Market Psychology
+Putting ourselves in the shoes of other traders is an effective way to get a better feeling
+for current market bias.
+Remember, fear and greed play a big role in the markets.
+
+
+--- Page 32 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+32/45
+Having a good understanding about market psychology can give you an additional edge in
+the markets.
+As price action develops two things happen:
+some traders will be driven by greed
+and other will start to “feel the pain” as the position moves against them.
+Let’s take EUR/USD as example:Going into the last ECB press conference, the market was
+largely short and buying interest was not very high. However, after the ECB meeting, the
+Euro rallied.
+While there were fundamental reasons for the move, price action itself contributed to the
+shift in sentiment.
+As we broke above 1.28, predatory traders were getting ready to push into the large buy
+stops above 1.29.
+Price was moving higher and those positioned short got more nervous.
+It was obvious there is a short squeeze ahead and eventually stops above 1.29 were
+triggered.
+In this example, we can see while the shorts started to “feel the pain” and had to cover, the
+longs took advantage of it and pushed into their stops.
+This goes on until some kind of balance is established.
+When sentiment takes a turn again, the process will repeat. Let’s say, there is really bad
+news coming from Cyprus and Euro bias turns negative.
+EUR/USD would be driven lower by fresh selling and sell stop clusters would come to the
+attention of other traders.
+Order Flow Trading-eurusd1-png
+Traders positioning is important, whether you daytrade or swing trade.
+You can keep an eye on COT positioning for a medium-term view on positioning.
+Even if it is lagging a bit, it is still useful, especially when positioning hits extreme levels.
+
+
+--- Page 33 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+33/45
+For short-term positioning you can guess it pretty easily once you watch price action for a
+certain period and get some feel for the markets.
+So, here is some homework: Try do apply some of this in your trading.
+In the previous sections, you have learned about other market participants characteristics
+and how to identify stop clusters. Combine it with the above mentioned method.
+Important: Don’t try to see a stop hunt or squeeze in every move. Stay focused on the key
+technical levels and the stops that are located above/below.
+On a personal note…
+I’d like to share some of my experiences in the trading business.
+Like most people do, I got into trading with the “Get rich quick” mindset.
+The world of trading is exciting, it is easy to get lost in emotions.
+Prices moving rapidly, news coming in every minute and tons of various chart patterns – I
+tried to get as much information together as I could, with the belief it will not take too long
+until I’m making serious money.
+We all know how these stories end – with a blown up account! I didn’t lose all the money
+in my first account, but I was pretty close.
+I’m thankful for this experience, as I got at least rid of the “get rich quick” mentality.
+I decided I’ll simply get rich slowly…
+As I mentioned in the opening post, I started trading in the stock market.
+I wasn’t really an active trader, doing some simple technical analysis, combined with some
+fundamental analysis and holding trades for at least a few days.
+When I got out of equities, it was the forex market that got me all excited about markets &
+trading and made me decide that I want to build a business out of it.
+We all felt that excitement about trading currencies, right? The largest market in the world
+and a truly global one – open 24 hours, 5 days a week.
+I started applying various forms of technical analysis, from indicators to chart patterns.
+
+
+--- Page 34 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+34/45
+I thought this has to be the key to successful trading – an approach that rationalizes price
+movements with all available information included in the charts.
+Why use fundamental analysis?
+It was all in the candles, I thought.
+For some time, I went through the highs and lows of trading – being overexcited when
+hitting a winning streak and frustrated as I realized that my strategy “did not seem to work
+anymore”.
+Like most traders, I then removed all the indicators and traded the naked charts.
+This gave me a little better understanding about the markets, as I focused on price action,
+not on indicators. I did better than in the first stage of trading, but still lacked consistency.
+I always felt that I’m missing a piece of the puzzle and it kept on bugging me.
+READ  Forex Factory Economic News Calendar - 11 Things To Know
+This prevented me from strictly following my rules and achieving the consistency I was
+seeking.
+However, I had that deep felling in me that trading is what I want to do.
+I’m sure many of you had the same feeling at some point? I HAD to succeed in this, not
+because I desperately seeked a way to accumulate wealth quickly, but because I’ve found
+something I love to do.
+So, I did not rest and continued to do research.
+After spending some more time with price action trading, modifing various strategies, I
+stumbled upon a few threads about order flow on FF.
+The topic seemed a bit complex on the first look, but I felt that I’ve finally found the
+missing puzzle piece I was looking for.
+See, it’s not just the order flow strategies I’ve been applying that turned me into a
+consistent and successful trader. It is the way of thinking – the mindset – of an OF trader
+that was a game changer for me.
+
+
+--- Page 35 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+35/45
+Instead of rationalizing everything through technical analysis, I chose to study what other
+participants operate in the marketplace and what characteristics they share.
+I see the markets completely different now and I can get a feeling for market bias much
+easier. My knowledge about market microstructure help me understand events that occur
+in the market in a clearer way.
+It is a constant seek for liquidity and clearing out the weaker side of the market. This is no
+overstatement – your loss is somebody else’s gain.
+Trading is not my primary source of income, but it provides a nice, additional flow of
+money and I love to trade.
+Not depending on the money allows me to trade stress free.
+If you want to be successful over the long run, you have to stop thinking about the money.
+I know it’s very hard.
+It took me years to achieve it.
+But after you calculated your risk and reward on the trade, stop thinking about the money!
+You have to think objectively about your trade and focus on your plan. As soon as you start
+to think about the cash, stop the thoughts!
+Furthermore, you have to find a strategy that suits you.
+You have to feel comfortable applying it and you need to have confidence in what you are
+doing. Doubt can be very costly in trading.
+Follow your trading plan strictly after you have a strategy that you’ve tested and feel
+comfortable with.
+We all go through tough times, I still have them too.
+But you have to stay calm and think about your long-term goals.
+Also, don’t compare your results to those of others.
+I couldn’t care less if there is a guy making millions with system “XYZ”, I got a trading style
+that suits me and I’m the only person responsible for the risks I take. When you’re in a
+
+
+--- Page 36 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+36/45
+trading room, stay honest.
+You will gain nothing if you act like a pro trader.
+Be honest to yourself in trading and accept temporary defeats. Be honest when you need
+help.
+If some people make stupid remarks about the mistakes you’ve made, ignore them, they
+are likely people without self-confidence, acting likely they are perfect traders and trying to
+hide that they’re actually losing.
+Truth is, trading is a tough game.
+Like every other profession in life, it takes time to get to a pro level.
+YOU will be your biggest enemy as it is unavoidable that you’ll be driven by emotions from
+time to time. It is key that you keep a cool head and think long-term.
+I wrote all my trading rules (analysis, strategy, entry, management, exit, money
+management) on a paper sheet and sticked it on the wall, so I can always see it from my
+trading desk.
+When you find yourself tempted to break a rule, keep an eye on the plan and do the right
+thing…
+I cannot say if Order Flow Trading is something for you, or not.
+You will need to find that out by yourself.
+But what I want you to understand is that if you study OFT and apply it, it is not limited to
+a specific strategy.
+It does not mean you have to trade stop hunts. Like I described earlier, it is a mindset and
+you can combine it with other strategies, which do not have to be directly OF-related.
+Start by studying market microstructure.
+You will great info in Darkstar’s book, Carol Osler’s academic papers and the various
+threads on the internet.
+To conclude, trading is a lot about psychology and no method or strategy can guarantee
+you success, but you will see that through the OF mindset, you’ll be able to see the markets
+
+
+--- Page 37 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+37/45
+from a different, more advanced perspective.
+ 
+Applying Order Flow Techniques on the Charts –
+Part I
+Understanding the importance of liquidity and what role stops play in the markets, you
+can now apply it directly in your trading.
+While there are several services that report where stop loss orders reside, it should be your
+goal to learn it yourself. After all, we want to make sure we are not too dependent on any
+news service or similar in our trading.
+There a few key things you need to keep in mind about the accumulation of stop loss
+orders in the markets:
+1) The higher the timeframe, the higher the number of market participants
+being aware of a certain technical pattern and placing orders based on it.
+Simply, more traders will notice a pattern on a 4-hour chart than one on the 15 minute
+chart. There is a lot of noise on the minutes charts and not many traders will bother with
+interpreting too much into it.
+2) The larger the number of confluences, the larger the size of the orders
+If a key resistance level happens to be near the 200 simple moving average and the 50.00
+% Fibonacci level from a key market swing (i.e. drawn from the monthly high to the
+monthly low), it will get even more attention and orders around it will be larger.
+3) The longer a pattern exists, the larger the size of the orders
+Let’s say we have an established range in EUR/USD between 1.30 and 1.32. Limit orders
+will start to cluster at both levels and stops will be placed below 1.30 and above 1.32. The
+longer the range exists, the larger the stops will grow until one side finally cracks and
+triggers the stops.
+Order Flow Trading-gbpusd-jpg
+We can see in the example above that GBP/USD traded within a 1.5450 – 1.5600 range.
+Stops were growing larger on both sides as price remained within the range.
+
+
+--- Page 38 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+38/45
+There were two things telling us that the downside was more likely to crack than the
+upside: 1) Weak UK fundamentals combined with USD strength and 2) the way price
+action reacted as it tested the lower range, we actually took out the stops below 1.5460, a
+sign that buyers aren’t as strong as the sellers ahead of 1.56.
+Remember what I taught you about market psychology.
+Once traders start feeling uncomfortable with their position (at least the professional
+one’s), they will look to cover. GBP/USD was just not able to break convincingly above 1.56
+and on every failure, which was followed by a downmove, there were some longs covering.
+The sellers were able to play this game for quite a while and they finally gained the upper
+hand on Friday, being able to push the pair into the weak sell stops.
+Applying order flow trading is considering the technical picture and taking advantage of
+the weak side of the market.
+How to Mark Large Stop Clusters on your
+Charts
+1) Open a blank chart – start with the Daily chart
+2) Note key support and resistance levels on the Daily and note at which price level the
+200 SMA is trading. If you wish, draw a Fibonacci retracement from the latest major swing
+low to the most recent major swing high.
+3) Move down to the 4H chart and again note the key S/R levels. Mark them in a different
+color
+4) Switch to the 1H chart and repeat the process, noting minor S/R levels. Again, draw
+them in a different color than the previous ones, so you can regonize them more easier.
+Here is an example (EUR/USD):
+Order Flow Trading-eurusd-jpg
+I started with the Daily and moved then to the 4H chart, noting key support and resistance
+levels.
+Repeat the process on the one hour chart.
+I did not mark the Daily 200 SMA and the Fibs on the example above, but feel free to do so
+if you consider it helpful.
+
+
+--- Page 39 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+39/45
+Stops are building below major support levels and above major resistance levels with limit
+orders very likely ahead. Your task is now to get a feeling for market bias and read price
+action to recognize the weaker side of the market and take advantage of them.
+Applying Order Flow Techniques on the Charts –
+Part II
+In the last section, I described the process of finding large stop clusters on the charts.
+Now, I will try to explain how I read price action with the Order Flow mindset applied.
+So why do key support/resistance levels work most of the times?
+There is psychological attachment to them! That’s why!
+Let’s take EUR/USD for example:
+1.2980 to 1.30 is currently strong resistance
+and sellers are lining up offers there in anticipation that the level will hold.
+Traders that are short EUR/USD are watching this level closely and a break above 1.30
+would be painful to them.
+Just think of the situation where you feel quite comfortable with a position and think it will
+run further in your favor and then suddenly you see a sharp move which takes out a i.e. key
+resistance level.
+Even professional/institutional traders have such situations where it doesn’t make sense
+for them to hold a position further.
+As the 1.2980-1.30 zone is an established resistance zone, EUR/USD shorts are watching it
+closely and how price action behaves in the zone can largely influence market sentiment.
+If we get another run into 1.2990, but it fails to even reach 1.30 and drops back quickly, the
+bears will feel renewed optimism.
+Bulls on the other side will feel frustrated and will question whether their EUR/USD long
+position makes sense. Stops are building on both sides and it’s just a matter of time until it
+becomes clear which side has the upper hand.
+What if we get a breakout above 1.30 and stops from EUR/USD shorts get triggered?
+
+
+--- Page 40 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+40/45
+Bulls will have gained the upper hand in the short-term as they cleared some of the shorts,
+but much will depend on price action after this event.
+Most important of course, are fundamentals. But then, are the dips well-bid compared to
+the selling that occurs at the rallies? Are bulls showing a strong initiative to keep price
+above?
+A false breakout followed by another drop would mean this was just a short victory for the
+bulls.
+Order Flow Trading-eurusd-jpg
+To conclude: When trading you want to think about the other participants and what they
+are likely to do in a certain scenario.
+Sentiment analysis can give us a very good edge and it can compensate if you struggle a bit
+with understanding fundamental analysis.
+Price action can also reveal a good amount of information – keep an eye on how the dips
+and the rallies look like. If we have small rallies, but strong downmoves, the bears are in
+control.
+How To Analyse  Market Sentiment
+How do you tell if the market sentiment is negative or positive for a currency pair?
+Here’s are the steps:
+1. I start by checking the relevant headlines on Reuters, Bloomberg, reading the opening
+reports on OrderFlowTrading.com
+2. and then write down what I perceive as prevailing sentiment for each major currency.
+3. Then compare the market sentiment to price action.
+All resources you need for sentiment analysis are available for free, so there is no need to
+subscribe to any services with in-depth analysis.
+When I was a beginner in order flow trading, I found it more useful to focus on the key
+headlines and topics traders are talking about.
+When you got an idea about the market  sentiment, compare it to price action, make brief
+notes and see at the end of the trading day if you got it right (or not).
+
+
+--- Page 41 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+41/45
+Again, don’t get confused by all the intraday noise, but focus first on medium-term
+sentiment.
+ 
+Sentiment Analysis Example
+Lets Look at Australia, the AUD:
+– RBA likely to cut rates further this year, while the FED is expected to scale down it’s QE
+program
+– Australian fundamental data doesn’t look healthy, Chinese growth is slowing down,
+commodities prices are dropping
+– Prevailing market bias is negative
+– COT data shows AUD short positioning is not at extreme levels yet, could still expand
+– Price action shows small rallies and large downmoves
+– 0.96 is now the key level everyone is watching
+When fading, I wait first for a reaction to the level.
+Even if sentiment is in our favor, we must keep in mind that orders can be withdrawn or
+that a sudden turn in flow occurs and the levels breaks without much effort needed.
+A good example is currently AUD/USD.
+While sentiment remains negative overall, there was quite some short-covering going on
+today and it took out the 0.95 and 0.9550 resistance levels easily.
+Look how price acts once it has broke a major technical or large order level. Assuming a
+large resistance level where offers in good size reside, you don’t only want to see price
+slowing down, but also how it reacts later.
+In this example, rallies should be small and downmoves larger.
+For this, I switch to the small timeframes (M1, M5) to see the PA more clearly.
+If the dips ran into good buying interest and the rallies seem stable, you don’t want to fade
+the move.
+It all comes down to risk-reward, when there is clear sentiment, you can go sometimes
+ahead and fade it, but the most important thing is that you accept when you are
+wrong.
+
+
+--- Page 42 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+42/45
+For example, if someone focused on the AUD-negative sentiment and forced himself to
+believe the Aussie has to trade lower, he would have got hurt today.
+If you fade and the trade goes wrong, accept it and either a) go with the flow or b) stay out
+of the pair.
+The point of order flow trading is going with the overall flow and taking advantage of
+inefficiencies and not fighting the strong flow.
+Go ahead and compare two pairs.
+AUD/USD as it broke above the key resistance level at 0.9550 today:
+Order Flow Trading-audusd-jpg
+What do you see?
+1) Price broke above pretty clearly, taking out the offers without much problem
+2) More importantly, the dips remained well-bid
+3) Price broke back below the now-support 0.9550 level, but strong buying interest at the
+dip to 0.9535
+This is how a well-bid pair looks like and something you don’t want to fight.
+As you can see, AUD/USD broke above 0.96 later.
+Now, GBP/USD:
+Order Flow Trading-gbpusd-jpg
+See how parabolic that move was?
+Not only that, but how little support it found after that stop hunt? Combine this with
+mixed sentiment and you have a good fade trade.
+Now, I hope you can understand what I mean by reading price action.
+It becomes much easier with time and you’ll start to see things much more clearly as you
+gain experience.
+I trade quite often on intuition, because I’ve watched markets for so long.
+Market Squeezes
+
+
+--- Page 43 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+43/45
+You have probably already heard the term “squeeze” in financial markets.
+It describes a market where traders are caught overly positioned to one side, which leaves
+them vulnerable to sentiment-changing events or large players taking advantage of their
+vulnerability by engineering a “technical” squeeze.
+How A Market Squeeze Can Happen
+There are two main ways market squeezes can happen-by an event/news or by technical
+reason.
+I will explain each below…
+1) DUE TO AN EVEN THAT HAS CHANGED SHORT TERM SENTIMENT
+A very recent example is the USD/JPY squeeze we saw the last night in the Asian trading
+session.
+Traders expected that the Japanese Prime Minister Abe and his party will win the majority
+in the Upper House election – which they did.
+However, this was already priced in as many traders bought the USD/JPY on Friday on
+those expectations.
+This resulted in a squeeze of the traders who were positioned long. Those who where long,
+took profits, and some predatory traders joined the selling to profit from the move.
+Once the stops below 100 started to getting triggered, downside momentum picked up
+until we ran into good-sized bids around 99.60.
+2) DUE TO TECHNICAL REASONS
+Large players can engineer a short squeeze without an event to gain more favorable
+conditions for themselves.
+This is most commonly seen as a stop hunt, as the stops from those short-term traders are
+usually triggered in this process.
+You have to keep in mind that it is the job of financial journalist to always find a reason
+why a certain price move has happened.
+
+
+--- Page 44 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+44/45
+So if you notice that there is really no reason why a certain pair moved, but you are aware
+of the fact that positioning is either overly long or short, you can imply that this was simply
+a stop hunt.
+How To Take Advantage Of Market Squeeze
+1) If there is no reason for a certain price move and you are sure it was only stop loss-
+driven, you can fade the move and trade in the direction of the trend/sentiment.
+You could of course join the squeeze and try to hunt the stops, but you need to be quick.
+2) The squeezes that happen due to an event that has changed short-term sentiment or
+even medium-term/long-term sentiment endure longer and you can take advantage of
+those trapped traders that are caught on the wrong side by joining the squeeze.
+For example: Let’s say the RBA (Reserve Bank of Australia) does not cut interest rates in
+August.
+The majority of traders expected they would do so and positioning is extremely short.
+What will happen? We will see a larger short squeeze driven by position covering and stop
+loss triggering.
+Tools for Market Positioning:
+Retail positioning is of course not significant for such a large market, but you can use it to
+get an idea what some of the retail traders are doing.
+Most of them use similar strategies and a large majority of them is positioned wrong, so
+you want to notice when market positions is overly long or overly short.
+Foreign Exchange Positions | Forex Open Position Ratios | OANDA fxTrade
+COT Charts (based on the CFTC IMM report released every Friday):
+Commitments Of Traders Reports – COT Report, COT Charts, COT Analysis and COT Data
+– COTbase.com
+Sites where you can get occasionally info about overall FX interbank positioning (from
+what I’ve figured out they derive it from various bank reports etc.):
+FXWW Market Commentary Blog – FXWW Market Commentary
+
+
+--- Page 45 ---
+11/15/2019
+Order Flow Trading (TIPS, TECHNIQUES, STRATEGIES)
+https://forextradingstrategies4u.com/order-ﬂow-trading/
+45/45
+ 
+Don’t forget to share, like, tweet, link or comment if you have enjoyed this order flow
+trading guide. Thanks
+ PREV ARTICLE
+NEXT ARTICLE 

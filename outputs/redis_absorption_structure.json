@@ -1,0 +1,109 @@
+{
+  "documentation_date": "2025-10-29",
+  "redis_host": "localhost:6379",
+  "redis_database": 0,
+  "key_patterns": {
+    "absorption_events": {
+      "pattern": "absorption:{symbol}:{cbdr_window}",
+      "example": "absorption:MNQZ5:REGULAR",
+      "data_type": "ZSET (sorted set)",
+      "sort_by": "significance_score (double precision)",
+      "count": 9066
+    },
+    "stop_events": {
+      "pattern": "stop:{symbol}.{exchange}@{provider}:session",
+      "example": "stop:MNQZ5.CME@RITHMIC:session",
+      "data_type": "ZSET (sorted set)",
+      "count": 10435
+    },
+    "iceberg_events": {
+      "pattern": "iceberg:{symbol}.{exchange}@{provider}:session",
+      "example": "iceberg:MNQZ5.CME@RITHMIC:session",
+      "data_type": "ZSET (sorted set)",
+      "count": 101
+    }
+  },
+  "absorption_event_structure": {
+    "data_format": "JSON string stored in ZSET",
+    "score": "significance value (0.0 to 1.0)",
+    "fields": {
+      "timestamp": {
+        "type": "double (epoch seconds)",
+        "format": "1761761970.461791",
+        "example": 1761761970.461791,
+        "description": "Nanoseconds from TradeEvent converted to seconds"
+      },
+      "price": {
+        "type": "double",
+        "unit": "raw Bookmap tick value (BEFORE 0.25 conversion)",
+        "example_raw": 105004.0,
+        "example_converted": 26251.0,
+        "description": "CRITICAL: Currently stores RAW price. After fix, will store (raw * 0.25)",
+        "fix_status": "NEEDS CONVERSION - multiply by 0.25"
+      },
+      "rawPrice": {
+        "type": "double",
+        "description": "NEW FIELD: Added after fix to preserve original Bookmap tick value",
+        "example": 105004.0
+      },
+      "size": {
+        "type": "integer",
+        "description": "Trade size (contracts)",
+        "example": 20
+      },
+      "side": {
+        "type": "string",
+        "enum": ["BUY", "SELL"],
+        "example": "SELL"
+      },
+      "maxChainSize": {
+        "type": "integer",
+        "description": "Size of biggest absorption bundle this event is part of",
+        "example": 20
+      },
+      "significance": {
+        "type": "double",
+        "range": "0.0 to 1.0",
+        "threshold": 0.5,
+        "formula": "(chainRatio * 0.6) + (volumeScore * 0.4)",
+        "example": 0.68
+      }
+    },
+    "sample_events": [
+      {
+        "timestamp": 1761761970.461791,
+        "significance": 0.68,
+        "size": 20,
+        "maxChainSize": 20,
+        "side": "SELL",
+        "price": 105004.0,
+        "comment": "Raw price - should be 26251.0 (105004 * 0.25)"
+      },
+      {
+        "timestamp": 1761761899.1795285,
+        "significance": 0.656,
+        "size": 14,
+        "maxChainSize": 14,
+        "side": "SELL",
+        "price": 105007.0,
+        "comment": "Raw price - should be 26251.75 (105007 * 0.25)"
+      }
+    ]
+  },
+  "current_issues": [
+    {
+      "issue": "Price not converted",
+      "severity": "CRITICAL",
+      "description": "Redis stores raw Bookmap tick prices (e.g., 105004) instead of converted index points (26251)",
+      "fix": "Multiply all prices by 0.25 before storing",
+      "code_location": "AbsorptionConsumer.java:320 - eventJson creation",
+      "status": "FIXED in build"
+    }
+  ],
+  "ttl_policy": "No TTL set - events persist until manually cleared",
+  "access_pattern": {
+    "write": "ZADD with significance score",
+    "read": "ZREVRANGE for top N events by significance",
+    "query": "ZCARD for count, ZRANGEBYSCORE for filtering by significance"
+  }
+}

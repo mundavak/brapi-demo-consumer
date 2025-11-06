@@ -41,22 +41,39 @@ public class AvwapValueHandler implements ProviderValueHandler {
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        return CastUtilities.castObject(o, BrVwapEvent.class);
+        try {
+            return CastUtilities.castObject(o, BrVwapEvent.class);
+        } catch (Throwable t) {
+            // Best effort - on failure return null
+            return null;
+        }
     }
 
     @Override
     public List<Event> castEventsInOurClassLoader(List<Object> o) {
-        return new LinkedList<>(CastUtilities.castObjects(o, BrVwapEvent.class));
+        try {
+            return new LinkedList<>(CastUtilities.castObjects(o, BrVwapEvent.class));
+        } catch (Throwable t) {
+            return new LinkedList<>();
+        }
     }
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        return CastUtilities.castObject(o, Filter.class);
+        try {
+            return CastUtilities.castObject(o, Filter.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        try {
+            return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override

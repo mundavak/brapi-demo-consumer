@@ -39,21 +39,37 @@ public class StrengthLevelValueHandler implements ProviderValueHandler {
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        return CastUtilities.castObject(o, BrIcebergEvent.class);
+        try {
+            return CastUtilities.castObject(o, BrIcebergEvent.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override
     public List<Event> castEventsInOurClassLoader(List<Object> o) {
-        return new LinkedList<>(CastUtilities.castObjects(o, BrIcebergEvent.class));
+        try {
+            return new LinkedList<>(CastUtilities.castObjects(o, BrIcebergEvent.class));
+        } catch (Throwable t) {
+            return new LinkedList<>();
+        }
     }
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        return CastUtilities.castObject(o, Filter.class);
+        try {
+            return CastUtilities.castObject(o, Filter.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        try {
+            return CastUtilities.castObject(o, ProviderSettingsProxy.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 }

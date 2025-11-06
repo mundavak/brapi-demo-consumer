@@ -1,0 +1,4460 @@
+Source: 789789011-Bookmap-Masterclass.pdf
+Pages: 364
+Characters: 87755
+Processing Time: 0.19s
+================================================================================
+
+--- Page 1 ---
+Profitable Trading with
+LOB and Bookmap™
+Bookmap™ Masterclass
+
+
+--- Page 2 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+4
+Walter Lesičar
+•
+Trading Futures since more then 10 years
+•
+Order Flow and Order Book
+•
+www.ttwtrader.com
+•
+wtl@ttwtrader.com
+•
+T: @ttwatrader
+•
+Y: ttwtrader
+Few Words About me
+
+
+--- Page 3 ---
+We will use the visualization of the limit order 
+book to show that profitable and sustainable 
+trading with liquid instruments in liquid 
+markets is possible in the long term.
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+5
+Goal of the Seminar
+
+
+--- Page 4 ---
+• How do modern markets operate?
+• Who is playing the game?
+• What are their motivations?
+• How do they act and interact?
+• How does all this affect liquidity and volatility?
+• How do I profit from this knowledge?
+• What strategies are the best for myself?
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+6
+Goal of the Seminar
+
+
+--- Page 5 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+7
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 6 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+8
+1. Test 1
+2. Part 1 – Auction
+3. Limit Order Book (LOB)
+4. Part 2 - Market Mechanic
+1. Basic Terminology
+5. Part 3 – Market Mechanic
+1. Liquidity
+6. Part 4 - Market Mechanic
+1. Market Terminology
+7. Part 5 – Order Book
+1. Visualization
+8. Part 6 – Strategies
+1. Strategies Part 1
+Liquidity, Sweep Trades, Pullback
+9. Strategies Part 2
+1. Correlations
+10.Part 7: Trading Preparation
+11.Strategies Pattern
+1. Execution Summary
+12.Strategies
+13.Strategies Indicators Part 3
+1. VWAP
+14.Strategies Part 4
+1. Advanced Analysis Tools
+15.Part 8 - Data Feed
+16.Part 9 – Option Expiration
+17.Part 10 - Trading Advice
+18.Test 2
+
+
+--- Page 7 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+9
+• All documentation, presentation, replay files and any additional 
+material can be downloaded from our Dropbox file. 
+• DropBox
+• ttwtrader.echofin.co
+• Video recordings via VIMEO
+• Live Education Room via Zoom.us
+• Announcement in ttwtrader.echofin.co „Signal Room“
+• Skype for direct contact
+Documentation
+
+
+--- Page 8 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+10
+• Short Term Trader : Retail -, discretionary Trader
+• Professional Trader
+• Prop. Trader
+• Institutional Trader
+This Seminar is designed for
+
+
+--- Page 9 ---
+Bookmap™
+Test 1
+
+
+--- Page 10 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+13
+• Please answer fast and intuitively
+• Where will the price move next?
+• Price rises (up)
+• Price declines (down)
+• Price goes sideways
+Test
+
+
+--- Page 11 ---
+Bookmap™
+Part 1 - Auction
+Limit Order Book (LOB)
+
+
+--- Page 12 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+25
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 13 ---
+„Limit Order Book“ or LOB is the standardised „Bookkeeping“ for
+every traded transaction
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+26
+
+
+--- Page 14 ---
+• LOB (Limit Order Book) is standardised (!) for all traded instruments worldwide
+• LOB Answers Questions:
+• How much was traded? 
+• When was it traded? 
+• At which price was it traded? 
+• Was the price accepted by the traders?
+• Which side wants to buy? 
+• Which side wants to sell? 
+• Are there aggressive buyers or sellers?
+• „Thin“ Liquidity (illiquid markets)
+• „Thick“ Liquidity (liquid markets)
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+27
+LOB Characteristics
+
+
+--- Page 15 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+28
+• Price 
+• Bid, Ask
+• Best Bid and Offer (BBO)
+• Traded Volume 
+• Aka Current Trades against inside bids and offers
+• Refresh time to be defined
+• Snapshot or Delta Volume 
+• Pulling and Stacking of limit orders
+• Statistics
+• Volume Profile shows total number of contracts traded at each level. It shows also 
+Session VWAP and POC.
+• Acts as Volume Profile tool
+• Quotes Center shows the number of contracts refreshed for each specific price 
+level. 
+Structure of a LOB
+
+
+--- Page 16 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+29
+
+
+--- Page 17 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+30
+Price
+Compare Bookmap 
+to a DOM
+
+
+--- Page 18 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+31
+Depth of Bid
+Depth of Bid
+Compare Bookmap 
+to a DOM
+
+
+--- Page 19 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+32
+Depth of Ask
+Depth of Ask
+Compare Bookmap 
+to a DOM
+
+
+--- Page 20 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+33
+Best Bid & Offer
+Best Bid & Offer
+Compare Bookmap 
+to a DOM
+
+
+--- Page 21 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+34
+Compare Bookmap 
+to a DOM
+Traded Market 
+Volume
+Traded Market 
+Volume
+
+
+--- Page 22 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+35
+Compare Bookmap 
+to a DOM
+Snapshot /Delta 
+Column
+
+
+--- Page 23 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+36
+Goals
+• Understanding the Auction
+• Understanding the Organisation of the LOB
+• Understanding LOB terminology
+• Understanding Your role as Trader
+• Understanding what moves the Price
+• Why is price going up?
+• Why is price going down?
+Group Excercise: Auction 
+
+
+--- Page 24 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+37
+• Open Outcry (Pit Trading) 
+• Auctioneer aka. Matching Machine
+• Auctioneer is the Market Maker
+• Bank, Broker sells and buys back Future-Contracts (not in a Webinar) 
+• We will practise a simple auktion
+• Everyone get $2000 to start ($100, $20, $10) 
+• Participants trade only Market Order
+• No short selling at the beginning
+• Duration about 10 – 15 min. 
+• At the end of the auction you have be flat
+• Bank, Broker, Auctioneer must be paid $10 for each auction
+Auction Rules
+
+
+--- Page 25 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+38
+
+
+--- Page 26 ---
+• Your Feeling
+• Did you get what you want?
+• Why are we allowed to trade?
+• What are you trading?
+• Trading is a Zero-Sum-Game!
+• > 98% Retail Trader are losing
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+39
+Discussion
+YOU WILL BE A WINNER! 
+
+
+--- Page 27 ---
+A limit order sits in the order book until it is:
+• either executed against a matching market order or it is canceled
+• A limit order may be executed very quickly if it corresponds to the Best-
+Bid-Offer (BBO) price
+• A limit order may take a long time if the market price moves away from 
+the requested price
+• the requested price is too far from the bid/ask.
+• can be canceled at any time
+• Typically, a limit order waits for a match
+• transaction cost is known
+• execution time is uncertain
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+40
+LOB Terms – Limit Order
+
+
+--- Page 28 ---
+• A market order is an order to buy/sell a certain quantity of the asset at the best 
+available price in the book.
+• Traders can put a market order that, for a buy (resp. sell) order,
+• The first share(s) will be traded at the ask (resp. bid) price
+• The remaining one(s) will be traded some ticks upper (resp. lower) in order 
+to fill the order size.
+• The ask (resp. bid) price is then modified accordingly.
+• When either the bid or ask queue is depleted by market orders or cancelations 
+the price is updated up or down to the next level of the order book.
+• Typically a market order consumes the cheapest limit orders immediate 
+execution (if the book is filled enough)
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+41
+LOB Terms – Market Order
+
+
+--- Page 29 ---
+• Traders can put a cancellation of x orders in a given 
+queue reduces the queue size by x
+• When either the bid or ask queue is depleted by market 
+orders and cancelations, the price moves up or down to 
+the next level of the order book.
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+42
+LOB Terms – Cancellation
+
+
+--- Page 30 ---
+Actual trades come in two forms
+• Trader can put a limit order and wait that this order matches another one
+• transaction cost is known
+• execution time is uncertain
+• Trader can put a market order that consumes the cheapest limit orders in the book
+• immediate execution (if the book is filled enough)
+• price per instrument instead depends on the order size
+• For a buy (resp. sell) order, the first instrument will be traded at the ask (resp. bid) price while 
+the last one will be traded some ticks upper (resp. lower) in order to fill the order size. The 
+ask (resp. bid) price is then modified accordingly.
+• Trader can put a cancellation of x orders in a given queue reduces the queue size by x
+• When either the bid or ask queue is depleted by market orders and cancelations, the price moves 
+up or down to the next level of the order book
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+43
+LOB Dynamics
+
+
+--- Page 31 ---
+• You never trade alone! 
+• If no one wants to trade with you, you won‘t be trading
+anything. 
+• Trading always needs two parties.
+• Cui Bono! (To Whom is it a benefit?)
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+44
+Trading Advice
+
+
+--- Page 32 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+45
+Price
+Volume
+ei
+Time
+Price is simply the
+auction‘s mean of
+advertising opportunity
+Time regulates each
+opportunity
+Volume measures the
+degree of success of
+each auction.
+James Dalton, Markets Profile, 
+Profiting from the Auction Process
+
+
+--- Page 33 ---
+Bookmap™
+Part 2 - Market Mechanic
+Basic Terminology
+
+
+--- Page 34 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+47
+Market Maker
+• Provides Liquidity
+• Without Liquidity no Trading
+• Quoting: 
+• MM provides a bid-price with corresponding bid-volume
+• MM provides a ask-price with corresponding ask-volume
+• Clearing:
+• MM decides on a price (p) to keep unsatisfied orders as small as possible
+• Satisfied orders are cleared
+• Facilitating Trading at any time and price
+• Most instruments trade 24h/day (except. Crypto)
+• „Thin“ and „Thick“ Markets
+
+
+--- Page 35 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+48
+Market Maker & Other Traders
+• Market Maker are called: Liquidity Providers
+• Other traders are called : Liquidity Takers
+
+
+--- Page 36 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+49
+Aggressors & Passive Trader
+• Aggressors are active traders who consume liquidity from the 
+market
+• Aggressors buys always at market! 
+• Algorithmic Trading Programs too (Sweeping!)
+• Market Order are „active“ Order
+• Passive Traders provide Liquidity
+• Limit Order are „passive“ Order
+• Transaktions matches always at Best-Bid-Offer!
+• Matching aggressor and passive trader
+
+
+--- Page 37 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+50
+Informed vs. Uninformed Trader
+• Informed traders posses information about the future price of
+an asset
+• News, company numbers, better market access, etc
+• Uninformed traders has no access to information
+• Lack of news, lack of knowledge about traded asset, 
+random trading, market ignorance
+• Information is hard to measure
+
+
+--- Page 38 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+51
+Matching Engine - Auktioneer
+• Enables electronic trading based on defined, fixed rules
+• Matches two parties, which want to trade
+• Matching Engine is always (!) fair
+• Following matching algorithms are used by the CME Group:
+• First In First Out (FIFO)
+• FIFO with Lead Market Maker
+• Pro Rata
+• Configurable
+• Threshold pro Rata
+• Threshold pro Rata with LMM
+• Allocation and Ending
+• Quelle: https://www.cmegroup.com/education/matching-algorithm-overview.html
+
+
+--- Page 39 ---
+Current Price trading on Best Offer
+Last trade is current price
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+52
+
+
+--- Page 40 ---
+Price Moves – Transacts on Best Bid
+Aggressor hits the bid with a sell market order
+Liquidity on Best Bid is consumed
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+53
+
+
+--- Page 41 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+54
+BEST 
+OFFER
+BEST 
+BID
+
+
+--- Page 42 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+55
+BEST 
+OFFER
+BEST 
+BID
+
+
+--- Page 43 ---
+Bookmap™
+Part 3 – Market Mechanic
+Liquidity
+
+
+--- Page 44 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+57
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 45 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+58
+•Liquidity is the „blood“ of all markets!
+•Without liquidity no trading!
+•Markets need sufficient liquidity to attract active and passive buyers
+• Market support buyers on the offer by providing liquidity
+• Market seeks buyers or sellers for distribution in price zones
+• Market uses liquidity to pressure the price down
+•Liquidity aka Volume attracts the price (magnet)
+•Liquidity is easy to manipulate – see Order Book Pulling, Stacking
+•Liquidity quickly vanishes from the market
+Liquidity Provides
+
+
+--- Page 46 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+59
+• Market always seeks liquidity – liquidity acts like magnet!
+• Liquidity is reliable if it is firm and stays firm
+• Long Term Liquidity
+• Stacking in LOB
+• Liquidity is weak
+• Short Term Liquidity – might appear only seconds in the LOB
+• Pulling in LOB 
+• Liquidity need to be taken by an equal amount of volume = absorption
+• Liquidity act like a Catapult (Support)
+• Book flipping, Spoofing, Long- , Short Term Liquidity
+• Liquidity is „thin“ and „thick“ – depends on market type
+• „Thin“ markets: FDAX, Forex, CL, 6E, NQ, YM etc
+• „Thick“ markets: Bonds, Treasuries, Indices
+• When Liquidity disappears (lack of liquidity) – Sit on Hands! (SOH)
+Conclusions
+
+
+--- Page 47 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+60
+Liquidity Absorps Market Volume
+Liquidity
+Volume
+Absorption
+• Whenever market volume and limit volume collide, volume or 
+“energy” is taken out of the market – “Energy” is absorbed
+• Less (!) “Energy” aka Volume remains in the market
+Limit Order
+Market Order
+
+
+--- Page 48 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+61
+Liquidity Absorps Market Volume
+• Whenever market volume and limit volume collide, volume or 
+“energy” is taken out of the market – “Energy” is absorbed
+• Less (!) “Energy” aka Volume remains in the market
+Limit Order
+Market Order
+Absorption
+Volume
+Liquidity
+
+
+--- Page 49 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+62
+Large Volume 
+Cluster
+Long Term Liq.
+Seeking new
+buyers!
+Not enough
+energy to trade
+
+
+--- Page 50 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+63
+Oil Inventories
+Keine Liquidität!
+Keine Liquidität!
+No Liquidity!
+
+
+--- Page 51 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+64
+
+
+--- Page 52 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+65
+
+
+--- Page 53 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+66
+
+
+--- Page 54 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+67
+•What is liquidity?
+•Who provides liquidity?
+•How does liquidity manipulate the price?
+•How is liquidity manipulating traders?
+•When is Liquidity reliable?
+Liquidity: Group Discussion
+
+
+--- Page 55 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Long Term High Liquidity
+•
+High liquidity remains in the book
+•
+Defines the auction
+•
+Digested by the auction participants
+•
+Channeling between longer term liquidity
+•
+Act as magnet
+•
+Market can trade there – seeking high liquidity! 
+•
+Understand context of the area
+•
+More or less liquidity around the area?
+•
+Tendencies to pull the liquidity?
+68
+
+
+--- Page 56 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+69
+
+
+--- Page 57 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+70
+Long Term High Liquidity
+Long Term High Liquidity
+
+
+--- Page 58 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+71
+Long Term High Liquidity
+
+
+--- Page 59 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+72
+Long Term High Liquidity
+
+
+--- Page 60 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+73
+
+
+--- Page 61 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+74
+•
+Short Term High liquidity briefly in the book
+•
+Creates large auction imbalances
+•
+New info for auction participants
+•
+Skews the auction – Repels price
+•
+Price reacts to supply and demand imbalance
+•
+Understand context of the area
+•
+Near areas of longer term liquidity
+•
+Relationships to swings in microstructure
+•
+Relationship with volume
+Short Term High Liquidity
+
+
+--- Page 62 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+75
+Long Term High Liquidity
+Short Term 
+High Liq. 
+Short Term 
+High Liq. 
+
+
+--- Page 63 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Long Term High Liquidity
+Long Term High Liquidity
+Short Term 
+High Liq.
+Short Term 
+High Liq. 
+Short Term 
+High Liq. 
+76
+
+
+--- Page 64 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+77
+•
+Clearly visible in Bookmap
+•
+BID or ASK side support the price move in one direction
+•
+Real time evidence which way the market will go
+•
+Valid until resistance or support shows up
+Liquidity - Path of Least Resistance
+
+
+--- Page 65 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+78
+
+
+--- Page 66 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+79
+
+
+--- Page 67 ---
+Bookmap™
+Part 4 - Market Mechanic
+Market Terminology
+
+
+--- Page 68 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+81
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 69 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+82
+• Liquidity
+• Absorption
+• Exhaustion
+• Sweeping
+• Stop Runs
+Active and Passive Indicators
+• Order Book Imbalance
+• Pulling / Stacking
+• Spoofing
+• Channeling
+• Book Flipping
+• Quote Stuffing
+• IceBerg
+Trading Indicators
+Confirmation Indicators
+
+
+--- Page 70 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+83
+• Absorption indicates the presence of one or more market makers 
+who are sufficiently capitalized to consume all orders at a certain 
+price.
+• Absorption meets firm resistance when the limit page of the order 
+book is "recharged" or "stacked" with new volume until the entire 
+aggressor volume is consumed.
+• Absorption always happens at price levels with equivalent liquidity.
+• Volume absorbed = Liquidity allocated 
+Absorption
+
+
+--- Page 71 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+84
+Liquidity Absorps Market Volume
+Liquidity
+Volume
+Absorption
+• Whenever market volume and limit volume collide, volume or 
+“energy” is taken out of the market – “Energy” is absorbed
+• Less (!) “Energy” aka Volume remains in the market
+Limit Order
+Market Order
+
+
+--- Page 72 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+85
+Liquidity Absorps Market Volume
+• Whenever market volume and limit volume collide, volume or 
+“energy” is taken out of the market – “Energy” is absorbed
+• Less (!) “Energy” aka Volume remains in the market
+Limit Order
+Market Order
+Absorption
+Volume
+Liquidity
+
+
+--- Page 73 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+86
+• Market is changing his mind
+• Traders has reached their target (Bussines Done)
+• Distribution and Accumulation takes place
+• Covering or Flatten open positions
+• Can happen over more then one price level (!)
+• Adding or opening new positions
+• Can happen over more then one price level (!)
+Reasons for Absorption
+
+
+--- Page 74 ---
+Absorption Example
+High Liquidity in order book on bid, resting for several hours
+It is far away from current best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+87
+
+
+--- Page 75 ---
+Sweep of Book
+Longer term liquidity resting on bid is now 1 Tick away from best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+88
+
+
+--- Page 76 ---
+Another large 50 lot sell order hits the bid
+High liquidity is 1 tick away from best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+89
+
+
+--- Page 77 ---
+Sweep of Price Level
+Now High liquidity is 1 on the best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+90
+
+
+--- Page 78 ---
+Aggressive Trade is absorbed
+High liquidity absorbs remainder of 50 lot order
+Price does NOT sweep the level, and 80 contracts still remain at best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+91
+
+
+--- Page 79 ---
+Another large 50 lot order hits the bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+92
+
+
+--- Page 80 ---
+Aggressive trade is absorbed, price stops
+Entire 50 lot order is absorbed by limit orders
+30 contracts still remain at best bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+93
+
+
+--- Page 81 ---
+Aggressive buyer enters the market
+Spread is 3 ticks
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+94
+
+
+--- Page 82 ---
+Aggressive buyer lift the offer with 1 contract
+Limit buy orders on bid stops the sell momentum to downside
+Price shifts to best offer and moves 3 tick higher
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+95
+
+
+--- Page 83 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+96
+Absorption: Advanced Concepts
+Strategies: V-Bottom reversal, Pullback Setup
+Phenomena: Stop runs, trapped volume, Book Flipping
+
+
+--- Page 84 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+97
+„Energy“ absorbed
+
+
+--- Page 85 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+98
+
+
+--- Page 86 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+99
+
+
+--- Page 87 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+100
+
+
+--- Page 88 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+101
+
+
+--- Page 89 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+102
+
+
+--- Page 90 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+103
+• Absorption is not ALWAYS a reversal or trading signal!!
+• It is important what happens next:
+• Short Retracement
+• Retracement up to next Liquidity Level
+• Break Through
+• Liquidity act as Support, Resistance
+• Absorption Reversal, Continuation
+Absorption: Application
+
+
+--- Page 91 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+104
+Absorption: Pattern
+Absorption – „short“ Retracement
+Indicates strenght in the price
+movement
+Small short covering
+NO Liquidity above or below
+Price drops
+Absorption – Retracement
+Short Covering
+Liquidity above or below
+Price seeks Liquidity
+Liquidity acts as Resitance or
+Support
+Absorption – Break Through
+Massive Sell Off
+Liquidity = Covering
+Price seeks final Support 
+(Liquidity) or Resistance 
+(Liquidity)
+
+
+--- Page 92 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+105
+Absorption: Pattern
+Absorption – Reversal
+Firm Liquidity on Limit Site
+Stacking in LOB 
+LOB – Market Order are absorbed
+LOB reading
+Absorption – Continuation
+Liquidity was absorbed
+Book flipping
+LOB reading – Market Order 
+indicates the strenght of current
+market
+
+
+--- Page 93 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+106
+
+
+--- Page 94 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+107
+
+
+--- Page 95 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+108
+
+
+--- Page 96 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+109
+
+
+--- Page 97 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+110
+• Exhaustion is a depletion of market orders on the last ticks or 
+price.
+• We observe decreasing volumes. 
+• Exhaustion is a price level of last seller in a downtrend and a 
+price of last buyer in case of an uptrend.
+Exhaustion
+
+
+--- Page 98 ---
+Exhaustion Example
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+111
+
+
+--- Page 99 ---
+Sweep of Book
+Down to low liquidity area of 8-10 contracts per price levels on bid
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+112
+
+
+--- Page 100 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+113
+5 lots trade hits the bid
+
+
+--- Page 101 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+114
+Another 5 lots hits the bid
+
+
+--- Page 102 ---
+5 lots trade on the bid
+Best bid now shows low liquidity of 8 contracts
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+115
+
+
+--- Page 103 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+116
+Lack of trading activity
+Best offer drops and narrows the spread
+
+
+--- Page 104 ---
+Price exhausts on bid – no trading activity
+Sellers dry up
+Buyers lift the offer as 5 lot enters the market
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+117
+
+
+--- Page 105 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+118
+Price exhausts on bid – no trading activity
+Market buy orders transact on the best offer
+
+
+--- Page 106 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+119
+
+
+--- Page 107 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+120
+
+
+--- Page 108 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+121
+
+
+--- Page 109 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+122
+
+
+--- Page 110 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+123
+• Trading through 1 or more price levels very fast
+• Big aggressive market orders
+• Leaving unfinished auctions (Low Volume Nodes – LVN)
+• Fast and powerful refusal of prices
+• Speed of price action is important
+• [Stop running] 
+Sweeping
+
+
+--- Page 111 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+124
+• Fast and powerful moves are initiated (ignited) by algos at 
+exogeneous events like sudden political or economical issues.
+• Prices then sweeps through a range of prices leaving an order
+vacuum in it‘s wake as time goes on.
+• New orders come into the void
+• Large market orders arrive so fast that the queue does not have
+time to equilibrate between their arrivals.
+• Market making programs see the orders and they seek to execute
+them so price retraces.
+Sweeping or Big Moves
+
+
+--- Page 112 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+125
+
+
+--- Page 113 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+126
+Quota Center 
+traded contracts=0
+
+
+--- Page 114 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+127
+No
+„Polling“
+Sweep
+Matching Engine 
+starts to poll
+
+
+--- Page 115 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+128
+
+
+--- Page 116 ---
+Current Price trading on Best Offer
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+129
+
+
+--- Page 117 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+130
+Aggressive 50 lot sell order hits the Bid
+
+
+--- Page 118 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+131
+All liquidity taken – 15 lots trade
+50 lot order is now 35 lots
+Aggressive sell order hits bid againat next price level, spread widens
+1 Tick
+
+
+--- Page 119 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+132
+All liquidity taken – 18 lots trade
+50 lot order is now 17 lots
+Aggressive sell order hits bid again at next price level, spread widens 2 Tick
+
+
+--- Page 120 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+133
+17 of 22 lots trade – 5 lots remain on Best Bid
+50 lot order is now completely filled – Best Bid remains on current level
+2 levels of the order book are quickly swept, vacuum between BBO
+VACUUM
+
+
+--- Page 121 ---
+Sweeping – advanced concepts
+Strategies: Momentum, Pullback setup, Rejection
+Phenomena: Book Flipping, Icebergs, Ignition
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+134
+
+
+--- Page 122 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+135
+Trading Advice
+Never trade in the direction of a Sweep! 
+Avoid the „Pavlovian Reflex“!
+A sweep must be traded AGAINST it‘s direction –
+at the near end of the move.
+
+
+--- Page 123 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+136
+
+
+--- Page 124 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+137
+
+
+--- Page 125 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+138
+
+
+--- Page 126 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+139
+
+
+--- Page 127 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+140
+
+
+--- Page 128 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+141
+
+
+--- Page 129 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+142
+
+
+--- Page 130 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+143
+
+
+--- Page 131 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+144
+• Stop runs are bottom or top formations that shoot beyond an 
+absorption level to trigger stops in the immediate area of the 
+absorption or breakout.
+• Stop Runs triggers stops which are immediately executed at market
+• This triggers a fast counter movement, which is intendent.
+• It is a Slingshot Move 
+• Sweeps are the most causes for Stop Runs
+Stop Runs – Stop Losses
+
+
+--- Page 132 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+145
+
+
+--- Page 133 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+146
+
+
+--- Page 134 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+147
+• Liquidity
+• Absorption
+• Exhaustion
+• Sweeping
+• Stop Runs
+Active and Passive Indicators
+• Order Book Imbalance
+• Pulling / Stacking
+• Spoofing
+• Channeling
+• Book Flipping
+• Quote Stuffing
+• IceBerg
+Trading Indicators
+Confirmation Indicators
+
+
+--- Page 135 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+148
+• Indicates a change of expectations or mood of market participants
+• Why does the price drop? 
+• Because there is no BID (!)
+• High Liquidity on Limit Offer means more resistance
+• Less Liquidity on Limit Bid means less resistance
+• Why does the price rise?
+• Because there are sufficient buyers willing to lift the offer
+• High liquidity on Limit Bid means strong support
+• Lower Liquidity on Limit Offer indicates low resistance
+• ALL  these „intentions“ are indicated by the „Order Book Imbalance“!
+Order Book Imbalance
+Why does the price move?
+
+
+--- Page 136 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+149
+Current Price trading on Best Offer
+Order Book is Balanced
+
+
+--- Page 137 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+150
+Price Moves – Transacts on Best Bid
+Aggressor hits the bid with a sell market order
+Liquidity on Best Bid is consumed
+
+
+--- Page 138 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+151
+Order Book Imbalance
+Value Shift in „Intent of Trade“ on the Best Offer
+
+
+--- Page 139 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+152
+Supply Imbalance
+Auction is „skewed“, seeks balance through price reevaluation
+Liquidity pulled, Spread widens as Best Bid drops 2 Ticks
+
+
+--- Page 140 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+153
+Price Moves – Transacts on the Best Bid
+Aggressor hits the Bid with a Sell Market Order, with volume of 1 contract 3 Tick vacuum
+created between BBO
+
+
+--- Page 141 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+154
+Depth Imbalance: advanced concepts
+Spoofing or Layering, Icebergs
+Strategies: Momentum
+
+
+--- Page 142 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+155
+• Means that market makers are adding to bid / offer to
+support one direction of the price
+• Mind changing
+• Gives mostly a reliable view of the price development
+Book Flipping
+
+
+--- Page 143 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+156
+
+
+--- Page 144 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+157
+
+
+--- Page 145 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+158
+Book 
+Flipping
+
+
+--- Page 146 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+159
+Book 
+Flipping
+
+
+--- Page 147 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+160
+• Bid and Ask side are managed separately according to similar 
+logic
+• Each side resets to zero whenever the best price changes
+• The Quotes delta displays cumulative size change of the 
+price level since the last reset
+• It is a simple adding and subtracting
+• Because changing of volume happens fast
+Quotes Delta: Pulling & Stacking
+Confirms Absorbtion!
+
+
+--- Page 148 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+161
+
+
+--- Page 149 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+162
+
+
+--- Page 150 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+163
+
+
+--- Page 151 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+164
+• Load the book in one direction and remove the orders
+before execution.
+• Goal is to manipulate the price action swelling the
+volume of the order book above and below the current
+price.
+• Under the 2010 Dodd-Frank Act spoofing is defined as 
+"the illegal practice of bidding or offering with intent to 
+cancel before execution.”
+Spoofing or Layering
+
+
+--- Page 152 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+165
+
+
+--- Page 153 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+166
+
+
+--- Page 154 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+167
+
+
+--- Page 155 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+168
+
+
+--- Page 156 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+169
+• Intent to keep the price within a price range in order to get filled on 
+certain price levels
+• Goal is to manipulate the price action WITHIN the range 
+• Text of Rule 575 – Disruptive Practices Prohibited
+• All orders must be entered for the purpose of executing bona fide 
+transactions. Additionally, all nonactionable messages must be 
+entered in good faith for legitimate purposes. 
+• A. No person shall enter or cause to be entered an order with 
+the intent, at the time of order entry, to cancel the order before 
+execution or to modify the order to avoid execution;
+Channeling
+
+
+--- Page 157 ---
+Channeling
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+170
+Channeling
+
+
+--- Page 158 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+171
+
+
+--- Page 159 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+172
+• Part of HFT trading 
+• Quote stuffing is the practice of quickly entering and then withdrawing large 
+orders in an attempt to flood the market with quotes, causing competitors to 
+lose time in processing them.
+• High-frequency trading in and of itself is not illegal. However, stuffing takes 
+place when traders fraudulently use algorithmic trading tools that allow them 
+to overwhelm markets by slowing down an exchange’s resources with buy 
+and sell orders in securities.
+• Only market makers and other large players in the market are capable of 
+executing these tactics, since they require a direct link to the securities 
+exchange in order to be effective.
+Quote Stuffing
+
+
+--- Page 160 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+173
+
+
+--- Page 161 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+174
+
+
+--- Page 162 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+175
+
+
+--- Page 163 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+176
+• Excerise Time: 30 min. 
+• Group discussion
+Excercise: Replay Bookmap™  
+
+
+--- Page 164 ---
+•Identify Basic Market Mechanics examples in Bookmap 
+replay mode
+•Markup several charts
+•Variations of how price moved
+•Draw conclusions from the examples, noting the
+different times, markets and varying liquidity
+•Begin anticipating Basic Mechanics in real time
+Training exercises
+Understanding these market mechanics are critical. 
+This will lay a solid foundation for future lessons.
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+177
+
+
+--- Page 165 ---
+Bookmap™ 
+Part 5 – Order Book
+Visualization
+
+
+--- Page 166 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+179
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 167 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+180
+• Order Book visualization with Bookmap™
+• Why visualization?
+• Advantages of LOB visualization
+• Bookmap™ design and set-up
+• Dot, Bid, Ask
+• Liquidity level
+• Time Slices, Macro- , Micro View
+• Settings
+Goals
+
+
+--- Page 168 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+181
+Data Visualization
+Data Visualization allows us to
+•
+Structure, evaluate and better comprehend the meaning of
+displayed data
+•
+Define terms for a common language
+•
+Develop rules based on the defined language and act
+accordingly across all platforms
+
+
+--- Page 169 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+182
+• Visualisation is relative to the selected time frame!! 
+• Small Dots – small volume!
+• Large Dots – large volume! (Large Volume Cluster)
+• Liquidity level are RELATIVE 
+• Related to the zoom level
+• Related to the time frame
+• Density of liq. is defined by color
+• From light to dark(er) (high liq.)
+Historical Chart Structure
+Everything is relative!
+
+
+--- Page 170 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+183
+LOB
+Long Term High Liquidity
+Book Flipping
+Pulling
+Stacking
+Short Term High Liquidity
+Pullback
+Sweep
+Absorption
+Volume 
+Profile
+Historical Data
+Traded
+Data
+Depth of Market (DOM)
+Limit Order Book (LOB)
+LVN
+LVN
+Cumulated Volume Delta
+
+
+--- Page 171 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+184
+Meaning of Dots = Volume
+• NEVER TRADE WITH BUT 
+AGAINST BIG VOLUME!
+• Pavlovian reflex!
+• Trap for most traders at highs
+and lows.
+• Stops were hit or they must 
+cover/flatten their positions
+• This panic supports the
+counter move
+
+
+--- Page 172 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+185
+Date & Time
+BID 42 at 2593.00
+Volume: 122 at 2592
+Date & Time
+ASK 44 at 2595.00
+Volume: 191 at 2595
+Liq. relative  to
+time frame!!
+Liq. relative  to
+time frame!!
+Ask
+Bid
+
+
+--- Page 173 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+186
+Heatmap and Volume Dots can
+be changed with dyn. Slider.
+Colormap
+Info Line has same 
+infos like Data Tool 
+Tipp
+
+
+--- Page 174 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+187
+Trading Advice
+Use higher time frames and don‘t lose yourself in MicroView!
+You want maximum profit with just a few trades!
+
+
+--- Page 175 ---
+Bookmap™ 
+Part 6 - Strategies
+
+
+--- Page 176 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+189
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 177 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+190
+Trading Advice
+• NO BIAS
+• BE PATIENT
+• LET THE MARKET GUIDE YOU
+
+
+--- Page 178 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+191
+Liquidity Absorps Market Volume
+Liquidity
+Volume
+Absorption
+• Whenever market volume and limit volume collide, volume or 
+“energy” is taken out of the market – “Energy” is absorbed
+• Less (!) “Energy” aka Volume remains in the market
+Limit Order
+Market Order
+
+
+--- Page 179 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+192
+Strategy Symbols
+Large Volume Cluster
+Liquidity (Long – und Short Term)
+Traded Volume 
+Divergences
+Pullback
+Correlations
+Reversals
+Sweeps
+
+
+--- Page 180 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+193
+Meaning of Dots = Volume
+• NEVER TRADE WITH BUT 
+AGAINST BIG VOLUME!
+• Pavlovian reflex!
+• Trap for most traders at highs
+and lows.
+• Stops were hit or they must 
+cover/flatten their positions
+• Supports the counter move
+
+
+--- Page 181 ---
+Bookmap™
+Strategies Part 1 
+Liquidity, Sweep Trades, 
+Pullback
+
+
+--- Page 182 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+195
+Trading Advice
+• NO BIAS
+• BE PATIENT
+• LET THE MARKET GUIDE YOU
+
+
+--- Page 183 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+196
+• Applying strategies based on the studied market mechanism
+• Active and passive indicators
+• Understanding strategies and their execution
+• Liquidity
+• Sweep trades
+• Pullback
+• Additional analysis methods in the second part
+Goals
+
+
+--- Page 184 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+197
+Liquidity as Target 
+• Liquidity acts as „magnet“ for all markets
+• Without Liquidity no trading
+• Liquidity is providing or taking „Energy“ 
+• Absorption (taking volume out of the market)
+• Book Flipping aka Support or Resistance
+• Order Book Imbalances (Support or Resistance)
+• Use Liquidity as your guidedance / orientation throughout the
+trading day
+
+
+--- Page 185 ---
+Liquidity
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+198
+Follow Liquidity
+„Energy“  absorbed
+here
+Liquidity
+Liquidity
+„Energy“  absorbed
+here
+
+
+--- Page 186 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+199
+
+
+--- Page 187 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+200
+
+
+--- Page 188 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+201
+
+
+--- Page 189 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+202
+
+
+--- Page 190 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+203
+
+
+--- Page 191 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+204
+
+
+--- Page 192 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+205
+•
+Sweep
+•
+Is always a 90° move !
+•
+Is always extremly fast (max. 2-20 sec.)
+•
+Leaves always a vacuum
+•
+Vacuum must be closed within a short period, always (!)
+•
+is always triggered by algos
+•
+Is most of the time the end of a swing or capitulation
+•
+Liquidity
+•
+Not existing
+•
+Sweep to a liquidity level = Absorbtion
+•
+Volume
+•
+At the beginning of a sweep not existent
+•
+At the Top or Bottom ends in a „Big Volume Cluster“
+•
+Always followed by a massive reaction to the Big Volume Cluster in the DOM
+•
+LOB shows no volume because of the speed of the move
+•
+Chart Range Volume Profile shows no volume either (LVN = Low Volume Nodes)
+Trade into the Sweep
+Prerequisites
+
+
+--- Page 193 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+206
+Trade into the Sweep – Scheme
+90° + 
+Vacuum
+CLH9
+ESH9
+ESH9
+ESH9
+
+
+--- Page 194 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+207
+
+
+--- Page 195 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+208
+
+
+--- Page 196 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+209
+
+
+--- Page 197 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+210
+
+
+--- Page 198 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+211
+•
+Sweep trading requires experience
+•
+Sweep indicates
+•
+a pause in trading
+•
+a reversal
+•
+Stop runs (immediate response)
+•
+Execution
+•
+Wait for the largest volume or „Large Volume Cluster“ of the sweep (1-3 sec.)
+•
+A fill on the top is in most cases unlikely (Slippage e.g CL)
+•
+Wait for a retest with lower volume
+•
+Consider this entry and place your stops above the liquidity level
+•
+It takes some time to lift off or to drop
+•
+A sweep indicates further
+•
+To clear your position (long or short)
+•
+To tighten your stops
+•
+End of the price movement
+•
+Disadvantage
+•
+A sweep can happen 1-2-3 times in a row (dependent on the instrument)
+Trade into the Sweep – Execution
+
+
+--- Page 199 ---
+Liquidity firm
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+212
+Trade into the Sweep – Execution 1
+Sweep
+90°
+Vacuum
+Sweep - Immediate Rejection
+Most of „Energy“  
+absorbed here
+Short Area
+Stop Area
+
+
+--- Page 200 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+213
+Short Area
+Stop Area
+Long Area
+Stop Area
+
+
+--- Page 201 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+214
+Trade into the Sweep – Execution 2
+90° + 
+Vacuum
+Most of „Energy“  
+absorbed here
+Sweep as Reversal 
+Short Area
+Stop Area
+Book flip
+
+
+--- Page 202 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+215
+Most of „Energy“  
+absorbed here
+90° + 
+Vacuum
+Short Area
+Stop Area
+Book flip
+
+
+--- Page 203 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+216
+Sweep
+90°
+Vacuum
+Most of „Energy“  
+absorbed here
+Short Area
+Stop Area
+
+
+--- Page 204 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Sweep
+90°
+Vacuum
+217
+
+
+--- Page 205 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+218
+Trade into the Sweep – Execution 3
+Sweep – Bottom and Top Formation
+Most of „Energy“  
+absorbed here
+Long Area
+Stop Area
+Book flip
+Sweep
+90°
+Vacuum
+
+
+--- Page 206 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+219
+Most of „Energy“  
+absorbed here
+90° + 
+Vacuum
+Long Area
+Stop Area
+Book flip
+
+
+--- Page 207 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+220
+Most of „Energy“  
+absorbed here
+90° + 
+Vacuum
+Long Area
+Stop Area
+Book flip
+
+
+--- Page 208 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+221
+Most of „Energy“  
+absorbed here
+Short Area
+Stop Area
+More Selling then
+buying
+
+
+--- Page 209 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+222
+Most of „Energy“  
+absorbed here
+Short Area
+Stop Area
+More Selling then
+buying
+
+
+--- Page 210 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+223
+Sweep – Basic Decision Table for Conservative Entries
+Sweep?
+Wait!
+No
+Retest?
+Wait!
+No
+Yes
+Yes
+Entry on low
+Volume
+Yes
+Entry ok?
+Cancel!
+No
+Runner
+
+
+--- Page 211 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+224
+Sweep?
+Wait!
+No
+Retest?
+Wait!
+No
+Yes
+Yes
+Entry on low
+Volume
+Yes
+Entry ok?
+Cancel!
+No
+Runner
+
+
+--- Page 212 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+225
+Trade into the Sweep – Execution 4
+Most of „Energy“  
+absorbed here
+Sweeps in a row
+Short Area
+Stop Area
+Sweep 2
+Sweep 1
+Most of „Energy“  
+absorbed here
+
+
+--- Page 213 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+226
+Sweep 2
+Sweep 1
+Sweep 3
+Liquidity = target
+
+
+--- Page 214 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+227
+Sweep 3
+Sweep 1
+Sweep 2
+Long Term High Liquidity
+
+
+--- Page 215 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+228
+Sweep 2
+Sweep 1
+Sweep 3
+
+
+--- Page 216 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+229
+Advanced Trade: Sweep Correction
+Sweep
+90°
+Vacuum
+Most of „Energy“  
+absorbed
+~ 50% of the
+Sweep
+TIME!!
+Advanced Scalping Technique: For experienced Trader!!
+
+
+--- Page 217 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+230
+~ 50% of the
+Sweep
+
+
+--- Page 218 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+231
+~ 30% - 50% of
+the Sweep
+
+
+--- Page 219 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+232
+•
+Trending Environment
+•
+Pullbacks or Reversals always in a Trend
+•
+Conditions
+•
+Move ends in a Volume flurry or Large Volume Cluster!!
+•
+Absorption of Volume (loss of Energy!)
+•
+Covering or profit taking starts
+•
+Volume
+•
+Pullback ends in depleted volume = Exhaustion
+•
+Divergence in Chart Accumulated Volume Profile
+•
+Liquidity
+•
+Good Short Term High Liquidity above / below the volume cluster
+Pullback Strategy - Prerequisites
+
+
+--- Page 220 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+233
+Pullback: Pattern
+Absorption – „short“ Retracement
+Indicates strenght in the price
+movement
+Small short covering
+NO Liquidity above or below
+Price drops
+Absorption – Retracement
+Short Covering
+Liquidity above or below
+Price seeks Liquidity
+Liquidity acts as Resitance or
+Support
+Absorption – Continuation
+Liquidity was absorbed
+Book flipping
+LOB – Market Order indicates the
+strenght of current market
+Pullback
+„small“ covering
+Pullback
+„Big“ covering
+Pullback
+Pullback
+
+
+--- Page 221 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+234
+Pullback – Scheme and Execution
+Most of „Energy“  
+absorbed here
+Short Area
+Stop Area
+Exhaustion
+Volume 
+Cluster
+Short Term Liquidity
+in the LOB
+Divergence
+
+
+--- Page 222 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+235
+•
+Pullbacks happen always in trending moves
+•
+Pullback Entry
+•
+Look for Short Term Liquidity above or below the last Large Volume 
+Cluster
+•
+Let the market trade towards the Short Term Liquidity
+•
+Remember: Price seeks Liquidity!
+•
+Place your trade below or at the Short Term Liquidity
+•
+Stop must be above the Short Term Liquidity
+•
+Volume
+•
+Low Volume close to Short Term Liquidity
+•
+Exhaustion is indicated
+•
+Watch Chart Volume Profile (CVP) for LVN (Low Volume Nodes)
+Pullback Strategy– Execution
+
+
+--- Page 223 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Short Term Liq.
+236
+
+
+--- Page 224 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+237
+
+
+--- Page 225 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Break of
+Structure
+LVN
+Low Volume pullback
+Exhaustion
+High Volume 
+Cluster
+238
+
+
+--- Page 226 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Stop Loss above POC
+Sell Volume 
+Cluster
+Stop Loss aggressive
+Recall exhaustion
+Set realistic limit order
+Target – High 
+Liquidity
+Book 
+sweep
+239
+
+
+--- Page 227 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+240
+
+
+--- Page 228 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+241
+
+
+--- Page 229 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+242
+
+
+--- Page 230 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+243
+
+
+--- Page 231 ---
+Bookmap™
+Strategies Part 2 
+Correlations
+
+
+--- Page 232 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+245
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 233 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+246
+Trading Advice
+Correlations gives an additional level of confidence in trading.
+Utilize this additional information in your daily trading decisions.
+
+
+--- Page 234 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+247
+•
+Many markets have close interdependencies
+Correlations help to see and recognize the direction of a market
+•
+Correlation is a statistical measure that determines how assets move in relation to each 
+other. (https://www.investopedia.com/articles/financial-advisors/022516/4-reasons-why-market-correlation-matters.asp)
+•
+Although Correlations exist, they must be always viewed in the economical context.
+Correlations
+
+
+--- Page 235 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+248
+S&P 500
+MSFT
+AAPL
+AMZN
+GOOG
+FB
+INTC
+45%
+NASDAQ 100
+MSFT
+AAPL
+AMZN
+GOOG
+FB
+INTC
+3,8%
+S&P 500
+MSFT
+AAPL
+AMZN
+GOOG
+FB
+INTC
+28,6%
+DOW JONES
+VIX
+Volatility Index
+SPY
+ETF Fund
+$ / YEN
+Source: https://www.slickcharts.com
+
+
+--- Page 236 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+249
+Correlation: ES – MSFT - AAPL
+
+
+--- Page 237 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+250
+Correlation: 
+ES – YEN – SPY – VXX - MSFT – AAPL –AMZN - NQ
+
+
+--- Page 238 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Correlations – SPY vs. ES
+• The SPDR S&P 500 trust is an exchange-traded 
+fund which trades on the NYSE Arca under the symbol 
+(NYSE Arca: SPY). SPDR is an acronym for the 
+Standard & Poor's Depositary Receipts, the former 
+name of the ETF. It is designed to track the S&P 500 
+stock market index. This fund is the largest ETF in the 
+world (https://en.wikipedia.org/wiki/SPDR_S%26P_500_Trust_ETF)
+251
+
+
+--- Page 239 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Correlations – QQQ vs. NQ
+The PowerShares QQQ, previously known as the QQQQ, is a widely held 
+and traded exchange-traded fund (ETF) that tracks the Nasdaq 100 Index.
+The Nasdaq 100 Index is composed of 100 of the largest international and 
+domestic companies, excluding financial companies, that are listed on 
+the Nasdaq stock exchange, based on market capitalization. Therefore, 
+QQQ is heavily weighted toward large-cap technology companies and is 
+often viewed as a snapshot of how the technology sector is trading.
+(https://www.investopedia.com/ask/answers/061715/what-qqq-etf.asp)
+252
+
+
+--- Page 240 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Correlations – VXXB or VIX
+The Volatility Index, or VIX, is an index created by the Chicago Board Options 
+Exchange (CBOE), which shows the market's expectation of 30-day volatility. It is 
+constructed using the implied volatilities on S&P 500 index options. This volatility is 
+meant to be forward looking, is calculated from both calls and puts, and is a widely 
+used measure of market risk. The VIX is often referred to as the "investor fear gauge."
+Fear, volatility, and the index move up when stock prices are falling and investors are 
+fearful. The index, volatility, and fear decline when stock prices are rising.
+(https://www.investopedia.com/terms/v/vix.asp)
+253
+
+
+--- Page 241 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+254
+Correlation: USD/YEN - ES
+•
+Investors shift their capital in case of uncertainty from stock markets, indices in 
+Forex markets
+•
+YEN is seen as the negative indicator of the S&P 500 (ES)  
+•
+Tight correlation between USD/YEN and S&P 500
+•
+YEN is in diffcult times the „Flight to Quality“
+•
+S&P 500 and YEN have (normally) an inverted ratio to each other. 
+This can change – see 2016
+•
+At times of high correlation, YEN is used to hedge against the S&P 500
+•
+Rule of Thumb:
+•
+If YEN soars – indices will drop (S&P 500)
+•
+If YEN plummets – indices are rising (S&P 500)
+
+
+--- Page 242 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+255
+Correlation: ES – YEN
+
+
+--- Page 243 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+256
+Correlation: ES – YEN
+
+
+--- Page 244 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+257
+Correlation: ES – YEN
+
+
+--- Page 245 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+258
+
+
+--- Page 246 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+259
+
+
+--- Page 247 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+260
+
+
+--- Page 248 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+261
+
+
+--- Page 249 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+262
+
+
+--- Page 250 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+263
+Correlations: Treasuries – S&P 500
+•
+30 Year Bond (ZB), 10 Year T-Note (ZN), 5 Year T-Note (ZF) correlates
+strongly
+•
+Stock- and Bondmarkets correlates contrary
+•
+When Bond market soars, the Stocks are likely to fall 
+•
+Investors tend to shift their capital
+•
+Investors are hedging the S&P 500 market against the Bonds and vice versa
+
+
+--- Page 251 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+264
+S&P 500
+ZB
+30 Year
+ZF
+10 year
+ZN
+5 Year
+Correlations: Treasuries, Indices
+BUND
+
+
+--- Page 252 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+ES - ZB – ZN - ZF
+265
+
+
+--- Page 253 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+ES - ZB – ZN - ZF
+266
+
+
+--- Page 254 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+ZB - ZN
+267
+
+
+--- Page 255 ---
+Bookmap™ 
+Part 7: Trading Preparation
+
+
+--- Page 256 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+269
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 257 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+270
+• Trading Day Preparation
+• Macro View (Tage, 60min)
+• Micro View (10 min, 5 min)
+• Historical Chart „synchronisation“
+• Cloud Notes for potential important price levels (Google 
+Docs)
+• Custom Notes for ad hoc entries
+Goals
+
+
+--- Page 258 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+271
+•
+Analyze your instrument in daily and minute charts
+•
+Y-Close (GAP), Y-Low, Y-High, PP, R-Open, Pre-High, Pre-Low, Y-VWAP, etc.
+•
+Transfer important price levels into Bookmap™
+•
+Dynamically with Google Docs via Notes -> Cloud Notes
+•
+Manually during the trading day via Notes -> Custom Notes
+•
+Algorithmic programs trade most of the time parallel between price levels
+•
+Draw horizontal lines at Swing Highs and Swing Lows
+Preparation - Macroview
+
+
+--- Page 259 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+272
+Trading Day Preparation
+Day
+60 min
+
+
+--- Page 260 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+273
+Cloud Notes
+
+
+--- Page 261 ---
+12 December 
+2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Macroview and Structure – example
+Daily Chart
+274
+
+
+--- Page 262 ---
+12 December 
+2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Macroview and Structure – example
+30 min.
+275
+
+
+--- Page 263 ---
+12 December 
+2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Microview and Structure – example
+5 min.
+276
+
+
+--- Page 264 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+277
+•
+Each market is manipulated (every day) by algorithmic
+programs
+•
+Algos moves in parallel between price levels
+•
+Mark the high and low of swings
+•
+Horizontal markings coincide with High Term Liquidity levels
+•
+In Bookmap™ applicable if historical data are subscribed
+Macroview and Algos
+
+
+--- Page 265 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+278
+Macroview and Algos - Preparation
+
+
+--- Page 266 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+279
+Macroview and Algos - Preparation
+
+
+--- Page 267 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+280
+Macroview and Algos - Preparation
+
+
+--- Page 268 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+281
+Macroview and Algos - Preparation
+
+
+--- Page 269 ---
+• Use current market data to prognosticate the daily trend
+• Correlations are highly reliable indications
+• Look 1 day and 2-3 day back. What is / was the trend?
+• Mark previous daily data in your chart (High, Low, Gap(!), Open..)
+• Mark important liquidity levels (Long Term High Liquidity)
+• Use additional technical indicators like McClellan or similar
+• Use a decision table
+• Always be aware that current analysis can be affected by daily events!
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Trend Definition
+282
+
+
+--- Page 270 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Trend Definition – Decision Table
+Example: S&P 500 Future (ES mini)
+283
+Indication
+Trend
+Result
+Yen / USD (6J) 
+1 day – 3 and more days
+Green / Red / Neutral
+Gold (GC) 
+1 day – 3 and more days
+Green / Red / Neutral
+Treasuries (ZB, ZN, ZF)
+1 day – 3 and more days
+Green / Red / Neutral
+Dow Jones (YM)
+Correlation with ES and NQ
+Green / Red / Neutral
+Nasdaq (NQ)
+Correlation with ES and YM
+Green / Red / Neutral
+Shares: AAPL, MSFT, AMZN, GOOG https://www.finviz.com/map.ashx?t=sec
+Green / Red / Neutral
+Technical Indicators (McClellan)
+Trend definition (https://www.mcoscillator.com/)
+Green / Red / Neutral
+Daily Liquidity Model
+Long Term High Liquidity (see next)
+Mark it in BM chart
+News
+Skew the trend !!
+News services: DataFlash
+https://www.financialjuice.com/home#
+
+
+--- Page 271 ---
+Liquidity
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+284
+Watch for Liquidity as a first Estimate
+Liquidity
+Liquidity
+Prio 1 Liquidity
+Prio 2 Liquidity
+Zoom out and observe
+current Long Term High 
+Liquidity levels.
+
+
+--- Page 272 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+285
+Prio 1 Liquidity
+Prio 2 Liquidity
+Prio 3 Liquidity
+
+
+--- Page 273 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+286
+Trend Definition
+ES – YEN – Gold – 30y Bond
+Trend Definition
+Shares vs Treasuries
+
+
+--- Page 274 ---
+Bookmap™
+Strategies Pattern
+Execution Summary
+
+
+--- Page 275 ---
+• Consistency
+• The ability to clearly identify if it‘s working or not
+• Having a close stop and a far target
+• High Risk:Reward (R:R) ratio
+• Patience 
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+What makes a Good Setup?
+288
+
+
+--- Page 276 ---
+• Sweeps are signs of liquidation, capitulation
+• See Sweep chapter
+• Leaves always an imbalanced limit order book! 
+• MUST always be traded contrary
+• Pattern
+• Wait until sweep comes to an end
+• Does the market retest price at top/bottom?
+• Volume retesting top/bottom must be clearly lower then traded before
+• Use Divergences, ASK / BID Imbalances 
+• Target
+• Price seeks liquidity
+• Correlation to other markets
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Sweep – Contrary Trading
+289
+
+
+--- Page 277 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+290
+
+
+--- Page 278 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+291
+
+
+--- Page 279 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+292
+
+
+--- Page 280 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+293
+
+
+--- Page 281 ---
+• Re-Bid means to enter market and to take advantage of it‘s direction
+• Pattern
+• Bullish Market 
+• Liquidity above attracts price
+• Execution
+• Step in and re-bid the move
+• Target = Liquidity above
+• Note
+• Stop below last low
+• R:R ratio not optimal
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Re-Bid – after open
+294
+
+
+--- Page 282 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+295
+Re-Bid
+
+
+--- Page 283 ---
+• Re-Offer means to enter market and to take advantage of it‘s direction
+• Pattern
+• Bearish Market 
+• Fast price action, mostly at the beginnig of trading session
+• Liquidity below attracts price
+• Execution
+• Step in and re-offer the move (market or limit)
+• Target = Liquidity below
+• If no liquidity below, ride the move until exhausted (Sweep)
+• Note
+• Stop above last high
+• R:R ratio not optimal
+12 December 
+2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Re-Offer
+296
+
+
+--- Page 284 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+297
+Re-Offer
+
+
+--- Page 285 ---
+• Time / Timing is the most important factor in Trading
+• Price seeks liquidity
+• Pattern
+• Bullish Market 
+• Firm Support at a price
+• Liquidity attract buyers above
+• Execution
+• Buying dips at re-tested price level
+• Target = Liquidity above
+• Help
+• Draw a rectangle around re-tested price
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Time and Liquidity as an Indicator
+298
+
+
+--- Page 286 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+299
+30 – 60 min 
+
+
+--- Page 287 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+300
+
+
+--- Page 288 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+301
+•
+Trending Environment
+•
+Pullbacks or Reversals always in a Trend
+•
+Conditions
+•
+Move ends in a Volume flurry or Large Volume Cluster!!
+•
+Absorption of Volume (loss of Energy!)
+•
+Covering or profit taking starts
+•
+Volume
+•
+Pullback ends in depleted volume = Exhaustion
+•
+Divergence in Chart Accumulated Volume Profile
+•
+Liquidity
+•
+Good Short Term High Liquidity above / below the volume cluster
+Pullback
+
+
+--- Page 289 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+302
+Trend
+Short Term High Liquidity
+
+
+--- Page 290 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+303
+
+
+--- Page 291 ---
+Bookmap™
+Strategies Indicators Part 3 
+VWAP
+
+
+--- Page 292 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+305
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 293 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+306
+VWAP –
+Volume Weighted Average Price
+•
+VWAP is the ratio of the value traded to total volume traded over a particular time 
+horizon (usually one day). It is a measure of the average price a financial 
+instrument such as stock or futures traded at over the trading horizon.
+•
+The most professional brokerage firms offer what is known as Guaranteed VWAP 
+execution to large institutional clients. Guaranteed VWAP is the process of 
+executing trades exactly at the VWAP price.
+•
+VWAP is used to identify liquidity points
+•
+VWAP spots the action of very active money pools
+
+
+--- Page 294 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+307
+VWAP –
+Volume Weighted Average Price
+•
+Daily Volume Weighted Average Price 
+•
+Weekly Volume Weighted Average Price
+•
+Monthly Volume Weighted Average Price
+•
+Time Weighted Average Price
+
+
+--- Page 295 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Daily VWAP (NT8)
+Source:
+https://www.lizardindicators.com
+308
+
+
+--- Page 296 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Weekly VWAP (NT8)
+Source: 
+https://www.lizardindicators.com
+309
+
+
+--- Page 297 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Monthly VWAP (NT8)
+Source: 
+https://www.lizardindicators.com
+310
+
+
+--- Page 298 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+311
+
+
+--- Page 299 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+312
+
+
+--- Page 300 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+313
+
+
+--- Page 301 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+314
+
+
+--- Page 302 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Indicators for NinjaTrader 8
+Source: 
+https://www.lizardindicators.com
+315
+
+
+--- Page 303 ---
+Bookmap™
+Strategies Part 4 
+Advanced Analysis Tools
+
+
+--- Page 304 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+317
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 305 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+318
+Advanced applications
+•
+Confluences at Setup Levels
+•
+Sharp Delta
+•
+Cumulative Volume Delta
+•
+Iceberg Detector
+•
+Large Lot Tracker
+•
+Correlations
+•
+Alert Settings
+•
+Large Trade Alert
+•
+Order Book Imbalance
+•
+VWAP
+•
+POC
+•
+API Automated Strategies
+•
+Training Excercises
+Tools
+
+
+--- Page 306 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+319
+Cumulative Volume Delta
+•
+Cumulative Volume Delta or CVD is a very basic indicator. It simply plots the 
+accumulation of aggressor volume.
+•
+The CVD simply displays the cumulative volume of buy aggressors minus sell 
+aggressors. Buy Volume is a positive number and Sell Volume is a negative
+number. Add them together and that's your CVD output…
+•
+5 Contracts bought = +5 
+2 Contracts sold = +3
+10 Contracts sold = -7
+….
+
+
+--- Page 307 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+320
+
+
+--- Page 308 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+321
+
+
+--- Page 309 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+322
+CVD - Basics
+•
+Significant directional CVD & volume is usually correlated with 
+strong price movement.
+•
+Insignificant directional CVD & volume is usually correlated with 
+weak price movement
+•
+If the above correlations don't exist, then something is amiss. 
+There is a divergence between price movement, volume, and 
+CVD. Therefore a possible trading opportunity exists.
+
+
+--- Page 310 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Sweeping and Retracement
+323
+
+
+--- Page 311 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Higher Time Frame
+324
+
+
+--- Page 312 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Absorption
+325
+
+
+--- Page 313 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Exhaustion
+326
+
+
+--- Page 314 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+327
+Iceberg Detector
+•
+Bookmap generates the iceberg indications based on difference between the 
+actual pending order offered at that price level and the actual number of orders 
+that transacted at that price level, at that specific moment.
+•
+Larger Players use hidden orders or IceBergs to conseal their intent to trade at 
+that price level; their large limit order do not display in the LOB. Therefore, 
+these hidden orders do not skew the aucion imbalance.
+•
+Can act as absorption at that price level, with lack of liquidity in LOB.
+•
+https://bookmap.com/wiki/Iceberg_Orders_Tracker
+
+
+--- Page 315 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Native Algorithm in Action
+328
+
+
+--- Page 316 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Usage of Iceberg orders
+329
+
+
+--- Page 317 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+330
+Large Lot Tracker
+•
+An approximation of the largest single pending order at a price 
+level if that order crosses a certain threshold based on the 
+adjustable settings in Bookmap.
+•
+Larger Players typically set individual large block orders in areas
+they want to deal
+•
+Can act as a spoof – puposely showing large orders can skew the
+auction and cancellation of these orders can create vacuum.
+
+
+--- Page 318 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+331
+
+
+--- Page 319 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+332
+Order Book Imbalance
+•
+Order Book imbalance represents the ratio between the average bid order book 
+size versus the average ask order book size 
+•
+Volume imbalance represents the ratio between the volume generated by 
+buying aggressors (market order transactions on the offer) versus the volume 
+generated by selling aggressors (market order transactions on the bid)
+•
+The two imbalance indicators are calculated according to the current chart 
+range. Any change to the chart range (either by dragging or by zooming in or 
+out) will affect the readings of the imbalance indicators..
+
+
+--- Page 320 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+333
+Order Book Imbalance
+Alert Settings
+• Alerts when extraordinary imbalance in LOB happen
+• Be careful in areas with „many“ imbalance alerts
+• Imbalance areas
+• Pause
+• End of a trend
+• Reversal of a trend
+
+
+--- Page 321 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+334
+
+
+--- Page 322 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+335
+
+
+--- Page 323 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+336
+POC – Point of Control
+•
+The Point of Control, commonly abbreviated as POC, is a Market Profile term 
+which describes the price level where the most volume was traded (also known as 
+the price level where the most TPO's have printed). 
+•
+A Naked Point of Control (also called a Virgin Point of Control) is a previous POC 
+which has not been traded at (taken out). It remains active until it is traded at 
+(taken out) and for this reason it attracts price towards it
+•
+See also: Dr. John Keppler, Profit with the Market Profile
+James F. Dalton, Mind over Markets
+
+
+--- Page 324 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+337
+
+
+--- Page 325 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+338
+
+
+--- Page 326 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+339
+•
+Bookmap API allows to connect to Bookmap new data sources 
+and trading systems, and to develop custom modules such as 
+automated trading strategy, indicators, voice alerts, data export 
+and recording, and more.
+•
+Source: Bookmap API Wiki
+•
+Source: Bookmap Forum
+Bookmap API‘s
+
+
+--- Page 327 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+340
+
+
+--- Page 328 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+341
+
+
+--- Page 329 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+342
+
+
+--- Page 330 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+343
+•
+https://www.youtube.com/playlist
+?list=PLzaGy-
+3oukoRSOXWvcynCFeFRTUAz
+mauD
+Bookmap Features and Components
+
+
+--- Page 331 ---
+Bookmap™
+Part 8 - Data Feed
+
+
+--- Page 332 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+345
+Syllabus
+Absorption
+Liquidity
+Strategies
+Correlations
+Auction
+LOB
+Exhaustion
+Adv. Analysis Tools
+Book Flipping
+Spoofing /Layering
+Quote Stuffing
+Stop Runs
+Bookmap™ 
+Oganization and Data 
+Presentation
+Data Feed
+CVD
+Large Lot Tracker
+Ice berg Detector
+Volume Imbalance
+POC
+Sweep
+Practice
+Practice
+Practice
+Practice
+
+
+--- Page 333 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+346
+•
+Bookmap™ can be connected to multiple data vendors
+•
+Quality of data feed differs (!)
+•
+Market-by-Price (MBP)
+•
+Market-by-Price (MBP) describes a price-based data feed that provides the ability to view 
+the total size of all orders at each price level. MBP can describe either full market depth or a 
+limited number of nearest Bid and Ask price levels, e.g. 5, 10, or 20 price levels.
+• Market by Order (MBO) 
+• or Order-by-Order describes an order-based data feed that provides the ability to view 
+individual orders and their evolution. The order's information contains its unique Order ID, limit 
+price, size, and its location in the queue. MBO typically provides full market depth, describing 
+orders at each price level. This is the more modern and more transparent type of market data.
+•
+https://bookmap.com/wiki/Main_Page#All_data_and_trading_connections
+•
+https://www.cmegroup.com/confluence/display/EPICSANDBOX/CME+MDP+3.0+Market+Data
+Data Feed
+
+
+--- Page 334 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+347
+Data Feed: Market by Order (Rithmic)
+
+
+--- Page 335 ---
+• Aggregated data are good enough for candle and similar charts. 
+• Aggregated for retail traders
+• To make a decision a trader can toss a coin to come to a decision
+• Need for indicators and different chart types
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+348
+Why Data Depth?
+
+
+--- Page 336 ---
+• Because only Charts with not aggregated data are meaningful and useful!
+• With non aggregated data everything is disclosed and we can decide according the 
+displayed information.
+• We see all levels available and thus we can plan and trade accordingly
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+349
+Why Data Depth?
+
+
+--- Page 337 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+350
+MSFT
+
+
+--- Page 338 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+351
+AAPL
+
+
+--- Page 339 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+Connections
+Futures
+Stocks*
+Crypto
+Data type
+Minimum 
+License **
+Trading
+Market depth 
+data
+Data quality 
+score 1-5 ****
+MacOS *****
+Exchanges
+API access 
+******
+Where can I get 
+the data?
+Demo data 
+available?
+Status remarks
+Rithmic
+Yes
+Real-time
+Global
+Yes
+Full
+5
+Soon
+CME, Eurex, 
+ICE, ...
+From brokers
+Yes
+dxFeed
+Yes
+Yes
+Real-time
+Global
+Via IB ***
+Full
+5
+Nasdaq, EDGX
+No
+From Bookmap
+dxFeed
+Yes
+Yes
+Delayed
+Digital
+Simulator
+Full
+5
+Nasdaq, EDGX
+No
+From Bookmap
+Cedro Crystal
+Yes
+Yes
+Real-time
+Global
+Yes
+Full
+5
+BM&F Bovespa 
+(Brazil)
+From XP broker
+S5 Trader
+Yes
+Real-time
+Global
+Yes
+10 levels
+4
+No
+CME, Eurex, 
+ICE, ...
+From Stage 5
+Yes
+CQG
+Yes
+Real-time
+Global
+Yes
+10 levels except 
+CL
+4
+CME, Eurex, 
+ICE, ...
+From brokers
+Yes
+Interactive 
+Brokers
+Yes
+Yes
+Real-time
+Global
+Yes
+10 levels
+2
+CME, Eurex, 
+ICE, ...
+From IB
+Gain
+Yes
+Real-time
+Global
+Yes
+10 levels
+4
+No
+CME, Eurex, 
+ICE, ...
+From brokers
+IQFeed
+Yes
+Real-time
+Global
+No
+10 levels
+3
+CME, Eurex, Ice 
+...
+From IQFeed
+Yes
+Ninja Trader
+Yes
+Real-time
+Global
+Yes
+10 levels
+3
+No
+Continium = 
+CQG Kinetick = 
+IQFeed
+From 
+NinjaTrader
+Transact
+Yes
+Real-time
+Global
+Yes
+10 levels
+3
+No
+CME
+From Transact
+X_TRADER (TT 
+API)
+Yes
+Real-time
+Global
+Yes
+10 levels
+4
+No
+CME, Eurex, 
+ICE, Euronext ...
+From brokers
+GDAX
+Yes
+Real-time
+Digital
+Yes
+Full
+5
+GDAX
+Included
+BitMEX
+Yes
+Real-time
+Digital
+Yes
+Full
+5
+BitMEX
+Included
+Beta
+OKCoin
+Yes
+Real-time
+Digital
+Yes
+Full
+5
+OKCoin
+Included
+Alpha
+Bitfinex
+Yes
+Real-time
+Digital
+No
+100 levels
+5
+Bitfinex
+Included
+Alpha
+Nanotick
+Yes
+Historical
+Global+
+Sim
+Full
+5
+CME
+From Nanotick
+Bookmap 
+Replay
+Yes
+Yes
+Yes
+Historical
+Digital+
+Sim
+Full
+5
+Any
+Files recorded 
+by user
+Virtual 
+exchange
+Real-time, 
+simulated
+Digital
+Yes
+Full
+5
+VE
+Included
+Sep 2018
+352
+Source: Option Expiration Calendar
+Source: Option Expiration Calenda
+
+
+--- Page 340 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+353
+
+
+--- Page 341 ---
+Bookmap™
+Part 9 – Option Expiration
+
+
+--- Page 342 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+355
+•
+Option expiration days have a high correlation with following
+indices:
+•
+ES, NQ, YM
+•
+Statistical probability is > 80% that on these days the indices
+will probably correct
+•
+Mark the Option Expirations days in your calendar
+Option Expiration
+
+
+--- Page 343 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+356
+Source: Option Expiration Calendar
+
+
+--- Page 344 ---
+Bookmap™
+Part 10 - Trading Advice
+
+
+--- Page 345 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+358
+Trading Advice
+• NO BIAS
+• BE PATIENT
+• LET THE MARKET GUIDE YOU
+• LISTEN TO THE MARKET
+
+
+--- Page 346 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+359
+• Don‘t fear to lose any opportunity
+• Fully and absolutely confidence in your system
+• Never be boredom
+• No need to force a trade – wait until market speaks to you!
+4 Reasons to be Successful
+
+
+--- Page 347 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+360
+• Order Book reading shows the opportunity when it arrives
+• Bookmap™ gives you clear signals at Macro- and Microlevel
+• Concenrate on your trading system
+• Act upon learned strategies
+• Good Opportunities always occur – you‘ll never miss one
+Don‘t fear to lose an Opportunity
+
+
+--- Page 348 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+361
+• Bookmap™ is a leading trading tool
+• Footprint is a leading trading tool
+• Accurate, non-aggregated data feed
+• Visualisation is of great help understanding and interpreting 
+the LOB and Order Flow
+• Be and stay a well skilled Order Book Trader
+Confidence in your System
+
+
+--- Page 349 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+362
+• Bookmap™ Historical Chart shows LOB levels in advance
+• Visualisation of long- and short term liquidity
+• Understanding the price action
+• Clear trend and signal indication
+• Look for easy trades
+• There is time for trading and time to go fishing! 
+No more Boredom
+Trade to win and not for excitement!
+
+
+--- Page 350 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+363
+• Bookmap™ Historical Chart shows LOB levels in advance
+• Visualisation of long- and short term liquidity
+• Learn to control your Bias and Wait
+• Follow the market
+• Bookmap™ shows you what the market is actually planning and
+doing
+• Stay relaxed and listen to the market
+No forcing a trade anymore
+Trade to win and not for excitement!
+
+
+--- Page 351 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+364
+1.
+Always wait for the setup: No Setup – No Trade!
+2.
+THE BEST trades work almost right away.
+3.
+Never take a big loss. If it doesn‘t „feel“ right – remove it!
+4.
+Always perfect your craft and sharpen your skills!
+5.
+Be patient with winning trades! Imaptient with sketchy trades!
+6.
+DISCIPLINE to follow your plan is the key to winning in trading.
+7.
+Never get emotionally attached to trades.
+8.
+Always trade with the size that makes your unemotional.
+9.
+Keep things very simple and don‘t over-think your trading methods.
+10. Stay humble at all times.
+Golden Rules
+
+
+--- Page 352 ---
+Bookmap™
+Test 2
+
+
+--- Page 353 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+366
+• Please answer fast and intuitively
+• Where will the price move next?
+• Price rises (up)
+• Price declines (down)
+Test
+
+
+--- Page 354 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+367
+
+
+--- Page 355 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+368
+
+
+--- Page 356 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+369
+
+
+--- Page 357 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+370
+
+
+--- Page 358 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+371
+
+
+--- Page 359 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+372
+
+
+--- Page 360 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+373
+
+
+--- Page 361 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+374
+
+
+--- Page 362 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+375
+
+
+--- Page 363 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+376
+
+
+--- Page 364 ---
+12 December 2019
+© 2019, TTW Trading Services Ltd. based on Bookmap™ 7.1.0
+377
+Google Forms
+Seminar Evaluation

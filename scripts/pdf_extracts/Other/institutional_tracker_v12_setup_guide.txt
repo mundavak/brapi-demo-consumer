@@ -1,0 +1,69 @@
+Source: institutional_tracker_v12_setup_guide.pdf
+Pages: 3
+Characters: 2349
+Processing Time: 0.00s
+================================================================================
+
+--- Page 1 ---
+Institutional Tracker v12 - Setup & Usage Guide
+What the Script Does
+--------------------
+- Tracks institutional phases: accumulation, distribution, breakout (Phase 3).
+- Detects patterns: absorption clusters, spoofing, iceberg orders, stop hunts, anomalies.
+- Separates bullish vs bearish institutional activity.
+- Saves trades, zones, alerts into SQLite database (persistent storage).
+- Writes JSON alert files with entries, invalidations, targets.
+- Supports Telegram/desktop alerts (optional).
+- Integrates with Bookmap via Python API (receives depth and trade data).
+Software Requirements
+---------------------
+1. Core
+   - Python 3.8+ (>=3.6 required by Bookmap Python API)
+   - Bookmap Desktop Platform (v7.1.0+ recommended)
+   - Bookmap Python API Addon
+2. Python Packages
+   - numpy (math/statistics)
+   - sqlite3 (built-in)
+   - requests (for Telegram/webhooks)
+   - plyer (optional desktop notifications)
+   - logging, json (built-in)
+
+
+--- Page 2 ---
+3. Optional
+   - Telegram bot setup (token + chat_id) for alerts
+Installation Steps
+------------------
+1. Install Python:
+   - Download from https://www.python.org/downloads/
+   - Verify with: python --version
+2. Install Dependencies:
+   pip install numpy requests plyer
+3. Install Bookmap & Python API Addon:
+   - Install Bookmap desktop from bookmap.com
+   - Open Bookmap → Settings → Configure Add-ons → Manage Add-ons
+   - Install Python API Add-on (.jar)
+   - Restart Bookmap
+4. Add the Script as Bookmap Addon:
+   - Place institutional_tracker_v12.py into your Bookmap Python folder:
+       F:\Bookmap\Python\   or
+       C:\Users\<you>\AppData\Roaming\Bookmap\Python\
+   - In Bookmap → Settings → Configure Add-ons → Add…
+   - Select Python addon runtime
+   - Choose institutional_tracker_v12.py
+
+
+--- Page 3 ---
+   - Build/Run to generate addon JAR
+   - Enable addon in Configure Add-ons and subscribe to an instrument
+5. Database Setup:
+   - Script auto-creates required SQLite DBs on first run:
+     institutional_trades.db, institutional_patterns.db, institutional_tracker.log
+   - Ensure directory exists (F:\TradingAgent or ~/.bookmap/institutional_tracker)
+Result
+------
+Once active, the addon:
+- Logs institutional activity
+- Saves historical zones
+- Generates JSON playbook alerts (entries, invalidations, targets)
+- Sends Telegram alerts if configured

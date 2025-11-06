@@ -1,0 +1,661 @@
+{
+  "pattern_library_metadata": {
+    "created": "2025-10-29T16:30:00-04:00",
+    "version": "1.0",
+    "sources": [
+      "ICT-Mentorship-Month-1-Notes.pdf",
+      "Order-Flow-Patterns-Big-Reversals.pdf",
+      "Quarterly-Theory.pdf",
+      "Cracking-the-Spoofing-Code.pdf"
+    ],
+    "total_patterns": 15,
+    "fake_move_patterns": 7,
+    "real_move_patterns": 6,
+    "confirmation_patterns": 2
+  },
+
+  "fake_move_patterns": [
+    {
+      "pattern_id": "FAKE_001",
+      "pattern_name": "Expansion Phase (Judas Swing)",
+      "pattern_type": "fake_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [4, 9, 31],
+      "description": "Sharp price movement away from equilibrium that hunts stops and grabs liquidity before reversing. Also called 'Judas Swing' or 'Market Protraction'.",
+      "characteristics": [
+        "Quick movement from equilibrium level",
+        "Reveals Market Maker intended repricing model",
+        "Occurs at specific times (London open, NY open)",
+        "Seeks nearby liquidity before reversing direction",
+        "Micro expansion targeting stop losses"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Price extends beyond previous high/low (old high or old low)",
+          "Sharp price surge (>50 ticks in <5 minutes for NQ)",
+          "Occurs during known liquidity grab windows (3:00-5:00 AM EST London, 9:30-10:00 AM EST NY)",
+          "Movement away from equilibrium price level"
+        ],
+        "supporting": [
+          "Low relative volume for move size",
+          "No institutional absorption confirmation",
+          "Counter to higher timeframe bias",
+          "Targets clean highs/lows (liquidity pools)"
+        ]
+      },
+      "timing": {
+        "typical_occurrence": [
+          "London Open: 3:00-5:00 AM EST",
+          "New York Open: 9:30-10:00 AM EST",
+          "First 30 minutes of any major session"
+        ],
+        "duration": "5-15 minutes",
+        "reversal_timeframe": "15-30 minutes"
+      },
+      "expected_outcome": "Retracement to 50%-61.8% of expansion move within 15-30 minutes",
+      "fake_move_probability": 0.85,
+      "confidence_factors": {
+        "increase_confidence": [
+          "Occurs at exact London/NY open times",
+          "Targets old high/low exactly",
+          "Low volume on expansion",
+          "Counter to quarterly bias"
+        ],
+        "decrease_confidence": [
+          "High volume institutional confirmation",
+          "Aligned with higher timeframe trend",
+          "Market structure break confirmed"
+        ]
+      },
+      "dashboard_signal": {
+        "alert_text": "FAKE MOVE ALERT: Expansion Phase Detected",
+        "recommendation": "DO NOT CHASE - Expect Retracement",
+        "color_code": "RED",
+        "confidence_display": "HIGH (85%)"
+      },
+      "trading_implications": {
+        "avoid": "Chasing the expansion move",
+        "watch_for": "Retracement to orderblock/equilibrium for real entry",
+        "target_retracement": "50%-61.8% Fibonacci retracement level"
+      }
+    },
+    {
+      "pattern_id": "FAKE_002",
+      "pattern_name": "Stop Run (Liquidity Pool Hit)",
+      "pattern_type": "fake_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [13, 17, 18],
+      "description": "Price runs above old highs or below old lows to trigger stop losses, creating liquidity for institutional entry before reversing.",
+      "characteristics": [
+        "Targets old highs (buy stops) or old lows (sell stops)",
+        "Clean highs/lows are primary targets",
+        "Creates liquidity pools for Market Makers",
+        "Brief penetration then quick reversal",
+        "Often precedes significant move in opposite direction"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Price penetrates old high or old low",
+          "Clean high/low present (obvious stop location)",
+          "Quick reversal after penetration (<5 minutes)",
+          "Low volume on penetration"
+        ],
+        "supporting": [
+          "Multiple failed attempts at level before penetration",
+          "News release catalyst",
+          "Occurs during low liquidity periods",
+          "Counter to established trend"
+        ]
+      },
+      "timing": {
+        "typical_occurrence": "Any time, but common during session opens",
+        "duration": "2-10 minutes",
+        "reversal_timeframe": "Immediate to 15 minutes"
+      },
+      "expected_outcome": "Quick reversal with strong momentum in opposite direction",
+      "fake_move_probability": 0.80,
+      "confidence_factors": {
+        "increase_confidence": [
+          "Multiple wicks at level before penetration",
+          "Low liquidity time of day",
+          "Clean obvious high/low",
+          "No follow-through after penetration"
+        ],
+        "decrease_confidence": [
+          "Strong institutional volume on breakout",
+          "Multiple timeframe breakout",
+          "Fundamental catalyst supporting direction"
+        ]
+      },
+      "dashboard_signal": {
+        "alert_text": "FAKE MOVE: Stop Run Detected at [price]",
+        "recommendation": "FADE THE MOVE - Reversal Likely",
+        "color_code": "RED",
+        "confidence_display": "HIGH (80%)"
+      }
+    },
+    {
+      "pattern_id": "FAKE_003",
+      "pattern_name": "Aggressor Exhaustion",
+      "pattern_type": "fake_move",
+      "source_pdf": "Order-Flow-Patterns-Big-Reversals.pdf",
+      "source_pages": ["estimated based on title"],
+      "description": "Aggressive buying/selling momentum fades as price makes new highs/lows, indicating fake move ending and reversal imminent.",
+      "characteristics": [
+        "Price making new extremes",
+        "Volume decreasing on continued movement",
+        "Delta divergence (price up but delta declining)",
+        "Aggressor orders slowing",
+        "Precedes major reversals"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Price making new high/low",
+          "Delta declining while price extending",
+          "Volume decreasing on price movement",
+          "Aggressor order flow slowing"
+        ],
+        "supporting": [
+          "Multiple timeframe overbought/oversold",
+          "Approaching key resistance/support",
+          "Time of day (end of session)",
+          "Lack of new participants"
+        ]
+      },
+      "expected_outcome": "Reversal within 5-20 minutes, often sharp and violent",
+      "fake_move_probability": 0.85,
+      "dashboard_signal": {
+        "alert_text": "FAKE MOVE ENDING: Aggressor Exhaustion",
+        "recommendation": "MOMENTUM FADING - Reversal Imminent",
+        "color_code": "ORANGE",
+        "confidence_display": "VERY HIGH (85%)"
+      }
+    },
+    {
+      "pattern_id": "FAKE_004",
+      "pattern_name": "Spoofing / Fake Liquidity",
+      "pattern_type": "fake_move",
+      "source_pdf": "Cracking-the-Spoofing-Code.pdf",
+      "source_pages": ["estimated"],
+      "description": "Large orders appear in DOM then disappear before execution, creating false impression of support/resistance to manipulate price.",
+      "characteristics": [
+        "Large orders appear then vanish",
+        "Layering of orders to create false depth",
+        "Orders pulled when price approaches",
+        "Repeated pattern at key levels",
+        "Creates fake walls/support/resistance"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Large order appears in Bookmap DOM",
+          "Order cancelled before execution (>3 times)",
+          "Pattern repeats at same level",
+          "Price movement follows spoof direction temporarily"
+        ],
+        "supporting": [
+          "Multiple levels of fake liquidity",
+          "Simultaneous pull of multiple orders",
+          "Small execution relative to displayed size",
+          "Occurs at psychological price levels"
+        ]
+      },
+      "expected_outcome": "Price moves opposite to fake liquidity direction once spoof is pulled",
+      "fake_move_probability": 0.80,
+      "dashboard_signal": {
+        "alert_text": "FAKE LIQUIDITY: Spoofing Detected at [price]",
+        "recommendation": "DO NOT TRUST DISPLAYED LIQUIDITY",
+        "color_code": "RED",
+        "confidence_display": "HIGH (80%)"
+      }
+    },
+    {
+      "pattern_id": "FAKE_005",
+      "pattern_name": "Fake Absorption",
+      "pattern_type": "fake_move",
+      "source_pdf": "Bookmap-Integration-Notes",
+      "source_pages": ["estimated"],
+      "description": "Small lots appearing as large volume absorption without sustained follow-through, designed to trap traders.",
+      "characteristics": [
+        "High absorption significance (>0.8)",
+        "Brief duration (<3 seconds)",
+        "No directional follow-through",
+        "Volume dots disappear quickly",
+        "No sustained price movement"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Absorption significance > 0.8",
+          "Duration < 3 seconds",
+          "No follow-through movement within 10 seconds",
+          "Volume dots disappear from heatmap"
+        ],
+        "supporting": [
+          "Occurs at resistance/support",
+          "Multiple fake absorptions in short time",
+          "Low overall session volume",
+          "Counter to trend"
+        ]
+      },
+      "expected_outcome": "Price continues in original direction, trapping absorption traders",
+      "fake_move_probability": 0.75,
+      "dashboard_signal": {
+        "alert_text": "FAKE ABSORPTION: Short-Lived Volume Spike",
+        "recommendation": "WAIT FOR CONFIRMATION",
+        "color_code": "ORANGE",
+        "confidence_display": "GOOD (75%)"
+      }
+    },
+    {
+      "pattern_id": "FAKE_006",
+      "pattern_name": "Counter-Trend to Quarterly Bias",
+      "pattern_type": "fake_move",
+      "source_pdf": "Quarterly-Theory.pdf",
+      "source_pages": ["estimated"],
+      "description": "Intraday move that contradicts quarterly directional bias, more likely to be stop hunt or short-term reversal.",
+      "characteristics": [
+        "Move against established quarterly bias",
+        "Typically smaller magnitude",
+        "Often targets nearby liquidity",
+        "Lacks institutional volume confirmation",
+        "Temporary in nature"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Quarterly bias established (bullish or bearish)",
+          "Current move opposite to quarterly direction",
+          "Lower timeframe move (1-15 minute)"
+        ],
+        "supporting": [
+          "Targets old high/low",
+          "Occurs during session transitions",
+          "Low relative volume",
+          "Lack of higher timeframe confirmation"
+        ]
+      },
+      "expected_outcome": "Reversal back in direction of quarterly bias within 30-60 minutes",
+      "fake_move_probability": 0.70,
+      "dashboard_signal": {
+        "alert_text": "FAKE MOVE: Counter to Quarterly [BULL/BEAR] Bias",
+        "recommendation": "LIKELY TEMPORARY - Favor Quarterly Direction",
+        "color_code": "YELLOW",
+        "confidence_display": "GOOD (70%)"
+      }
+    },
+    {
+      "pattern_id": "FAKE_007",
+      "pattern_name": "Low Volume Breakout",
+      "pattern_type": "fake_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [9, 30],
+      "description": "Price breaks key level with low relative volume, indicating lack of institutional participation and high fake move probability.",
+      "characteristics": [
+        "Breakout of consolidation or range",
+        "Volume significantly below average",
+        "Lack of aggressor volume",
+        "No absorption confirmation",
+        "Often retraces quickly"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Price breaks consolidation range or key level",
+          "Volume < 50% of recent average",
+          "Low aggressor participation",
+          "No institutional absorption detected"
+        ],
+        "supporting": [
+          "Occurs during low liquidity periods",
+          "News event absent",
+          "Multiple failed breakout attempts prior",
+          "Heatmap shows thin liquidity"
+        ]
+      },
+      "expected_outcome": "Failure and retracement back into range within 15-30 minutes",
+      "fake_move_probability": 0.75,
+      "dashboard_signal": {
+        "alert_text": "FAKE MOVE: Low Volume Breakout",
+        "recommendation": "LIKELY FAILED BREAKOUT",
+        "color_code": "ORANGE",
+        "confidence_display": "GOOD (75%)"
+      }
+    }
+  ],
+
+  "real_move_patterns": [
+    {
+      "pattern_id": "REAL_001",
+      "pattern_name": "Retracement Entry (Institutional Zone)",
+      "pattern_type": "real_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [4, 11, 12, 25, 26],
+      "description": "Price returns inside recently created range to 50%-61.8% Fibonacci retracement, indicating Market Makers repricing to levels not efficiently traded for Fair Value. Prime institutional entry zone.",
+      "characteristics": [
+        "Retracement to 50%-61.8% of prior expansion",
+        "Returns to fair value gaps and liquidity voids",
+        "Market Makers repricing for efficiency",
+        "Discount zone for buys (below 50%)",
+        "Premium zone for sells (above 50%)",
+        "Frames ideal trade setups"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Prior expansion phase identified",
+          "Retracement to 50%-61.8% Fibonacci level",
+          "Fair value gap or liquidity void present",
+          "Orderblock identified at or near equilibrium"
+        ],
+        "supporting": [
+          "Institutional absorption at retracement level",
+          "Iceberg stacking detected",
+          "Market structure intact",
+          "Aligned with quarterly bias",
+          "Volume increasing on reversal"
+        ]
+      },
+      "timing": {
+        "typical_occurrence": "New York Session (9:30 AM - 12:00 PM EST)",
+        "setup_duration": "15-45 minutes",
+        "move_duration": "30-120 minutes"
+      },
+      "expected_outcome": "Strong directional move resuming expansion trend, often exceeds initial expansion range",
+      "real_move_probability": 0.90,
+      "confidence_factors": {
+        "increase_confidence": [
+          "Retracement to 61.8% (optimal entry)",
+          "Institutional absorption confirmed",
+          "Multiple timeframe alignment",
+          "Quarterly bias aligned",
+          "Iceberg stacking present"
+        ],
+        "decrease_confidence": [
+          "Shallow retracement (<38.2%)",
+          "No absorption detected",
+          "Counter to higher timeframe",
+          "Low volume environment"
+        ]
+      },
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE SETUP: Retracement Complete at [price]",
+        "recommendation": "HIGH PROBABILITY ENTRY - Institutional Zone",
+        "color_code": "GREEN",
+        "confidence_display": "VERY HIGH (90%)"
+      },
+      "trading_implications": {
+        "entry_zone": "50%-61.8% retracement (optimal at 61.8%)",
+        "stop_loss": "Beyond fair value gap or orderblock",
+        "target": "Expansion high/low + extension (127%-162%)",
+        "risk_reward": "Minimum 1:3"
+      }
+    },
+    {
+      "pattern_id": "REAL_002",
+      "pattern_name": "Market Structure Break + Reversal",
+      "pattern_type": "real_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [13, 14],
+      "description": "Price reverses direction after running liquidity pools at old highs/lows, indicating Market Makers have collected stops and significant move should unfold in new direction.",
+      "characteristics": [
+        "Runs liquidity at old high or low",
+        "Clear market structure break",
+        "Strong institutional volume",
+        "Multiple timeframe confirmation",
+        "Sustained momentum in new direction"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Liquidity pool targeted (old high or low)",
+          "Clean break of market structure",
+          "Institutional volume surge",
+          "Sustained price movement (>10 minutes)"
+        ],
+        "supporting": [
+          "Higher timeframe structure aligned",
+          "Absorption at reversal point",
+          "Iceberg accumulation/distribution",
+          "Quarterly bias aligned",
+          "Delta strongly in favor of direction"
+        ]
+      },
+      "expected_outcome": "Significant directional move lasting 1-4 hours, often entire session",
+      "real_move_probability": 0.92,
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE CONFIRMED: Structure Break + Reversal",
+        "recommendation": "STRONG DIRECTIONAL MOVE - Entry Signal",
+        "color_code": "DARK_GREEN",
+        "confidence_display": "VERY HIGH (92%)"
+      }
+    },
+    {
+      "pattern_id": "REAL_003",
+      "pattern_name": "Iceberg Stacking (Hidden Accumulation)",
+      "pattern_type": "real_move",
+      "source_pdf": "Order-Flow-Patterns-Big-Reversals.pdf",
+      "source_pages": ["estimated from title"],
+      "description": "Large hidden orders detected via MBO data, consistently absorbing supply/demand at price level, indicating institutional accumulation/distribution before strong move.",
+      "characteristics": [
+        "Hidden orders detected (not visible in DOM)",
+        "Consistent absorption despite aggressive hitting/lifting",
+        "Price holds stable at level",
+        "Icebergs stacking at multiple levels",
+        "Precedes strong directional moves"
+      ],
+      "detection_criteria": {
+        "required": [
+          "MBO data shows hidden orders (order size > executed size)",
+          "Price stability despite aggressive volume (>3 minutes)",
+          "Multiple iceberg levels detected",
+          "Consistent absorption pattern"
+        ],
+        "supporting": [
+          "Increasing aggressor volume absorbed",
+          "Heatmap shows persistent volume dots",
+          "Occurs at key technical levels",
+          "Time of day: institutional hours (9:30 AM - 3:00 PM EST)"
+        ]
+      },
+      "expected_outcome": "Strong directional move within 15-45 minutes, often sharp and sustained",
+      "real_move_probability": 0.88,
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE BUILDING: Iceberg Stacking at [price]",
+        "recommendation": "INSTITUTIONAL ACCUMULATION - High Probability Move Incoming",
+        "color_code": "GREEN",
+        "confidence_display": "VERY HIGH (88%)"
+      }
+    },
+    {
+      "pattern_id": "REAL_004",
+      "pattern_name": "Real Absorption (Institutional Volume)",
+      "pattern_type": "real_move",
+      "source_pdf": "Bookmap-Integration-Notes",
+      "source_pages": ["estimated"],
+      "description": "Large sustained volume absorption with follow-through directional movement, indicating genuine institutional participation.",
+      "characteristics": [
+        "Absorption significance > 0.8",
+        "Duration > 5 seconds",
+        "Followed by directional move",
+        "Volume dots persist on heatmap",
+        "Multiple price levels involved"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Absorption significance > 0.8",
+          "Duration > 5 seconds",
+          "Directional movement within 10 seconds",
+          "Volume dots persist on Bookmap heatmap"
+        ],
+        "supporting": [
+          "Multiple absorption events at nearby levels",
+          "Increasing volume on continuation",
+          "Aligned with trend direction",
+          "Occurs during institutional hours",
+          "Quarterly bias aligned"
+        ]
+      },
+      "expected_outcome": "Sustained directional move for 20-60 minutes",
+      "real_move_probability": 0.85,
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE: Institutional Absorption Confirmed",
+        "recommendation": "FOLLOW INSTITUTIONAL FLOW",
+        "color_code": "GREEN",
+        "confidence_display": "HIGH (85%)"
+      }
+    },
+    {
+      "pattern_id": "REAL_005",
+      "pattern_name": "Aligned with Quarterly Bias",
+      "pattern_type": "real_move",
+      "source_pdf": "Quarterly-Theory.pdf",
+      "source_pages": ["estimated"],
+      "description": "Intraday move aligned with established quarterly directional bias, significantly higher probability of sustained institutional participation.",
+      "characteristics": [
+        "Move in direction of quarterly bias",
+        "Higher institutional participation",
+        "Larger magnitude moves",
+        "Multiple timeframe alignment",
+        "Sustained momentum"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Quarterly bias established (bullish or bearish)",
+          "Current move aligned with quarterly direction",
+          "Higher volume than counter-trend moves"
+        ],
+        "supporting": [
+          "Market structure breaks in bias direction",
+          "Absorption confirms direction",
+          "Higher timeframes aligned",
+          "Economic fundamentals support bias"
+        ]
+      },
+      "expected_outcome": "Extended move with higher probability of targets being reached",
+      "real_move_probability": 0.80,
+      "confidence_modifier": "+0.20 to any pattern when aligned",
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE: Aligned with Quarterly [BULL/BEAR] Bias",
+        "recommendation": "FAVOR THIS DIRECTION - Institutional Flow",
+        "color_code": "GREEN",
+        "confidence_display": "HIGH (80%)"
+      }
+    },
+    {
+      "pattern_id": "REAL_006",
+      "pattern_name": "Low Resistance Liquidity Run",
+      "pattern_type": "real_move",
+      "source_pdf": "ICT-Mentorship-Month-1-Notes.pdf",
+      "source_pages": [30],
+      "description": "Price has clear path to obvious liquidity pools with minimal resistance, often triggered by news release, high probability of reaching target.",
+      "characteristics": [
+        "Clear path to liquidity pool",
+        "Minimal resistance levels in between",
+        "Often triggered by economic news",
+        "Sharp and sustained movement",
+        "High institutional participation"
+      ],
+      "detection_criteria": {
+        "required": [
+          "Obvious liquidity pool identified (old high/low)",
+          "Minimal resistance in price path",
+          "Strong directional momentum",
+          "Volume increasing on move"
+        ],
+        "supporting": [
+          "News catalyst present",
+          "Multiple timeframe breakout",
+          "Aligned with quarterly bias",
+          "Institutional hours (9:30 AM - 3:00 PM EST)"
+        ]
+      },
+      "expected_outcome": "Sharp move directly to liquidity target, minimal retracements",
+      "real_move_probability": 0.85,
+      "dashboard_signal": {
+        "alert_text": "REAL MOVE: Low Resistance Liquidity Run",
+        "recommendation": "HIGH PROBABILITY TARGET REACHED",
+        "color_code": "GREEN",
+        "confidence_display": "HIGH (85%)"
+      }
+    }
+  ],
+
+  "confirmation_patterns": [
+    {
+      "pattern_id": "CONF_001",
+      "pattern_name": "Multiple Timeframe Alignment",
+      "pattern_type": "confirmation",
+      "description": "Multiple timeframes (15m, 1H, 4H, Daily) all showing same directional bias and structure breaks.",
+      "confidence_modifier": "+0.15 to any pattern",
+      "detection_criteria": [
+        "15-minute structure aligned",
+        "1-hour structure aligned",
+        "4-hour structure aligned",
+        "Daily structure aligned"
+      ]
+    },
+    {
+      "pattern_id": "CONF_002",
+      "pattern_name": "Delta + Volume Confirmation",
+      "pattern_type": "confirmation",
+      "description": "Strong delta in favor of direction combined with increasing volume, confirms institutional participation.",
+      "confidence_modifier": "+0.10 to real move patterns",
+      "detection_criteria": [
+        "Delta strongly positive (for longs) or negative (for shorts)",
+        "Volume increasing on directional moves",
+        "Aggressor side matches direction",
+        "Cumulative delta trending with price"
+      ]
+    }
+  ],
+
+  "pattern_combinations": [
+    {
+      "combination_id": "COMBO_001",
+      "primary_pattern": "FAKE_001 (Expansion Phase)",
+      "secondary_pattern": "REAL_001 (Retracement Entry)",
+      "relationship": "follows",
+      "description": "Fake move expansion followed by retracement to real entry zone",
+      "combined_confidence": 0.95,
+      "trading_strategy": "Wait for expansion, enter on retracement to 61.8%"
+    },
+    {
+      "combination_id": "COMBO_002",
+      "primary_pattern": "FAKE_002 (Stop Run)",
+      "secondary_pattern": "REAL_002 (Market Structure Break)",
+      "relationship": "precedes",
+      "description": "Stop run creates liquidity for institutional entry and structure break",
+      "combined_confidence": 0.93,
+      "trading_strategy": "Fade stop run, enter on structure break confirmation"
+    },
+    {
+      "combination_id": "COMBO_003",
+      "primary_pattern": "FAKE_003 (Aggressor Exhaustion)",
+      "secondary_pattern": "REAL_003 (Iceberg Stacking)",
+      "relationship": "transitions_to",
+      "description": "Exhaustion of one direction followed by hidden accumulation in opposite",
+      "combined_confidence": 0.90,
+      "trading_strategy": "Exit on exhaustion, enter when icebergs stack in opposite direction"
+    },
+    {
+      "combination_id": "COMBO_004",
+      "primary_pattern": "REAL_001 (Retracement Entry)",
+      "secondary_pattern": "REAL_005 (Quarterly Bias Aligned)",
+      "relationship": "confirms",
+      "description": "Retracement entry in direction of quarterly bias",
+      "combined_confidence": 0.97,
+      "trading_strategy": "Highest probability setup - enter aggressively with full size"
+    }
+  ],
+
+  "usage_notes": {
+    "pattern_matching_workflow": [
+      "1. Identify current market phase (expansion, retracement, reversal, consolidation)",
+      "2. Check for fake move patterns first (expansion, stop run, exhaustion)",
+      "3. If fake move detected, wait for confirmation and retracement",
+      "4. Look for real move setup patterns (retracement entry, iceberg stacking)",
+      "5. Validate with confirmation patterns (MTF alignment, delta/volume)",
+      "6. Calculate combined confidence score",
+      "7. Generate dashboard signal with recommendation"
+    ],
+    "confidence_scoring_algorithm": "Base pattern probability + confirmation modifiers + quarterly bias modifier - contra-indicators",
+    "minimum_confidence_for_signal": 0.70,
+    "high_confidence_threshold": 0.85,
+    "dashboard_integration": "Real-time pattern matching on each absorption/stops/icebergs event"
+  }
+}

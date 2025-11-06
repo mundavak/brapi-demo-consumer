@@ -1,0 +1,244 @@
+{
+  "database_info": {
+    "database_name": "trading_data",
+    "database_type": "PostgreSQL 17 with TimescaleDB extension",
+    "data_directory": "F:/TradingAgent/Databases",
+    "log_directory": "F:/TradingAgent/Databases/log",
+    "hypertable_enabled": true
+  },
+  "table_name": "absorption_events",
+  "table_type": "TimescaleDB Hypertable",
+  "schema": {
+    "columns": [
+      {
+        "name": "timestamp",
+        "type": "timestamp with time zone",
+        "nullable": false,
+        "description": "Event timestamp - part of primary key",
+        "conversion": "to_timestamp(nanoseconds / 1_000_000_000.0)"
+      },
+      {
+        "name": "symbol",
+        "type": "character varying(20)",
+        "nullable": false,
+        "description": "Trading symbol (e.g., MNQZ5)"
+      },
+      {
+        "name": "event_type",
+        "type": "character varying(20)",
+        "nullable": false,
+        "description": "Type of event: ABSORPTION or SWEEP",
+        "constraint": "CHECK (event_type IN ('ABSORPTION', 'SWEEP'))"
+      },
+      {
+        "name": "side",
+        "type": "character varying(4)",
+        "nullable": false,
+        "description": "Trade side: BUY or SELL",
+        "constraint": "CHECK (side IN ('BUY', 'SELL'))"
+      },
+      {
+        "name": "price",
+        "type": "double precision",
+        "nullable": false,
+        "description": "Trade price in index points (NQ: raw tick * 0.25)",
+        "example": 26251.0,
+        "critical_note": "MUST be converted: raw Bookmap price * 0.25"
+      },
+      {
+        "name": "absorbed_volume",
+        "type": "bigint",
+        "nullable": false,
+        "default": 0,
+        "description": "Volume absorbed at this level"
+      },
+      {
+        "name": "aggressor_volume",
+        "type": "bigint",
+        "nullable": false,
+        "description": "Volume from aggressive orders"
+      },
+      {
+        "name": "liquidity_removed",
+        "type": "bigint",
+        "nullable": false,
+        "default": 0,
+        "description": "Total liquidity removed"
+      },
+      {
+        "name": "absorption_ratio",
+        "type": "double precision",
+        "nullable": true,
+        "description": "Ratio of absorbed to total volume (0.0 to 1.0)",
+        "constraint": "CHECK (absorption_ratio >= 0 AND absorption_ratio <= 1)"
+      },
+      {
+        "name": "imbalance_ratio",
+        "type": "double precision",
+        "nullable": true,
+        "description": "Buy/sell imbalance ratio (0.0 to 1.0)",
+        "constraint": "CHECK (imbalance_ratio >= 0 AND imbalance_ratio <= 1)"
+      },
+      {
+        "name": "session_id",
+        "type": "character varying(100)",
+        "nullable": false,
+        "description": "Unique session identifier for grouping events"
+      },
+      {
+        "name": "cbdr_window",
+        "type": "character varying(20)",
+        "nullable": true,
+        "description": "CBDR window type: REGULAR, ASIAN, LONDON, NYC"
+      },
+      {
+        "name": "is_in_cbdr",
+        "type": "boolean",
+        "nullable": false,
+        "default": false,
+        "description": "Whether event occurred during CBDR period"
+      },
+      {
+        "name": "significance_score",
+        "type": "double precision",
+        "nullable": false,
+        "description": "Calculated significance (0.0 to 1.0)",
+        "constraint": "CHECK (significance_score >= 0 AND significance_score <= 1)",
+        "formula": "(chainRatio * 0.6) + (volumeScore * 0.4)"
+      },
+      {
+        "name": "metadata",
+        "type": "jsonb",
+        "nullable": true,
+        "description": "Additional event metadata (maxChainSize, rawPrice, etc.)"
+      }
+    ],
+    "primary_key": {
+      "columns": ["timestamp", "symbol", "event_type", "price"],
+      "name": "absorption_events_pkey",
+      "description": "Composite primary key ensuring unique events"
+    },
+    "indexes": [
+      {
+        "name": "absorption_events_timestamp_idx",
+        "type": "btree",
+        "columns": ["timestamp DESC"],
+        "description": "Time-series queries"
+      },
+      {
+        "name": "idx_absorption_symbol_time",
+        "type": "btree",
+        "columns": ["symbol", "timestamp DESC"],
+        "description": "Symbol-specific time-series queries"
+      },
+      {
+        "name": "idx_absorption_event_type",
+        "type": "btree",
+        "columns": ["event_type", "timestamp DESC"],
+        "description": "Filter by absorption vs sweep"
+      },
+      {
+        "name": "idx_absorption_significance",
+        "type": "btree",
+        "columns": ["symbol", "significance_score DESC", "timestamp DESC"],
+        "description": "Top significant events per symbol"
+      },
+      {
+        "name": "idx_absorption_session",
+        "type": "btree",
+        "columns": ["session_id", "timestamp DESC"],
+        "description": "Session-based queries"
+      },
+      {
+        "name": "idx_absorption_cbdr",
+        "type": "btree (partial)",
+        "columns": ["symbol", "cbdr_window", "timestamp DESC"],
+        "where": "cbdr_window IS NOT NULL",
+        "description": "CBDR window analysis"
+      },
+      {
+        "name": "idx_absorption_in_cbdr",
+        "type": "btree (partial)",
+        "columns": ["symbol", "is_in_cbdr", "timestamp DESC"],
+        "where": "is_in_cbdr = true",
+        "description": "Events during CBDR periods"
+      }
+    ],
+    "constraints": [
+      {
+        "name": "absorption_events_event_type_check",
+        "type": "CHECK",
+        "condition": "event_type IN ('ABSORPTION', 'SWEEP')"
+      },
+      {
+        "name": "absorption_events_side_check",
+        "type": "CHECK",
+        "condition": "side IN ('BUY', 'SELL')"
+      },
+      {
+        "name": "absorption_events_absorption_ratio_check",
+        "type": "CHECK",
+        "condition": "absorption_ratio >= 0 AND absorption_ratio <= 1"
+      },
+      {
+        "name": "absorption_events_imbalance_ratio_check",
+        "type": "CHECK",
+        "condition": "imbalance_ratio >= 0 AND imbalance_ratio <= 1"
+      },
+      {
+        "name": "absorption_events_significance_score_check",
+        "type": "CHECK",
+        "condition": "significance_score >= 0 AND significance_score <= 1"
+      }
+    ],
+    "triggers": [
+      {
+        "name": "ts_insert_blocker",
+        "timing": "BEFORE INSERT",
+        "for_each": "ROW",
+        "function": "_timescaledb_functions.insert_blocker()",
+        "description": "TimescaleDB internal trigger for chunk management"
+      },
+      {
+        "name": "ts_cagg_invalidation_trigger",
+        "timing": "AFTER INSERT OR DELETE OR UPDATE",
+        "for_each": "ROW",
+        "function": "_timescaledb_functions.continuous_agg_invalidation_trigger('7')",
+        "description": "TimescaleDB continuous aggregate invalidation"
+      }
+    ]
+  },
+  "timescaledb_configuration": {
+    "is_hypertable": true,
+    "time_column": "timestamp",
+    "chunk_interval": "Not queried - default TimescaleDB settings",
+    "compression": "Not configured",
+    "retention_policy": "Not configured"
+  },
+  "current_data": {
+    "record_count": 0,
+    "reason": "All inserts failing due to wrong timestamp conversion (1969-12-31 epoch dates)",
+    "error_pattern": "duplicate key value violates unique constraint",
+    "example_error": "Key (timestamp, symbol, event_type, price)=(1969-12-31 19:29:21.762066-05, MNQZ5, ABSORPTION, 104954) already exists"
+  },
+  "critical_issues": [
+    {
+      "issue": "Timestamp conversion error",
+      "severity": "CRITICAL",
+      "description": "event.timestamp = (long) (timestamp * 1000) converts seconds to milliseconds, but TimescaleDBManager expects nanoseconds",
+      "result": "All timestamps become 1969-12-31 (Unix epoch overflow)",
+      "fix": "Use timestampNanos directly: event.timestamp = timestampNanos",
+      "code_location": "AbsorptionConsumer.java:295",
+      "status": "FIXED in build"
+    },
+    {
+      "issue": "Price not converted to index points",
+      "severity": "CRITICAL",
+      "description": "Raw Bookmap tick prices stored instead of 0.25-converted values",
+      "example": "Storing 104954 instead of 26238.5",
+      "fix": "double convertedPrice = price * 0.25; dbEvent.price = convertedPrice",
+      "code_location": "AbsorptionConsumer.java:298",
+      "status": "FIXED in build"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+PDF Extraction Summary - 2025-10-28 14:32:16.081951
+================================================================================
+
+Total PDFs: 39
+Successful: 0
+Failed: 39
+
+
+By Category:
+
+
+Failed Extractions:
+  - 230271751-Trading-With-Depth-of-Market.pdf: document closed
+  - 372759727-The-Python-Manual.pdf: document closed
+  - 373723507-Bookmap-User-Guide-5-0.pdf: document closed
+  - 377235419-Futures-Trading.pdf: document closed
+  - 414548356-Ubuntu-Overview.pdf: document closed
+  - 430196357-Bookmap-User-Guide-6-1.pdf: document closed
+  - 433558502-Confirming-Levels-With-Order-Flow.pdf: document closed
+  - 435949428-The-Ultimate-Guide-To-Order-Flow-Trading.pdf: document closed
+  - 443878056-ICT-Mentorship-Month-1-Notes.pdf: document closed
+  - 447213505-Nasdaq-15h30-Strategy-1.pdf: document closed
+  - 477771225-FXGOAT-NAS100-Strategy-pdf.pdf: document closed
+  - 484567392-traderunner-pro-A-Complete-BookMap-Review-pdf.pdf: document closed
+  - 491996508-A-NASDAQ-100-Timing-Strategy.pdf: document closed
+  - 618889627-Infinity-Scalping.pdf: document closed
+  - 698793566-Institutional-Order-Flow-Trading.pdf: document closed
+  - 733581123-Smc-Trading-Strategy.pdf: document closed
+  - 753252012-Ttrades-Notes-Merged.pdf: document closed
+  - 789789011-Bookmap-Masterclass.pdf: document closed
+  - Bookmap API _ Bookmap Knowledge Base.pdf: document closed
+  - Cracking the Spoofing Code_Inside the World of Market Manipulation.pdf: document closed
+  - How to Detect Spoofing in Trading _ Deceptive Trading Practices.pdf: document closed
+  - How to Migrate Your Data to Timescale (3 Ways) _ TigerData.pdf: document closed
+  - how-to-manage-a-redis-database.pdf: document closed
+  - How_to_use_analyze_database_trades_v4.pdf: document closed
+  - institutional_tracker_v12_setup_guide.pdf: document closed
+  - java-developers-guide.pdf: document closed
+  - javascript.pdf: document closed
+  - Market_Behavior_Emotions_Patterns.pdf: document closed
+  - MS Word MCP server for AI agents.pdf: document closed
+  - Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf: document closed
+  - ORDER-FLOW-Trading-Setups-Golden-ticket-edition-13.5.2024-1.pdf: document closed
+  - Pine Script User Manual PDF.pdf: document closed
+  - postgresql-16-A4.pdf: document closed
+  - powershell-scripting-powershell-7.5.pdf: document closed
+  - SQLite.pdf: document closed
+  - Stops and Icebergs_ How to Detect Hidden Orders Using MBO Data.pdf: document closed
+  - TimescaleDB_Starter_Guide.pdf: document closed
+  - VOLUME-PROFILE-The-insiders-guide-to-trading-golden-ticket-edition-13.5.2024.pdf: document closed
+  - What Redis TimescaleDB Actually Does and When to Use It.pdf: document closed

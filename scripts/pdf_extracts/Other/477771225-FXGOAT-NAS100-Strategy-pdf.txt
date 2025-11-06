@@ -1,0 +1,514 @@
+Source: 477771225-FXGOAT-NAS100-Strategy-pdf.pdf
+Pages: 29
+Characters: 10903
+Processing Time: 0.02s
+================================================================================
+
+--- Page 1 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Kwethemba Mthethwa 
+@da_almighty_jaguar 
+NASDAQ TRADING STRATEGY 
+
+
+--- Page 2 ---
+1. What is NASDAQ? 
+The Nasdaq 100, is also best known as the NAS100, USTEC, Nasdaq 100 index, or 
+USTEC100, is a market capitalization system which features more than 100 of the largest 
+publicly-traded non-financial businesses on the Nasdaq composite index namely Google, 
+Facebook, Apple, Microsoft, Amazon, etc, it is a global electronic market place used for 
+buying and selling securities as well as benchmark index for technology stocks, it 
+ 
+2.  The naming of NASDAQ differs from a broker to another, other 
+famous names for it are:  
+ 
+ 
+US100 
+NASDAQ100 
+US100CASH 
+ 
+ 
+3. Before we jump into different strategies of trading NASDAQ, it is 
+cardinal that we take note of the following tips about NASDAQ 
+trading 
+ 
+1. When we experience positivity on stocks, NASDAQ will also give positive results, 
+meaning when stocks are bullish, NASDAQ will also be bullish. 
+ 
+2. When we experience negativity on stocks, MASDAQ will also give negative outcomes, 
+meaning when stocks are bearish, NASDAQ will also be bearish. 
+(Stocks refers to the 100 of the largest publicly-traded non-financial businesses) 
+ 
+3. According to the South African Time Stocks opens at 16h30, this means that high 
+volatility can be expected to take place on NASDAQ at this time, hence we always 
+experience high movements on NASDAQ at these times between 16h30 and 17h00 
+ 
+4. It is important that one masters price action, which also includes support and 
+resistance, double top ( M- formation), triple top, Consolidations, Double bottom ( W- 
+formation) this will help you master break outs, in that way you will never go wrong 
+when trading NASDAQ 
+ 
+ 
+ 
+4. Recommended brokers for trading NASDAQ 
+ 
+ 
+1. JP Markets  
+2. Globex360  
+3. Avatrade 
+4. IC Markets  
+5. Oanda 
+
+
+--- Page 3 ---
+ 
+5. NASDAQ Trading strategies  
+ 
+1. V – PATTERN AND SNVERSE 
+2. Z – PATTERN 
+3. SUPPORT AND RESSSTANCE 
+ 
+FOLLOW THE RULES OF THSS STRATEGY AND YOU SHALL NEVER GO 
+WRONG 
+ 
+ 
+Requirements  
+ 
+1. Broker that offers NASDAQ. 
+2. Leverage 1.500 not more than. 
+3. Equity of about $500 and above 
+4. Take trades on 15 Minutes or more 
+ 
+1. V Pattern and Inverse  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+--- Page 4 ---
+V – PATTERN AND SNVERSE RULES 
+ 
+ 
+This is something you will need to apply each and every day. 
+ 
+The Science behind the strategy is waiting for NASDAQ to pick or choose 
+a direction for the day, then wait for it to come back to retest or to respect 
+the previous low or high. 
+ 
+It is always important to mark your previous low/high and weight for the price to 
+come and retest before moving up/down. 
+ 
+Always weight for candles to rejects before taking any trades. 
+ 
+Buy or sell on the retest because NASDAQ always respects its previous 
+low/high. 
+ 
+If the price respects the previous low/high but not forming a V- pattern or an 
+inverse thereof, that set-up is invalid. 
+ 
+ENTRY RULES 
+ 
+Enter on the retest. 
+ 
+Always target previous highs and lows for take profit and stop loss. 
+ 
+Let your stop loss be 5 points away from your previous support or residence level 
+depending on whether you are on a bearish or a bullish direction 
+ 
+EXAMPLE: 
+
+
+--- Page 5 ---
+ 
+
+
+--- Page 6 ---
+ 
+ 
+
+
+--- Page 7 ---
+Z – PATTERN 
+ 
+ 
+ 
+ 
+ 
+Z – PATTERN RULES 
+ 
+Wait for NASDAQ to pick a direction for  a day and then reverse forming a V – 
+shape (inverse) and then complete the Z - pattern. 
+ 
+As it reverses It will respect the previous low/high and shot up/down completing 
+the pattern. 
+ 
+Wait for it to go up/down to respect the previous low/high before taking 
+trades. 
+ 
+NASDAQ has a tendency of packing direction and the reverse to respect the 
+previous low/high before moving up/down till the following day. 
+ENTRY RULES 
+ 
+Wait for it to pick a direction and show rejecting candles before take trades 
+ 
+buy/sell immediately after retesting the previous high or low. 
+
+
+--- Page 8 ---
+EXAMPLES: 
+ 
+ 
+ 
+ 
+ 
+
+
+--- Page 9 ---
+ 
+NB: ALWAYS MARK YOUR PREVSOUS LOWS/HIGHS 
+ 
+ 
+Previous high respected by price : 
+ 
+ 
+ENTRY 
+ 
+ 
+First thing you do is to mark your previous high. 
+ 
+Wait for the price to retest on the previous high. 
+ 
+Place your sell order and ride it down. 
+
+
+--- Page 10 ---
+EXAMPLE : 
+ 
+ 
+ 
+
+
+--- Page 11 ---
+PREVSOUS LOW RESPECTED BY PRICE: 
+ 
+ 
+ENTRY 
+ 
+ 
+First thing you do is to mark your previous low. 
+ 
+Wait for the price to retest on the previous low. 
+ 
+Place your buy order and ride it up. 
+
+
+--- Page 12 ---
+EXAMPLE : 
+ 
+ 
+ 
+ 
+ 
+NB: NASDAQ RETRACE A LOT SO ALWAYS USE STOP LOSS, TO AVOID 
+BLOWING ACCOUNTS IN CASE THE MARKET GOES AGAINST YOU. 
+
+
+--- Page 13 ---
+CONFIRMATION 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(a)  Bearish Reversal Pattern, may be black or white, colour doesn’t matter 
+but location 
+A long upper shadow is at least twice of the real body. 
+Has a small Lower shadow or not at all. 
+A Shadow formed represent higher prices rejection. 
+A Black or Red Shooting Star is more bearish than a White or Green one. 
+The Price will usually trade bellow the real body, therefore it is important to put 
+our Stop Loss few pips above upper shadow. 
+  We look for them at Resistance Level to Sell. 
+ 
+(b) BULLSSH REVERSAL 
+ 
+Bullish single candle reversal pattern. 
+Market ideally gaps down to a hammer candle. 
+Colour may be either red or green. 
+Lower shadow is at least twice of the real body. 
+St has a small upper shadow or no shadow at all. 
+A white hammer is more bullish than a black one, due to the bulls ability to 
+force price close above the opening. 
+  The price usually trades above the hammer making us put our stop a few pips 
+bellow the tail or wick. 
+WE LOOK FOR THEM AT SUPPORT TO GO LONG 
+
+
+--- Page 14 ---
+SUPPORT AND RESSSTANCE 
+ 
+Support and resistance is one of the most widely used concepts in trading, 
+approximately all price action traders depend on it, as one believes in support and 
+resistance, if the market may make them vanish, I for sure will be leaving Forex 
+trading. Strangely enough, everyone seems to have their own idea on how you 
+should measure support and resistance. 
+ 
+ 
+ 
+ 
+ 
+ 
+ When the forex market moves up and then pull back, the highest point reached 
+before pulled back is now resistance. 
+ As the market continues up against lowest point reached before it started back 
+is now support. 
+ 
+Think of support and resistance as you are playing a ball in a garage, what happens if 
+the ball hits the wall? St goes and hits opposite wall right, think of it as a you’re playing 
+pool and you see a white ball moving, it hits that side, it then comes back and hit this 
+side but if the applied force was too strong we see the white ball jump the walls of the 
+pool, this means that we cannot be in one range of support and resistance. 
+ 
+S and R are areas where the market or price turn, resistance is a peak and 
+support is a trough. 
+
+
+--- Page 15 ---
+HERE’S SOME EXAMPLES : 
+ 
+
+
+--- Page 16 ---
+ANOTHER EXAMPLE : 
+ 
+ 
+ 
+ENTRY RULES 
+We buy at support 
+We sell at resistance 
+We look for rejecting candles at R&S before take trades. 
+
+
+--- Page 17 ---
+CANDLES TO LOOK FOR : 
+ 
+NAMES 
+SHAPES 
+DOJS 
+ 
+Engulfing 
+pattern 
+ 
+SHOOTSNG STAR 
+/HAMMER/PSNBAR 
+ 
+MORNSNG STAR 
+ 
+PSERCSNG 
+PATTERN 
+ 
+ 
+ 
+FOR MORE CANDLES PLEASE STUDY PRSCE ACTSON. 
+
+
+--- Page 18 ---
+ 
+
+
+--- Page 19 ---
+You have the key, unlock (do something) your wealth, no one will do it for you, put in 
+the hours, put in the effort and you will be rewarded. S would’ve never notice what S 
+have brought to you if S didn’t put in the effort and S want you to do the same, the world is 
+governed by principles and it rewards those who work. 
+ 
+ 
+ 
+
+
+--- Page 20 ---
+Flat Channel  
+Resistance and support do not change 
+So you will buy at short and sell at resistance until a break 
+out is made Example of Flat channel 
+ 
+When a break out happens for example when resistance breaks the old resistance 
+will become our new support when support breaks out the old support becomes 
+our new resistance 
+ 
+Raising Channel  
+Example 
+ 
+
+
+--- Page 21 ---
+Example 
+ 
+ 
+
+
+--- Page 22 ---
+Buy at support and sell at resistance when a breaks occurs on a raising channel the 
+market will form a retracement back lower of the market 
+Example 
+ 
+Example 
+ 
+ 
+FALLING CHANNEL 
+ 
+ 
+ 
+ 
+ 
+ 
+When a support occurs the market will likely retrace back to the higher point hence it’s 
+a down trend we call it reversal 
+Falling and raising channel they are the mave channel they opposite with each other 
+
+
+--- Page 23 ---
+Symmetrical triangle 
+On this channel support and resistance start to become smaller when the triangle 
+starts to become smaller wait for a break out occurs go the trend if it breaks out at 
+support sell it when it breaks out at resistance buy it 
+ 
+Example  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+--- Page 24 ---
+EXAMPLE OF A BRERAK OUT ON Symmetrical triangle 
+ 
+ 
+ 
+Ascending channel 
+Here resistance does not change only support that start to become smaller until a 
+break occurs 
+ 
+ 
+Example of Ascending channel 
+ 
+ 
+ 
+NB remember when the triangle starts to become smaller wait for break out 
+
+
+--- Page 25 ---
+Example on how to trade a breaks out 
+ 
+ 
+5 Decending channel 
+ 
+ 
+ 
+Ascending channel and Descending channel is the same thing just differ because 
+on ascending channel resistance doesn’t change than on deciding channel support 
+doesn’t change 
+
+
+--- Page 26 ---
+Candlestick formation 
+When we trade the candlesticks it plays a very important role on support and 
+resistance 
+ 
+ 
+Candlestick of buy signal confirmation (bullish pin Bar) 
+ 
+ 
+Candlestick of sell signal confirmation (Bearish pin Bar) 
+ 
+
+
+--- Page 27 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Contact details 
+ 
+ 
+ 
+ 
+@da_almighty_jaguar 
+ 
+ 
+ 
+          +27 6192 84 753  
+ 
+ 
+🐆Jaguar Premium Forex Signals🐆 
+ 
+VIP Channel Price: 
+* 3 Months:  $135🔥           
+* 1 Month:  $70 🔥          
+* 1 Week :  $45 🔥 
+ 
+NAS100 and Vix Premium Signals  
+ 
+* 1 month : $80 
+* I week : $40 
+* 3 months : $200 
+ 
+VIP DETAILS📈📉 
+> 85%-90% Winning Accurecy  
+> 3-5 Signals A Day. 
+>1000-2000 Pips Per Mounth 
+> 2-3 T.Ps(TakeProfits)Pre Trade 
+>Live Support From 10:00-16:00 
+
+
+--- Page 28 ---
+>Free Market Chart Analysis 
+>Partime Free Zoom Class 
+ 
+Contact admin to get this  exclusive offer 👇👇 
+             Contact the Admin at @gfdfjk 
+ 
+Join the free Jaguar FX Signals Group at  
+https://t.me/jaguarfxsignals 
+ 
+You can also WhatsApp or iMassage 
++27619284753  
+ 
+Capitec | Account Number 1554536055 Capitec  
+Account Holder KST MTHETHWA  
+Cell phone numbers 0619284753 
+Standard Bank Instant Money | 0619284753 
+FNB Account Holder | Kwethemba S T Mthethwa 
+ Account No| 62830608024 
+PayPal | https://www.paypal.me/mthethwakwethemba 
+Skrill | mthethwakwethemba@gmail.com  
+Skrill ID | 119445467 
+NETELLER - mthethwakwethemba@gmail.com 
+Block Chain - 18CaaTw1bi5Ver5S2fS2RQynjj7Zg3GWCa 
+🐆🐆🐆🐆🐆🐆🐆🐆🐆🐆 
+Follow: @da_almighty_jaguar 
+ 
+
+
+--- Page 29 ---

@@ -1,0 +1,121 @@
+Source: 447213505-Nasdaq-15h30-Strategy-1.pdf
+Pages: 4
+Characters: 4786
+Processing Time: 0.01s
+================================================================================
+
+--- Page 1 ---
+                  🦍Nasdaq 15:30pm Strategy🦍
+            
+             FACTS ABOUT NASDAQ INDICE
+What Is Nasdaq?
+The Nasdaq Stock Market is an American stock exchange. It is 
+the second-largest exchange in the world by market 
+capitalization, It is a broad-based index including more than 
+3,000 companies, many of which are in the high-tech industry.
+Market Cap
+*$10 Trillion
+Number Of Listings
+*3 321(Carrying Approximately 1.8 Billion Trades Per Day)
+Why Is Nasdaq Important?
+NASDAQ has a very important role to play in global as well as 
+local economy. In the U.S. alone, it is the single most trusted 
+ground for any company to list its shares on. All major global 
+conglomerates have their stocks listed on NASDAQ.
+What Causes Stock Price Change?
+By this we mean that share prices change because of supply 
+and demand. If more people want to buy a stock (demand) 
+than sell it (supply), then the price moves up. Conversely, if 
+more people wanted to sell a stock than buy it, there would be 
+greater supply than demand, and the price would fall.
+What Makes A Stock Price To Go Up And Down?
+If there is a greater number of buyers than sellers (more 
+demand), the buyers bid up the prices of the stocks to entice 
+sellers to get rid of them. Conversely, a larger number of sellers 
+bids down the price of stocks hoping to entice buyers to 
+purchase.
+
+
+--- Page 2 ---
+We Are Done With The First Part............
+Strategy Requirements.....
+You Must Have A Slight Background Knowledge Of The 
+Following 4 Aspects.
+*SUPPORT AND RESISTANCE
+*SUPPLY AND DEMAND
+*Breakouts And Retest
+*NEW YORK SESSION OPENING TIME
+-Support And Resistance
+Is a concept that the movement of the price of a asset will tend 
+to stop and reverse at certain established price levels. These 
+levels are indicated by multiple touches of price without a 
+breakthrough of the level.
+-Supply And Demand
+Supply and demand trading is a trading method where the idea 
+is to ﬁnd points in the market where the price has made a 
+strong advance or decline
+Rules Of Trading The Strategy
+In General , Most Traders/Investors Believes In Support And 
+Resistance , Without Fear I Can Say It Really Does Works , But 
+With Nasdaq I Have Discovered That 85% Of The Times 
+Support And Resistance Are Totally/Strongly Violated During 
+The NY Session Opening.
+Trading Support And Resistance On Nasdaq
+Firstly You Need To Precisely Observe And Identify The 
+Strongest Support Or A Resistance Zone On H1 And H4 
+Timeframe , Once You,ve Done That , Mark Them With Your 
+
+
+--- Page 3 ---
+Horizontal Lines , Bear In Mind , You’re Required To Market The 
+Zones As Follows.
+-First Trend line Should Be From A Body To A Wick , And A 
+Second Trend line From A Wick To A Body , Hope You Get It.
+Rule Number 1( Resistance)
+-When The Market Approaches Your Resistance And The Time 
+Is 15:28pm For Instance , You Need To Wait For The 
+Green(Bull)Candle To Touch Your Resistance First Then 
+Execute A “BUY” Position At 15:30pm  , You Do Not Take A 
+Trade When The Last Candle Before 15:30pm Was A 
+Red(Bearish)Candle.
+Rule Number 2(Support)
+-When The Market Approaches Your Support Zone And The 
+Time Is 15:28pm For Instance , You Need To Wait For The 
+Red(Bearish) Candle To Touch Your Support First Then Execute 
+A “SELL” Position At 15:30pm  , You Do Not Take A Trade When 
+The Last Candle Before 15:30pm Was A Green(Bullish)Candle.
+We’re Totally Against Support And Resistance Principle On 
+This Strategy.
+Trading Supply And Demand Nasdaq
+In My Experience, I Have Witness Supp And Demand Doing 
+Wonders In All The Markets , Either Stocks , Currencies Or 
+Futures , You Must Remember , What Creates The Market It’s 
+The Human/Traders psychology.
+Rule Number 1(Supply)
+When The Market Approaches This crucial Zone , It Tends To 
+Grow Attention On Investors As It’s A Zone With A HUGE 
+Volume Of Sellers . So Immediately The Market Touches Your 
+Supply Zone , You Execute A “SELL” POSITION” Asking No 
+
+
+--- Page 4 ---
+Questions☝As This Is A Very Reliable And Mostly Traded Zone 
+On The Market.
+Rule Number 2(Demand)
+When The Market Approaches This crucial Zone , It Tends To 
+Grow Attention On Investors As It’s A Zone With A HUGE 
+Volume Of Buyers . So Immediately The Market Touches Your 
+Demand Zone , You Execute A “BUY” POSITION” Asking No 
+Questions☝As This Is A Very Reliable And Mostly Traded Zone 
+On The Market.
+Trading Breakout And Retest
+With This Strategy , You’ll Only Trade Breakouts And Retest Of 
+Either Supply Or Demand Zone , You Do Not Apply This On 
+Support And Resistance As They Are Not Much Reliable On 
+Stocks.
+Hope You Enjoy Reading The Strategy , Kindly Drop A 
+Feedback Once You,ve Tested It. Kindly Make Sure You Apply 
+And Follow All The Rules.
+Good luck!!
+Limits Only Exist On Your Mind🦍
+-Siya Vezi

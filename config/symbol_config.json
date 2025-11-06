@@ -1,0 +1,32 @@
+[
+    {
+        "symbol": "MNQ",
+        "exchange": "CME",
+        "description": "Micro E-mini Nasdaq-100 Futures",
+        "tickSize": 0.25,
+        "tickValue": 0.5,
+        "contractMultiplier": 2.0,
+        "currency": "USD",
+        "isActive": true,
+        "tradingHours": "23:00 - 22:00 EST (Sun-Fri)",
+        "cbdrSupport": true,
+        "priority": 1,
+        "lastTradeTime": 0,
+        "lastPrice": 0.0
+    },
+    {
+        "symbol": "BTC",
+        "exchange": "CME",
+        "description": "Bitcoin Futures",
+        "tickSize": 5.0,
+        "tickValue": 25.0,
+        "contractMultiplier": 5.0,
+        "currency": "USD",
+        "isActive": false,
+        "tradingHours": "18:00 - 17:00 EST (Sun-Fri)",
+        "cbdrSupport": true,
+        "priority": 2,
+        "lastTradeTime": 0,
+        "lastPrice": 0.0
+    }
+]

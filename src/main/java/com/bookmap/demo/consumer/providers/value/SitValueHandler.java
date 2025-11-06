@@ -49,13 +49,17 @@ public class SitValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        Event event = null;
-        if(o.getClass().getName().equals(IcebergEvent.class.getName())) {
-            event = CastUtilities.castObject(o,IcebergEvent.class);
-        } else if(o.getClass().getName().equals(StopEvent.class.getName())){
-            event = CastUtilities.castObject(o,StopEvent.class);
+        try {
+            Event event = null;
+            if(o.getClass().getName().equals(IcebergEvent.class.getName())) {
+                event = CastUtilities.castObject(o,IcebergEvent.class);
+            } else if(o.getClass().getName().equals(StopEvent.class.getName())){
+                event = CastUtilities.castObject(o,StopEvent.class);
+            }
+            return event;
+        } catch (Throwable t) {
+            return null;
         }
-        return event;
     }
 
     @Override
@@ -75,11 +79,19 @@ public class SitValueHandler implements ProviderValueHandler{
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        return CastUtilities.castObject(o, ThresholdFilter.class);
+        try {
+            return CastUtilities.castObject(o, ThresholdFilter.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, SitSettings.class);
+        try {
+            return CastUtilities.castObject(o, SitSettings.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 }

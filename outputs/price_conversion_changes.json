@@ -1,0 +1,248 @@
+{
+  "document_type": "Price Conversion Implementation Details",
+  "created_date": "2025-10-29",
+  "requirement": "Multiply all prices by 0.25 before storage",
+  "reason": "NQ (E-mini NASDAQ) tick prices must be converted to index points",
+  
+  "conversion_formula": {
+    "formula": "converted_price = raw_tick_price * 0.25",
+    "example_1": {
+      "raw_tick": 105004,
+      "converted_price": 26251.0,
+      "calculation": "105004 * 0.25 = 26251.0"
+    },
+    "example_2": {
+      "raw_tick": 104954,
+      "converted_price": 26238.5,
+      "calculation": "104954 * 0.25 = 26238.5"
+    },
+    "example_3": {
+      "raw_tick": 104920,
+      "converted_price": 26230.0,
+      "calculation": "104920 * 0.25 = 26230.0"
+    }
+  },
+  
+  "implementation_locations": [
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 267,
+      "context": "processTradeEvent() method - immediately after receiving price from TradeEvent",
+      "code": "double convertedPrice = price * 0.25;",
+      "comment": "CRITICAL: Convert price by multiplying by 0.25 (NQ tick to index point)",
+      "rationale": "Apply conversion as early as possible to ensure consistency"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 281,
+      "context": "calculateSignificance() call",
+      "code": "calculateSignificance(convertedPrice, size, maxChainSize, isBid)",
+      "old_code": "calculateSignificance(price, size, maxChainSize, isBid)",
+      "impact": "Ensures significance calculation uses correct price scale"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 298,
+      "context": "Database event creation - price field",
+      "code": "dbEvent.price = convertedPrice;",
+      "old_code": "dbEvent.price = price;",
+      "impact": "CRITICAL FIX: Stores 0.25-converted price in TimescaleDB",
+      "example": "26251.0 instead of 105004.0"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 315,
+      "context": "Redis JSON event - price field",
+      "code": "\"price\", convertedPrice,",
+      "old_code": "\"price\", price,",
+      "impact": "CRITICAL FIX: Stores 0.25-converted price in Redis",
+      "example": "26251.0 instead of 105004.0"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 316,
+      "context": "Redis JSON event - NEW field",
+      "code": "\"rawPrice\", price,",
+      "impact": "NEW: Preserves original Bookmap tick value for reference",
+      "example": "105004.0 (original tick price)"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "line": 309,
+      "context": "Metadata JSON for database",
+      "code": "String.format(\"{\\\"maxChainSize\\\":%d,\\\"rawPrice\\\":%.2f}\", maxChainSize, price)",
+      "old_code": "String.format(\"{\\\"maxChainSize\\\":%d}\", maxChainSize)",
+      "impact": "Preserves raw price in database metadata JSONB column"
+    },
+    {
+      "file": "AbsorptionConsumer.java",
+      "lines": "285-286",
+      "context": "Logging statements",
+      "code": [
+        "String.format(\"TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d...\", side, convertedPrice, price, ...)",
+        "String.format(\"✓ Stored absorption event: %s %s @ %.2f (raw: %.2f, sig=%.2f)\", symbol, side, convertedPrice, price, ...)"
+      ],
+      "impact": "Logs show both converted and raw prices for transparency"
+    }
+  ],
+  
+  "data_flow": {
+    "step_1": {
+      "location": "TradeEvent.getPrice()",
+      "value": "105004.0 (raw Bookmap tick)",
+      "format": "double"
+    },
+    "step_2": {
+      "location": "AbsorptionConsumer processTradeEvent() line 267",
+      "operation": "double convertedPrice = price * 0.25",
+      "value": "26251.0 (index point)",
+      "format": "double"
+    },
+    "step_3_redis": {
+      "location": "Redis ZSET absorption:MNQZ5:REGULAR",
+      "stored_value": {
+        "price": 26251.0,
+        "rawPrice": 105004.0
+      },
+      "format": "JSON string"
+    },
+    "step_3_database": {
+      "location": "TimescaleDB absorption_events.price",
+      "stored_value": 26251.0,
+      "metadata": "{\"maxChainSize\":20,\"rawPrice\":105004.00}",
+      "format": "double precision + jsonb"
+    }
+  },
+  
+  "validation_queries": [
+    {
+      "purpose": "Verify Redis has converted prices",
+      "command": "redis-cli ZREVRANGE 'absorption:MNQZ5:REGULAR' 0 4 WITHSCORES",
+      "expected_output": {
+        "price_range": "25000.0 to 27000.0",
+        "rawPrice_range": "100000.0 to 108000.0",
+        "relationship": "price = rawPrice * 0.25"
+      }
+    },
+    {
+      "purpose": "Verify TimescaleDB has converted prices",
+      "command": "SELECT price, metadata->>'rawPrice' as raw_price FROM absorption_events LIMIT 10;",
+      "expected_output": {
+        "price_range": "25000.0 to 27000.0",
+        "raw_price_range": "100000.0 to 108000.0",
+        "validation": "price = raw_price::numeric * 0.25"
+      }
+    },
+    {
+      "purpose": "Statistical validation",
+      "command": "SELECT MIN(price), MAX(price), AVG(price), STDDEV(price) FROM absorption_events;",
+      "expected_ranges": {
+        "min_price": "24000.0 to 26000.0 (typical NQ support)",
+        "max_price": "26000.0 to 28000.0 (typical NQ resistance)",
+        "avg_price": "25500.0 to 26500.0 (recent NQ range)",
+        "stddev": "Should be reasonable (not 4x expected)"
+      }
+    },
+    {
+      "purpose": "Detect unconverted prices",
+      "command": "SELECT COUNT(*) FROM absorption_events WHERE price > 50000;",
+      "expected": 0,
+      "reasoning": "NQ index points never exceed 50000 in normal market conditions"
+    }
+  ],
+  
+  "before_after_comparison": {
+    "before_fix": {
+      "redis_example": {
+        "price": 105004.0,
+        "note": "Raw tick value - INCORRECT"
+      },
+      "database_example": {
+        "price": 105004.0,
+        "note": "Raw tick value - INCORRECT (but actually 0 records due to timestamp bug)"
+      },
+      "logs": "TradeEvent: SELL @ 105004.00"
+    },
+    "after_fix": {
+      "redis_example": {
+        "price": 26251.0,
+        "rawPrice": 105004.0,
+        "note": "Converted + preserved raw - CORRECT"
+      },
+      "database_example": {
+        "price": 26251.0,
+        "metadata": "{\"maxChainSize\":20,\"rawPrice\":105004.00}",
+        "note": "Converted + metadata - CORRECT"
+      },
+      "logs": "TradeEvent: SELL @ 26251.00 (raw: 105004.00)"
+    }
+  },
+  
+  "instrument_specific_notes": {
+    "NQ_MNQ": {
+      "contract": "E-mini NASDAQ-100 / Micro E-mini NASDAQ-100",
+      "tick_value": 0.25,
+      "conversion": "tick_price * 0.25",
+      "example": "105004 ticks = 26251.0 points"
+    },
+    "ES_MES": {
+      "contract": "E-mini S&P 500 / Micro E-mini S&P 500",
+      "tick_value": 0.25,
+      "conversion": "tick_price * 0.25",
+      "note": "Same conversion as NQ"
+    },
+    "other_instruments": {
+      "note": "Different instruments may have different tick values",
+      "recommendation": "Create PriceConverter utility class with instrument-specific logic",
+      "future_enhancement": "Map symbol patterns to conversion multipliers"
+    }
+  },
+  
+  "error_scenarios": [
+    {
+      "scenario": "Price not converted",
+      "detection": "Prices > 50000 in database",
+      "impact": "Trading signals 4x off target",
+      "prevention": "Validation query in testing"
+    },
+    {
+      "scenario": "Double conversion",
+      "detection": "Prices < 6000 (26251 * 0.25 = 6562.75)",
+      "impact": "Prices too low by factor of 4",
+      "prevention": "Don't apply 0.25 in TimescaleDBManager (already done in consumer)"
+    },
+    {
+      "scenario": "Conversion to wrong precision",
+      "detection": "Prices as integers (26251 instead of 26251.0)",
+      "impact": "Loss of 0.25, 0.50, 0.75 fractional prices",
+      "prevention": "Use double throughout, not int or long"
+    }
+  ],
+  
+  "testing_checklist": [
+    "✅ Build successful (no compilation errors)",
+    "⏳ User reloads Bookmap with new JAR",
+    "⏳ Check logs for '@ 26251.00 (raw: 105004.00)' pattern",
+    "⏳ Redis query shows price ~26000 + rawPrice ~104000",
+    "⏳ TimescaleDB query shows price ~26000 range",
+    "⏳ Metadata JSONB contains rawPrice field",
+    "⏳ No prices > 50000 in database",
+    "⏳ No prices < 6000 in database",
+    "⏳ price = rawPrice * 0.25 for all records"
+  ],
+  
+  "rollback_plan": {
+    "if_issues_found": [
+      "Stop consumer in Bookmap",
+      "Restore old JAR from backup",
+      "Clear Redis: FLUSHDB",
+      "Clear TimescaleDB: DELETE FROM absorption_events WHERE timestamp >= '2025-10-29'",
+      "Restart Bookmap with old JAR",
+      "Debug new issues before re-deploying"
+    ],
+    "data_preservation": {
+      "redis_backup": "redis-cli --rdb dump.rdb",
+      "postgres_backup": "pg_dump -U postgres -d trading_data -t absorption_events > backup.sql"
+    }
+  }
+}

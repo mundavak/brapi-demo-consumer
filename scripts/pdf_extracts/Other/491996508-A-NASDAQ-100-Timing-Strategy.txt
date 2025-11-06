@@ -1,0 +1,234 @@
+Source: 491996508-A-NASDAQ-100-Timing-Strategy.pdf
+Pages: 6
+Characters: 12902
+Processing Time: 0.01s
+================================================================================
+
+--- Page 1 ---
+THE NASDAQ-100 SIGNALS
+The NASDAQ-100 timing signals use a mix of traditional and proprietary technical 
+analysis to create computerized Buy (Up) and Sell (Down) signals for the future 
+direction of the NASDAQ-100.  The signals are 100% mechanical.  That is they are 
+based on programmed buy and sell RULES that have worked in the PAST and 
+there is no discretionary judgment required.  These rules collectively make up the 
+trading system which is run nightly to issue signals for the next market day.  An 
+important aspect of this system is that it is ALWAYS in the market predicting 
+either an UP or DOWN move in the NASDAQ-100.  There are never any “STOP” 
+signals predicting you should NOT be invested.  Every UP signal is ALWAYS 
+followed by a DOWN signal and vice versa.  The logic of the rules is based ONLY 
+on the past action of the NASDAQ-100 Index from 01/02/1987 to the PRESENT in 
+terms of PRICE, VOLUME, and TIME.
+The MAIN RULES used try to determine if there is a trend in price or not and then 
+act accordingly.
+
+If price has moved UP ENOUGH to define an UP TREND then the system 
+issues an UP SIGNAL.
+
+If price has moved DOWN ENOUGH to define a DOWN TREND then the 
+system issues a DOWN SIGNAL.
+
+If there is NO TREND AND price has moved UP ENOUGH to be 
+OVERBOUGHT then a DOWN SIGNAL is issued.
+
+If there is NO TREND AND price has moved DOWN ENOUGH to be 
+OVERSOLD then an UP SIGNAL is issued.
+
+The only other main rule, that deviates from the above rules, is if price has 
+been TRENDING DOWN ENOUGH that the market may now be considered 
+a bargain because it is OVERSOLD ENOUGH then an UP SIGNAL is issued.
+All the other MINOR RULES are rules that look at short-term price and volume 
+PATTERNS that may sometimes form and contradict the main rules and either:
+
+Delay or cancel the signals from the main rules until conditions are more 
+favorable and in line with the main rules.  For instance if the market has 
+now entered an UP TREND and the main logic wants to issue an UP SIGNAL 
+but the last few days have been way above average up days and the short-
+term odds are now for a short-term pullback (down move) then the UP 
+SIGNAL may be filtered out for a period of time.
+
+Take short-term high probability trades contrary to the main rules.  For 
+instance if the market has entered an UP TREND and the logic of the main
+rules have issued an UP SIGNAL that is expected to continue BUT short-
+
+
+--- Page 2 ---
+tem price and volume patterns indicate a good chance of a short-term 
+pullback a DOWN SIGNAL may be issued to try to capture a few days profit 
+from the expected short-term move down.  After a short time period has 
+passed then another UP SIGNAL would be issued by the slower responding 
+main rules still in effect.
+Notice that in the above descriptions of the main rules I use the word 
+“ENOUGH”.  What is enough?  That is the million dollar question.  The answer is 
+that I let the computer backtest the various system parameters daily (“enough 
+thresholds”) to determine what optimized thresholds were most profitable in the 
+PAST and then use those.  That means that as “new history” is generated over 
+time the “best” NASDAQ-100 thresholds can change and therefore so can past 
+signals!  I think that is a “plus” that allows the system to slowly adapt to 
+conditions over time but be aware that many if not all academicians would 
+disagree.  They would point out that any change, however small, in the logic of a 
+trading system means you are now using a DIFFERENT trading system and 
+therefore you cannot rely on the performance of the “new” system until you 
+have seen it perform in real time for an extended period and created a new track 
+record.  For this same reason you should also be aware that if I can find 
+additional rules (based solely on past action of the NASDAQ-100 itself), that I 
+believe are conceptually sound and that in my opinion improve the overall 
+historical performance by working synergistically with the systems existing rules, I 
+may decide to add them to the system in the future.  These “system 
+improvement” factors should be considered additional risks to the investment 
+and system risks discussed in the RISK section below.
+INVESTMENT VEHICLES
+In order to attempt to profit from the above mentioned signals one must 
+purchase an investment. You can’t make or lose money until you do.  You have 
+to be in to have a chance to win. Because the signals are based on the NASDAQ-
+100 stock index I believe it is best to pick an investment that moves as closely as 
+possible with the up and down movements of this index. This means for our 
+purposes Exchange Traded Funds (ETF’s) such as QQQ, QLD & QID, or Mutual 
+funds that correlate highly with the NASDAQ-100 index. According to my 
+research the greater RISK but also the greater potential reward is to be found by 
+investing in the RYDEX NASDAQ-100 2x Mutual funds - symbol RYVYX (for UP 
+signals) and RYVNX (for DOWN signals). These funds attempt to produce a return 
+TWICE the underlying movement of the NASDAQ-100 Index.  The 2x return 
+
+
+--- Page 3 ---
+(return - not to be confused with profit) is NOT due to my signals.  It is due to 
+being invested in the 2x RYDEX funds that use leverage to try to produce returns, 
+based on the movement in price of the NASDAQ-100 Index, that are TWICE the 
+UP & DOWN movement of the NASDAQ-100.  So this means that…
+
+If on a given day the NASDAQ-100 is UP 1% the RYVYX (RYDEX Long 
+Strategy) should move UP approximately 2% (make money), and the 
+RYVNX (RYDEX Inverse Strategy) should move DOWN approximately 2%
+(lose money).
+
+Likewise, if the NASDAQ-100 is DOWN 1% then the RYVYX (RYDEX Long 
+Strategy) should move DOWN approximately 2% (lose money) and the 
+RYVNX (RYDEX Inverse Strategy) should move UP approximately 2% (make 
+money).
+Whatever profit or LOSS you might incur by investing in the movement of the 
+NASDAQ-100 is simply approximately doubled.  The 2x funds can give you close 
+to a double return when the market is moving in your favor and can double your 
+loss when the market moves against you.
+RISK
+My understanding is the RYDEX funds use such investment vehicles as EQUITY 
+INDEX SWAPS, OPTIONS and/or FUTURE CONTRACTS on the NASDAQ-100 in 
+order to try to achieve the “extra” return on the movement of the NASDAQ-100.
+One thus runs the RISK of making less than the return of the NASDAQ-100 if the 
+market does not move “enough” in your favor to overcome any “premium” paid 
+for the use of the leveraged investments used.  In addition I would assume one 
+runs even greater RISK of severe and perhaps total loss in the event of a global
+economic collapse than if one was just invested in the NASDAQ-100 without 
+leverage.  In a financial collapse other institutions, which RYDEX uses to create 
+the leverage, may be unable to honor their financial contracts with RYDEX.
+When using the 2x Rydex funds our RISK and potential reward are approximately
+doubled.  If we are right we can make nearly twice as much and if we are wrong 
+we can LOSE nearly twice as much.  This means we must be willing to watch our 
+account go DOWN 50%!  I say this because in backtesting I’ve seen the account 
+equity correct (give back profits) of 23%.  Indeed you yourself have probably seen 
+individual stocks go down at least this much since individual stocks often move 
+more than the indexes which represent the movement of a group of stocks as a 
+whole. If the NASDAQ-100 makes a sudden extreme move like during the 1987 
+crash or if we invest based on signals that are wrong (LOSE money) five or more 
+
+
+--- Page 4 ---
+times in a row - then we may find not only that we have a 25% loss, based on the 
+corresponding movements of the NASDAQ-100, but that because we are using 
+Rydex 2x funds our loss is actually nearly double this - or 50%!  In other words 
+this is a strategy that I think most experts would define as being EXTREMELY 
+RISKY – at least if you define risk as VOLATILITY as most experts do!  One can 
+potentially lose ALL ones money when investing in the stock market and with 2x 
+funds this can happen TWICE as fast!  In order NOT to lose one must be right 
+more often than one is wrong and/or one must lose less when one is wrong than 
+one makes when one is right.  Obviously this is not easy to do or there would not
+be so many people who underperform the S&P 500 and/or lose money when 
+investing in equities.
+SUMMARY
+The NASDAQ-100 trading system issues signals, based on the hindsight of past 
+NASDAQ-100 movements (which is NO GURANTEE OF FUTURE RESULTS), to make 
+an “educated guess” about the future direction of the NASDAQ-100.  One may
+then use these signals in an attempt to make money by using investments such as 
+the RYDEX mutual funds.  When the signals are right about the future UP or 
+DOWN direction one can make money and when the signals are wrong one will
+LOSE money.  
+The reasons I like this strategy, as I personally use it with the RYDEX funds, are:
+
+You are always in the market and thus always have a chance to make 
+money and catch the next trend or market move.
+
+You have a chance to make money in both an up and down trending 
+market as well as in the up and down movements of a sideways market.
+
+When using the RYDEX funds for signals in a TD Ameritrade account there 
+are no commissions, no SEC sell side fees, no minimum investment size, no 
+minimum holding period and every dollar goes to work for you since you 
+can buy fractions of a share with mutual funds.  
+
+With the RYDEX funds you have the chance of doubling the return of the 
+NASDAQ-100 if you get the direction right.  I don’t know about you but I 
+would guess that most investors, who are long a portfolio of stocks in an 
+up market, make money but don’t usually beat the market by a factor of 
+nearly 2!
+
+For most investors to have a chance of beating the market by a factor of 2 
+they must employ the use of margin.  Margin rates are often expensive 
+and you cannot use margin in a retirement account because you run the 
+
+
+--- Page 5 ---
+risk of losing more than you have invested.  RYDEX funds, including the 
+inverse funds used to profit in a down market, can be used in a retirement 
+account because you cannot lose more than you invest in them.  You can 
+however make or lose money twice as quickly.
+
+You don’t have to monitor the performance of a portfolio of stocks but 
+only your one RYDEX position.  Less work.
+
+Although you hold only one position at a time you have the diversification 
+and financial size of the stocks that make up the NASDAQ-100 index which 
+limits your risk.  Compare this to holding the stock of one individual 
+company that can then announces earnings, after the close or before the 
+open of the market, which causes the stock to gap up or down in price 
+before you have a chance to act.
+
+The computerized signals are 100% mechanical and based on the action of 
+the NASDAQ-100 only.  This takes emotion, ego, and subjective judgment
+out of the signal equation and allows NASDAQ-100 action alone to force it 
+to correct its “mistakes”.  Thus there is no way you can end up holding a 
+losing position just because some analyst thinks the market should be 
+going the other way or because the dollar, or some commodity, or some 
+economic indicator is “indicating” the market “should” be behaving 
+differently than it is.
+
+The system that generates the signals is self-adjusting.  Although the rules 
+are fixed the thresholds that trigger each rule are constantly backtested 
+from 1/1/1987 to the present and each day signals are generated from the 
+current optimized set of parameters.  So the hope is that if the trading 
+characteristics of the NASDAQ-100 slowly change over time so will the 
+system.
+
+The system has performed very well now for over two years in 
+independently verified real time.
+This strategy, as defined above, should be considered EXTREMLY RISKY because 
+of:
+
+The use of the RYDEX 2x funds as investment vehicles which can double 
+losses when the signals are wrong and which may not be profitable even if 
+the NASDAQ-100 moves in the direction of the signals.
+
+The daily optimization of system parameters.
+
+The possibility of new rules being added to the system, which generates 
+the signals, by the system developer.
+Because of the risky nature of the above strategy one should only invest money 
+one can afford to lose in this approach!
+
+
+--- Page 6 ---
+The NASDAQ-100 system only provides you with signals which may, and often 
+will, prove to be wrong in their future prediction of NASDAQ-100 movement.  
+How you use these signals is up to YOU!  The strategy outlined above is only how 
+I use the signals in my own account and is NOT and should NOT be considered 
+investment advice.  You should consult with your own financial advisor before 
+deciding if and how you wish to use the signals in your own personal financial 
+situation.

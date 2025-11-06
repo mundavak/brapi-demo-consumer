@@ -1,0 +1,498 @@
+Source: 230271751-Trading-With-Depth-of-Market.pdf
+Pages: 20
+Characters: 26044
+Processing Time: 0.03s
+================================================================================
+
+--- Page 1 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+How to spot trading patterns 
+using the DOM ladder 
+PROPEX EDUCATION SERIES
+GUY BOWER
+
+
+--- Page 2 ---
+ 
+Contents 
+ 
+1. Depth Trading Basics 
+Understanding the display 
+What Depth Gives You 
+ 
+2. Depth Trading Setups 
+Perspective 
+Setup: The Free Trade 
+Setup: Open Your Eyes 
+Setup: The Up ‘n’ Down 
+Setup: Ahead of the Game 
+Setup: Playing the Game 
+Setup: Wake up Jeff! 
+Setup: Catching the Train 
+Setup: The Fake 
+Setup: The Magnet 
+Your Own Setups 
+ 
+ 
+ 
+ 
+ 
+The information in this document and related documents and communication is intended for 
+educational purposes only and does not constitute advice. Redistribution of the material without prior 
+permission is prohibited.  
+Propex Derivatives Pty Ltd Level 4, 299 Elizabeth Street. Sydney 2000.  
+ 
+
+
+--- Page 3 ---
+1. Depth Trading Basics 
+ 
+Neo: “Why do my eyes hurt?” 
+Morpheus: “You’ve never used them before.” 
+Understanding the display 
+ 
+ 
+Depth trading is a new field and it is good to see most software packages these days have some 
+sort of “Depth Of Market” display. Some call it DOM, others DOME and others Market Depth or 
+the “ladder”. Whatever it is called, understanding depth is one of the significant factors in 
+trading high frequency. 
+In many ways it is what differentiates a professional trader from someone that has simply been 
+to a seminar and read a couple of books on technical analysis. 
+A depth style display allows you to see the bids and offers for a market. It’s not just the best bid 
+and the best offer (called the “inside market”) that is important, but the size of the bids and 
+offers either side of those prices. 
+Consider the following two statements: 
+a) The last traded price for the SPI was 4496. 
+b) For the SPI there are currently buyers at 4497 and sellers at 4498. 
+Which of the two statements offer you more information? It’s b) of course. Also, option a) tells 
+you where the market was in the past, not where you can transact now. The bid/ask shows 
+where you can transact right now. 
+Taking this one step further we add depth. Here is a typical depth display: 
+ 
+
+
+--- Page 4 ---
+The middle column shows the market prices. The left column shows the total volume people 
+are willing to buy at the best 5 prices. The right column shows the total volume people are 
+willing to sell at their corresponding prices. 
+This is market depth. Here you can see how much people want to buy and how much people 
+want to sell. Do you think understanding this type of display and how it moves could be helpful 
+in active trading? Absolutely! 
+This eBook is all about understanding how to use market depth. For this section, let’s just look 
+at how market depth changes. It’s actually pretty simple. 
+In the current market above, let’s say I jump online and place an order to buy 10 contracts at 
+4497. This is how the display changes. 
+ 
+Now let’s say I also place an order to buy 5 at 4498. Since the best offer is 4498, this order is 
+transacted immediately and the offer size moved from 11 to 6. 
+
+
+--- Page 5 ---
+ 
+Now let’s say, someone else comes in and buys 15 “at market” – meaning at the best possible 
+offer price. 6 lots will be traded at 4498 and the remaining 9 will trade at 4499. 
+ 
+Note the 4498 offer disappears as those have been transacted and the 19 on offer at 4499 
+drops to 10. 
+Now throughout any minute in any active market, these bids and offers change given: 
+• 
+Some go from being bids and offers to transacted trades. 
+• 
+Some change their bid or offer price(s). 
+• 
+Some will change their volume size. 
+• 
+Some will cancel orders. 
+When you first see all of this in action, it can be a little confusing. It actually looks like a big 
+mess with numbers flying all over the place, but a little time and focus will change that. You’ll 
+pretty quickly start seeing things. That is what a good part of this course is about – learn to see 
+the market from this point of view and trading accordingly. 
+
+
+--- Page 6 ---
+What Depth Gives You 
+Depth is used by our traders to measure things such as: 
+• 
+Strength of individual or combined bids and offers. 
+• 
+Possible support, resistance or sticking points. 
+• 
+Overall short term momentum of the market. 
+We are talking about getting a feel for very short term movement here. Using Depth of Market 
+gives you the basis for trading the short term ebb and flow of the market – and that is 
+essentially the role of a high frequency or active trader. 
+ 
+2. Depth Trading Setups  
+ 
+Perspective 
+The term ‘Setup’ refers to entry and exit signals. The mistake many new traders make when 
+seeing the word setup is thinking it is some type of magical signal which if they only follow to 
+the letter, they can make a killing.  
+The reality - and this is the same with all types of signals or systems - is sometimes they work 
+and sometimes they don’t. The way to use a setup is as a starting point.  
+Understanding these (and others you will come up with) gives you a framework for looking at 
+the markets. We all know about identify levels on a chart. In the olden days, the break of a 
+contract high was seen as a significant occurrence and quite a bullish signal. These days we 
+have false breaks as well. This simply says a break of a contract high is sometimes bullish and 
+sometimes bearish. However we still look at highs and lows on charts as it works as a starting 
+point for analysis. There may be other factor we take into account when deciding to go with the 
+break or fade the break.  
+It’s the same with these DOM setups. Understanding a few basics setups will be a starting point 
+for your development as a depth trader. It will also help you understand how depth works.  
+It should also be pointed out each market has its own personality. That means each will have its 
+own setups – and some will work better at different times of the day or around data releases 
+and so on. These are the things you need to think about when seeing a set up played out in real 
+time.  
+Setup: The Free Trade 
+Now that you understand how to read a ladder, consider the following scenario. You see the 
+market depth looking like this with the market recently trading 97 or below: 
+
+
+--- Page 7 ---
+ 
+It happens to be a relatively active day and the bid/ask spread is rarely deviating from one 
+point. You are looking to get long just one contract, but unsure of entry price. Then someone 
+buys 10 at 98, leaving one on the offer. The ladder looks like this: 
+ 
+To get long you could jump in the queue at 97 (behind 33 other lots) or go to market at 98. 
+Of course, you’d rather get in at one point lower, but if you pay 98 for one that takes away the 
+last of the offers at 98, it may send a bullish signal to others that are watching the same screen. 
+What you can then see is the market going bid 98 and if nothing else, you could exit the trade 
+at breakeven. That’s a free trade. 
+By itself this should not really be seen as a strong bullish (or bearish) signal. Instead you would 
+tend to use this method of entry based on your existing bullish (or bearish) view. 
+The key to differentiating a good signal from a bad one is to spend a lot of time just following 
+the ladder and watching how a market behaves. 
+Setup: Open Your Eyes 
+
+
+--- Page 8 ---
+OK, here is another scenario. Below is an daily chart showing the Australian 10yr bond futures. 
+The question is, if you are watching this move unfold, would you be going long at this level? 
+Hopefully your answer is no. 
+ 
+Pretty much all trading methods out there are looking for momentum – either increasing or 
+decreasing. 
+One trading rule that should be tattooed to all trader’s brains is: 
+Do not argue with strong momentum 
+Another way to put this is: 
+Do not step in front of a runaway train. 
+As I keep saying, each market has its own personality. Therefore each market has its own 
+definition of momentum – a 5pt move, a 200pt move, etc. It’s up to the trader to work out 
+what defines a runaway market and that comes with observation and practice. 
+Getting back to the “open your eyes” concept, a trader simply has to be ready for the runaway 
+market when it happens. If you are ready, it’s free money. If you are not ready, you’d tend to sit 
+there and say “wow, look at it move” but be too shy to jump on board or worse, too late. 
+The “open your eyes” concept sounds like a logical type of trade setup. In a way, it’s almost too 
+simple to discuss here. However, without being conscious of what to do in these situations, it’s 
+amazingly easy to miss the move. 
+
+
+--- Page 9 ---
+As for going against a strong move, sometimes that can work for sure, but when it doesn’t 
+work, it’s horrible. Below are a couple of examples in the AUD and EUR futures. Going long into 
+a move like this is stop loss suicide and well into the realm of coin toss gambling. 
+ 
+ 
+The three above examples are shown with charts not the ladder. This is because it’s hard to 
+show a still picture of this happening on the ladder. On the ladder these moves will typically 
+show: 
+• 
+A fast market (obviously). 
+• 
+Bids being pulled as new offers coming in lower and lower. 
+• 
+A temporary widening of the bid/ask spread. 
+
+
+--- Page 10 ---
+These three points make it quite difficult to enter the market in the direction of the move, 
+particularly if you are setting limit orders. The fact is, sometimes you’ll be able to get set at a 
+price, other time you’ll miss it. It’s just a part of trading. 
+Setup: The Up ‘n’ Down 
+Suppose you see the following market (below). The market has just been bid up from the low 
+90s and is trading 97/98. You also see the offers lighten up. That means you seen are seeing 
+fewer contracts on the offer than the bid. It all looks rather strong. 
+ 
+Suppose then someone comes in and sweeps the bids up to 4501 and a few new bids come in 
+beneath it: 
+ 
+How would you then interpret a large sell order coming in at 4500 and 4499? That is a large 
+order, say for 150 lots, hits the 00s and 99s. 
+
+
+--- Page 11 ---
+ 
+The guy with the 150 lot hits the 90 (55+35) on bid, leaving a balance of 60 offered at 99. At this 
+stage you think the 60 lot is a real order (not there to fool you) and who knows, maybe he has 
+more to sell. 
+In fact it could have been him buying up the market to 01s in a hope everyone else would think 
+it’s a break out and start bidding. That way he could get a better price for his larger sell order. 
+Would this strategy work? Maybe, but that’s not important. What’s important is that this 
+scenario offers you a quick and risk friendly trade. The trade to make would be to jump in front 
+of his offer, that is, hit the best bid. 
+You see as soon as that low volume move up loses steam, a few others will be seeing it as a 
+potential top and pulling their bids. Others will be looking to get short. 
+Hitting the bid is a good short trade since you’ll know pretty quickly, as in seconds, if you are 
+right. If the market starts bidding up again, even just a couple of ticks, you are wrong. Get out. 
+Otherwise, this type of set up could be good for a few points. 
+It’s good to see this pattern around technical levels or round numbers (as above) as this can 
+make it more valid and the subsequent move lower could be worth a few more ticks. 
+The Down ‘n’ up? 
+So does this pattern work with a down-move followed by an up-move? It can, but for some 
+reason, it’s just more common seeing the up move followed by the down move, particularly in 
+indices and bonds. Keep an eye out for it though. Remember these setups are not trading 
+‘rules’, these are ideas. You may find ones of your own that work. 
+Setup: Ahead of the Game 
+Suppose you see a support level forming over the course of a few minutes or over the course of 
+the day. It’s a level, say 4483, that has been tested and bid up each time it trades there. It 
+seems to be providing some kind of support. 
+
+
+--- Page 12 ---
+Now, after the last test, the market bounced into the 90s, then reversed and now you see the 
+market heading back towards this 83 level. For the technical analysts, this pattern may look like 
+an ascending triangle on the charts – although that’s not essential. 
+Traditional technical analysis will tell you to buy just above, anticipating some support, or sell a 
+break below, anticipating a sell off. In fact here is an image I grabbed from a website on 
+technical analysis. Note the text says “Traders will enter into a short position on a break below 
+support”. 
+ 
+I love this. That’s what traders will do is it? Well I hope they do, but just not our guys. As active 
+day traders, we must be a bit faster than this. We must anticipate and be ahead of the game. 
+The problem with selling on a break is that there may not be enough sellers to push the market 
+lower once the break occurs. There you have your classic false break – something that seems to 
+happen more often than not these days. 
+Let’s back track a touch to before the break. If you are watching this unfold, you know there is a 
+level there that is likely to get tested. Also, after a few previous attempts there is a chance 
+someone will try to push it through the level to see if it goes further. 
+So what on earth are you doing sitting on your hands without a trade while this is happening? 
+The “ahead of the game” trade is to get short before that test and break and if you are feeling 
+cocky enough, put in your bids below that support line. Essentially what you’ve created is a 
+trade that will make money on both a solid break and a false break. 
+The key to this trade is following the depth of market in the lead up to the re-test or break. 
+What you want to see is less size on the bids as the market ticks lower. That’s the signal to get 
+short. 
+
+
+--- Page 13 ---
+ 
+A lot of bid size suggests the market may not even retest that level, so you have to go easy or 
+not trade at all when there is size. But if the bids are weak heading towards that level, then you 
+can pretty much bet there will be a test. So get short a few points above. 
+The alternative, once short, is to hold for an even bigger move – a proper break, not a false one. 
+There you want to see good size on the offers as the market breaks. If you don’t see size, cover 
+your shorts. 
+As for putting your bids below the level before the break, you do this to get a better place in 
+the queue. If the move is a false break, then chances are not every bid below the level will be 
+sold into and if you put your bid in after the break then you will not get filled. You’ll miss your 
+profit target by not being ahead of the game. 
+As for risk, this type of trade allows you to set your stops pretty tight; 2-3 ticks. Be quick to get 
+out as you can always get short again if the market turns lower. 
+Setup: Playing the Game 
+OK, suppose you missed the above move. You were too slow on the ladder or you were out 
+feeding the dog. On your screen you see the market has broken that level. As mentioned above, 
+
+
+--- Page 14 ---
+traditional technical analysis says you should be getting short on this break and perhaps taking 
+a measured move and raking in the cash. 
+In actuality, this type of trade has a bigger risk than getting in before the break. Generally after 
+a break of say the descending triangle shown above, volatility will increase. No matter what 
+your position, you’d more likely run wider stops because of this. There’s the bigger risk. 
+The key to getting short however is what the ladder is telling you, not the chart. The chart will 
+not tell you if more and more offers are coming into the market, but seeing this on the ladder 
+will show you that this break may not be a false one at all. Hopefully you are quick enough to 
+get in before people start hitting the bids and other bids start being pulled. 
+ 
+The idea of ‘playing the game’ is like following the herd, but there are times that can be 
+profitable. Spend lots of time in front of the ladder and you’ll see the patterns. 
+ 
+ 
+
+
+--- Page 15 ---
+Setup: Wake up Jeff! 
+OK, here is another scenario. Suppose you are watching a very quiet market. In many markets, 
+this can often be around lunch time or a bit after. The market is trading up a little, down a little, 
+up a little and so on. 
+Let’s say you have a large order to sell, perhaps 100 lots. If you were a broker or a trader, would 
+you: 
+a) Drip feed the order into the market with small lots on the offer? 
+b) Place the whole lot on the offer? 
+c) Slam the best bid, leaving the remainder on offer at that bid price in a move to get filled 
+ASAP? 
+Answers a and b are credible, but c would be rare. If all you had to do was 100 lots, it would 
+make far more sense to work that order over a few minutes or longer. Hitting the bid with a 
+large lot suggests there might be more behind it and that being the case, there is a shorting 
+opportunity good for a couple of ticks. 
+What could it be? Who knows? It could be someone pushing the market around for a tick or 
+two or it could be something bigger. It might be that this trade is the one that wakes the market 
+up from its tight range. That being the case you want to be short also. Either at that offer price 
+or a tick in front. 
+Is this a higher probably trade by itself? Probably not, but chances are you’ll know if you are 
+right pretty quickly and there would be no need to risk any more than a few ticks with a stop. 
+Setup: Catching the Train 
+The last thing you ever want to do is argue with momentum. We pretty much covered that idea 
+in the ‘open your eyes’ setup. This one, however, is a spin on that. 
+Let’s say the market has been pushing higher and higher and seems to get to a level where it 
+momentarily stops. The market looks like this: 
+ 
+
+
+--- Page 16 ---
+You’re probably wondering if this is a shorting opportunity. After all, the market has made a 
+decent move higher, markets always snap back at some stage and here the momentum seems 
+to have stopped suggesting a pullback is about to happen. 
+Here you are ready to get short and you see a few trades at 85 (the bid); then the rest of the 85 
+bids pull; then 85 goes offered; then 84 bids are pulled also. Hmm, perfect set up for a sell? 
+Probably not. In fact, that could be a good little fake move where it was just one or maybe two 
+guys pulling their bids at 85 and maybe the same guy/s at 84. What they are doing is letting the 
+market think the run is over and trigger some selling, then those bids will just come straight 
+back in at a few ticks lower and proceed to drive the market back up. 
+Meanwhile those new shorts (those other guys that thought this was a good sell) realize they 
+got it wrong and start covering, pushing the market back up again. 
+The trade to make in this instance would have been to get long as the market was pulling back. 
+The key signal here would be the speed of the initial advance. A strong market should rarely be 
+argued with and that quick pullback was not strong enough to be considered a sell signal. 
+Keep in mind there will also be others trying to sell the absolute top or buy the absolute 
+bottom. They are the ones that get stuck with these dud trades. It’s easy to be smarter than 
+that, but you have to be quick. 
+Setup: The Fake 
+Picture yourself sitting at a poker table with five others. Each of them has their own way of 
+playing, betting and bluffing. You are doing your best to size up the others (as they are sizing up 
+you). You are watching all sorts of things including how they bet, where they are looking, if they 
+are fidgeting and so on. It’s all to get an understanding on what they might have behind them 
+and if they are strong, weak or clumsy. 
+In a way, reading the depth of market is a lot like reading poker players. In trading, you are at a 
+table of more than 5 players and they are anonymous, but with practice you can still spot 
+individual behavior and see possible patterns from the market as a whole. That’s essentially 
+what this whole eBook is about – reading the patterns. 
+Like bets on a poker table, not all bids and offers on the ladder are there with strong conviction. 
+Some are and some aren’t. Now we are not going to get into the legality of placing orders and 
+pulling them – as in some circumstances it’s a no-no. 
+All we can say is that it happens. That is, some traders will bluff the market into thinking 
+something is about to happen. 
+Take a look at the ladder below. Suppose you see someone hit both offers at 99 and 98 and 
+strong bids come in at 99 and 98. There is a chance most of that came from one trader. 
+You see this and immediately think this is bullish. Someone is buying the offers and coming in 
+with even more bids. 
+
+
+--- Page 17 ---
+ 
+This may well be a broker with a large buy order. Alternatively, it may be a trader who is buying 
+a little and placing more bids in an effect to bring in more buyers in front of him. He creates an 
+illusion of a bullish market where his real intention is to sell. 
+Once a few others jump in with bids in front of him, he turns around and sells into them, then 
+of course, pulls his other bids. He ends up making a little on his bought position and gets set on 
+an even larger sell order. 
+This happens. Sure it takes big money to do this, but keep in mind, there is a lot of big money 
+out there. This pattern is a little similar to the up ‘n’ down described above. The difference here 
+is the bids (the one designed to tell the market there is strong buying interest) will be pulled. 
+The trick is to watch for this. 
+Can you always tell when this is about to happen? Unfortunately, no. It’s just a matter of 
+practice and getting a feel for how your market behaves. 
+Setup: The Magnet 
+OK, here is an interesting little pattern. Like all patterns, sometimes it works, other times it 
+doesn’t. However it can set you up with a good risk:reward trade worth a few ticks. 
+
+
+--- Page 18 ---
+The pattern has to do with larger than normal bids or offers. Essentially these can act like 
+magnets as the market is pushed towards the level just to see what happens. 
+What will often happen with a level like this is the market will not only gravitate towards that 
+level and test it, it will break that level by a couple of ticks. If the offers are thin enough just 
+below this price, traders will push the market there just to see if once that offer disappears, 
+more buying will come into the market, taking the market higher still. 
+Now the trade to make if you see this one unfolding will be to buy a few ticks below the level, 
+anticipating a small break above. As soon as you get set on the buy side, get your offers in there 
+for an exit. 
+In the SPI example below, we had 300 lots sitting on offer at 4331. The chart below shows the 
+market hovering around the high 20’s. At this point, those watching depth knew of the big 
+order sitting at 4331. On a chart you could not see it, but it was there in the depth display. 
+ 
+The first test of this level came at point A. The high there was 4330. The market was bid 4330 
+and offered 4331. A few cheeky traders were selling the 4330 bid with the view 4331 would 
+hold. They were right for a few minutes. The market pulled back only a couple of ticks, but that 
+large offer stayed there.  
+Shortly after the market was pushed higher and tested 4331 once more (point B). The market 
+traded just a few lots there, but buyers just didn’t emerge and the market pulled back a couple 
+of ticks. This was as good a signal as any to get in long. That is, the market kept testing the 
+higher level and when it retraced, it was not by much. That offer was about to get eaten… 
+
+
+--- Page 19 ---
+ 
+The next test of 4331 was more aggressive. Larger lots started trading and the size at 4331 was 
+dropping. Before 300 lots had a chance to go through, the remaining offers were pulled and the 
+market shot through 4331 with ease. 
+ 
+The market then traded a few points higher to 4335 and found some balance. At this point the 
+trade was over. Those long ahead of 4331 should have been out by now. 
+
+
+--- Page 20 ---
+When you see levels like this on the depth display, think of how others are looking at it. A lot of 
+people would be seeing this level as significant. This is the advantage of trading with depth. You 
+can see these levels before they even trade and build a low risk strategy to trade it. 
+Your Own Setups 
+There are no hard and fast rules to recognizing setups. Markets behave differently at different 
+times of the day, month, quarter or overall cycle. It is our job as traders to read the market with 
+an open mind and recognize how it is behaving. 
+As mentioned in a previous lesson, it is in our nature to look for patterns in pretty much 
+everything. I’m sure a lot of academics have written a lot of papers about this. 
+Sometimes we see things that are not there, but there are other times where patterns are 
+present and valid. It’s is only through time and focus that these things start to become clear. 
+Remember those 3-D pictures that were popular years ago? These were the one you had to 
+stare at for a while then all of a sudden you see the giraffe or plane or whatever. 
+Trading with the ladder is just like that. The first time you see it, and particularly if the market is 
+busy, it will look chaotic. The more time you spend in front of the screen, the more things will 
+unfold. In an upcoming lesson, we will look at various trading drills that require a simulator with 
+a ladder. There are essentially a couple of weeks of drills there that will be extremely useful in 
+developing your depth of market pattern recognition skills. 
+- 
+ 
+ 
+ 
+ 
+ 
+ 
+Contact details: 
+Guy Bower 
+Head of Training and Development 
+Guy.Bower@Propex.net.au  
+Online Training: www.PropexTraining.com 
+In-house Trading: www.Propex.net.au 
+ 
+The information in this document and related documents and communication is intended for 
+educational purposes only and does not constitute advice. Redistribution of the material without prior 
+permission is prohibited.  
+Propex Derivatives Pty Ltd Level 4, 299 Elizabeth Street. Sydney 2000.

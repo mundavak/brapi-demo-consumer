@@ -1,44 +1,26 @@
 package com.bookmap.demo.consumer;
 
-import velox.api.layer1.Layer1ApiAdminAdapter;
-import velox.api.layer1.Layer1ApiDataAdapter;
-import velox.api.layer1.Layer1ApiFinishable;
-import velox.api.layer1.Layer1ApiInstrumentAdapter;
-import velox.api.layer1.Layer1ApiProvider;
-import velox.api.layer1.Layer1CustomPanelsGetter;
-import velox.api.layer1.annotations.Layer1ApiVersion;
-import velox.api.layer1.annotations.Layer1ApiVersionValue;
-import velox.api.layer1.annotations.Layer1Attachable;
-import velox.api.layer1.annotations.Layer1StrategyName;
-import velox.api.layer1.common.ListenableHelper;
-import velox.api.layer1.common.Log;
-import velox.api.layer1.data.InstrumentInfo;
-import velox.api.layer1.data.TradeInfo;
-import velox.gui.StrategyPanel;
+import com.bookmap.demo.consumer.database.RedisManager;
+import com.bookmap.demo.consumer.database.TimescaleDBManager;
+import com.bookmap.demo.consumer.utils.SessionManager;
+import com.bookmap.demo.consumer.utils.LoggingConfig;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
+import com.google.gson.Gson;
 import java.util.*;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+// Bookmap Core API imports
+import velox.api.layer1.*;
+import velox.api.layer1.annotations.*;
+import velox.api.layer1.data.*;
+import velox.api.layer1.messages.UserMessageLayersChainCreatedTargeted;
 
 /**
- * OHLC Candle Consumer - Builds candles from trade data
- * Aggregates trades into time-based candles (1m, 5m, 15m, 1h)
- * Saves OHLC data to SQLite database
+ * OHLC Candle Consumer with Redis (hot) and TimescaleDB (cold) storage
+ * Captures candle data from market trades
+ * Stores real-time in Redis, historical in TimescaleDB
  */
 @Layer1Attachable
 @Layer1StrategyName("OHLC Candle Consumer")
@@ -47,401 +29,383 @@ public class OhlcCandleConsumer implements
         Layer1ApiFinishable,
         Layer1ApiAdminAdapter,
         Layer1ApiInstrumentAdapter,
-        Layer1CustomPanelsGetter,
-        Layer1ApiDataAdapter {
+        Layer1ApiDataListener {
 
-    // Configuration
-    private static final String OHLC_LOG_PATH = "F:/TradingAgent/ohlc_candles.log";
-    private static final String SQLITE_DB_PATH = "F:/TradingAgent/enhanced_market_monitor_mbo.db";
-
-    // Timeframes in milliseconds
-    private static final long[] TIMEFRAMES_MS = {
-        60_000L,      // 1 minute
-        300_000L,     // 5 minutes
-        900_000L,     // 15 minutes
-        3600_000L     // 1 hour
-    };
+    private static final Logger LOGGER = Logger.getLogger(OhlcCandleConsumer.class.getName());
+    private static final Gson gson = new Gson();
 
     private final Layer1ApiProvider provider;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    private final Map<String, InstrumentInfo> instrumentsInfo = new ConcurrentHashMap<>();
+    private RedisManager redisManager;
+    private TimescaleDBManager timescaleDBManager;
+    private SessionManager sessionManager;
+
+    // Candle tracking by alias
+    private final Map<String, Map<String, CandleBuilder>> candleBuilders = new ConcurrentHashMap<>();
+    private final Map<String, String> aliasToSymbol = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionIds = new ConcurrentHashMap<>();
     private final Map<String, Double> instrumentPips = new ConcurrentHashMap<>();
-    private Connection dbConnection;
-    private final AtomicBoolean isWorking = new AtomicBoolean(false);
-    private final AtomicInteger candleCount = new AtomicInteger(0);
 
-    // Candle builders for each timeframe
-    private final Map<String, Map<Long, CandleBuilder>> candleBuilders = new ConcurrentHashMap<>();
+    // Batch processing for TimescaleDB
+    private final BlockingQueue<TimescaleDBManager.OhlcCandle> batchQueue = new LinkedBlockingQueue<>(10000);
+    private final ScheduledExecutorService batchProcessor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService candleCloser = Executors.newSingleThreadScheduledExecutor();
 
-    // UI components
-    private JTextArea logArea;
-    private JLabel statsLabel;
+    // Supported timeframes
+    private static final String[] TIMEFRAMES = { "1m", "5m", "15m", "1h", "4h" };
+    private static final Map<String, Long> TIMEFRAME_MILLIS = new HashMap<>();
 
-    // Scheduler for closing candles
-    private ScheduledExecutorService scheduler;
-
-    /**
-     * Inner class to build candles from trades
-     */
-    private class CandleBuilder {
-        String instrument;
-        long timeframe;
-        long periodStart;
-        long periodEnd;
-        double open = 0;
-        double high = Double.MIN_VALUE;
-        double low = Double.MAX_VALUE;
-        double close = 0;
-        double volume = 0;
-        boolean hasData = false;
-
-        CandleBuilder(String instrument, long timeframe, long timestamp) {
-            this.instrument = instrument;
-            this.timeframe = timeframe;
-            this.periodStart = (timestamp / timeframe) * timeframe;
-            this.periodEnd = periodStart + timeframe;
-        }
-
-        synchronized void addTrade(double price, int size, long timestamp) {
-            if (!hasData) {
-                open = price;
-                hasData = true;
-            }
-
-            high = Math.max(high, price);
-            low = Math.min(low, price);
-            close = price;
-            volume += size;
-        }
-
-        synchronized Map<String, Object> toMap() {
-            if (!hasData) {
-                return null;
-            }
-
-            Map<String, Object> candle = new HashMap<>();
-            candle.put("timestamp", dateFormat.format(new Date(periodEnd)));
-            candle.put("instrument", instrument);
-            candle.put("timeframe", formatTimeframe(timeframe));
-            candle.put("open", open);
-            candle.put("high", high);
-            candle.put("low", low);
-            candle.put("close", close);
-            candle.put("volume", volume);
-            candle.put("bar_start_time", periodStart);
-            candle.put("bar_end_time", periodEnd);
-            return candle;
-        }
+    static {
+        TIMEFRAME_MILLIS.put("1m", 60_000L);
+        TIMEFRAME_MILLIS.put("5m", 300_000L);
+        TIMEFRAME_MILLIS.put("15m", 900_000L);
+        TIMEFRAME_MILLIS.put("1h", 3_600_000L);
+        TIMEFRAME_MILLIS.put("4h", 14_400_000L);
     }
 
     public OhlcCandleConsumer(Layer1ApiProvider provider) {
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        ListenableHelper.addListeners(provider, this);
         this.provider = provider;
+        velox.api.layer1.common.ListenableHelper.addListeners(provider, this);
 
-        Log.info("========================================");
-        Log.info("OHLC Candle Consumer: STARTING UP");
-        Log.info("========================================");
+        // Initialize logging
+        LoggingConfig.initializeLogging("OhlcCandleConsumer", Level.INFO);
 
-        initializeDatabase();
-        startCandleCloser();
+        // Initialize managers
+        redisManager = RedisManager.getInstance();
+        timescaleDBManager = TimescaleDBManager.getInstance();
+        sessionManager = SessionManager.getInstance();
 
-        log("INFO", "OHLC Candle Consumer initialized");
-        log("INFO", "Log file: " + OHLC_LOG_PATH);
-        log("INFO", "SQLite DB: " + SQLITE_DB_PATH);
-        log("INFO", "Timeframes: 1m, 5m, 15m, 1h");
-    }
+        // Start batch processor (process every 5 seconds)
+        batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS);
 
-    private void initializeDatabase() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + SQLITE_DB_PATH;
-            dbConnection = DriverManager.getConnection(url);
-
-            String createTableSQL = """
-                CREATE TABLE IF NOT EXISTS candles (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL,
-                    instrument TEXT NOT NULL,
-                    timeframe TEXT NOT NULL,
-                    open REAL NOT NULL,
-                    high REAL NOT NULL,
-                    low REAL NOT NULL,
-                    close REAL NOT NULL,
-                    volume REAL,
-                    bar_start_time INTEGER,
-                    bar_end_time INTEGER,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-                """;
-
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createTableSQL);
-                log("INFO", "Candles table created or already exists");
-            }
-
-            // Create indexes
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute("CREATE INDEX IF NOT EXISTS idx_candles_instrument_time ON candles(instrument, timeframe, timestamp)");
-            }
-
-        } catch (Exception e) {
-            log("ERROR", "Database initialization failed: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Start scheduler to periodically close completed candles
-     */
-    private void startCandleCloser() {
-        scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                closeCompletedCandles();
-            } catch (Exception e) {
-                log("ERROR", "Error closing candles: " + e.getMessage());
-            }
-        }, 1, 1, TimeUnit.SECONDS);
-    }
-
-    /**
-     * Close and save completed candles
-     */
-    private void closeCompletedCandles() {
-        long now = System.currentTimeMillis();
-
-        for (Map.Entry<String, Map<Long, CandleBuilder>> entry : candleBuilders.entrySet()) {
-            String instrument = entry.getKey();
-            Map<Long, CandleBuilder> timeframes = entry.getValue();
-
-            List<Long> toRemove = new ArrayList<>();
-
-            for (Map.Entry<Long, CandleBuilder> tfEntry : timeframes.entrySet()) {
-                Long timeframe = tfEntry.getKey();
-                CandleBuilder builder = tfEntry.getValue();
-
-                // Close candle if period has ended
-                if (now >= builder.periodEnd) {
-                    Map<String, Object> candleData = builder.toMap();
-                    if (candleData != null) {
-                        saveCandleToDatabase(candleData);
-                        int count = candleCount.incrementAndGet();
-
-                        if (count % 10 == 0) {
-                            log("CANDLE", String.format("[CANDLE #%d] %s %s: O=%.2f H=%.2f L=%.2f C=%.2f V=%.0f",
-                                count, candleData.get("instrument"), candleData.get("timeframe"),
-                                candleData.get("open"), candleData.get("high"),
-                                candleData.get("low"), candleData.get("close"),
-                                candleData.get("volume")));
-                        }
-                    }
-                    toRemove.add(timeframe);
-                }
-            }
-
-            // Remove closed candles
-            toRemove.forEach(timeframes::remove);
-        }
-
-        updateUI();
+        // Start candle closer (check every 1 second)
+        candleCloser.scheduleAtFixedRate(this::closeCompletedCandles, 1, 1, TimeUnit.SECONDS);
     }
 
     @Override
-    public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
-        instrumentsInfo.put(alias, instrumentInfo);
-        instrumentPips.put(alias, instrumentInfo.pips);
-        candleBuilders.put(alias, new ConcurrentHashMap<>());
+    public void onUserMessage(Object data) {
+        if (data instanceof UserMessageLayersChainCreatedTargeted) {
+            UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
+            if (message.targetClass == getClass()) {
+                LOGGER.info("OhlcCandleConsumer: Layers chain created");
+            }
+        }
+    }
 
-        log("INFO", String.format("Instrument added: %s (pips=%.8f)", alias, instrumentInfo.pips));
+    @Override
+    public void onInstrumentAdded(String alias, InstrumentInfo info) {
+        String symbol = info.symbol;
+        aliasToSymbol.put(alias, symbol);
+        instrumentPips.put(alias, info.pips);
+
+        // Generate session ID
+        String sessionId = sessionManager.generateSessionId(symbol);
+        sessionIds.put(alias, sessionId);
+
+        // Initialize candle builders for all timeframes
+        Map<String, CandleBuilder> builders = new ConcurrentHashMap<>();
+        for (String timeframe : TIMEFRAMES) {
+            builders.put(timeframe, new CandleBuilder(symbol, timeframe));
+        }
+        candleBuilders.put(alias, builders);
+
+        // Set symbol active in Redis
+        Map<String, String> symbolConfig = new HashMap<>();
+        symbolConfig.put("exchange", info.exchange);
+        symbolConfig.put("active", "true");
+        symbolConfig.put("last_update", String.valueOf(System.currentTimeMillis()));
+        redisManager.updateSymbolConfig(symbol, symbolConfig);
+        redisManager.setSymbolActive(symbol, true);
+
+        // Create session in Redis
+        redisManager.createSession(sessionId, symbol, System.currentTimeMillis());
+
+        // Create session in TimescaleDB
+        String sessionType = sessionManager.getSessionType(System.currentTimeMillis());
+        timescaleDBManager.createTradingSession(sessionId, symbol, sessionType, System.currentTimeMillis());
+
+        LOGGER.info("OhlcCandleConsumer initialized for " + symbol + " (alias: " + alias + ")");
     }
 
     @Override
     public void onInstrumentRemoved(String alias) {
-        instrumentsInfo.remove(alias);
-        instrumentPips.remove(alias);
-        candleBuilders.remove(alias);
-        log("INFO", "Instrument removed: " + alias);
+        // Close any remaining candles for this instrument
+        Map<String, CandleBuilder> builders = candleBuilders.remove(alias);
+        if (builders != null) {
+            String symbol = aliasToSymbol.get(alias);
+            for (Map.Entry<String, CandleBuilder> entry : builders.entrySet()) {
+                closeCandle(alias, entry.getKey(), entry.getValue());
+            }
+        }
+        aliasToSymbol.remove(alias);
+        sessionIds.remove(alias);
     }
 
     @Override
     public void onTrade(String alias, double price, int size, TradeInfo tradeInfo) {
-        if (!isWorking.get()) {
+        String symbol = aliasToSymbol.get(alias);
+        if (symbol == null)
             return;
+
+        // Convert tick price to actual price using pips
+        Double pips = instrumentPips.get(alias);
+        if (pips == null)
+            return;
+        double actualPrice = price * pips;
+
+        long timestamp = System.currentTimeMillis();
+        Map<String, CandleBuilder> builders = candleBuilders.get(alias);
+        if (builders == null)
+            return;
+
+        // Update all timeframe candles
+        for (Map.Entry<String, CandleBuilder> entry : builders.entrySet()) {
+            String timeframe = entry.getKey();
+            CandleBuilder builder = entry.getValue();
+
+            builder.addTrade(timestamp, actualPrice, size);
+
+            // Update current candle in Redis for real-time display
+            updateRedisCandle(symbol, timeframe, builder);
         }
 
-        try {
-            long timestamp = System.currentTimeMillis();
+        // Update session metrics
+        String sessionId = sessionIds.get(alias);
+        if (sessionId != null) {
+            redisManager.updateSessionMetrics(sessionId, size, 1);
+        }
+    }
 
-            // Convert price from ticks to actual price (same logic as Stop/Iceberg events)
-            // Bookmap's onTrade provides prices in the same format as depth data
-            Double pips = instrumentPips.get(alias);
-            double actualPrice = price;
+    @Override
+    public void onDepth(String alias, boolean isBid, int price, int size) {
+        // Not used for candle generation
+    }
 
-            if (pips != null) {
-                // Convert: actual_price = tick_price * pips
-                actualPrice = price * pips;
-            } else {
-                log("WARN", "No pip size found for " + alias + ", using raw price");
-            }
+    @Override
+    public void onMarketMode(String alias, MarketMode marketMode) {
+        // Not used for candle generation
+    }
 
-            // Get or create candle builders for this instrument
-            Map<Long, CandleBuilder> timeframes = candleBuilders.get(alias);
-            if (timeframes == null) {
-                return;
-            }
+    /**
+     * Check and close completed candles
+     */
+    private void closeCompletedCandles() {
+        long currentTime = System.currentTimeMillis();
 
-            // Add trade to each timeframe
-            for (long timeframe : TIMEFRAMES_MS) {
-                CandleBuilder builder = timeframes.computeIfAbsent(timeframe,
-                    tf -> new CandleBuilder(alias, tf, timestamp));
+        for (Map.Entry<String, Map<String, CandleBuilder>> symbolEntry : candleBuilders.entrySet()) {
+            String symbol = symbolEntry.getKey();
+            Map<String, CandleBuilder> builders = symbolEntry.getValue();
 
-                // Check if we need a new candle builder for this period
-                if (timestamp >= builder.periodEnd) {
-                    // Close the old candle
-                    Map<String, Object> candleData = builder.toMap();
-                    if (candleData != null) {
-                        saveCandleToDatabase(candleData);
-                        int count = candleCount.incrementAndGet();
+            for (Map.Entry<String, CandleBuilder> builderEntry : builders.entrySet()) {
+                String timeframe = builderEntry.getKey();
+                CandleBuilder builder = builderEntry.getValue();
 
-                        log("CANDLE", String.format("[CANDLE #%d] %s %s: O=%.2f H=%.2f L=%.2f C=%.2f V=%.0f",
-                            count, candleData.get("instrument"), candleData.get("timeframe"),
-                            candleData.get("open"), candleData.get("high"),
-                            candleData.get("low"), candleData.get("close"),
-                            candleData.get("volume")));
-                    }
-
-                    // Create new builder for the new period
-                    builder = new CandleBuilder(alias, timeframe, timestamp);
-                    timeframes.put(timeframe, builder);
+                if (builder.shouldClose(currentTime)) {
+                    closeCandle(symbol, timeframe, builder);
                 }
-
-                // Add the converted price to the candle
-                builder.addTrade(actualPrice, size, timestamp);
             }
-
-        } catch (Exception e) {
-            log("ERROR", "Error processing trade: " + e.getMessage());
         }
     }
 
-    private void saveCandleToDatabase(Map<String, Object> candle) {
-        if (dbConnection == null) {
+    /**
+     * Close a completed candle and persist to both Redis and TimescaleDB
+     */
+    private void closeCandle(String symbol, String timeframe, CandleBuilder builder) {
+        if (!builder.hasData())
             return;
+
+        String sessionId = sessionIds.get(symbol);
+        String cbdrWindow = sessionManager.getCbdrWindow(builder.startTime);
+
+        // Create OHLC candle object
+        TimescaleDBManager.OhlcCandle candle = new TimescaleDBManager.OhlcCandle();
+        candle.symbol = symbol;
+        candle.timeframe = timeframe;
+        candle.timestamp = builder.startTime;
+        candle.open = builder.open;
+        candle.high = builder.high;
+        candle.low = builder.low;
+        candle.close = builder.close;
+        candle.volume = builder.volume;
+        candle.tradeCount = builder.tradeCount;
+        candle.vwap = builder.getVwap();
+        candle.sessionId = sessionId;
+        candle.cbdrWindow = cbdrWindow;
+
+        // Add to batch queue for TimescaleDB
+        try {
+            batchQueue.put(candle);
+        } catch (InterruptedException e) {
+            LOGGER.warning("Failed to queue candle for batch processing: " + e.getMessage());
         }
 
-        String insertSQL = """
-            INSERT INTO candles (timestamp, instrument, timeframe, open, high, low, close, volume, bar_start_time, bar_end_time)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+        // Store closed candle in Redis with longer TTL
+        String closedKey = String.format("candle:%s:%s:closed:%d", symbol, timeframe, builder.startTime);
+        Map<String, String> candleData = new HashMap<>();
+        candleData.put("open", String.valueOf(candle.open));
+        candleData.put("high", String.valueOf(candle.high));
+        candleData.put("low", String.valueOf(candle.low));
+        candleData.put("close", String.valueOf(candle.close));
+        candleData.put("volume", String.valueOf(candle.volume));
+        candleData.put("trade_count", String.valueOf(candle.tradeCount));
+        candleData.put("vwap", String.valueOf(candle.vwap));
+        candleData.put("timestamp", String.valueOf(candle.timestamp));
 
-        try (PreparedStatement pstmt = dbConnection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, (String) candle.get("timestamp"));
-            pstmt.setString(2, (String) candle.get("instrument"));
-            pstmt.setString(3, (String) candle.get("timeframe"));
-            pstmt.setDouble(4, (Double) candle.get("open"));
-            pstmt.setDouble(5, (Double) candle.get("high"));
-            pstmt.setDouble(6, (Double) candle.get("low"));
-            pstmt.setDouble(7, (Double) candle.get("close"));
-            pstmt.setDouble(8, (Double) candle.get("volume"));
-            pstmt.setLong(9, (Long) candle.get("bar_start_time"));
-            pstmt.setLong(10, (Long) candle.get("bar_end_time"));
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            log("ERROR", "Failed to save candle: " + e.getMessage());
+        try (var jedis = redisManager.getConnection()) {
+            jedis.hset(closedKey, candleData);
+            jedis.expire(closedKey, 86400); // Keep for 24 hours
         }
+
+        // Reset builder for next candle
+        builder.reset(builder.startTime + TIMEFRAME_MILLIS.get(timeframe));
+
+        LOGGER.fine(String.format("Closed candle: %s %s at %d", symbol, timeframe, candle.timestamp));
     }
 
-    private String formatTimeframe(long milliseconds) {
-        if (milliseconds < 60_000) {
-            return (milliseconds / 1000) + "s";
-        } else if (milliseconds < 3600_000) {
-            return (milliseconds / 60_000) + "m";
-        } else if (milliseconds < 86400_000) {
-            return (milliseconds / 3600_000) + "h";
-        } else {
-            return (milliseconds / 86400_000) + "d";
-        }
+    /**
+     * Update current candle in Redis for real-time dashboard
+     */
+    private void updateRedisCandle(String symbol, String timeframe, CandleBuilder builder) {
+        if (!builder.hasData())
+            return;
+
+        Map<String, String> candleData = new HashMap<>();
+        candleData.put("open", String.valueOf(builder.open));
+        candleData.put("high", String.valueOf(builder.high));
+        candleData.put("low", String.valueOf(builder.low));
+        candleData.put("close", String.valueOf(builder.close));
+        candleData.put("volume", String.valueOf(builder.volume));
+        candleData.put("trade_count", String.valueOf(builder.tradeCount));
+        candleData.put("vwap", String.valueOf(builder.getVwap()));
+        candleData.put("start_time", String.valueOf(builder.startTime));
+        candleData.put("last_update", String.valueOf(System.currentTimeMillis()));
+
+        redisManager.updateCurrentCandle(symbol, timeframe, candleData);
     }
 
-    private void log(String level, String message) {
-        String logLine = String.format("[%s] [%s] %s", dateFormat.format(new Date()), level, message);
-        Log.info(logLine);
+    /**
+     * Process batch of candles to TimescaleDB
+     */
+    private void processBatch() {
+        List<TimescaleDBManager.OhlcCandle> batch = new ArrayList<>();
+        batchQueue.drainTo(batch, 500); // Process up to 500 at a time
 
-        try (FileWriter writer = new FileWriter(OHLC_LOG_PATH, true)) {
-            writer.write(logLine + "\n");
-        } catch (IOException e) {
-            Log.error("Failed to write to log file", e);
-        }
-
-        if (logArea != null) {
-            SwingUtilities.invokeLater(() -> {
-                logArea.append(logLine + "\n");
-                logArea.setCaretPosition(logArea.getDocument().getLength());
-            });
-        }
-    }
-
-    private void updateUI() {
-        if (statsLabel != null) {
-            SwingUtilities.invokeLater(() -> {
-                StringBuilder stats = new StringBuilder("<html>");
-                stats.append("<b>OHLC CANDLE STATISTICS</b><br>");
-                stats.append("Total Candles: ").append(candleCount.get()).append("<br>");
-                stats.append("Instruments: ").append(instrumentsInfo.size()).append("<br>");
-                stats.append("Timeframes: 1m, 5m, 15m, 1h<br>");
-                stats.append("</html>");
-                statsLabel.setText(stats.toString());
-            });
+        if (!batch.isEmpty()) {
+            timescaleDBManager.batchInsertOhlcCandles(batch);
+            LOGGER.info("Processed batch of " + batch.size() + " candles to TimescaleDB");
         }
     }
 
     @Override
     public void finish() {
-        if (scheduler != null) {
-            scheduler.shutdown();
-        }
+        LOGGER.info("Stopping OhlcCandleConsumer...");
 
-        // Close remaining candles
-        closeCompletedCandles();
-
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-                log("INFO", "Database connection closed");
-            } catch (SQLException e) {
-                log("ERROR", "Error closing database: " + e.getMessage());
+        // Close any remaining candles
+        for (Map.Entry<String, Map<String, CandleBuilder>> entry : candleBuilders.entrySet()) {
+            String alias = entry.getKey();
+            for (Map.Entry<String, CandleBuilder> builderEntry : entry.getValue().entrySet()) {
+                closeCandle(alias, builderEntry.getKey(), builderEntry.getValue());
             }
         }
 
-        log("INFO", "Final: " + candleCount.get() + " candles saved");
+        // Process remaining batch
+        processBatch();
+
+        // Shutdown executors
+        batchProcessor.shutdown();
+        candleCloser.shutdown();
+
+        try {
+            if (!batchProcessor.awaitTermination(10, TimeUnit.SECONDS)) {
+                batchProcessor.shutdownNow();
+            }
+            if (!candleCloser.awaitTermination(10, TimeUnit.SECONDS)) {
+                candleCloser.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            batchProcessor.shutdownNow();
+            candleCloser.shutdownNow();
+        }
+
+        LOGGER.info("OhlcCandleConsumer stopped");
     }
 
-    @Override
-    public StrategyPanel[] getCustomGuiFor(String alias, String indicatorName) {
-        isWorking.set(true);
+    /**
+     * Inner class to build candles from trades
+     */
+    private static class CandleBuilder {
+        String symbol;
+        String timeframe;
+        long startTime;
+        double open;
+        double high;
+        double low;
+        double close;
+        long volume;
+        int tradeCount;
+        double volumeWeightedSum;
+        boolean hasData;
 
-        StrategyPanel mainPanel = new StrategyPanel("OHLC Candles - " + alias);
-        mainPanel.setLayout(new BorderLayout());
+        CandleBuilder(String symbol, String timeframe) {
+            this.symbol = symbol;
+            this.timeframe = timeframe;
+            long now = System.currentTimeMillis();
+            long timeframeMillis = TIMEFRAME_MILLIS.get(timeframe);
+            this.startTime = (now / timeframeMillis) * timeframeMillis;
+            this.hasData = false;
+        }
 
-        statsLabel = new JLabel("<html><b>Building candles from trades...</b></html>");
-        JPanel statsPanel = new JPanel(new BorderLayout());
-        statsPanel.add(statsLabel, BorderLayout.NORTH);
+        void addTrade(long timestamp, double price, int size) {
+            // Check if we need to start a new candle
+            long timeframeMillis = TIMEFRAME_MILLIS.get(timeframe);
+            long expectedStart = (timestamp / timeframeMillis) * timeframeMillis;
 
-        logArea = new JTextArea(20, 60);
-        logArea.setEditable(false);
-        logArea.setBackground(Color.BLACK);
-        logArea.setForeground(Color.CYAN);
-        JScrollPane scrollPane = new JScrollPane(logArea);
+            if (expectedStart != startTime) {
+                // This trade belongs to a new candle period
+                return;
+            }
 
-        mainPanel.add(statsPanel, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
+            if (!hasData) {
+                // First trade in this candle
+                open = price;
+                high = price;
+                low = price;
+                close = price;
+                hasData = true;
+            } else {
+                // Update candle
+                if (price > high)
+                    high = price;
+                if (price < low)
+                    low = price;
+                close = price;
+            }
 
+            volume += size;
+            tradeCount++;
+            volumeWeightedSum += price * size;
+        }
 
-        updateUI();
+        boolean shouldClose(long currentTime) {
+            if (!hasData)
+                return false;
+            long timeframeMillis = TIMEFRAME_MILLIS.get(timeframe);
+            return currentTime >= startTime + timeframeMillis;
+        }
 
-        return new StrategyPanel[]{mainPanel};
+        double getVwap() {
+            return volume > 0 ? volumeWeightedSum / volume : close;
+        }
+
+        void reset(long newStartTime) {
+            this.startTime = newStartTime;
+            this.hasData = false;
+            this.volume = 0;
+            this.tradeCount = 0;
+            this.volumeWeightedSum = 0;
+        }
+
+        boolean hasData() {
+            return hasData;
+        }
     }
 }
-

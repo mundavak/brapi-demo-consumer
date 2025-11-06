@@ -1,0 +1,202 @@
+Source: MS Word MCP server for AI agents.pdf
+Pages: 8
+Characters: 5923
+Processing Time: 0.53s
+================================================================================
+
+--- Page 1 ---
+Back to servers
+Setup instructions
+Claude Code
+Cursor
+Claude Desktop
+Provider
+famano
+Release date
+Jan 21, 2025
+Language
+playbooks
+MS Word MCP server
+Integrates with Microsoft Word documents to enable reading, writing, and
+editing of text, tables, and images for automated document processing and
+content generation.
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+1/8
+
+
+--- Page 2 ---
+Python
+Stats
+27 stars
+The MCP Server Office enables you to read, write, and edit Microsoft Word (docx)
+files through a Model Context Protocol server interface, making document
+manipulation programmatically accessible.
+Installation
+Install the MCP server using pip:
+pip install mcp-server-office
+If you prefer using uv:
+uvx mcp-server-office
+Starting the Server
+View Markdown
+View on GitHub
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+2/8
+
+
+--- Page 3 ---
+Start the MCP server by running:
+mcp-server-office
+Available Tools
+The server provides four main tools for working with Word documents:
+Read DOCX Files
+The read_docx  tool extracts the complete contents of a docx file, including tables
+and images.
+Input parameters:
+path  (string) - Absolute path to the target file
+Note: Images appear as [Image]  placeholders, and track changes are not shown in
+the output.
+Write DOCX Files
+The write_docx  tool creates new docx files with content you specify.
+Input parameters:
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+3/8
+
+
+--- Page 4 ---
+path  (string) - Absolute path to the target file
+content  (string) - Content to write to the file
+Formatting guidelines:
+Use double line breaks to create new paragraphs
+Use [Table]  tag with |  separators to create tables
+Edit DOCX Paragraphs
+The edit_docx_paragraph  tool makes text replacements in specific paragraphs of a
+docx file.
+Input parameters:
+path  (string) - Absolute path to the file to edit
+edits  (array) - List of dictionaries containing:
+paragraph_index  (number) - 0-based index of the paragraph to edit
+search  (string) - Text to find within the specified paragraph
+replace  (string) - Text to replace with
+Note: Each search string must match exactly once within the specified paragraph.
+Insert Content into DOCX Files
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+4/8
+
+
+--- Page 5 ---
+The edit_docx_insert  tool inserts new paragraphs into a docx file.
+Input parameters:
+path  (string) - Absolute path to the file to edit
+inserts  (array) - List of dictionaries containing:
+text  (string) - Text to insert as a new paragraph
+paragraph_index  (number, optional) - 0-based index of the paragraph before
+which to insert. If not specified, the text will be inserted at the end.
+System Requirements
+Python 3.12 or newer
+Required dependencies (installed automatically):
+mcp[cli] ≥ 1.2.0
+python-docx ≥ 1.1.2
+How to install this MCP server
+For Claude Code
+To add this MCP server to Claude Code, run this command in your terminal:
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+5/8
+
+
+--- Page 6 ---
+
+
+claude mcp add-json "mcp-server-office" '{"command":"mcp-server-office","ar
+See the official Claude Code MCP documentation for more details.
+For Cursor
+There are two ways to add an MCP server to Cursor. The most common way is to
+add the server globally in the ~/.cursor/mcp.json  file so that it is available in all of
+your projects.
+If you only need the server in a single project, you can add it to the project instead by
+creating or adding it to the .cursor/mcp.json  file.
+Adding an MCP server to Cursor globally
+To add a global MCP server go to Cursor Settings > Tools & Integrations and click
+"New MCP Server".
+When you click that button the ~/.cursor/mcp.json  file will be opened and you can
+add your server like this:
+{
+    "mcpServers": {
+        "mcp-server-office": {
+            "command": "mcp-server-office",
+            "args": []
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+6/8
+
+
+--- Page 7 ---
+        }
+    }
+}
+Adding an MCP server to a project
+To add an MCP server to a project you can create a new .cursor/mcp.json  file or
+add it to the existing one. This will look exactly the same as the global MCP server
+example above.
+How to use the MCP server
+Once the server is installed, you might need to head back to Settings > MCP and
+click the refresh button.
+The Cursor agent will then be able to see the available tools the added MCP server
+has available and will call them when it needs to.
+You can also explicitly ask the agent to use the tool by mentioning the tool name and
+describing what the function does.
+For Claude Desktop
+To add this MCP server to Claude Desktop:
+1. Find your configuration file:
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+7/8
+
+
+--- Page 8 ---
+macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+Windows: %APPDATA%\Claude\claude_desktop_config.json
+Linux: ~/.config/Claude/claude_desktop_config.json
+2. Add this to your configuration file:
+{
+    "mcpServers": {
+        "mcp-server-office": {
+            "command": "mcp-server-office",
+            "args": []
+        }
+    }
+}
+3. Restart Claude Desktop for the changes to take effect
+Privacy / Terms / Advertise
+Made by Ian Nuttall
+Adding a new feature to a project with
+Factory CLI
+10/24/25, 8:22 AM
+MS Word MCP server for AI agents
+https://playbooks.com/mcp/famano-office
+8/8

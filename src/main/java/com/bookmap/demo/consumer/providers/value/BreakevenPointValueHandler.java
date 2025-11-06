@@ -42,10 +42,14 @@ public class BreakevenPointValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        if(o.getClass().getName().equals(BreakevenEventV1.class.getName())) {
-            return CastUtilities.castObject(o, BreakevenEventV1.class);
-        } else if(o.getClass().getName().equals(PaidCommissionEventV1.class.getName())) {
-            return CastUtilities.castObject(o, PaidCommissionEventV1.class);
+        try {
+            if(o.getClass().getName().equals(BreakevenEventV1.class.getName())) {
+                return CastUtilities.castObject(o, BreakevenEventV1.class);
+            } else if(o.getClass().getName().equals(PaidCommissionEventV1.class.getName())) {
+                return CastUtilities.castObject(o, PaidCommissionEventV1.class);
+            }
+        } catch (Throwable t) {
+            // Best effort - return null on cast failure
         }
         return null;
     }
@@ -67,7 +71,11 @@ public class BreakevenPointValueHandler implements ProviderValueHandler{
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, CommissionsSettingsV1.class);
+        try {
+            return CastUtilities.castObject(o, CommissionsSettingsV1.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override

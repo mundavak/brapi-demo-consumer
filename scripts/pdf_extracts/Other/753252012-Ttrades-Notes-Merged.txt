@@ -1,0 +1,3663 @@
+Source: 753252012-Ttrades-Notes-Merged.pdf
+Pages: 302
+Characters: 34726
+Processing Time: 0.34s
+================================================================================
+
+--- Page 1 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+TTRADES NOTES 
+MERGED 
+
+
+--- Page 2 ---
+Table of Contents 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Subject 
+Page No. 
+Trading Models and Checklist 
+1 
+Liquidity 
+7 
+Discount & Premium 
+13 
+ICT Killzones 
+19 
+Market Structure Shift 
+23 
+MSS vs Liquidity Grab 
+27 
+Fair Value Gaps 
+33 
+Orderblocks 
+41 
+OTE 
+49 
+Daily Bias 
+57 
+Important Liquidity 
+65 
+IRL & ERL 
+73 
+ERL-IRL Model 
+83 
+Position Sizing 
+95 
+Basic Market Structure 
+103 
+SMT 
+115 
+Intraday Bias 
+125 
+PO3 
+131 
+Inversion 
+137 
+CISD 
+153 
+MSS vs CISD 
+155 
+Breaker Blocks 
+161 
+Std. Projections 
+179 
+PO3 + STD. 
+189 
+Silver Bullet – AM 
+197 
+ICT Son’s Model 
+201 
+ICT Son’s Model (HTF) 
+205 
+Relative Strength/Weakness 
+213 
+Mitigation Blocks 
+219 
+Propulsion Blocks 
+233 
+Advanced Market Structure 
+241 
+Broadening Formations 
+257 
+MMXM Twitter Model 
+277 
+Unicorn Model 
+287 
+Economic Calender 
+293 
+
+
+--- Page 3 ---
+Trading Models and Checklist 
+ 
+ 
+ 
+1 
+ 
+Model 1 : HTF + BOS + FVG 
+ 
+ 
+2 
+ 
+Model 2 : HTF + BOS + IDM + FVG 
+ 
+3 
+ 
+Model 3 : HTF + BOS + FVG + OTE (Model 1 + OTE) 
+ 
+4 
+ 
+Model 4 : HTF + BOS + IDM + FVG + OTE (Model 2 + OTE) 
+ 
+5 
+ 
+Model 5 : Box Setup 
+1
+
+
+--- Page 4 ---
+Model 1 : HTF + BOS + FVG 
+HTF POI
+HTF POI
+Liquidity grab
+Liquidity grab
+BOS
+BOS
+FVG
+FVG
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+FVG
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Discount
+Good Risk : Reward 
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Premium
+Good Risk : Reward 
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+FVG
+Model 1 Variation : Failed swing
+Model 1 Variation : SMT
+@TTrades_edu
+-
+-
+-
+-
+-
+-
+2
+
+
+--- Page 5 ---
+Model 2 : HTF + BOS + IDM + FVG 
+HTF POI
+HTF POI
+Liquidity grab
+Liquidity grab
+BOS
+BOS
+FVG
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Discount
+Good Risk : Reward 
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Premium
+Good Risk : Reward 
+Model 2 Variation : Failed swing
+Model 2 Variation : SMT
+IDM
+FVG
+IDM
+Internal Liquidity (IDM)
+Internal Liquidity (IDM)
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+IDM
+FVG
+IDM
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+IDM
+FVG
+IDM
+@TTrades_edu=
+-
+-
+-
+-
+3
+
+
+--- Page 6 ---
+Model 3 : HTF + BOS + FVG + OTE
+HTF POI
+HTF POI
+Liquidity grab
+Liquidity grab
+BOS
+BOS
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Discount + OTE (.62-.79)
+Good Risk : Reward 
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Premium + OTE (.62-.79)
+Good Risk : Reward 
+Model 1 Variation : Failed swing
+Model 1 Variation : SMT
+1
+.79
+.79
+1
+.62
+.5
+0
+.62
+.5
+0
+FVG
+FVG
+Model 1 + OTE
+HTF POI
+HTF POI
+BOS
+BOS
+1
+.79
+.79
+1
+.62
+.5
+0
+.62
+.5
+0
+FVG
+FVG
+HTF POI
+HTF POI
+BOS
+BOS
+1
+.79
+.79
+1
+.62
+.5
+0
+.62
+.5
+0
+FVG
+FVG
+@TTrades_edu
+I
+more
+-
+mee
+-
+-
+T
+- -
+- -
+4
+
+
+--- Page 7 ---
+Model 4 : HTF + BOS + IDM + FVG + OTE
+HTF POI
+HTF POI
+Liquidity grab
+Liquidity grab
+BOS
+BOS
+FVG
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Discount + OTE (.62-.79)
+Good Risk : Reward 
+HTF LIQ GRAB / FVG / POI
+LTF Liquidity Grab
+BOS + Displacement + FVG
+FVG In Premium + OTE (.62-.79)
+Good Risk : Reward 
+Model 2 Variation : Failed swing
+Model 2 Variation : SMT
+IDM
+FVG
+Internal Liquidity (IDM)
+Internal Liquidity (IDM)
+.79
+1
+.62
+.5
+0
+0
+.79
+1
+.62
+.5
+IDM
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+IDM
+FVG
+.79
+1
+.62
+.5
+0
+0
+.79
+1
+.62
+.5
+IDM
+HTF POI
+HTF POI
+BOS
+BOS
+FVG
+IDM
+FVG
+.79
+1
+.62
+.5
+0
+0
+.79
+1
+.62
+.5
+IDM
+Model 2 + OTE
+@TTrades_edu
+I
+-
+-
+-are
+in
+a
+re
+-
+↑
+minine
+e
+- VI
+eVI
+N
+N
+-mean
+-
+-a
+5
+
+
+--- Page 8 ---
+Model 5 : Box Setup
+HTF POI
+HTF POI / Low
+Original Consolidation Range
+Aggressive Down
+Aggressive Up
+Good Risk : Reward 
+Retest of Original Consolidation Low
+HTF POI
+HTF POI / High
+Original Consolidation Range
+Aggressive Up
+Aggressive Down
+Good Risk : Reward 
+Retest of Original Consolidation High
+Model 5 : Box Setup Variations - No POI
+Experiment! 
+@TTrades_edu
+-
+-
+-
+-
+-
+-
+6
+
+
+--- Page 9 ---
+Liquidity
+1
+Swing Highs & Lows
+2
+Buyside & Sellside
+3
+Types Of Liquidity
+4
+Previous Day & Week
+5
+Session Highs & Lows
+7
+
+
+--- Page 10 ---
+1
+Swing Highs & Lows
+A Swing High is formed when there is a high 
+with a lower high to the left and right. 
+A Swing Low is formed when there is a low 
+with a higher low to the left and right. 
+8
+
+
+--- Page 11 ---
+2
+Buyside & Sellside
+A Swing High at the top of the 
+range will have stop losses from 
+short positions (buy stops). This 
+is called buyside liquidity.
+A Swing Low at the bottom of 
+the range will have stop losses 
+from long positions (sell stops). 
+This is called sellside liquidity.
+Sellside Liquidity
+Buyside Liquidity
+9
+
+
+--- Page 12 ---
+3
+Types Of Liquidity
+Sellside Liquidity
+Buyside Liquidity
+Old Highs & Lows are previous 
+highs and lows. 
+Sellside Liquidity
+Buyside Liquidity
+Equal Highs & Lows are when 
+price reaches the same price 
+level multiple times. Appearing 
+to be support and resistance.
+Relatively Equal Highs
+Relatively Equal Lows
+Old Low
+Old High
+10
+
+
+--- Page 13 ---
+4
+Previous Day & Week
+Previous Week High & Low are 
+liquidity levels that can be used as 
+a draw on liquidity or frame a 
+reversal or continuation.
+Previous Weeks Low
+Previous Weeks High
+M
+T
+W
+TH
+F
+Previous Day Low
+Previous Day High
+Daily Timeframe
+4 Hour Timeframe
+Previous Day High & Low are 
+liquidity levels that can be used as 
+a draw on liquidity or frame a 
+reversal or continuation.
+11
+
+
+--- Page 14 ---
+5
+Session Highs & Lows
+Asian Session High
+Asian Session Low
+London Session Low
+London Session High
+Session Highs & Lows are 
+liquidity levels that can be used as 
+a draw on liquidity or frame a 
+reversal or continuation
+12
+
+
+--- Page 15 ---
+Discount & Premium
+1
+Range High & Low
+2
+Discount & Premium
+3
+Why?
+4
+Premium PD Array
+5
+Discount PD Array
+13
+
+
+--- Page 16 ---
+1
+Range High & Low
+Discount and premium is based off the 
+range high to the range low.
+An easy way to view a range is to look for 
+where sell side and buyside liquidity is 
+resting. 
+Liquidity PDF
+ 
+Buyside Liquidity  
+Sellside Liquidity
+14
+
+
+--- Page 17 ---
+2
+Discount & Premium
+A Gann Box or Fibonacci can be used from 
+the high to the low, marking out the middle 
+of the range, or 0.5.
+The top 50% or above the 0.5 is considered 
+a premium.
+The bottom 50% or below the 0.5 is 
+considered a discount.
+ 
+0.5
+ 
+15
+
+
+--- Page 18 ---
+3
+Why?
+Short positions in premium give better 
+reward to risk than a short at equilibrium 
+(0.5) or a short in discount. 
+ 
+0.5
+ 
+RR>1
+ 
+RR=1
+ 
+RR<1
+ 
+Premium 
+Equilibrium
+Discount
+Short
+ 
+Entry: 
+0.5
+ 
+Long positions in discount give better 
+reward to risk than a long at equilibrium 
+(0.5) or a long in premium. 
+ 
+RR>1
+ 
+RR=1
+ 
+RR<1
+ 
+Long
+ 
+Premium 
+Discount
+Equilibrium
+Entry:
+16
+
+
+--- Page 19 ---
+4
+Premium PD Array
+0.5
+ 
+Premium arrays, or PD arrays in a premium 
+are used to frame a short setup. 
+OB
+17
+
+
+--- Page 20 ---
+5
+Discount PD Array
+0.5
+ 
+Discount arrays, or PD arrays in a discount 
+are used to frame a long setup. 
+FVG
+18
+
+
+--- Page 21 ---
+ICT Killzones
+1
+Killzones 
+2
+Silver Bullet Windows 
+19
+
+
+--- Page 22 ---
+1
+Killzones
+Asia: 20:00 – 00:00
+London: 02:00 – 05:00
+New York AM: 07:00 – 10:00
+London Close: 10:00 – 12:00
+Forex Killzones:
+Asia: 20:00 – 00:00
+London: 02:00 – 05:00
+New York AM: 08:30 – 11:00
+New York PM: 13:30 – 16:00
+Indices Killzones:
+20:00 – 00:00
+02:00 – 05:00
+07:00 – 10:00
+10:00 – 12:00
+20:00 – 00:00
+02:00 – 05:00
+08:30 – 11:00
+13:30 – 16:00
+Eastern Standard Time (EST)
+20
+
+
+--- Page 23 ---
+2
+Silver Bullet Windows
+London SB: 03:00 – 04:00
+New York AM SB: 10:00 – 11:00
+New York PM SB: 14:00 – 15:00
+Silver Bullet:
+20:00 – 00:00
+02:00 – 05:00
+08:30 – 11:00
+13:30 – 16:00
+03:00–04:00
+10:00–11:00
+14:00–15:00
+Eastern Standard Time (EST)
+21
+
+
+--- Page 24 ---
+22
+
+
+--- Page 25 ---
+Market Structure Shift
+1
+Displacement
+2
+Market Structure Shift
+3
+Higher Time Frame Level
+23
+
+
+--- Page 26 ---
+1
+Displacement
+Displacement is an aggressive move with 
+full-bodied candles.
+This can form in a single candle or in 
+multiple candles. 
+Generally, displacement candle(s) have FVG 
+present.  
+24
+
+
+--- Page 27 ---
+2
+Market Structure Shift
+When displacement occurs over or below a 
+swing high or low, a market structure shift 
+happens.  
+Having bodies close over/below previous structure is preferred.
+A stop raid before the MSS is preferred. 
+A market structure shift (MSS) indicates a 
+change in trend from bullish to bearish or 
+bearish to bullish.
+Market Structure Shift 
+25
+
+
+--- Page 28 ---
+3
+Higher Time Frame Level
+It is important that a higher time frame level 
+is engaged prior to the lower time frame 
+market structure shift.  
+Higher Time Frame Level
+26
+
+
+--- Page 29 ---
+MSS vs Liquidity Grab
+1
+Displacement
+2
+Market Structure Shift
+3
+Liquidity Grab
+4
+Example
+27
+
+
+--- Page 30 ---
+1
+Displacement
+Displacement is an aggressive move with 
+full-bodied candles.
+This can form in a single candle or in 
+multiple candles. 
+Generally, displacement candle(s) have FVG 
+present.  
+28
+
+
+--- Page 31 ---
+2
+Market Structure Shift
+When displacement occurs over or below a 
+swing high or low, a market structure shift 
+occurs.  
+Having bodies close over/below previous structure is preferred.
+A stop raid before the MSS is preferred. 
+A market structure shift (MSS) indicates a 
+change in trend from bullish to bearish or 
+bearish to bullish.
+MSS PDF
+Market Structure Shift 
+29
+
+
+--- Page 32 ---
+3
+Liquidity Grab
+When there is lack of displacement over or 
+below a swing high or low, a liquidity grab 
+occurs.
+Having bodies fail to close over/below previous structure is preferred.
+A liquidity grab indicates a failure to 
+continue in one direction.
+Failure to displace over previous high
+Failure to displace below previous low
+30
+
+
+--- Page 33 ---
+4
+Example
+Failure To Displace
+Displacement
+31
+
+
+--- Page 34 ---
+32
+
+
+--- Page 35 ---
+Fair Value Gaps
+1
+Fair Value Gaps
+2
+SIBI & BISI
+3
+VI & Opening Gap
+4
+Entries
+5
+Stop Losses
+6
+Inversion
+33
+
+
+--- Page 36 ---
+1
+Fair Value Gaps
+Fair value gaps (FVG) are a three-candlestick 
+pattern where the high/low of the candle(1) 
+does not overlap the low/high of candle(3). 
+1
+2
+3
+1
+2
+3
+The low of candle(1) 
+does not overlap with 
+the high of candle(3). 
+34
+
+
+--- Page 37 ---
+2
+SIBI & BISI
+SIBI: Sellside imbalance buyside inefficiency
+This is a bearish FVG.
+Price offered sellside and made an 
+imbalance. This leaves buyside inefficient.
+Candle(1) low does not overlap with 
+Candle(3) high. 
+BISI: Buyside imbalance sellside inefficiency
+This is a bullish FVG. 
+Price offered buyside and made an 
+imbalance. This leaves sellside inefficient.
+Candle(1) high does not overlap with 
+Candle(3) low. 
+1
+2
+3
+1
+2
+3
+35
+
+
+--- Page 38 ---
+3
+VI & Opening Gap
+Fair Value Gap
+Opening Gap
+Volume Imbalance
+36
+
+
+--- Page 39 ---
+4
+Entries
+IOFED
+FVG Fill
+Consequent Encroachment
+Entry
+Entry
+0.5
+Entry
+37
+
+
+--- Page 40 ---
+5
+Stop Losses
+FVG End
+Swing
+Order Block
+Stop
+Stop
+Stop
+38
+
+
+--- Page 41 ---
+6
+Inversion
+A SIBI used as support on the 
+buyside of the curve.
+A BISI used as resistance on the 
+sellside of the curve. 
+39
+
+
+--- Page 42 ---
+40
+
+
+--- Page 43 ---
+Orderblocks
+1
+Orderblocks
+5
+Mean Threshold
+6
+Stop Losses
+41
+
+
+--- Page 44 ---
+1
+Orderblocks
+OB
+Important Level
+OB
+Important Level
+42
+
+
+--- Page 45 ---
+2
+Orderblocks
+OB
+OB
+43
+
+
+--- Page 46 ---
+3
+Orderblocks
+OB
+FVG
+44
+
+
+--- Page 47 ---
+4
+Orderblocks
+OB
+45
+
+
+--- Page 48 ---
+Mean Threshold
+5
+Important Level
+0.5
+1
+0
+46
+
+
+--- Page 49 ---
+6
+Stop Losses
+Swing Low
+OB
+47
+
+
+--- Page 50 ---
+48
+
+
+--- Page 51 ---
+OTE
+1
+Fibonacci Settings
+2
+Anchor Points
+3
+Optimal Trade Entry (OTE)
+4
+Alignment With PD Arrays
+5
+Extra
+49
+
+
+--- Page 52 ---
+1
+Fibonacci Settings
+1
+.79
+.705
+.62
+.5
+0
+1
+.79
+.705
+.62
+.5
+0
+The Fibonacci Settings:
+0
+0.5
+0.62
+0.705
+0.79
+1
+50
+
+
+--- Page 53 ---
+1
+.79
+.705
+.62
+.5
+0
+2
+Anchor Points
+Anchored from swing high to 
+swing low. Liquidity PDF
+51
+
+
+--- Page 54 ---
+3
+Optimal Trade Entry (OTE)
+1
+.79
+.705
+.62
+.5
+0
+52
+
+
+--- Page 55 ---
+4
+Alignment With PD Arrays
+1
+.79
+.705
+.62
+.5
+0
+53
+
+
+--- Page 56 ---
+1
+.79
+.705
+.62
+.5
+0
+5
+Extra
+54
+
+
+--- Page 57 ---
+1
+.79
+.705
+.62
+.5
+0
+6
+Extra
+55
+
+
+--- Page 58 ---
+1
+.79
+.705
+.62
+.5
+0
+7
+Extra
+56
+
+
+--- Page 59 ---
+Daily Bias
+1
+Previous Day High & Low
+2
+Previous Week High & Low
+3
+Swing Points
+4
+Failure To Displace
+5
+Next Day Model
+Credit to The MMXM Trader for his teachings
+57
+
+
+--- Page 60 ---
+1
+Previous Day High & Low
+Previous Day High & Low are liquidity levels that can be used 
+as a draw on liquidity or frame a reversal or continuation.
+Previous Day High
+Previous Day Low
+Is price more likely to reach for previous day high or previous day low? 
+Previous Day High
+Previous Day Low
+Previous Day High
+Previous Day Low
+Previous Day High
+Previous Day Low
+Reversals can be framed off PDH and PDL when there is a failure to displace.
+Reversal Framed 
+Off PDH
+Anticipate PDL 
+As Draw
+Reversal Framed 
+Off PDL
+PDH
+Anticipate PDH 
+As Draw
+Anticipate PDH 
+As Draw
+Daily Timeframe
+58
+
+
+--- Page 61 ---
+2
+Previous Day High & Low
+Previous Day Low
+Previous Day High
+4 Hour Timeframe
+Previous Day Low
+Previous Day High
+4 Hour Timeframe
+Example of Previous Day Low being used as a draw on 
+liquidity and being used to frame a reversal. H4 chart is 
+shown. 
+59
+
+
+--- Page 62 ---
+3
+Previous Week High & Low
+Previous Week High & Low are liquidity levels that can be used as 
+a draw on liquidity or frame a reversal or continuation.
+Previous Weeks Low
+Previous Weeks High
+M
+T
+W
+TH
+F
+Previous Weeks Low
+Previous Weeks High
+M
+T
+W
+TH
+F
+Daily Timeframe
+60
+
+
+--- Page 63 ---
+4
+Swing Points
+Swing points in the market can be used 
+as a draw on liquidity or be used to 
+frame a reversal. 
+Anticipate As Draw On Liquidity
+Reversal Framed Off Swing Point
+Daily Timeframe
+61
+
+
+--- Page 64 ---
+5
+Failure To Displace
+Failure to displace over old highs & lows can 
+be used to frame a reversal. 
+Reversal Framed Off Swing Point
+Reversal Framed Off Swing Point
+Daily Timeframe
+62
+
+
+--- Page 65 ---
+6
+Next Day Model
+When price respects a PD array or fails to 
+displace over a swing high or low, the next 
+candle can be anticipated. 
+Daily Timeframe
+63
+
+
+--- Page 66 ---
+64
+
+
+--- Page 67 ---
+Important Liquidity
+1
+Candles 
+2
+Monthly 
+3
+Weekly
+4
+Daily 
+5
+Killzones
+6
+Sessions 
+65
+
+
+--- Page 68 ---
+1
+Candles
+Consolidation
+One Side
+Both Sides
+66
+
+
+--- Page 69 ---
+2
+Monthly
+Previous Month Low
+Previous Month High
+Weekly Timeframe
+Previous Month Low
+Previous Month High
+Weekly Timeframe
+67
+
+
+--- Page 70 ---
+3
+Weekly
+Previous Weeks Low
+Previous Weeks High
+Daily Timeframe
+Previous Weeks Low
+Previous Weeks High
+Daily Timeframe
+68
+
+
+--- Page 71 ---
+4
+Daily
+Previous Day Low
+Previous Day High
+4 Hour Timeframe
+Previous Day Low
+Previous Day High
+4 Hour Timeframe
+69
+
+
+--- Page 72 ---
+5
+Killzones
+Asia: 20:00 – 00:00
+London: 02:00 – 05:00
+New York AM: 08:30 – 11:00
+New York PM: 13:30 – 16:00
+Indices Killzones:
+20:00 – 00:00
+02:00 – 05:00
+08:30 – 11:00
+13:30 – 16:00
+Eastern Standard Time (EST)
+70
+
+
+--- Page 73 ---
+6
+Sessions
+Eastern Standard Time (EST)
+Asian Session High
+Asian Session Low
+London Session Low
+London Session High
+71
+
+
+--- Page 74 ---
+7
+Sessions
+Eastern Standard Time (EST)
+Asian Session High
+Asian Session Low
+London Session Low
+London Session High
+72
+
+
+--- Page 75 ---
+IRL & ERL
+1
+Internal Liquidity
+2
+External Liquidity
+3
+Relationship
+73
+
+
+--- Page 76 ---
+1
+Internal Range Liquidity
+74
+
+
+--- Page 77 ---
+2
+External Range Liquidity
+Sellside Liquidity
+Buyside Liquidity
+External Range Liquidity
+75
+
+
+--- Page 78 ---
+3
+Relationship
+External Range Liquidity
+Internal Range Liquidity
+76
+
+
+--- Page 79 ---
+4
+External Range Liquidity
+Internal Range Liquidity
+Relationship
+77
+
+
+--- Page 80 ---
+5
+External Range Liquidity
+Internal Range Liquidity
+Relationship
+78
+
+
+--- Page 81 ---
+6
+External Range Liquidity
+External Range Liquidity
+Internal Range Liquidity
+Relationship
+79
+
+
+--- Page 82 ---
+7
+External Range Liquidity
+External Range Liquidity
+Internal Range Liquidity
+Relationship
+80
+
+
+--- Page 83 ---
+8
+External Range Liquidity
+External Range Liquidity
+Internal Range Liquidity
+Relationship
+81
+
+
+--- Page 84 ---
+82
+
+
+--- Page 85 ---
+ERL-IRL Model 
+ 
+ 
+ 
+1 
+ 
+INTERNAL LIQUIDITY 
+ 
+2 
+ 
+EXTERNAL LIQUIDITY 
+ 
+3 
+ 
+RELATIONSHIP 
+ 
+4 
+ 
+THE MODEL 
+ 
+ 
+ 
+83
+
+
+--- Page 86 ---
+CONTENTS
+internal liquidity
+
+external liquidity
+
+relationship
+
+the model
+1
+
+2
+
+3
+
+8
+
+
+
+84
+
+
+--- Page 87 ---
+1
+TTrades
+TTrades
+85
+
+
+--- Page 88 ---
+2
+TTrades
+TTrades
+86
+
+
+--- Page 89 ---
+3
+TTrades
+TTrades
+87
+
+
+--- Page 90 ---
+4
+TTrades
+TTrades
+88
+
+
+--- Page 91 ---
+5
+TTrades
+TTrades
+89
+
+
+--- Page 92 ---
+6
+TTrades
+TTrades
+90
+
+
+--- Page 93 ---
+7
+TTrades
+TTrades
+91
+
+
+--- Page 94 ---
+8
+TTrades
+TTrades
+ERL -> IRL
+IRL -> ERL
+HTF
+HTF
+LTF
+LTF
+killzone
+Stop raid
+market structure
+shift
+fair value gap
+2r
+HTF Level
+92
+
+
+--- Page 95 ---
+9
+TTrades
+TTrades
+93
+
+
+--- Page 96 ---
+TTrades
+10
+TTrades
+94
+
+
+--- Page 97 ---
+Position Sizing
+1
+Win Rate & Risk : Reward
+2
+Position Sizing Options
+3
+Fixed Contract
+4
+Fixed $ / %
+95
+
+
+--- Page 98 ---
+1
+Win Rate & RR
+20%
+30%
+40%
+50%
+60%
+1:1
+1:2
+1:3
+1:4
+1:5
+Not 
+Profitable
+Not 
+Profitable
+Not 
+Profitable
+Not 
+Profitable
+Not 
+Profitable
+Not 
+Profitable
+Breakeven
+Breakeven
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Profitable
+Win Rate
+Risk : Reward Ratio
+Assuming Same $ Risk Per Trade
+96
+
+
+--- Page 99 ---
+2
+Position Sizing Options
+Fixed Contracts
+Fixed Dollar
+Fixed Percentage
+Options For Position Sizing
+97
+
+
+--- Page 100 ---
+3
+Fixed Contract
+2 NQ Contracts
+20 Points Risk
+Risk = $800
+2 NQ Contracts Used In Each Scenario
+2 NQ Contracts
+40 Points Risk
+Risk = $1600
+2 NQ Contracts
+10 Points Risk
+Risk = $400
+98
+
+
+--- Page 101 ---
+4
+Fixed Contract
+2 NQ Contracts
+20 Points Risk
+Risk = $800
+2 NQ Contracts Used In Each Scenario
+2 NQ Contracts
+40 Points Risk
+Risk = $1600
+2 NQ Contracts
+10 Points Risk
+Risk = $400
+-$800 (-1R)
+-$1600 (-1R)
++$1600 (+4R)
+------------------------
+-$800 (+2R)???
+99
+
+
+--- Page 102 ---
+Fixed $/% 
+5
+2.5 Contracts
+20 Points Risk
+Risk = $1000
+Adjust Contracts Per Scenario To 
+Maintain Fixed Risk Of $1000
+$ of defined risk / $ per point / stop size
+1000/20/20 = 2.5
+5 NQ Contracts
+10 Points Risk
+Risk = $1000
+1.25 NQ Contracts
+40 Points Risk
+Risk = $1000
+1000/20/40 = 1.25
+1000/20/10 = 5
+25 Micros
+12.5 Micros
+50 Micros
+100
+
+
+--- Page 103 ---
+Fixed $/% 
+6
+2.5 Contracts
+20 Points Risk
+Risk = $1000
+Adjust Contracts Per Scenario To 
+Maintain Fixed Risk Of $1000
+$ of defined risk / $ per point / stop size
+1000/20/20 = 2.5
+5 NQ Contracts
+10 Points Risk
+Risk = $1000
+1.25 NQ Contracts
+40 Points Risk
+Risk = $1000
+1000/20/40 = 1.25
+1000/20/10 = 5
+25 Micros
+12.5 Micros
+50 Micros
+-$1000 (-1R)
+-$1000 (-1R)
++$4000 (+4R)
+------------------------
++$2000 (+2R) 
+101
+
+
+--- Page 104 ---
+102
+
+
+--- Page 105 ---
+Basic Market Structure
+1
+Bullish Trend
+3
+Bearish Trend
+5
+Change In Trend
+9
+Understanding HTF
+103
+
+
+--- Page 106 ---
+1
+Bullish Trend
+104
+
+
+--- Page 107 ---
+2
+Bullish Trend
+Low
+High
+HL
+HH
+HL
+HL
+HH
+HH
+105
+
+
+--- Page 108 ---
+3
+Bearish Trend
+106
+
+
+--- Page 109 ---
+4
+Bearish Trend
+High
+Low
+LH
+LL
+LL
+LL
+LH
+LH
+107
+
+
+--- Page 110 ---
+5
+Change In Trend
+LL
+LL
+LH
+HL
+HH
+HL
+HH
+LL
+LH
+HH
+108
+
+
+--- Page 111 ---
+6
+Change In Trend
+LL
+LL
+LH
+HL
+HH
+HL
+HH
+LL
+LH
+HH
+109
+
+
+--- Page 112 ---
+7
+Change In Trend
+LL
+LH
+HH
+HH
+LL
+LL
+HL
+HL
+HH
+LH
+110
+
+
+--- Page 113 ---
+8
+Change In Trend
+LL
+LH
+HH
+HH
+LL
+LL
+HL
+HL
+HH
+LH
+111
+
+
+--- Page 114 ---
+9
+Understanding HTF
+112
+
+
+--- Page 115 ---
+10
+Understanding HTF
+113
+
+
+--- Page 116 ---
+11
+Understanding HTF
+114
+
+
+--- Page 117 ---
+SMT
+1
+Correlated Pairs – Bullish
+2
+Correlated Pairs – Bullish SMT
+4
+Correlated Pairs – Bearish
+5
+Correlated Pairs – Bearish SMT
+7
+Inversely Correlated Pairs
+8
+Inversely Correlated Pairs SMT
+115
+
+
+--- Page 118 ---
+1
+Correlated Pairs - Bullish
+Low
+Higher Low
+Low
+Higher Low
+116
+
+
+--- Page 119 ---
+2
+Correlated Pairs – Bullish SMT
+Low
+Lower Low
+Low
+Higher Low
+117
+
+
+--- Page 120 ---
+3
+Correlated Pairs – Bullish SMT
+118
+
+
+--- Page 121 ---
+4
+Correlated Pairs - Bearish
+High
+Lower High
+High
+Lower High
+119
+
+
+--- Page 122 ---
+5
+Correlated Pairs – Bearish SMT
+High
+Higher High
+High
+Lower High
+120
+
+
+--- Page 123 ---
+6
+Correlated Pairs – Bearish SMT
+121
+
+
+--- Page 124 ---
+7
+Inversely Correlated Pairs
+Lower High
+High
+High
+Higher High
+Low
+Lower Low
+Low
+Higher low
+122
+
+
+--- Page 125 ---
+8
+Inversely Correlated Pairs SMT
+Lower High
+High
+High
+Higher High
+Low
+Higher Low
+Low
+Lower Low
+123
+
+
+--- Page 126 ---
+9
+Inversely Correlated Pairs SMT
+124
+
+
+--- Page 127 ---
+Intraday Bias
+1
+Previous Candle High (PCH) & Low (PCL) 
+2
+Swing Points
+3
+Failure To Displace
+4
+Next Candle Model
+Credit to The MMXM Trader for his teachings
+125
+
+
+--- Page 128 ---
+1
+Previous Candle High & Low
+Previous Candle High & Low are liquidity levels that can be 
+used as a draw on liquidity or frame a reversal or 
+continuation.
+PCH
+PCL
+Is price more likely to reach for previous candle high or low? 
+PCH
+PCL
+PCH
+PCL
+PCH
+PCL
+Reversals can be framed off PCH and PCL when there is a failure to displace.
+Reversal Framed 
+Off PCH
+Anticipate PCL 
+As Draw
+Reversal Framed 
+Off PCL
+PCH
+Anticipate PCH
+As Draw
+Anticipate PCH
+As Draw
+H4 / H1 / M30 / M15 
+Timeframe
+126
+
+
+--- Page 129 ---
+2
+Previous Candle High & Low
+Previous Candle Low
+Previous Candle High
+Lower Time Frame
+Previous Candle Low
+Previous Candle High
+Lower Time Frame
+Example of Previous Candle Low being used as a draw on 
+liquidity and being used to frame a reversal. 
+H4 / H1 / M30 / M15 
+Timeframe
+127
+
+
+--- Page 130 ---
+3
+Swing Points
+Swing points in the market can be used 
+as a draw on liquidity or be used to 
+frame a reversal. 
+Anticipate As Draw On Liquidity
+Reversal Framed Off Swing Point
+H4 / H1 / M30 / M15 
+Timeframe
+128
+
+
+--- Page 131 ---
+4
+Failure To Displace
+Failure to displace over old highs & lows can 
+be used to frame a reversal. 
+Reversal Framed Off Swing Point
+Reversal Framed Off Swing Point
+H4 / H1 / M30 / M15 
+Timeframe
+129
+
+
+--- Page 132 ---
+5
+Next Candle Model
+When price respects a PD array or fails to 
+displace over a swing high or low, the next 
+candle can be anticipated. 
+H4 / H1 / M30 / M15 
+Timeframe
+130
+
+
+--- Page 133 ---
+PO3
+1
+OHLC / OLHC
+2
+AMD
+3
+Power Of Three
+4
+Entries
+131
+
+
+--- Page 134 ---
+1
+OHLC / OLHC
+132
+
+
+--- Page 135 ---
+2
+AMD
+Accumulation
+Accumulation
+Manipulation
+Manipulation
+Distribution
+Distribution
+133
+
+
+--- Page 136 ---
+3
+Power Of Three
+134
+
+
+--- Page 137 ---
+4
+Entries
+135
+
+
+--- Page 138 ---
+136
+
+
+--- Page 139 ---
+Inversion
+1
+Fair Value Gaps
+2
+Inversion
+7
+Consequent Encroachment
+13
+Old SIBI / BISI
+137
+
+
+--- Page 140 ---
+1
+Fair Value Gaps
+138
+
+
+--- Page 141 ---
+2
+Inversion
+139
+
+
+--- Page 142 ---
+3
+Inversion
+140
+
+
+--- Page 143 ---
+4
+Inversion
+141
+
+
+--- Page 144 ---
+5
+Inversion
+142
+
+
+--- Page 145 ---
+6
+Inversion
+143
+
+
+--- Page 146 ---
+7
+Consequent Encroachment
+0.5
+144
+
+
+--- Page 147 ---
+8
+Consequent Encroachment
+0.5
+145
+
+
+--- Page 148 ---
+9
+Consequent Encroachment
+0.5
+146
+
+
+--- Page 149 ---
+10
+Consequent Encroachment
+0.5
+147
+
+
+--- Page 150 ---
+Consequent Encroachment
+0.5
+11
+148
+
+
+--- Page 151 ---
+Consequent Encroachment
+0.5
+12
+149
+
+
+--- Page 152 ---
+Old SIBI / BISI
+13
+150
+
+
+--- Page 153 ---
+Old SIBI / BISI
+14
+151
+
+
+--- Page 154 ---
+152
+
+
+--- Page 155 ---
+1
+CISD
+CISD
+Important Level
+CISD
+Important Level
+153
+
+
+--- Page 156 ---
+1
+CISD
+CISD
+Important Level
+CISD
+Important Level
+154
+
+
+--- Page 157 ---
+MSS vs CISD
+1
+Market Structure Shift
+2
+Change In State Of Delivery
+3
+Comparison
+4
+Inversion
+155
+
+
+--- Page 158 ---
+1
+Market Structure Shift
+Market Structure Shift 
+156
+
+
+--- Page 159 ---
+2
+CISD
+CISD
+Important Level
+CISD
+Important Level
+157
+
+
+--- Page 160 ---
+3
+Comparison
+CISD
+Important Level
+CISD
+Important Level
+Market Structure Shift 
+Market Structure Shift 
+158
+
+
+--- Page 161 ---
+Inversion
+4
+159
+
+
+--- Page 162 ---
+160
+
+
+--- Page 163 ---
+Breaker Blocks
+1
+Fair Value Gaps
+2
+Breaker Blocks
+4
+Unicorn
+161
+
+
+--- Page 164 ---
+1
+Bullish Breaker Block
+162
+
+
+--- Page 165 ---
+2
+Bullish Breaker Block
+Low
+163
+
+
+--- Page 166 ---
+3
+Bullish Breaker Block
+Low
+High
+164
+
+
+--- Page 167 ---
+4
+Bullish Breaker Block
+Low
+High
+Lower Low
+165
+
+
+--- Page 168 ---
+5
+Bullish Breaker Block
+Low
+High
+Lower Low
+Higher High
+166
+
+
+--- Page 169 ---
+6
+Bullish Breaker Block
+Low
+High
+Lower Low
+Higher High
+167
+
+
+--- Page 170 ---
+7
+Bullish Breaker Block
+Low
+High
+Lower Low
+Higher High
+168
+
+
+--- Page 171 ---
+8
+Bearish Breaker Block
+High
+169
+
+
+--- Page 172 ---
+9
+Bearish Breaker Block
+High
+Low
+170
+
+
+--- Page 173 ---
+10
+Bearish Breaker Block
+High
+Low
+Higher High
+171
+
+
+--- Page 174 ---
+Bearish Breaker Block
+High
+Low
+Higher High
+Lower Low
+11
+172
+
+
+--- Page 175 ---
+12
+Bearish Breaker Block
+High
+Low
+Higher High
+Lower Low
+173
+
+
+--- Page 176 ---
+13
+Bearish Breaker Block
+High
+Low
+Higher High
+Lower Low
+174
+
+
+--- Page 177 ---
+14
+Fair Value Gaps
+Bearish
+Fair Value Gap
+Bullish
+Fair Value Gap
+175
+
+
+--- Page 178 ---
+15
+Unicorn Model
+176
+
+
+--- Page 179 ---
+16
+Stop Losses
+177
+
+
+--- Page 180 ---
+16
+OB vs BB
+178
+
+
+--- Page 181 ---
+Std. Projections
+1
+Settings
+2
+Anchoring
+6
+Retracement or Reversal
+7
+Max Expansion
+8
+Pairing with PD Arrays
+179
+
+
+--- Page 182 ---
+1
+Settings
+180
+
+
+--- Page 183 ---
+2
+Anchoring
+0
+1
+-1
+-2
+-2.5
+-4
+181
+
+
+--- Page 184 ---
+3
+Anchoring
+182
+
+
+--- Page 185 ---
+4
+Anchoring
+183
+
+
+--- Page 186 ---
+5
+Anchoring
+0
+1
+-1
+-2
+-2.5
+-4
+184
+
+
+--- Page 187 ---
+6
+Retracement or Reversal
+0
+1
+-1
+-2
+-2.5
+-4
+185
+
+
+--- Page 188 ---
+7
+Max Expansion
+0
+1
+-1
+-2
+-2.5
+-4
+186
+
+
+--- Page 189 ---
+8
+PD Array Pairing
+0
+1
+-1
+-2
+-2.5
+-4
+187
+
+
+--- Page 190 ---
+188
+
+
+--- Page 191 ---
+PO3 + STD.
+1
+AMD
+6
+Standard Deviation Projection
+7
+Combination
+189
+
+
+--- Page 192 ---
+1
+AMD
+Accumulation
+Manipulation
+Distribution
+190
+
+
+--- Page 193 ---
+2
+AMD
+191
+
+
+--- Page 194 ---
+3
+AMD
+192
+
+
+--- Page 195 ---
+4
+AMD
+193
+
+
+--- Page 196 ---
+5
+AMD
+194
+
+
+--- Page 197 ---
+6
+Standard Deviation Projection
+0
+1
+-1
+-2
+-2.5
+-4
+195
+
+
+--- Page 198 ---
+7
+Combination
+0
+1
+-1
+-2
+-2.5
+-4
+196
+
+
+--- Page 199 ---
+Silver Bullet – AM
+1
+Time
+2
+Framework 
+197
+
+
+--- Page 200 ---
+1
+Time
+9:30
+10:00
+11:00
+AM Session 
+Silver Bullet Window
+(EST)
+198
+
+
+--- Page 201 ---
+2
+Framework
+9:00am Hourly High 
+9:00am Hourly Low 
+9:00am Hourly High 
+9:00am Hourly Low 
+Intraday bias video uses the previous candles high 
+and low to frame a reversal. The previous hourly 
+candle (9:00am) will be used in this framework.
+199
+
+
+--- Page 202 ---
+3
+Framework
+10:00
+11:00
+AM Session 
+Silver Bullet Window
+(EST)
+9:00am Hourly High
+9:00am Hourly Low 
+NASDAQ
+1 Minute Chart
+200
+
+
+--- Page 203 ---
+ICT Son’s Model
+1
+Draw On Liquidity  
+2
+Stop Raid
+3
+Entry 
+201
+
+
+--- Page 204 ---
+1
+Draw On Liquidity
+H1 or M15 Chart
+202
+
+
+--- Page 205 ---
+2
+Stop Raid
+Draw On Liquidity
+Stop Raid
+M5 Chart
+203
+
+
+--- Page 206 ---
+3
+Entry
+M5 Stop Raid
+30s Chart
+204
+
+
+--- Page 207 ---
+ICT Son’s Model
+1
+Draw On Liquidity  
+2
+Stop Raid
+3
+Entry 
+4
+Draw On Liquidity  
+5
+Stop Raid
+6
+Entry 
+205
+
+
+--- Page 208 ---
+1
+Draw On Liquidity
+H4 or H1 Chart
+206
+
+
+--- Page 209 ---
+2
+Stop Raid
+Draw On Liquidity
+Stop Raid
+M15 Chart
+207
+
+
+--- Page 210 ---
+3
+Entry
+M15 Stop Raid
+1m Chart
+208
+
+
+--- Page 211 ---
+4
+Draw On Liquidity
+D1 or H4 Chart
+209
+
+
+--- Page 212 ---
+5
+Stop Raid
+Draw On Liquidity
+Stop Raid
+H1 Chart
+210
+
+
+--- Page 213 ---
+6
+Entry
+H1 Stop Raid
+m5 Chart
+211
+
+
+--- Page 214 ---
+212
+
+
+--- Page 215 ---
+Relative Strength/Weakness
+1
+What is Relative Strength & Weakness 
+2
+Using SMT
+3
+Using ES/NQ Chart
+4
+Reversals
+213
+
+
+--- Page 216 ---
+1
+Relative Strength/Weakness
+Strength
+Weakness
+Relative Strength or Weakness is when comparing correlated 
+assets, assessing which one is more bullish (strength) or 
+bearish (weakness). 
+ES or NQ Chart
+214
+
+
+--- Page 217 ---
+2
+Using SMT
+SMT can be used to show a divergence between correlated 
+assets. This can be used to show relative strength and 
+weakness. 
+Relative 
+Strength
+Relative 
+Weakness
+ES or NQ Chart
+215
+
+
+--- Page 218 ---
+3
+Using ES/NQ Chart
+ES/NQ :
+ES/NQ :
+ES :
+ES :
+NQ :
+NQ :
+ES/NQ :
+ES :
+NQ :
+ES/NQ :
+ES :
+NQ :
+ES/NQ Chart
+Relative Strength or Weakness can be determined 
+comparing ES to NQ by charting ES1! / NQ1! on Tradingview.
+216
+
+
+--- Page 219 ---
+4
+Reversals
+My Theory is reversals on ES1!/NQ1! can be used to show
+the change in correlation and used to anticipate a reversal 
+on ES or NQ and/or determine relative strength. 
+ES/NQ Chart
+ES/NQ :
+ES :
+NQ :
+ES/NQ :
+ES :
+NQ :
+217
+
+
+--- Page 220 ---
+218
+
+
+--- Page 221 ---
+Mitigation Blocks
+1
+Mitigation Blocks
+219
+
+
+--- Page 222 ---
+1
+Mitigation Blocks
+220
+
+
+--- Page 223 ---
+2
+Mitigation Blocks
+221
+
+
+--- Page 224 ---
+Mitigation Blocks
+3
+HTF Level
+222
+
+
+--- Page 225 ---
+Mitigation Blocks
+4
+HTF Level
+223
+
+
+--- Page 226 ---
+Mitigation Blocks
+5
+HTF Level
+224
+
+
+--- Page 227 ---
+Mitigation Blocks
+6
+HTF Level
+225
+
+
+--- Page 228 ---
+Mitigation Blocks
+7
+HTF Level
+226
+
+
+--- Page 229 ---
+Mitigation Blocks
+8
+HTF Level
+227
+
+
+--- Page 230 ---
+Mitigation Blocks
+9
+HTF Level
+228
+
+
+--- Page 231 ---
+Mitigation Blocks
+10
+HTF Level
+229
+
+
+--- Page 232 ---
+Mitigation Blocks
+11
+HTF Level
+230
+
+
+--- Page 233 ---
+Mitigation Blocks
+12
+HTF Level
+231
+
+
+--- Page 234 ---
+232
+
+
+--- Page 235 ---
+Propulsion Blocks
+1
+Order Blocks
+2
+Propulsion Blocks
+3
+Mean Threshold
+233
+
+
+--- Page 236 ---
+1
+Orderblocks
+OB
+Important Level
+OB
+Important Level
+234
+
+
+--- Page 237 ---
+2
+Propulsion Block
+OB
+Important Level
+235
+
+
+--- Page 238 ---
+3
+Propulsion Block
+OB
+Important Level
+236
+
+
+--- Page 239 ---
+4
+Propulsion Block
+OB
+Important Level
+PB
+237
+
+
+--- Page 240 ---
+5
+Propulsion Block
+OB
+Important Level
+PB
+238
+
+
+--- Page 241 ---
+6
+Mean Threshold
+OB
+PB
+0.5
+239
+
+
+--- Page 242 ---
+240
+
+
+--- Page 243 ---
+Advanced Market Structure
+1
+Short Term High & Low
+2
+Intermediate Term High & Low
+11
+Long Term High & Low
+14
+Put It Together
+241
+
+
+--- Page 244 ---
+1
+STH / STL
+STL
+STH
+242
+
+
+--- Page 245 ---
+2
+ITH / ITL
+STL
+243
+
+
+--- Page 246 ---
+3
+ITH / ITL
+STL
+STL
+244
+
+
+--- Page 247 ---
+4
+ITH / ITL
+STL
+STL
+STL
+245
+
+
+--- Page 248 ---
+5
+ITH / ITL
+STL
+STL
+STL
+STL
+246
+
+
+--- Page 249 ---
+6
+ITH / ITL
+STL
+STL
+ITL
+STL
+247
+
+
+--- Page 250 ---
+7
+ITH / ITL
+STL
+STL
+STL
+STL
+ITL
+248
+
+
+--- Page 251 ---
+8
+ITH / ITL
+STH
+STH
+ITH
+STH
+STH
+249
+
+
+--- Page 252 ---
+9
+ITH / ITL
+ITL
+250
+
+
+--- Page 253 ---
+10
+ITH / ITL
+ITH
+251
+
+
+--- Page 254 ---
+Long Term H / L 
+HTF Level
+LTL
+11
+252
+
+
+--- Page 255 ---
+Long Term H / L 
+HTF Level
+LTL
+STL
+STL
+STL
+ITL
+12
+253
+
+
+--- Page 256 ---
+Long Term H / L 
+HTF Level
+LTH
+13
+254
+
+
+--- Page 257 ---
+Put It Together
+HTF Level
+LTH
+STH
+STH
+ITH
+STH
+14
+255
+
+
+--- Page 258 ---
+256
+
+
+--- Page 259 ---
+Broadening Formations 
+ 
+ 
+ 
+1 
+ 
+WHAT IS A BROADENING FORMATION 
+ 
+2 
+ 
+HOW TO SPOT IT 
+ 
+3 
+ 
+HOW TO DRAW (OPTION 1) 
+ 
+4 
+ 
+HOW TO DRAW (OPTION 2) 
+ 
+5 
+ 
+HTF PICTURE 
+ 
+6 
+ 
+HOW TO ANTICIPATE - DAILY PROFILE 
+ 
+ 
+257
+
+
+--- Page 260 ---
+CONTENTS
+What is a Broadening Formation
+
+How to spot it
+
+How to draw (Option 1)
+
+How to draw (option 2)
+
+HTF Picture
+
+How to anticipate - Daily profile
+1
+
+2
+
+8
+
+10
+
+17
+
+18
+258
+
+
+--- Page 261 ---
+1
+TTrades
+TTrades
+259
+
+
+--- Page 262 ---
+2
+TTrades
+TTrades
+260
+
+
+--- Page 263 ---
+3
+TTrades
+TTrades
+261
+
+
+--- Page 264 ---
+4
+TTrades
+TTrades
+262
+
+
+--- Page 265 ---
+5
+TTrades
+TTrades
+263
+
+
+--- Page 266 ---
+6
+TTrades
+TTrades
+264
+
+
+--- Page 267 ---
+7
+TTrades
+TTrades
+265
+
+
+--- Page 268 ---
+8
+TTrades
+TTrades
+266
+
+
+--- Page 269 ---
+9
+TTrades
+TTrades
+267
+
+
+--- Page 270 ---
+10
+TTrades
+TTrades
+268
+
+
+--- Page 271 ---
+11
+TTrades
+TTrades
+269
+
+
+--- Page 272 ---
+12
+TTrades
+TTrades
+270
+
+
+--- Page 273 ---
+13
+TTrades
+TTrades
+271
+
+
+--- Page 274 ---
+14
+TTrades
+TTrades
+272
+
+
+--- Page 275 ---
+15
+TTrades
+TTrades
+273
+
+
+--- Page 276 ---
+16
+TTrades
+TTrades
+274
+
+
+--- Page 277 ---
+17
+TTrades
+TTrades
+275
+
+
+--- Page 278 ---
+18
+TTrades
+TTrades
+276
+
+
+--- Page 279 ---
+TTrades
+MMXM twitter model
+introduction and explanation of the mmxm trader’s twitter model
+277
+
+
+--- Page 280 ---
+Contents
+TTrades
+The model
+Walkthrough
+Fractal nature
+1
+2
+8
+278
+
+
+--- Page 281 ---
+The model
+TTrades
+1
+279
+
+
+--- Page 282 ---
+Walkthrough
+TTrades
+2
+D
+280
+
+
+--- Page 283 ---
+Walkthrough
+TTrades
+3
+PDH
+H1
+D
+281
+
+
+--- Page 284 ---
+Walkthrough
+TTrades
+4
+[0:00]
+PDH
+M15
+D
+PDH
+282
+
+
+--- Page 285 ---
+Walkthrough
+TTrades
+5
+D
+H1
+PDH
+[0:00]
+PDH
+SMT
+MSS
+M15
+283
+
+
+--- Page 286 ---
+Walkthrough
+TTrades
+6
+D
+PDH
+H1
+[0:00]
+PDH
+SMT
+MSS
+M15
+284
+
+
+--- Page 287 ---
+Walkthrough
+TTrades
+7
+D
+PDH
+H1
+[0:00]
+PDH
+SMT
+MSS
+M15
+285
+
+
+--- Page 288 ---
+Fractal nature
+TTrades
+8
+W
+PWH
+H4
+PWH
+SMT
+MSS
+H1
+286
+
+
+--- Page 289 ---
+Unicorn Model
+1
+Fair Value Gaps
+2
+Breaker Blocks
+4
+Unicorn
+287
+
+
+--- Page 290 ---
+1
+Fair Value Gaps
+Bearish
+Fair Value Gap
+Bullish
+Fair Value Gap
+288
+
+
+--- Page 291 ---
+2
+Breaker Blocks
+Bearish
+Breaker Block
+Bullish
+Breaker Block
+289
+
+
+--- Page 292 ---
+3
+Breaker Block
+Bearish
+Breaker Block
+Bullish
+Breaker Block
+290
+
+
+--- Page 293 ---
+4
+Unicorn
+Bearish
+Breaker Block 
++ FVG
+Bullish
+Breaker Block
++ FVG
+291
+
+
+--- Page 294 ---
+292
+
+
+--- Page 295 ---
+TTrades
+economic calendar
+introduction to filtering and using the economic calendar
+293
+
+
+--- Page 296 ---
+Contents
+TTrades
+What Is the economic calendar
+Filtering
+Example
+NFP protocol
+1
+2
+5
+8
+294
+
+
+--- Page 297 ---
+Economic calendar
+TTrades
+1
+Used to identify news events that could cause significant volatility in the market. 
+
+Different assets will have different news events (filter).
+
+A general rule for myself is that trading prior to the first high impact news event of the week is unfavorable.
+
+Monday’s lack high impact news - generally accumulation or Judas swing within the weekly profile.
+ 
+295
+
+
+--- Page 298 ---
+Filtering
+TTrades
+2
+Filter news events
+https://www.forexfactory.com
+296
+
+
+--- Page 299 ---
+Filtering
+TTrades
+3
+https://www.forexfactory.com
+297
+
+
+--- Page 300 ---
+Filtering
+TTrades
+4
+High Impact:
+Action Plan
+? Non-farm Payroll (NFP-
+? Consumer Price Index (CPI-
+? FOMC Press Conference
+? Avoid day prioD
+? Avoid releasF
+? Watch after
+? Avoid session prioD
+? Avoid releasF
+? Watch after
+? No restrictions
+Low Impact:
+? All other
+Medium Impact:
+? Producer Price Index (PPI-
+? Core PCE Price Indexv
+? FOMC Meeting Minutes
+298
+
+
+--- Page 301 ---
+Example
+TTrades
+5
+Mon
+-> 
+Avoid
+Tue
+08:30 am
+Core CPI m/m
+CPI m/m
+CPI y/y
+01:01 pm
+10-y Bond Auction
+-> 
+Avoid prior to 8:30
+Wed
+01:01 pm
+30-y Bond Auction
+-> 
+No restrictions
+Thu
+08:30 am
+Core PPI m/m
+Core Retail Sales m/m
+PPI m/m
+Retail Sales m/m
+Unemployment Claims
+-> 
+Avoid prior to 8:30
+Fri
+08:30 am
+Empire State Manufacturing Index
+10:00 am
+PRelim UoM Consumer Sentiment
+-> 
+No restrictions
+299
+
+
+--- Page 302 ---
+NFP Protocol
+First Friday of each month, significant news event.
+TTrades
+6
+Mon
+09:45 am
+Final Manufacturing PMI
+10:00 am
+ISM Manufacturing PMI
+-> 
+Not interested
+Tue
+10:00 am
+JOLTS Job Openings
+-> 
+Somewhat interested
+Wed
+08:15 am
+ADP Non-Farm Employment Change
+10:00 am
+ISM Services PMI
+-> 
+Somewhat interested 
+Thu
+08:30 am
+Unemployment Claims
+-> 
+Not interested
+Fri
+08:30 am
+Average Hourly Earnings m/m
+Non Farm Emplyment Change`
+Unemployment Rate
+-> 
+Highly interested after News Release
+300

@@ -53,13 +53,17 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
 
     @Override
     public Event castEventInOurClassLoader(Object o) {
-        MPEvent mpEvent = null;
-        if(o.getClass().getSimpleName().equals(MPDoubleBarEventV1.class.getSimpleName())){
-            mpEvent = CastUtilities.castObject(o, MPDoubleBarEventV1.class);
-        } else if(o.getClass().getSimpleName().equals(MPSingleBarEventV1.class.getSimpleName())){
-            mpEvent = CastUtilities.castObject(o, MPSingleBarEventV1.class);
+        try {
+            MPEvent mpEvent = null;
+            if(o.getClass().getSimpleName().equals(MPDoubleBarEventV1.class.getSimpleName())){
+                mpEvent = CastUtilities.castObject(o, MPDoubleBarEventV1.class);
+            } else if(o.getClass().getSimpleName().equals(MPSingleBarEventV1.class.getSimpleName())){
+                mpEvent = CastUtilities.castObject(o, MPSingleBarEventV1.class);
+            }
+            return mpEvent;
+        } catch (Throwable t) {
+            return null;
         }
-        return mpEvent;
     }
 
     @Override
@@ -74,11 +78,19 @@ public class MarketPulseValueHandler implements ProviderValueHandler{
 
     @Override
     public EventFilter<Event> castFilter(Object o) {
-        return CastUtilities.castObject(o, MPFilterV1.class);
+        try {
+            return CastUtilities.castObject(o, MPFilterV1.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
     @Override
     public Object castSettings(Object o) {
-        return CastUtilities.castObject(o, MPWidgetSettingsV1.class);
+        try {
+            return CastUtilities.castObject(o, MPWidgetSettingsV1.class);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 }

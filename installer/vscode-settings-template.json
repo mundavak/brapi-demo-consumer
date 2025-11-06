@@ -1,0 +1,42 @@
+# MCP PDF Reader Configuration Template
+# This file shows the VS Code settings.json configuration that will be added
+
+{
+    "github.copilot.chat.mcpServers": {
+        "pdf-reader": {
+            "command": "PATH_TO_INSTALLATION\\venv\\Scripts\\python.exe",
+            "args": [
+                "PATH_TO_INSTALLATION\\pdf_reader_server.py"
+            ],
+            "env": {
+                "PDF_SOURCE_DIR": "PATH_TO_YOUR_PDFS",
+                "PYTHONPATH": "PATH_TO_INSTALLATION"
+            }
+        }
+    }
+}
+
+# PATHS TO UPDATE:
+# - PATH_TO_INSTALLATION: Where you installed the MCP PDF Reader (e.g., C:\MCPPDFReader)
+# - PATH_TO_YOUR_PDFS: Folder containing your PDF files (e.g., C:\YourProject\PDFs)
+
+# EXAMPLE CONFIGURATION:
+# {
+#   "github.copilot.chat.mcpServers": {
+#     "pdf-reader": {
+#       "command": "C:\\MCPPDFReader\\venv\\Scripts\\python.exe",
+#       "args": [
+#         "C:\\MCPPDFReader\\pdf_reader_server.py"
+#
+            ],
+#       "env": {
+#         "PDF_SOURCE_DIR": "D:\\MyProject\\KnowledgeBase",
+#         "PYTHONPATH": "C:\\MCPPDFReader"
+#
+            }
+#
+        }
+#
+    }
+#
+}

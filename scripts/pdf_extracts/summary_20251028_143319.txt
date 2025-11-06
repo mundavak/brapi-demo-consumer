@@ -1,0 +1,61 @@
+PDF Extraction Summary - 2025-10-28 14:33:19.230775
+================================================================================
+
+Total PDFs: 39
+Successful: 39
+Failed: 0
+
+Total Pages: 10,657
+Total Characters: 17,121,927
+
+
+By Category:
+
+Trading Concepts (12 PDFs):
+  - 230271751-Trading-With-Depth-of-Market.pdf (20 pages, 0.03s)
+  - 377235419-Futures-Trading.pdf (74 pages, 0.06s)
+  - 433558502-Confirming-Levels-With-Order-Flow.pdf (14 pages, 0.01s)
+  - 435949428-The-Ultimate-Guide-To-Order-Flow-Trading.pdf (45 pages, 0.04s)
+  - 443878056-ICT-Mentorship-Month-1-Notes.pdf (32 pages, 0.04s)
+  - 698793566-Institutional-Order-Flow-Trading.pdf (4 pages, 0.01s)
+  - 733581123-Smc-Trading-Strategy.pdf (27 pages, 0.02s)
+  - Cracking the Spoofing Code_Inside the World of Market Manipulation.pdf (16 pages, 0.07s)
+  - How to Detect Spoofing in Trading _ Deceptive Trading Practices.pdf (15 pages, 0.04s)
+  - Order Flow Patterns That Precede Big Reversals_From Aggressor Exhaustion to Iceberg Stacking.pdf (25 pages, 0.11s)
+  - ORDER-FLOW-Trading-Setups-Golden-ticket-edition-13.5.2024-1.pdf (160 pages, 0.10s)
+  - VOLUME-PROFILE-The-insiders-guide-to-trading-golden-ticket-edition-13.5.2024.pdf (196 pages, 0.18s)
+
+Programming References (4 PDFs):
+  - 372759727-The-Python-Manual.pdf (196 pages, 1.49s)
+  - java-developers-guide.pdf (291 pages, 0.27s)
+  - javascript.pdf (545 pages, 0.34s)
+  - powershell-scripting-powershell-7.5.pdf (3518 pages, 8.95s)
+
+Bookmap Documentation (5 PDFs):
+  - 373723507-Bookmap-User-Guide-5-0.pdf (89 pages, 0.17s)
+  - 430196357-Bookmap-User-Guide-6-1.pdf (85 pages, 0.10s)
+  - 484567392-traderunner-pro-A-Complete-BookMap-Review-pdf.pdf (14 pages, 0.01s)
+  - 789789011-Bookmap-Masterclass.pdf (364 pages, 0.19s)
+  - Bookmap API _ Bookmap Knowledge Base.pdf (21 pages, 0.02s)
+
+Other (12 PDFs):
+  - 414548356-Ubuntu-Overview.pdf (124 pages, 0.06s)
+  - 447213505-Nasdaq-15h30-Strategy-1.pdf (4 pages, 0.01s)
+  - 477771225-FXGOAT-NAS100-Strategy-pdf.pdf (29 pages, 0.02s)
+  - 491996508-A-NASDAQ-100-Timing-Strategy.pdf (6 pages, 0.01s)
+  - 618889627-Infinity-Scalping.pdf (58 pages, 0.05s)
+  - 753252012-Ttrades-Notes-Merged.pdf (302 pages, 0.34s)
+  - institutional_tracker_v12_setup_guide.pdf (3 pages, 0.00s)
+  - Market_Behavior_Emotions_Patterns.pdf (7 pages, 0.00s)
+  - MS Word MCP server for AI agents.pdf (8 pages, 0.53s)
+  - Pine Script User Manual PDF.pdf (834 pages, 13.21s)
+  - SQLite.pdf (369 pages, 0.65s)
+  - Stops and Icebergs_ How to Detect Hidden Orders Using MBO Data.pdf (10 pages, 0.04s)
+
+Database Documentation (6 PDFs):
+  - How to Migrate Your Data to Timescale (3 Ways) _ TigerData.pdf (20 pages, 0.13s)
+  - how-to-manage-a-redis-database.pdf (95 pages, 0.05s)
+  - How_to_use_analyze_database_trades_v4.pdf (1 pages, 0.00s)
+  - postgresql-16-A4.pdf (3021 pages, 5.10s)
+  - TimescaleDB_Starter_Guide.pdf (10 pages, 0.01s)
+  - What Redis TimescaleDB Actually Does and When to Use It.pdf (5 pages, 0.01s)
