@@ -57,9 +57,9 @@ public class AvwapConsumer implements
 
     // Trading windows in EST (Bookmap times are in UTC-4)
     private static final int[][] TRADING_WINDOWS_EST = {
-        {16, 0, 20, 0},  // CBDR PM/Asian: 16:00-20:00 EST
-        {2, 0, 5, 0},    // CBDR London: 02:00-05:00 EST
-        {7, 30, 9, 30}   // Pre-NY: 07:30-09:30 EST
+            { 16, 0, 20, 0 }, // CBDR PM/Asian: 16:00-20:00 EST
+            { 2, 0, 5, 0 }, // CBDR London: 02:00-05:00 EST
+            { 7, 30, 9, 30 } // Pre-NY: 07:30-09:30 EST
     };
 
     private JTextArea logArea;
@@ -90,12 +90,14 @@ public class AvwapConsumer implements
 
         initializeDatabase();
 
-        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "AVWAP Broadcasting Consumer", this.getClass());
+        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "AVWAP Broadcasting Consumer",
+                this.getClass());
         this.connector = new Connector(provider, broadcaster, com.bookmap.demo.consumer.providers.Provider.AVWAP);
 
         broadcaster.setProviderStatusListener(new ProviderStatusListener() {
             @Override
-            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
+            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator,
+                    boolean isOnline) {
                 log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
                         providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
 
@@ -119,19 +121,19 @@ public class AvwapConsumer implements
             dbConnection = DriverManager.getConnection(url);
 
             String createTableSQL = """
-                CREATE TABLE IF NOT EXISTS AvwapEvents (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL,
-                    price REAL,
-                    vwap_value REAL,
-                    volume REAL,
-                    anchor_time TEXT,
-                    instrument TEXT,
-                    event_type TEXT,
-                    deviation REAL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-                """;
+                    CREATE TABLE IF NOT EXISTS AvwapEvents (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp TEXT NOT NULL,
+                        price REAL,
+                        vwap_value REAL,
+                        volume REAL,
+                        anchor_time TEXT,
+                        instrument TEXT,
+                        event_type TEXT,
+                        deviation REAL,
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )
+                    """;
 
             try (Statement stmt = dbConnection.createStatement()) {
                 stmt.execute(createTableSQL);
@@ -227,11 +229,10 @@ public class AvwapConsumer implements
             };
 
             broadcaster.subscribeToLiveData(
-                com.bookmap.demo.consumer.providers.Provider.AVWAP.getFullName(),
-                generatorName,
-                eventListener,
-                connectionListener
-            );
+                    com.bookmap.demo.consumer.providers.Provider.AVWAP.getFullName(),
+                    generatorName,
+                    eventListener,
+                    connectionListener);
 
         } catch (Exception e) {
             log("ERROR", "Failed to subscribe to generator: " + e.getMessage());
@@ -261,8 +262,10 @@ public class AvwapConsumer implements
 
             // Try different field names for VWAP value
             Object vwapObj = getFieldValue(event, "value");
-            if (vwapObj == null) vwapObj = getFieldValue(event, "vwap");
-            if (vwapObj == null) vwapObj = getFieldValue(event, "price");
+            if (vwapObj == null)
+                vwapObj = getFieldValue(event, "vwap");
+            if (vwapObj == null)
+                vwapObj = getFieldValue(event, "price");
 
             if (vwapObj instanceof Integer tickVwap) {
                 double actualVwap = convertPrice(tickVwap, instrument);
@@ -283,26 +286,32 @@ public class AvwapConsumer implements
 
             // Try to get volume - may not exist for AVWAP
             Object volumeObj = getFieldValue(event, "volume");
-            if (volumeObj == null) volumeObj = getFieldValue(event, "totalVolume");
-            if (volumeObj == null) volumeObj = getFieldValue(event, "size");
+            if (volumeObj == null)
+                volumeObj = getFieldValue(event, "totalVolume");
+            if (volumeObj == null)
+                volumeObj = getFieldValue(event, "size");
             avwapData.put("volume", volumeObj);
 
             // Try to get anchor time
             Object anchorObj = getFieldValue(event, "anchorTime");
-            if (anchorObj == null) anchorObj = getFieldValue(event, "anchor");
-            if (anchorObj == null) anchorObj = getFieldValue(event, "startTime");
+            if (anchorObj == null)
+                anchorObj = getFieldValue(event, "anchor");
+            if (anchorObj == null)
+                anchorObj = getFieldValue(event, "startTime");
             avwapData.put("anchorTime", anchorObj);
 
             // Get event type
             Object typeObj = getFieldValue(event, "type");
-            if (typeObj == null) typeObj = getFieldValue(event, "eventType");
+            if (typeObj == null)
+                typeObj = getFieldValue(event, "eventType");
             String eventType = (typeObj != null) ? typeObj.toString() : "VWAP";
             avwapData.put("eventType", eventType);
             typeCounts.merge(eventType, 1, Integer::sum);
 
             // Try to get deviation
             Object deviationObj = getFieldValue(event, "deviation");
-            if (deviationObj == null) deviationObj = getFieldValue(event, "stdDev");
+            if (deviationObj == null)
+                deviationObj = getFieldValue(event, "stdDev");
             avwapData.put("deviation", deviationObj);
 
             avwapData.put("instrument", instrument);
@@ -315,8 +324,7 @@ public class AvwapConsumer implements
                     formatNumber(avwapData.get("vwapValue")),
                     formatNumber(avwapData.get("volume")),
                     formatNumber(avwapData.get("deviation")),
-                    avwapData.get("anchorTime") != null ? avwapData.get("anchorTime").toString() : "N/A"
-            );
+                    avwapData.get("anchorTime") != null ? avwapData.get("anchorTime").toString() : "N/A");
 
             log("AVWAP", logMsg);
             updateUI();
@@ -338,10 +346,10 @@ public class AvwapConsumer implements
         }
 
         String insertSQL = """
-            INSERT INTO AvwapEvents (timestamp, price, vwap_value, volume,
-                                    anchor_time, instrument, event_type, deviation)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+                INSERT INTO AvwapEvents (timestamp, price, vwap_value, volume,
+                                        anchor_time, instrument, event_type, deviation)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (PreparedStatement pstmt = dbConnection.prepareStatement(insertSQL)) {
             pstmt.setString(1, (String) event.get("timestamp"));
@@ -389,7 +397,8 @@ public class AvwapConsumer implements
     }
 
     private Object getFieldValue(Object obj, String fieldName) {
-        if (obj == null) return null;
+        if (obj == null)
+            return null;
         try {
             java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
@@ -439,7 +448,8 @@ public class AvwapConsumer implements
             int idx = 0;
             for (Map.Entry<String, Integer> e : typeCounts.entrySet()) {
                 json.append("      \"").append(e.getKey()).append("\": ").append(e.getValue());
-                if (++idx < typeCounts.size()) json.append(",");
+                if (++idx < typeCounts.size())
+                    json.append(",");
                 json.append("\n");
             }
 
@@ -449,7 +459,8 @@ public class AvwapConsumer implements
 
             for (int i = 0; i < avwapEvents.size(); i++) {
                 json.append("    ").append(mapToJson(avwapEvents.get(i)));
-                if (i < avwapEvents.size() - 1) json.append(",");
+                if (i < avwapEvents.size() - 1)
+                    json.append(",");
                 json.append("\n");
             }
 
@@ -475,7 +486,8 @@ public class AvwapConsumer implements
             } else {
                 s.append("\"").append(v.toString().replace("\"", "\\\"")).append("\"");
             }
-            if (++i < map.size()) s.append(",");
+            if (++i < map.size())
+                s.append(",");
         }
         s.append("}");
         return s.toString();
@@ -506,9 +518,8 @@ public class AvwapConsumer implements
                 stats.append("Total Events: ").append(totalCount.get()).append("<br>");
                 if (!typeCounts.isEmpty()) {
                     stats.append("<br><b>Event Types:</b><br>");
-                    typeCounts.forEach((type, count) ->
-                        stats.append("  ").append(type).append(": ").append(count).append("<br>")
-                    );
+                    typeCounts.forEach(
+                            (type, count) -> stats.append("  ").append(type).append(": ").append(count).append("<br>"));
                 }
                 stats.append("</html>");
                 statsLabel.setText(stats.toString());
@@ -517,7 +528,8 @@ public class AvwapConsumer implements
     }
 
     private String formatNumber(Object o) {
-        if (o == null) return "N/A";
+        if (o == null)
+            return "N/A";
         if (o instanceof Number number) {
             return "%.2f".formatted(number.doubleValue());
         }
@@ -526,7 +538,8 @@ public class AvwapConsumer implements
 
     @Override
     public void onUserMessage(Object data) {
-        if (data == null) return;
+        if (data == null)
+            return;
 
         if (data.getClass() == UserMessageLayersChainCreatedTargeted.class) {
             UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
@@ -591,7 +604,6 @@ public class AvwapConsumer implements
 
         updateUI();
 
-        return new StrategyPanel[]{mainPanel};
+        return new StrategyPanel[] { mainPanel };
     }
 }
-

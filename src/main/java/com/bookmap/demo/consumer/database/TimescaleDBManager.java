@@ -291,10 +291,10 @@ public class TimescaleDBManager {
     public void insertStopIcebergEvent(String symbol, String eventType, String side,
             long timestamp, double price, long detectedSize,
             long estimatedTotal, double confidence,
-            String sessionId, String cbdrWindow, String metadata) {
+            String sessionId, String cbdrWindow, String icebergSubtype, String metadata) {
         String sql = "INSERT INTO stops_icebergs (timestamp, symbol, event_type, side, price, detected_size, " +
-                "estimated_total_size, confidence_score, session_id, cbdr_window, metadata) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "estimated_total_size, confidence_score, session_id, cbdr_window, iceberg_subtype, metadata) " +
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -309,7 +309,8 @@ public class TimescaleDBManager {
             pstmt.setDouble(8, confidence);
             pstmt.setString(9, sessionId);
             pstmt.setString(10, cbdrWindow);
-            pstmt.setString(11, metadata);
+            pstmt.setString(11, icebergSubtype);
+            pstmt.setString(12, metadata);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -319,8 +320,9 @@ public class TimescaleDBManager {
 
     public void batchInsertStopIcebergEvents(List<StopIcebergEvent> events) {
         String sql = "INSERT INTO stops_icebergs (timestamp, symbol, event_type, side, price, detected_size, " +
-                "estimated_total_size, fill_count, confidence_score, duration_ms, session_id, cbdr_window, metadata) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "estimated_total_size, fill_count, confidence_score, duration_ms, session_id, cbdr_window, iceberg_subtype, metadata) "
+                +
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -355,11 +357,18 @@ public class TimescaleDBManager {
                 pstmt.setString(11, event.sessionId);
                 pstmt.setString(12, event.cbdrWindow);
 
+                // Handle nullable iceberg_subtype (NULL for STOP events)
+                if (event.icebergSubtype != null && !event.icebergSubtype.isEmpty()) {
+                    pstmt.setString(13, event.icebergSubtype);
+                } else {
+                    pstmt.setNull(13, java.sql.Types.VARCHAR);
+                }
+
                 // Handle nullable metadata JSONB field
                 if (event.metadata != null && !event.metadata.isEmpty()) {
-                    pstmt.setString(13, event.metadata);
+                    pstmt.setString(14, event.metadata);
                 } else {
-                    pstmt.setNull(13, java.sql.Types.OTHER);
+                    pstmt.setNull(14, java.sql.Types.OTHER);
                 }
 
                 pstmt.addBatch();
@@ -631,6 +640,7 @@ public class TimescaleDBManager {
         public long durationMs;
         public String sessionId;
         public String cbdrWindow;
+        public String icebergSubtype; // Bookmap iceberg sub-type: TRADE, EXECUTION, DETECTION, CANCELLATION, MOVEMENT
         public String metadata;
     }
 

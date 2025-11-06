@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  mcp-doc-reader:
+    build:
+      context: ./installer
+      dockerfile: Dockerfile
+    container_name: mcp-doc-reader
+    volumes:
+      # Mount KnowledgeBase directory as read-only
+      - ../KnowledgeBase:/knowledge-base:ro
+    environment:
+      - PDF_SOURCE_DIR=/knowledge-base
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+  # Optional: Add a web interface for testing
+  mcp-doc-reader-web:
+    build:
+      context: ./installer
+      dockerfile: Dockerfile.web
+    container_name: mcp-doc-reader-web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../KnowledgeBase:/knowledge-base:ro
+    environment:
+      - PDF_SOURCE_DIR=/knowledge-base
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    depends_on:
+      - mcp-doc-reader
+
+networks:
+  mcp-network:
+    driver: bridge

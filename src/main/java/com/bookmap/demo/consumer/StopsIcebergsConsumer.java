@@ -389,8 +389,10 @@ public class StopsIcebergsConsumer
                 } else {
                     this.log("INFO", "[STOP] Event in CBDR window: %s".formatted(cbdrWindow));
                 }
-                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}".formatted(
-                        symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
+                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}"
+                        .formatted(
+                                symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId,
+                                cbdrWindow);
                 this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
                 TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
                 dbEvent.symbol = symbol;
@@ -402,6 +404,7 @@ public class StopsIcebergsConsumer
                 dbEvent.estimatedTotal = (long) totalSize;
                 dbEvent.sessionId = this.currentSessionId;
                 dbEvent.cbdrWindow = cbdrWindow;
+                dbEvent.icebergSubtype = null; // NULL for STOP events
                 if (!this.batchQueue.offer(dbEvent)) {
                     this.log("WARN", "Batch queue full, event dropped");
                 }
@@ -469,6 +472,9 @@ public class StopsIcebergsConsumer
                 long timestamp = icebergData.get("time") != null ? ((Number) icebergData.get("time")).longValue()
                         : System.nanoTime();
                 String eventType = "ICEBERG";
+                // Extract iceberg sub-type from icebergData (TRADE, EXECUTION, DETECTION,
+                // CANCELLATION, MOVEMENT)
+                String icebergSubtype = (String) icebergData.getOrDefault("eventType", null);
                 String side = (String) icebergData.getOrDefault("side", "UNKNOWN");
                 double price = icebergData.get("price") != null ? ((Number) icebergData.get("price")).doubleValue()
                         : 0.0;
@@ -481,10 +487,13 @@ public class StopsIcebergsConsumer
                     cbdrWindow = "OUTSIDE_CBDR";
                     this.log("DEBUG", "[ICEBERG] Event outside CBDR windows - still recording");
                 } else {
-                    this.log("INFO", "[ICEBERG] Event in CBDR window: %s".formatted(cbdrWindow));
+                    this.log("INFO",
+                            "[ICEBERG] Event in CBDR window: %s (subtype: %s)".formatted(cbdrWindow, icebergSubtype));
                 }
-                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}".formatted(
-                        symbol, timestamp, eventType, side, price, size, totalSize, this.currentSessionId, cbdrWindow);
+                String eventJson = "{\"symbol\":\"%s\",\"timestamp\":%d,\"eventType\":\"%s\",\"icebergSubtype\":\"%s\",\"side\":\"%s\",\"price\":%.2f,\"size\":%.2f,\"totalSize\":%.2f,\"sessionId\":\"%s\",\"cbdrWindow\":\"%s\"}"
+                        .formatted(
+                                symbol, timestamp, eventType, icebergSubtype, side, price, size, totalSize,
+                                this.currentSessionId, cbdrWindow);
                 this.redisManager.addStopIcebergEvent(symbol, eventType, timestamp, eventJson);
                 TimescaleDBManager.StopIcebergEvent dbEvent = new TimescaleDBManager.StopIcebergEvent();
                 dbEvent.symbol = symbol;
@@ -496,6 +505,7 @@ public class StopsIcebergsConsumer
                 dbEvent.estimatedTotal = (long) totalSize;
                 dbEvent.sessionId = this.currentSessionId;
                 dbEvent.cbdrWindow = cbdrWindow;
+                dbEvent.icebergSubtype = icebergSubtype; // Capture Bookmap iceberg sub-type
                 if (!this.batchQueue.offer(dbEvent)) {
                     this.log("WARN", "Batch queue full, event dropped");
                 }

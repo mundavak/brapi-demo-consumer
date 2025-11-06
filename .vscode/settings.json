@@ -2,5 +2,30 @@
     "git.ignoreLimitWarning": true,
     "java.compile.nullAnalysis.mode": "automatic",
     "java.configuration.updateBuildConfiguration": "automatic",
-    "chat.agent.maxRequests": 1000
+    "chat.agent.maxRequests": 1000,
+    "github.copilot.chat.mcpServers": {
+        "doc-reader": {
+            "command": "python",
+            "args": ["installer/pdf_reader_server.py"],
+            "env": {
+                "PYTHONPATH": "F:\\TradingAgent\\deaProjects\\brapi-demo-consumer\\installer",
+                "PDF_SOURCE_DIR": "F:\\TradingAgent\\deaProjects\\brapi-demo-consumer\\KnowledgeBase"
+            }
+        },
+        "doc-reader-docker": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",
+                "-v",
+                "F:/TradingAgent/deaProjects/brapi-demo-consumer/KnowledgeBase:/knowledge-base:ro",
+                "-e",
+                "PDF_SOURCE_DIR=/knowledge-base",
+                "mcp-doc-reader:latest",
+                "python",
+                "pdf_reader_server.py"
+            ]
+        }
+    }
 }
