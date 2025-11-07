@@ -128,6 +128,98 @@ public class RedisManager {
         }
     }
 
+    // Store MBO order in sorted set (price-sorted book)
+    public void storeMboOrder(String symbol, String orderId, double price, double size, boolean isBid,
+            String eventType) {
+        String side = isBid ? "bid" : "ask";
+        String key = "mbo:orders:%s:%s".formatted(symbol, side);
+        try (Jedis jedis = getConnection()) {
+            if ("CANCEL".equals(eventType)) {
+                // For CANCEL events, remove the order from both bid and ask sides
+                // (we don't know which side it was on from cancel event alone)
+                String bidKey = "mbo:orders:%s:bid".formatted(symbol);
+                String askKey = "mbo:orders:%s:ask".formatted(symbol);
+
+                // Scan and remove matching orderId from both sides
+                removeOrderById(jedis, bidKey, orderId);
+                removeOrderById(jedis, askKey, orderId);
+            } else {
+                // SEND or REPLACE: Add/update order in sorted set
+                String orderData = String.format(
+                        "{\"order_id\":\"%s\",\"size\":%.2f,\"event_type\":\"%s\",\"timestamp\":\"%s\"}",
+                        orderId, size, eventType, java.time.Instant.now().toString());
+                jedis.zadd(key, price, orderData);
+                jedis.expire(key, ttlCache.get("mbo"));
+            }
+        } catch (Exception e) {
+            LOGGER.severe("Error storing MBO order: " + e.getMessage());
+        }
+    }
+
+    // Helper method to remove order by orderId from sorted set
+    private void removeOrderById(Jedis jedis, String key, String orderId) {
+        try {
+            // Get all members and find ones containing this orderId
+            var members = jedis.zrange(key, 0, -1);
+            for (String member : members) {
+                if (member.contains("\"order_id\":\"" + orderId + "\"")) {
+                    jedis.zrem(key, member);
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.severe("Error removing order: " + e.getMessage());
+        }
+    }
+
+    // Store trade in Redis Stream
+    public void storeTrade(String symbol, String tradeId, double price, double size, boolean isBidAggressor) {
+        String key = "mbo:trades:%s".formatted(symbol);
+        try (Jedis jedis = getConnection()) {
+            Map<String, String> tradeData = new HashMap<>();
+            tradeData.put("trade_id", tradeId);
+            tradeData.put("price", String.format("%.2f", price));
+            tradeData.put("size", String.format("%.2f", size));
+            tradeData.put("is_bid_aggressor", isBidAggressor ? "1" : "0");
+            tradeData.put("timestamp", java.time.Instant.now().toString());
+
+            jedis.xadd(key, (redis.clients.jedis.StreamEntryID) null, tradeData);
+            jedis.expire(key, ttlCache.get("trades"));
+        } catch (Exception e) {
+            LOGGER.severe("Error storing trade: " + e.getMessage());
+        }
+    }
+
+    // Store depth update (aggregated price level)
+    public void storeDepth(String symbol, double price, double size, boolean isBid) {
+        String side = isBid ? "bid" : "ask";
+        String key = "mbo:depth:%s:%s".formatted(symbol, side);
+        try (Jedis jedis = getConnection()) {
+            // Store as hash: price -> size
+            jedis.hset(key, String.format("%.2f", price), String.format("%.2f", size));
+            jedis.expire(key, ttlCache.get("depth"));
+        } catch (Exception e) {
+            LOGGER.severe("Error storing depth: " + e.getMessage());
+        }
+    }
+
+    // Update MBO statistics
+    public void updateMboStats(String symbol, String sessionId, long mboCount, long tradeCount, long depthCount) {
+        String key = "mbo:stats:%s".formatted(symbol);
+        try (Jedis jedis = getConnection()) {
+            Map<String, String> stats = new HashMap<>();
+            stats.put("mbo_events", String.valueOf(mboCount));
+            stats.put("trade_events", String.valueOf(tradeCount));
+            stats.put("depth_events", String.valueOf(depthCount));
+            stats.put("session_id", sessionId);
+            stats.put("last_update", java.time.Instant.now().toString());
+
+            jedis.hset(key, stats);
+            jedis.expire(key, ttlCache.get("stats"));
+        } catch (Exception e) {
+            LOGGER.severe("Error updating MBO stats: " + e.getMessage());
+        }
+    }
+
     // ============================================
     // Price Ladder Operations
     // ============================================
@@ -193,7 +285,8 @@ public class RedisManager {
             streamData.put("timestamp", String.valueOf(timestamp));
             streamData.put("data", eventJson);
             // XADD with MAXLEN approximation
-            jedis.xadd(streamKey, streamData, redis.clients.jedis.params.XAddParams.xAddParams().maxLen(1000).approximateTrimming());
+            jedis.xadd(streamKey, streamData,
+                    redis.clients.jedis.params.XAddParams.xAddParams().maxLen(1000).approximateTrimming());
         } catch (Exception e) {
             LOGGER.severe("Error adding stop/iceberg event: " + e.getMessage());
         }
@@ -226,7 +319,8 @@ public class RedisManager {
             streamData.put("significance", String.valueOf(significance));
             streamData.put("data", eventJson);
             // XADD with MAXLEN approximation
-            jedis.xadd(streamKey, streamData, redis.clients.jedis.params.XAddParams.xAddParams().maxLen(500).approximateTrimming());
+            jedis.xadd(streamKey, streamData,
+                    redis.clients.jedis.params.XAddParams.xAddParams().maxLen(500).approximateTrimming());
         } catch (Exception e) {
             LOGGER.severe("Error adding absorption event: " + e.getMessage());
         }
@@ -458,4 +552,3 @@ public class RedisManager {
         }
     }
 }
-

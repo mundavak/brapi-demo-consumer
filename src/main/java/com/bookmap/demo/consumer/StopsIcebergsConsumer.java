@@ -33,6 +33,7 @@ import com.bookmap.demo.consumer.database.RedisManager;
 import com.bookmap.demo.consumer.database.TimescaleDBManager;
 import com.bookmap.demo.consumer.providers.Provider;
 import com.bookmap.demo.consumer.utils.SessionManager;
+import com.bookmap.demo.consumer.utils.EventFieldExtractor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -329,10 +330,17 @@ public class StopsIcebergsConsumer
             HashMap<String, Object> stopData = new HashMap<String, Object>();
             stopData.put("timestamp", this.dateFormat.format(new Date()));
             stopData.put("type", "stop");
+
+            // Extract ALL available fields from the event using reflection
+            Map<String, Object> allFields = EventFieldExtractor.extractAllFields(event);
+            String additionalDataJson = EventFieldExtractor.toJsonString(allFields);
+
             if (event != null) {
                 try {
                     if (this.stopCount.get() == 0) {
                         this.logEventStructure("StopEvent", event);
+                        this.log("INFO", "===== ALL EXTRACTED FIELDS =====");
+                        this.log("INFO", additionalDataJson);
                     }
                     String instrument = this.instrumentsInfo.isEmpty() ? ""
                             : this.instrumentsInfo.keySet().iterator().next();
@@ -405,6 +413,7 @@ public class StopsIcebergsConsumer
                 dbEvent.sessionId = this.currentSessionId;
                 dbEvent.cbdrWindow = cbdrWindow;
                 dbEvent.icebergSubtype = null; // NULL for STOP events
+                dbEvent.additionalData = additionalDataJson; // Store ALL BrAPI fields
                 if (!this.batchQueue.offer(dbEvent)) {
                     this.log("WARN", "Batch queue full, event dropped");
                 }
@@ -421,6 +430,16 @@ public class StopsIcebergsConsumer
 
     public void onIcebergEvent(Object event) {
         try {
+            // Extract ALL available fields from the event using reflection
+            Map<String, Object> allFields = EventFieldExtractor.extractAllFields(event);
+            String additionalDataJson = EventFieldExtractor.toJsonString(allFields);
+
+            // Log all extracted fields on first event for debugging
+            if (this.icebergCount.get() == 0) {
+                this.log("INFO", "===== ALL EXTRACTED ICEBERG FIELDS =====");
+                this.log("INFO", additionalDataJson);
+            }
+
             HashMap<String, Object> icebergData = new HashMap<String, Object>();
             icebergData.put("timestamp", this.dateFormat.format(new Date()));
             icebergData.put("type", "iceberg");
@@ -506,6 +525,7 @@ public class StopsIcebergsConsumer
                 dbEvent.sessionId = this.currentSessionId;
                 dbEvent.cbdrWindow = cbdrWindow;
                 dbEvent.icebergSubtype = icebergSubtype; // Capture Bookmap iceberg sub-type
+                dbEvent.additionalData = additionalDataJson; // Store ALL BrAPI fields as JSON
                 if (!this.batchQueue.offer(dbEvent)) {
                     this.log("WARN", "Batch queue full, event dropped");
                 }

@@ -16,6 +16,7 @@ import com.bookmap.demo.consumer.database.TimescaleDBManager;
 import com.bookmap.demo.consumer.providers.Provider;
 import com.bookmap.demo.consumer.utils.SessionManager;
 import com.bookmap.demo.consumer.utils.LoggingConfig;
+import com.bookmap.demo.consumer.utils.EventFieldExtractor;
 
 import com.google.gson.Gson;
 import velox.indicators.absorption.broadcasting.module.EventInterface;
@@ -257,6 +258,16 @@ public class AbsorptionConsumer implements
 
     private void processTradeEvent(TradeEvent tradeEvent) {
         try {
+            // Extract ALL available fields from the event using reflection
+            Map<String, Object> allFields = EventFieldExtractor.extractAllFields(tradeEvent);
+            String additionalDataJson = EventFieldExtractor.toJsonString(allFields);
+
+            // Log all extracted fields on first event for debugging
+            if (stopCount.get() == 0) {
+                log("INFO", "===== ALL EXTRACTED ABSORPTION FIELDS =====");
+                log("INFO", additionalDataJson);
+            }
+
             // Direct field access - NO REFLECTION
             long timestampNanos = tradeEvent.getTime();
             double price = tradeEvent.getPrice();
@@ -283,8 +294,9 @@ public class AbsorptionConsumer implements
             // Log every 10th event with significance (show converted price)
             if (stopCount.incrementAndGet() % 10 == 0) {
                 log("INFO",
-                        "TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d, significance=%.2f (threshold: 0.5)".formatted(
-                                side, convertedPrice, price, size, maxChainSize, significance));
+                        "TradeEvent: %s @ %.2f (raw: %.2f), size=%d, chain=%d, significance=%.2f (threshold: 0.5)"
+                                .formatted(
+                                        side, convertedPrice, price, size, maxChainSize, significance));
             }
 
             // Only store if significant
@@ -307,6 +319,7 @@ public class AbsorptionConsumer implements
                 dbEvent.isInCbdr = false; // TODO: Check actual CBDR status
                 dbEvent.significance = significance;
                 dbEvent.metadata = "{\"maxChainSize\":%d,\"rawPrice\":%.2f}".formatted(maxChainSize, price);
+                dbEvent.additionalData = additionalDataJson; // Store ALL BrAPI fields as JSON
 
                 // Store to Redis with converted price
                 String eventJson = gson.toJson(Map.of(

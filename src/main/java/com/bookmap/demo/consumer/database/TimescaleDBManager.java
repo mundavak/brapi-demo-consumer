@@ -133,9 +133,9 @@ public class TimescaleDBManager {
     }
 
     public void batchInsertMboData(List<MboData> mboDataList) {
-        String sql = "INSERT INTO mbo_data (timestamp, symbol, order_id, side, price, size, order_type, action, session_id, cbdr_window) "
+        String sql = "INSERT INTO mbo_data (timestamp, symbol, order_id, side, price, size, order_type, action, session_id, data_type, cbdr_window, additional_data) "
                 +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -144,16 +144,42 @@ public class TimescaleDBManager {
             int batchSize = 0;
 
             for (MboData data : mboDataList) {
+                if (data == null)
+                    continue;
+
                 pstmt.setDouble(1, data.timestamp / 1000.0);
                 pstmt.setString(2, data.symbol);
-                pstmt.setLong(3, data.orderId);
+
+                // Convert orderId to long (database expects BIGINT)
+                // For numeric IDs, parse directly; for generated IDs like "TRADE_123", extract
+                // number
+                long orderIdLong;
+                try {
+                    if (data.orderId.contains("_")) {
+                        // Extract numeric part from generated IDs like "TRADE_123456789"
+                        String numericPart = data.orderId.substring(data.orderId.lastIndexOf('_') + 1);
+                        orderIdLong = Long.parseLong(numericPart);
+                    } else {
+                        orderIdLong = Long.parseLong(data.orderId);
+                    }
+                } catch (NumberFormatException e) {
+                    // If parsing fails, use hash of the string
+                    orderIdLong = Math.abs(data.orderId.hashCode());
+                }
+                pstmt.setLong(3, orderIdLong);
+
                 pstmt.setString(4, data.side);
                 pstmt.setDouble(5, data.price);
-                pstmt.setLong(6, data.size);
+
+                // Convert size to long (database expects BIGINT)
+                pstmt.setLong(6, (long) data.size);
+
                 pstmt.setString(7, data.orderType);
                 pstmt.setString(8, data.action);
                 pstmt.setString(9, data.sessionId);
-                pstmt.setString(10, data.cbdrWindow);
+                pstmt.setString(10, data.dataType); // NEW: data_type field
+                pstmt.setString(11, data.cbdrWindow);
+                pstmt.setString(12, data.additionalData); // Store ALL BrAPI fields as JSON
 
                 pstmt.addBatch();
                 batchSize++;
@@ -175,6 +201,17 @@ public class TimescaleDBManager {
         } catch (SQLException e) {
             LOGGER.severe("Error batch inserting MBO data: " + e.getMessage());
         }
+    }
+
+    // Array overload for convenience
+    public void batchInsertMboData(MboData[] mboDataArray) {
+        java.util.List<MboData> list = new java.util.ArrayList<>();
+        for (MboData data : mboDataArray) {
+            if (data != null) {
+                list.add(data);
+            }
+        }
+        batchInsertMboData(list);
     }
 
     // ============================================
@@ -320,9 +357,9 @@ public class TimescaleDBManager {
 
     public void batchInsertStopIcebergEvents(List<StopIcebergEvent> events) {
         String sql = "INSERT INTO stops_icebergs (timestamp, symbol, event_type, side, price, detected_size, " +
-                "estimated_total_size, fill_count, confidence_score, duration_ms, session_id, cbdr_window, iceberg_subtype, metadata) "
+                "estimated_total_size, fill_count, confidence_score, duration_ms, session_id, cbdr_window, iceberg_subtype, metadata, additional_data) "
                 +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb)";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -369,6 +406,13 @@ public class TimescaleDBManager {
                     pstmt.setString(14, event.metadata);
                 } else {
                     pstmt.setNull(14, java.sql.Types.OTHER);
+                }
+
+                // Handle additional_data JSONB field - NEW: captures ALL BrAPI fields
+                if (event.additionalData != null && !event.additionalData.isEmpty()) {
+                    pstmt.setString(15, event.additionalData);
+                } else {
+                    pstmt.setNull(15, java.sql.Types.OTHER);
                 }
 
                 pstmt.addBatch();
@@ -424,8 +468,8 @@ public class TimescaleDBManager {
     public void batchInsertAbsorptionEvents(List<AbsorptionEvent> events) {
         String sql = "INSERT INTO absorption_events (timestamp, symbol, event_type, side, price, " +
                 "absorbed_volume, aggressor_volume, liquidity_removed, absorption_ratio, imbalance_ratio, " +
-                "session_id, cbdr_window, is_in_cbdr, significance_score, metadata) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "session_id, cbdr_window, is_in_cbdr, significance_score, metadata, additional_data) " +
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb)";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -448,6 +492,7 @@ public class TimescaleDBManager {
                 pstmt.setBoolean(13, event.isInCbdr);
                 pstmt.setDouble(14, event.significance);
                 pstmt.setString(15, event.metadata);
+                pstmt.setString(16, event.additionalData); // Store ALL BrAPI fields as JSON
                 pstmt.addBatch();
             }
 
@@ -602,14 +647,33 @@ public class TimescaleDBManager {
     public static class MboData {
         public String symbol;
         public long timestamp;
-        public long orderId;
+        public String orderId; // Changed to String for flexibility (can be order ID or generated ID)
         public String side;
         public double price;
-        public long size;
+        public double size; // Changed to double for actual size
         public String orderType;
         public String action;
         public String sessionId;
+        public String dataType; // NEW: "MBO", "TRADE", or "DEPTH"
         public String cbdrWindow;
+        public String additionalData; // Complete JSON dump of ALL event fields
+
+        public MboData(long timestamp, String symbol, String orderId, double price, double size,
+                String side, String orderType, String action, String sessionId,
+                String dataType, String additionalData) {
+            this.timestamp = timestamp;
+            this.symbol = symbol;
+            this.orderId = orderId;
+            this.price = price;
+            this.size = size;
+            this.side = side;
+            this.orderType = orderType;
+            this.action = action;
+            this.sessionId = sessionId;
+            this.dataType = dataType;
+            this.cbdrWindow = "NONE"; // Default, can be set later if needed
+            this.additionalData = additionalData;
+        }
     }
 
     public static class OhlcCandle {
@@ -642,6 +706,7 @@ public class TimescaleDBManager {
         public String cbdrWindow;
         public String icebergSubtype; // Bookmap iceberg sub-type: TRADE, EXECUTION, DETECTION, CANCELLATION, MOVEMENT
         public String metadata;
+        public String additionalData; // Complete JSON dump of ALL BrAPI event fields
     }
 
     public static class AbsorptionEvent {
@@ -660,5 +725,6 @@ public class TimescaleDBManager {
         public boolean isInCbdr;
         public double significance;
         public String metadata;
+        public String additionalData; // Complete JSON dump of ALL BrAPI event fields
     }
 }

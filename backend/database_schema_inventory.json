@@ -1,0 +1,611 @@
+{
+  "database": "trading_data",
+  "host": "localhost:5432",
+  "discovered_date": "2025-11-06",
+  "total_tables": 6,
+  "tables": {
+    "absorption_events": {
+      "row_count": 1281823,
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event_type",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "side",
+          "type": "character varying(4)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "price",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "absorbed_volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "aggressor_volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "liquidity_removed",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "absorption_ratio",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "imbalance_ratio",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "cbdr_window",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "is_in_cbdr",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "significance_score",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "primary_keys": [
+        "timestamp",
+        "symbol",
+        "event_type",
+        "price"
+      ],
+      "indexes": [
+        "absorption_events_pkey",
+        "absorption_events_timestamp_idx",
+        "idx_absorption_symbol_time",
+        "idx_absorption_event_type",
+        "idx_absorption_significance",
+        "idx_absorption_cbdr",
+        "idx_absorption_session",
+        "idx_absorption_in_cbdr"
+      ]
+    },
+    "market_bias": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "direction",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "confidence",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "supporting_factors",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "cbdr_window",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "buy_volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "sell_volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "absorption_count",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "iceberg_count",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        }
+      ],
+      "primary_keys": [
+        "timestamp",
+        "symbol"
+      ],
+      "indexes": [
+        "market_bias_pkey",
+        "market_bias_timestamp_idx",
+        "idx_bias_symbol_time",
+        "idx_bias_direction",
+        "idx_bias_confidence"
+      ]
+    },
+    "mbo_data": {
+      "row_count": 32722471,
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "side",
+          "type": "character varying(4)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "price",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "size",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "order_type",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "action",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "cbdr_window",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "primary_keys": [
+        "timestamp",
+        "symbol",
+        "order_id"
+      ],
+      "indexes": [
+        "mbo_data_pkey",
+        "mbo_data_timestamp_idx",
+        "idx_mbo_symbol_time",
+        "idx_mbo_session",
+        "idx_mbo_cbdr",
+        "idx_mbo_price"
+      ]
+    },
+    "ohlc_candles": {
+      "row_count": 1903,
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "timeframe",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "open",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "high",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "low",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "close",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "trade_count",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "vwap",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "cbdr_window",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "primary_keys": [
+        "timestamp",
+        "symbol",
+        "timeframe"
+      ],
+      "indexes": [
+        "ohlc_candles_pkey",
+        "ohlc_candles_timestamp_idx",
+        "idx_ohlc_symbol_tf_time",
+        "idx_ohlc_session",
+        "idx_ohlc_cbdr"
+      ]
+    },
+    "stops_icebergs": {
+      "row_count": 598856,
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event_type",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "side",
+          "type": "character varying(4)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "price",
+          "type": "double precision",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "detected_size",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "estimated_total_size",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "fill_count",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "confidence_score",
+          "type": "double precision",
+          "nullable": true,
+          "default": "0.0"
+        },
+        {
+          "name": "duration_ms",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "cbdr_window",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "iceberg_subtype",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "primary_keys": [
+        "timestamp",
+        "symbol",
+        "event_type",
+        "price"
+      ],
+      "indexes": [
+        "stops_icebergs_pkey",
+        "stops_icebergs_timestamp_idx",
+        "idx_stops_symbol_time",
+        "idx_stops_event_type",
+        "idx_stops_confidence",
+        "idx_stops_cbdr",
+        "idx_stops_session",
+        "idx_stops_iceberg_subtype"
+      ]
+    },
+    "trading_sessions": {
+      "row_count": 4,
+      "columns": [
+        {
+          "name": "session_id",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "symbol",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "session_type",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "start_time",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "end_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "total_volume",
+          "type": "bigint",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "total_trades",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "avg_price",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "high_price",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "low_price",
+          "type": "double precision",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": "'ACTIVE'::character varying"
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "primary_keys": [
+        "session_id"
+      ],
+      "indexes": [
+        "trading_sessions_pkey",
+        "idx_sessions_symbol_time",
+        "idx_sessions_type",
+        "idx_sessions_status"
+      ]
+    }
+  },
+  "nov6_data_availability": {
+    "absorption_events": {
+      "count": 321373,
+      "earliest": "2025-11-06 09:02:54.515221-05:00",
+      "latest": "2025-11-06 14:41:07.797443-05:00"
+    },
+    "mbo_data": {
+      "count": 3477291,
+      "earliest": "2025-11-06 02:00:00.008607-05:00",
+      "latest": "2025-11-06 09:29:59.999953-05:00"
+    },
+    "stops_icebergs": {
+      "count": 95138,
+      "earliest": "2025-11-06 00:00:30.146236-05:00",
+      "latest": "2025-11-06 14:41:06.505079-05:00"
+    }
+  },
+  "notes": {
+    "mbo_data_cutoff": "2025-11-06 09:29:59 EST (stops before NY session)",
+    "trades_tables_found": [],
+    "depth_tables_found": [],
+    "primary_data_sources": [
+      "stops_icebergs (stop hunts and iceberg orders)",
+      "mbo_data (market-by-order data, but limited hours)",
+      "ohlc_candles (OHLC candle data)",
+      "absorption_events (absorption indicator events)"
+    ]
+  }
+}
