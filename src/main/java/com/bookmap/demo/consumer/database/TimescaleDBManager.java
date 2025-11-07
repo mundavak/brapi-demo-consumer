@@ -331,7 +331,11 @@ public class TimescaleDBManager {
             String sessionId, String cbdrWindow, String icebergSubtype, String metadata) {
         String sql = "INSERT INTO stops_icebergs (timestamp, symbol, event_type, side, price, detected_size, " +
                 "estimated_total_size, confidence_score, session_id, cbdr_window, iceberg_subtype, metadata) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb) " +
+                "ON CONFLICT (timestamp, symbol, event_type, price) DO UPDATE SET " +
+                "detected_size = EXCLUDED.detected_size, " +
+                "estimated_total_size = EXCLUDED.estimated_total_size, " +
+                "confidence_score = EXCLUDED.confidence_score";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -359,7 +363,13 @@ public class TimescaleDBManager {
         String sql = "INSERT INTO stops_icebergs (timestamp, symbol, event_type, side, price, detected_size, " +
                 "estimated_total_size, fill_count, confidence_score, duration_ms, session_id, cbdr_window, iceberg_subtype, metadata, additional_data) "
                 +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb) " +
+                "ON CONFLICT (timestamp, symbol, event_type, price) DO UPDATE SET " +
+                "detected_size = EXCLUDED.detected_size, " +
+                "estimated_total_size = EXCLUDED.estimated_total_size, " +
+                "fill_count = EXCLUDED.fill_count, " +
+                "confidence_score = EXCLUDED.confidence_score, " +
+                "duration_ms = EXCLUDED.duration_ms";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -440,7 +450,10 @@ public class TimescaleDBManager {
         String sql = "INSERT INTO absorption_events (timestamp, symbol, event_type, side, price, " +
                 "absorbed_volume, aggressor_volume, absorption_ratio, session_id, cbdr_window, " +
                 "is_in_cbdr, significance_score, metadata) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb) " +
+                "ON CONFLICT (timestamp, symbol, event_type, price) DO UPDATE SET " +
+                "absorbed_volume = EXCLUDED.absorbed_volume, " +
+                "aggressor_volume = EXCLUDED.aggressor_volume";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -469,7 +482,11 @@ public class TimescaleDBManager {
         String sql = "INSERT INTO absorption_events (timestamp, symbol, event_type, side, price, " +
                 "absorbed_volume, aggressor_volume, liquidity_removed, absorption_ratio, imbalance_ratio, " +
                 "session_id, cbdr_window, is_in_cbdr, significance_score, metadata, additional_data) " +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb, ?::jsonb) " +
+                "ON CONFLICT (timestamp, symbol, event_type, price) DO UPDATE SET " +
+                "absorbed_volume = EXCLUDED.absorbed_volume, " +
+                "aggressor_volume = EXCLUDED.aggressor_volume, " +
+                "liquidity_removed = EXCLUDED.liquidity_removed";
 
         try (Connection conn = getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
