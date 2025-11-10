@@ -178,8 +178,8 @@ public class EventFieldExtractor {
             Object value = entry.getValue();
             if (value == null) {
                 json.append("null");
-            } else if (value instanceof String) {
-                json.append("\"").append(escape((String) value)).append("\"");
+            } else if (value instanceof String string) {
+                json.append("\"").append(escape(string)).append("\"");
             } else if (value instanceof Number || value instanceof Boolean) {
                 json.append(value);
             } else {

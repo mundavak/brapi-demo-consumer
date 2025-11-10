@@ -433,7 +433,7 @@ public class MboDataConsumer implements
                     eventCounts.getOrDefault("depth", 0L));
 
             // Log batch composition
-            log("INFO", String.format("Batch inserted %d records: %s | Queue remaining: %d",
+            log("INFO", "Batch inserted %d records: %s | Queue remaining: %d".formatted(
                     batchSize, batchCounts, mboBatchQueue.size()));
 
             // Log progress every 1000 events

@@ -32,7 +32,7 @@ public class SessionManager {
     public String generateSessionId(String symbol) {
         String timestamp = LocalDateTime.now().format(FORMATTER);
         String uuid = UUID.randomUUID().toString().substring(0, 8);
-        String sessionId = String.format("%s_%s_%s", symbol, timestamp, uuid);
+        String sessionId = "%s_%s_%s".formatted(symbol, timestamp, uuid);
 
         activeSessionsPerSymbol.put(symbol, sessionId);
         return sessionId;

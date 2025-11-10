@@ -145,8 +145,7 @@ public class RedisManager {
                 removeOrderById(jedis, askKey, orderId);
             } else {
                 // SEND or REPLACE: Add/update order in sorted set
-                String orderData = String.format(
-                        "{\"order_id\":\"%s\",\"size\":%.2f,\"event_type\":\"%s\",\"timestamp\":\"%s\"}",
+                String orderData = "{\"order_id\":\"%s\",\"size\":%.2f,\"event_type\":\"%s\",\"timestamp\":\"%s\"}".formatted(
                         orderId, size, eventType, java.time.Instant.now().toString());
                 jedis.zadd(key, price, orderData);
                 jedis.expire(key, ttlCache.get("mbo"));
@@ -177,8 +176,8 @@ public class RedisManager {
         try (Jedis jedis = getConnection()) {
             Map<String, String> tradeData = new HashMap<>();
             tradeData.put("trade_id", tradeId);
-            tradeData.put("price", String.format("%.2f", price));
-            tradeData.put("size", String.format("%.2f", size));
+            tradeData.put("price", "%.2f".formatted(price));
+            tradeData.put("size", "%.2f".formatted(size));
             tradeData.put("is_bid_aggressor", isBidAggressor ? "1" : "0");
             tradeData.put("timestamp", java.time.Instant.now().toString());
 
@@ -195,7 +194,7 @@ public class RedisManager {
         String key = "mbo:depth:%s:%s".formatted(symbol, side);
         try (Jedis jedis = getConnection()) {
             // Store as hash: price -> size
-            jedis.hset(key, String.format("%.2f", price), String.format("%.2f", size));
+            jedis.hset(key, "%.2f".formatted(price), "%.2f".formatted(size));
             jedis.expire(key, ttlCache.get("depth"));
         } catch (Exception e) {
             LOGGER.severe("Error storing depth: " + e.getMessage());
