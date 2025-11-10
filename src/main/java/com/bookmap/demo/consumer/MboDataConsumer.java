@@ -67,11 +67,17 @@ public class MboDataConsumer implements
     private volatile boolean firstTrade = true;
     private volatile boolean firstDepth = true;
 
+    // MBO feed verification
+    private volatile long initTime = 0;
+    private volatile boolean mboDataReceived = false;
+    private final ScheduledExecutorService mboVerifier = Executors.newSingleThreadScheduledExecutor();
+
     @Override
     public void initialize(String alias, InstrumentInfo info, Api api, InitialState initialState) {
         this.alias = alias;
         this.instrumentInfo = info;
         this.sessionId = SessionManager.getInstance().generateSessionId(alias);
+        this.initTime = System.currentTimeMillis();
 
         // Initialize event counters
         eventCounts.put("mbo_send", 0L);
@@ -89,6 +95,9 @@ public class MboDataConsumer implements
         log("INFO", "✓ Subscribed to MBO data (MarketByOrderDepthDataListener - send/replace/cancel)");
         log("INFO", "✓ Subscribed to Trade data (TradeDataListener)");
         log("INFO", "✓ Subscribed to Depth data (DepthDataListener)");
+
+        // Schedule MBO feed verification after 30 seconds
+        mboVerifier.schedule(this::verifyMboFeed, 30, TimeUnit.SECONDS);
     }
 
     @Override
@@ -98,18 +107,62 @@ public class MboDataConsumer implements
         // Process remaining batches
         processBatch();
 
-        // Shutdown executor
+        // Shutdown executors
+        mboVerifier.shutdown();
         batchProcessor.shutdown();
         try {
             if (!batchProcessor.awaitTermination(10, TimeUnit.SECONDS)) {
                 batchProcessor.shutdownNow();
             }
+            if (!mboVerifier.awaitTermination(5, TimeUnit.SECONDS)) {
+                mboVerifier.shutdownNow();
+            }
         } catch (InterruptedException e) {
             batchProcessor.shutdownNow();
+            mboVerifier.shutdownNow();
             Thread.currentThread().interrupt();
         }
 
         log("INFO", "MboDataConsumer stopped. Stats: " + eventCounts);
+        if (mboDataReceived) {
+            log("INFO", "✓ MBO data feed was ACTIVE - received true order-by-order data");
+        } else {
+            log("WARN", "⚠ NO MBO data received - only trades/depth data available");
+        }
+    }
+
+    /**
+     * Verify that true MBO data is being received (not just trades/depth)
+     */
+    private void verifyMboFeed() {
+        long elapsedSeconds = (System.currentTimeMillis() - initTime) / 1000;
+
+        if (!mboDataReceived) {
+            log("WARN", "═══════════════════════════════════════════════════════════");
+            log("WARN", "⚠ MBO FEED CHECK: NO MBO events received after " + elapsedSeconds + " seconds!");
+            log("WARN", "═══════════════════════════════════════════════════════════");
+            log("WARN", "Possible reasons:");
+            log("WARN", "  1. No MBO subscription active for " + alias);
+            log("WARN", "  2. Market is closed or very quiet");
+            log("WARN", "  3. Using aggregated data feed (trades/depth only)");
+            log("WARN", "  4. MBO data not available for this instrument");
+            log("WARN", "═══════════════════════════════════════════════════════════");
+            log("WARN", "Current data received:");
+            log("WARN", "  - Trades: " + eventCounts.get("trade"));
+            log("WARN", "  - Depth updates: " + eventCounts.get("depth"));
+            log("WARN", "  - MBO events: 0 (MISSING!)");
+            log("WARN", "═══════════════════════════════════════════════════════════");
+        } else {
+            log("INFO", "═══════════════════════════════════════════════════════════");
+            log("INFO", "✓ MBO FEED VERIFIED: Receiving true order-by-order data!");
+            log("INFO", "═══════════════════════════════════════════════════════════");
+            log("INFO", "  - MBO SEND events: " + eventCounts.get("mbo_send"));
+            log("INFO", "  - MBO REPLACE events: " + eventCounts.get("mbo_replace"));
+            log("INFO", "  - MBO CANCEL events: " + eventCounts.get("mbo_cancel"));
+            log("INFO", "  - Trade events: " + eventCounts.get("trade"));
+            log("INFO", "  - Depth events: " + eventCounts.get("depth"));
+            log("INFO", "═══════════════════════════════════════════════════════════");
+        }
     }
 
     // =================================================================
@@ -120,6 +173,12 @@ public class MboDataConsumer implements
     public void send(String orderId, boolean isBid, int price, int size) {
         if (!isActive.get())
             return;
+
+        // Mark that we received true MBO data
+        if (!mboDataReceived) {
+            mboDataReceived = true;
+            log("INFO", "✓ TRUE MBO DATA CONFIRMED: Receiving order-by-order feed (not just aggregated trades)");
+        }
 
         eventCounts.merge("mbo_send", 1L, Long::sum);
 
@@ -175,6 +234,11 @@ public class MboDataConsumer implements
     public void replace(String orderId, int price, int size) {
         if (!isActive.get())
             return;
+
+        // Mark that we received true MBO data
+        if (!mboDataReceived) {
+            mboDataReceived = true;
+        }
 
         eventCounts.merge("mbo_replace", 1L, Long::sum);
 
@@ -233,6 +297,11 @@ public class MboDataConsumer implements
     public void cancel(String orderId) {
         if (!isActive.get())
             return;
+
+        // Mark that we received true MBO data
+        if (!mboDataReceived) {
+            mboDataReceived = true;
+        }
 
         eventCounts.merge("mbo_cancel", 1L, Long::sum);
 
