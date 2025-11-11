@@ -115,6 +115,141 @@ def fetch_iceberg_data(cursor, lookback_time):
     return cursor.fetchall()
 
 
+def fetch_sweep_data(cursor, lookback_time):
+    """Fetch sweep events for BOS/MSS analysis."""
+    query = """
+    SELECT timestamp, price, side, aggressor_volume, significance_score,
+           metadata->>'maxChainSize' as chain_size,
+           metadata->>'sweepType' as sweep_type
+    FROM absorption_events
+    WHERE timestamp >= %s
+      AND event_type = 'SWEEP'
+    ORDER BY timestamp;
+    """
+    cursor.execute(query, (lookback_time,))
+    return cursor.fetchall()
+
+
+def fetch_recent_candles(cursor, lookback_hours=24):
+    """Fetch recent OHLC candles for swing high/low detection."""
+    lookback_time = datetime.now(pytz.UTC) - timedelta(hours=lookback_hours)
+    query = """
+    SELECT timestamp, open, high, low, close, volume
+    FROM ohlc_candles
+    WHERE timestamp >= %s
+    ORDER BY timestamp;
+    """
+    cursor.execute(query, (lookback_time,))
+    return cursor.fetchall()
+
+
+def detect_bos_mss(candles, sweep_data, current_price, lookback_swings=20):
+    """
+    Detect BOS (Break of Structure) vs MSS (Market Structure Shift)
+
+    BOS = Continuation pattern (breaks structure in trend direction)
+    MSS = Reversal pattern (breaks structure against trend)
+
+    Returns dict with structure break info.
+    """
+    if len(candles) < lookback_swings:
+        return None
+
+    # Extract swing highs and lows (using simple peak detection)
+    swing_highs = []
+    swing_lows = []
+
+    for i in range(2, len(candles) - 2):
+        high = candles[i][2]  # high price
+        low = candles[i][3]  # low price
+
+        # Swing high if higher than 2 candles on each side
+        if (
+            high > candles[i - 1][2]
+            and high > candles[i - 2][2]
+            and high > candles[i + 1][2]
+            and high > candles[i + 2][2]
+        ):
+            swing_highs.append((candles[i][0], high))  # (timestamp, price)
+
+        # Swing low if lower than 2 candles on each side
+        if (
+            low < candles[i - 1][3]
+            and low < candles[i - 2][3]
+            and low < candles[i + 1][3]
+            and low < candles[i + 2][3]
+        ):
+            swing_lows.append((candles[i][0], low))
+
+    if not swing_highs or not swing_lows:
+        return None
+
+    # Get last swing high and low
+    last_swing_high = swing_highs[-1][1]
+    last_swing_low = swing_lows[-1][1]
+
+    # Determine trend (bullish if making higher lows, bearish if lower highs)
+    recent_lows = [sl[1] for sl in swing_lows[-3:]]
+    recent_highs = [sh[1] for sh in swing_highs[-3:]]
+
+    trend = None
+    if len(recent_lows) >= 2 and recent_lows[-1] > recent_lows[-2]:
+        trend = "BULLISH"
+    elif len(recent_highs) >= 2 and recent_highs[-1] < recent_highs[-2]:
+        trend = "BEARISH"
+    else:
+        trend = "NEUTRAL"
+
+    # Detect structure breaks
+    structure_break = None
+    break_type = None
+
+    # Check if current price breaks last swing high
+    if current_price > last_swing_high:
+        if trend == "BULLISH":
+            structure_break = "BOS_BULLISH"
+            break_type = "CONTINUATION"
+        else:
+            structure_break = "MSS_BULLISH"
+            break_type = "REVERSAL"
+
+    # Check if current price breaks last swing low
+    elif current_price < last_swing_low:
+        if trend == "BEARISH":
+            structure_break = "BOS_BEARISH"
+            break_type = "CONTINUATION"
+        else:
+            structure_break = "MSS_BEARISH"
+            break_type = "REVERSAL"
+    else:
+        structure_break = "NO_BREAK"
+        break_type = "WITHIN_STRUCTURE"
+
+    # Analyze sweep correlation with structure break
+    sweep_bias = None
+    if sweep_data:
+        buy_sweeps = len([s for s in sweep_data if s[2] == "BUY"])
+        sell_sweeps = len([s for s in sweep_data if s[2] == "SELL"])
+        sweep_delta = buy_sweeps - sell_sweeps
+
+        if sweep_delta > 0:
+            sweep_bias = "BULLISH"
+        elif sweep_delta < 0:
+            sweep_bias = "BEARISH"
+        else:
+            sweep_bias = "NEUTRAL"
+
+    return {
+        "structure_break": structure_break,
+        "break_type": break_type,
+        "trend": trend,
+        "last_swing_high": last_swing_high,
+        "last_swing_low": last_swing_low,
+        "sweep_bias": sweep_bias,
+        "sweep_count": len(sweep_data) if sweep_data else 0,
+    }
+
+
 def analyze_mbo_bias(mbo_data):
     """Calculate bias from MBO order flow."""
     buy_volume = sum(r[2] for r in mbo_data if r[3] == "BUY" and r[4] == "ADD")
@@ -363,6 +498,77 @@ def print_support_resistance(support_levels, resistance_levels, current_price):
     print(f"{'─'*110}\n")
 
 
+def print_bos_mss_analysis(bos_mss_data):
+    """Print BOS/MSS structure break analysis."""
+    if not bos_mss_data:
+        return
+
+    print("🔍 MARKET STRUCTURE ANALYSIS (BOS/MSS)")
+    print(f"{'─'*110}")
+
+    structure = bos_mss_data["structure_break"]
+    break_type = bos_mss_data["break_type"]
+    trend = bos_mss_data["trend"]
+
+    # Structure break emoji and interpretation
+    if structure == "BOS_BULLISH":
+        emoji = "📈"
+        interpretation = "Bullish Continuation - Price broke above last swing high (trend continues UP)"
+    elif structure == "BOS_BEARISH":
+        emoji = "📉"
+        interpretation = "Bearish Continuation - Price broke below last swing low (trend continues DOWN)"
+    elif structure == "MSS_BULLISH":
+        emoji = "🔄"
+        interpretation = "Bullish Reversal - Price broke structure to upside (potential trend change to BULLISH)"
+    elif structure == "MSS_BEARISH":
+        emoji = "🔄"
+        interpretation = "Bearish Reversal - Price broke structure to downside (potential trend change to BEARISH)"
+    else:
+        emoji = "⏸️"
+        interpretation = (
+            "No Break - Price within current structure (consolidation/range)"
+        )
+
+    print(f"\n{emoji} STRUCTURE BREAK: {structure}")
+    print(f"   Type: {break_type}")
+    print(f"   Previous Trend: {trend}")
+    print(f"   Interpretation: {interpretation}")
+
+    print(f"\n📊 KEY SWING LEVELS:")
+    print(f"   Last Swing High: {bos_mss_data['last_swing_high']:.2f}")
+    print(f"   Last Swing Low:  {bos_mss_data['last_swing_low']:.2f}")
+
+    if bos_mss_data["sweep_bias"]:
+        print(f"\n🌊 SWEEP CORRELATION:")
+        print(f"   Sweep Count: {bos_mss_data['sweep_count']} sweeps")
+        print(f"   Sweep Bias: {bos_mss_data['sweep_bias']}")
+
+        # Check for sweep/structure alignment
+        if structure.endswith("BULLISH") and bos_mss_data["sweep_bias"] == "BULLISH":
+            print(f"   ✅ ALIGNED - Sweeps confirm bullish structure break")
+        elif structure.endswith("BEARISH") and bos_mss_data["sweep_bias"] == "BEARISH":
+            print(f"   ✅ ALIGNED - Sweeps confirm bearish structure break")
+        elif structure != "NO_BREAK" and bos_mss_data["sweep_bias"] != "NEUTRAL":
+            print(
+                f"   ⚠️  DIVERGENCE - Sweeps not aligned with structure break (use caution)"
+            )
+
+    print(f"\n💡 TRADING IMPLICATIONS:")
+    if "BOS" in structure:
+        print(f"   • CONTINUATION setup - Trade WITH the trend")
+        print(f"   • Look for pullbacks to swing levels for re-entry")
+        print(f"   • Higher probability setup (following momentum)")
+    elif "MSS" in structure:
+        print(f"   • REVERSAL setup - Potential trend change")
+        print(f"   • Wait for confirmation (retest, volume, sweeps)")
+        print(f"   • Higher risk (counter-trend trading)")
+    else:
+        print(f"   • RANGE-BOUND - Trade breakouts or range edges")
+        print(f"   • Wait for structure break in either direction")
+
+    print(f"{'─'*110}\n")
+
+
 def print_trading_recommendations(
     unified_bias, support_levels, resistance_levels, current_price
 ):
@@ -482,6 +688,8 @@ def main():
     mbo_data = fetch_mbo_data(cursor, lookback_time)
     absorption_data = fetch_absorption_data(cursor, lookback_time)
     iceberg_data = fetch_iceberg_data(cursor, lookback_time)
+    sweep_data = fetch_sweep_data(cursor, lookback_time)
+    candles = fetch_recent_candles(cursor, lookback_hours=24)
 
     # Print data summary
     print_data_summary(len(mbo_data), len(absorption_data), len(iceberg_data))
@@ -498,6 +706,11 @@ def main():
     print_bias_analysis(
         mbo_analysis, absorption_analysis, iceberg_analysis, unified_bias
     )
+
+    # Detect BOS/MSS structure breaks
+    bos_mss_data = detect_bos_mss(candles, sweep_data, current_price)
+    if bos_mss_data:
+        print_bos_mss_analysis(bos_mss_data)
 
     # Find support/resistance
     support_levels, resistance_levels = find_support_resistance_levels(
