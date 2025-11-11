@@ -145,8 +145,9 @@ public class RedisManager {
                 removeOrderById(jedis, askKey, orderId);
             } else {
                 // SEND or REPLACE: Add/update order in sorted set
-                String orderData = "{\"order_id\":\"%s\",\"size\":%.2f,\"event_type\":\"%s\",\"timestamp\":\"%s\"}".formatted(
-                        orderId, size, eventType, java.time.Instant.now().toString());
+                String orderData = "{\"order_id\":\"%s\",\"size\":%.2f,\"event_type\":\"%s\",\"timestamp\":\"%s\"}"
+                        .formatted(
+                                orderId, size, eventType, java.time.Instant.now().toString());
                 jedis.zadd(key, price, orderData);
                 jedis.expire(key, ttlCache.get("mbo"));
             }
@@ -322,6 +323,29 @@ public class RedisManager {
                     redis.clients.jedis.params.XAddParams.xAddParams().maxLen(500).approximateTrimming());
         } catch (Exception e) {
             LOGGER.severe("Error adding absorption event: " + e.getMessage());
+        }
+    }
+
+    public void addSweepEvent(String symbol, String side, double price, long volume, String eventJson) {
+        // Store in sorted set by timestamp (price as score for now, could use
+        // timestamp)
+        String key = "sweep:%s:%s".formatted(symbol, side);
+        try (Jedis jedis = getConnection()) {
+            jedis.zadd(key, price, eventJson);
+            jedis.expire(key, ttlCache.get("absorption")); // Use absorption TTL for sweeps
+
+            // Stream for real-time notifications
+            String streamKey = "stream:sweep:%s".formatted(symbol);
+            Map<String, String> streamData = new HashMap<>();
+            streamData.put("side", side);
+            streamData.put("price", String.valueOf(price));
+            streamData.put("volume", String.valueOf(volume));
+            streamData.put("data", eventJson);
+            // XADD with MAXLEN approximation
+            jedis.xadd(streamKey, streamData,
+                    redis.clients.jedis.params.XAddParams.xAddParams().maxLen(500).approximateTrimming());
+        } catch (Exception e) {
+            LOGGER.severe("Error adding sweep event: " + e.getMessage());
         }
     }
 
