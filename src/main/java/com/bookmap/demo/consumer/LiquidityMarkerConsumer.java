@@ -6,6 +6,11 @@ import com.bookmap.addons.broadcasting.api.view.listeners.LiveConnectionStatusLi
 import com.bookmap.addons.broadcasting.api.view.listeners.LiveEventListener;
 import com.bookmap.addons.broadcasting.api.view.listeners.ProviderStatusListener;
 import com.bookmap.addons.broadcasting.implementations.view.BroadcastFactory;
+import com.bookmap.demo.consumer.database.RedisManager;
+import com.bookmap.demo.consumer.database.TimescaleDBManager;
+import com.bookmap.demo.consumer.providers.Provider;
+import com.bookmap.demo.consumer.utils.SessionManager;
+import com.bookmap.demo.consumer.utils.EventFieldExtractor;
 import velox.api.layer1.Layer1ApiAdminAdapter;
 import velox.api.layer1.Layer1ApiFinishable;
 import velox.api.layer1.Layer1ApiInstrumentAdapter;
@@ -16,7 +21,6 @@ import velox.api.layer1.annotations.Layer1ApiVersionValue;
 import velox.api.layer1.annotations.Layer1Attachable;
 import velox.api.layer1.annotations.Layer1StrategyName;
 import velox.api.layer1.common.ListenableHelper;
-import velox.api.layer1.common.Log;
 import velox.api.layer1.data.InstrumentInfo;
 import velox.api.layer1.messages.Layer1ApiUserMessageReloadStrategyGui;
 import velox.api.layer1.messages.UserMessageLayersChainCreatedTargeted;
@@ -26,21 +30,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Consumer for Liquidity Marker broadcasting events
- * Receives and logs liquidity events with trading window filtering
+ * Consumer for Bookmap Liquidity Markers Indicator Broadcasting API
+ * Captures liquidity level events (significant support/resistance zones
+ * identified by institutional order flow analysis)
+ * and stores them in Redis (hot storage) + TimescaleDB (cold storage).
+ * 
+ * Liquidity levels indicate price barriers where significant volume rests,
+ * often representing institutional buy/sell zones.
  */
 @Layer1Attachable
 @Layer1StrategyName("Liquidity Marker Broadcasting Consumer")
@@ -51,492 +59,790 @@ public class LiquidityMarkerConsumer implements
         Layer1ApiInstrumentAdapter,
         Layer1CustomPanelsGetter {
 
-    private static final String LOG_PATH = "F:/TradingAgent/liquidity_events.log";
-    private static final String JSON_PATH = "F:/TradingAgent/liquidity_data.json";
-    private static final String SQLITE_DB_PATH = "F:/TradingAgent/enhanced_market_monitor_mbo.db";
+    private static final String LIQUIDITY_LOG_PATH = "F:/Databases/Logs/liquidity_consumer.log";
+    private static final String ADDON_NAME = "Liquidity Marker Broadcasting Consumer";
 
-    // Trading windows in EST (Bookmap times are in UTC-4)
-    private static final int[][] TRADING_WINDOWS_EST = {
-        {16, 0, 20, 0},  // CBDR PM/Asian: 16:00-20:00 EST
-        {2, 0, 5, 0},    // CBDR London: 02:00-05:00 EST
-        {7, 30, 9, 30}   // Pre-NY: 07:30-09:30 EST
-    };
+    // Database managers (singleton pattern)
+    private final RedisManager redisManager;
+    private final TimescaleDBManager dbManager;
 
+    // Batch processing for TimescaleDB
+    private final BlockingQueue<LiquidityEvent> batchQueue;
+    private final ScheduledExecutorService batchProcessor;
+
+    // Session tracking
+    private String currentSessionId;
+
+    // UI components
     private JTextArea logArea;
     private JLabel statsLabel;
 
-    private final List<Map<String, Object>> liquidityEvents = new ArrayList<>();
-    private final AtomicInteger totalCount = new AtomicInteger(0);
-    private final Map<String, Integer> typeCounts = new HashMap<>();
+    // Event tracking
+    private final List<Map<String, Object>> liquidityEvents = Collections.synchronizedList(new ArrayList<>());
+    private final AtomicInteger liquidityCount = new AtomicInteger(0);
+    private final AtomicInteger supportCount = new AtomicInteger(0);
+    private final AtomicInteger resistanceCount = new AtomicInteger(0);
+    private final Map<String, Integer> levelTypeCounts = new ConcurrentHashMap<>();
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    // Instrument tracking
     private final Map<String, InstrumentInfo> instrumentsInfo = new ConcurrentHashMap<>();
     private final Map<String, Double> instrumentPips = new ConcurrentHashMap<>();
 
+    // Date formatting
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+    // BrAPI components
     private final Layer1ApiProvider provider;
     private final BroadcasterConsumer broadcaster;
-    private Connection dbConnection;
     private final AtomicBoolean isWorking = new AtomicBoolean(false);
+    private final Connector connector;
+
+    // Liquidity feed verification (similar to MboDataConsumer)
+    private volatile boolean firstLiquidityReceived = false;
+    private final ScheduledExecutorService verificationExecutor = Executors.newSingleThreadScheduledExecutor();
 
     public LiquidityMarkerConsumer(Layer1ApiProvider provider) {
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         ListenableHelper.addListeners(provider, this);
         this.provider = provider;
 
-        Log.info("========================================");
-        Log.info("Liquidity Marker Broadcasting Consumer: STARTING UP");
-        Log.info("========================================");
+        log("INFO", "========================================");
+        log("INFO", "Liquidity Marker Broadcasting Consumer: STARTING UP");
+        log("INFO", "========================================");
 
-        initializeDatabase();
+        // Initialize database managers
+        this.redisManager = RedisManager.getInstance();
+        this.dbManager = TimescaleDBManager.getInstance();
 
-        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, "Liquidity Marker Broadcasting Consumer", this.getClass());
+        // Initialize batch processing (write every 5 seconds)
+        this.batchQueue = new LinkedBlockingQueue<>(5000);
+        this.batchProcessor = Executors.newSingleThreadScheduledExecutor();
+        this.batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS);
 
-        broadcaster.setProviderStatusListener(new ProviderStatusListener() {
+        // Initialize broadcaster
+        this.broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, ADDON_NAME, this.getClass());
+        this.connector = new Connector(provider, this.broadcaster, Provider.LIQUIDITY_MARKERS);
+
+        // Setup provider status listener
+        this.broadcaster.setProviderStatusListener(new ProviderStatusListener() {
             @Override
-            public void providerUpdateGenerator(String providerName, String providerId, GeneratorInfo generator, boolean isOnline) {
-                log("INFO", "Provider update: %s, generator: %s, online: %s".formatted(
-                        providerName, generator != null ? generator.getGeneratorName() : "null", isOnline));
+            public void providerUpdateGenerator(String providerName, String providerId,
+                    GeneratorInfo generator, boolean isOnline) {
+                log("INFO", String.format("Provider update: %s, generator: %s, online: %s",
+                        providerName,
+                        generator != null ? generator.getGeneratorName() : "null",
+                        isOnline));
 
                 if (isWorking.get()) {
-                    ExecutorsUtilities.getExecutor().submit(() -> {
-                        LiquidityMarkerConsumer.this.provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                    });
+                    ExecutorsUtilities.getExecutor()
+                            .submit(() -> provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui()));
                 }
             }
         });
 
-        Log.info("LiquidityMarkerConsumer: Broadcaster created");
-        Log.info("Log file: " + LOG_PATH);
-        Log.info("SQLite DB: " + SQLITE_DB_PATH);
+        log("INFO", "LiquidityMarkerConsumer: Broadcaster created (waiting for chain creation)");
+        log("INFO", "Log file: " + LIQUIDITY_LOG_PATH);
+        log("INFO", "Redis: Hot storage enabled");
+        log("INFO", "TimescaleDB: Cold storage enabled (batch writes every 5 seconds)");
     }
 
-    private void initializeDatabase() {
+    /**
+     * Batch write queued liquidity events to TimescaleDB
+     */
+    private void processBatch() {
         try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + SQLITE_DB_PATH;
-            dbConnection = DriverManager.getConnection(url);
+            List<LiquidityEvent> batch = new ArrayList<>();
+            batchQueue.drainTo(batch, 500);
 
-            String createTableSQL = """
-                CREATE TABLE IF NOT EXISTS LiquidityEvents (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL,
-                    price REAL,
-                    size REAL,
-                    side TEXT,
-                    is_bid INTEGER,
-                    instrument TEXT,
-                    event_type TEXT,
-                    liquidity_level REAL,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-                """;
-
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createTableSQL);
-                log("INFO", "SQLite database initialized - LiquidityEvents table ready");
+            if (!batch.isEmpty()) {
+                dbManager.batchInsertLiquidityLevels(batch);
+                log("INFO", String.format("[BATCH] Wrote %d liquidity events to TimescaleDB", batch.size()));
             }
-
-            String createIndexSQL = "CREATE INDEX IF NOT EXISTS idx_liquidity_timestamp ON LiquidityEvents(timestamp)";
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.execute(createIndexSQL);
-            }
-
-        } catch (ClassNotFoundException e) {
-            log("ERROR", "SQLite JDBC driver not found: " + e.getMessage());
-        } catch (SQLException e) {
-            log("ERROR", "Failed to initialize database: " + e.getMessage());
+        } catch (Exception e) {
+            log("ERROR", "[BATCH] Error processing batch: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private boolean isWithinTradingWindow(long timestampNanos) {
-        long timestampMillis = timestampNanos / 1_000_000;
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
-        cal.setTimeInMillis(timestampMillis);
-
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
-        int currentMinutes = hour * 60 + minute;
-
-        for (int[] window : TRADING_WINDOWS_EST) {
-            int startMinutes = window[0] * 60 + window[1];
-            int endMinutes = window[2] * 60 + window[3];
-
-            if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /**
+     * Connect to Liquidity Markers provider
+     */
     private void connectToProvider() {
-        log("INFO", "Searching for Liquidity Marker provider...");
+        log("INFO", "Connecting to Liquidity Markers provider...");
 
-        ExecutorsUtilities.getExecutor().submit(() -> {
-            try {
-                Thread.sleep(1000);
+        try {
+            connector.connect();
 
-                // Try to find liquidity marker provider by scanning available providers
-                broadcaster.start();
-                log("INFO", "Broadcaster started, waiting for provider discovery...");
+            // Give connection time to establish
+            ExecutorsUtilities.getExecutor().submit(() -> {
+                try {
+                    Thread.sleep(1000);
 
-            } catch (Exception e) {
-                log("ERROR", "Error during connection setup: " + e.getMessage());
-            }
-        });
+                    if (connector.isConnected()) {
+                        log("INFO", "✓ Successfully connected to Liquidity Markers");
+
+                        // Get available generators
+                        List<String> generators = connector.getGeneratorsNames();
+                        log("INFO", "Found " + generators.size() + " generator(s)");
+
+                        // Subscribe to each generator
+                        for (String generatorName : generators) {
+                            log("INFO", "Subscribing to generator: " + generatorName);
+                            subscribeToGenerator(generatorName);
+                        }
+
+                        // Start liquidity feed verification (30 seconds)
+                        scheduleLiquidityFeedVerification();
+
+                    } else {
+                        log("WARN", "Connection not yet established, will retry in 2 seconds...");
+                        Thread.sleep(2000);
+                        connectToProvider();
+                    }
+                } catch (Exception e) {
+                    log("ERROR", "Error during connection setup: " + e.getMessage());
+                }
+            });
+
+        } catch (Exception e) {
+            log("ERROR", "Failed to connect to provider: " + e.getMessage());
+        }
     }
 
-    private void subscribeToGenerator(String providerName, String generatorName) {
+    /**
+     * Schedule liquidity feed verification (similar to MBO verification)
+     */
+    private void scheduleLiquidityFeedVerification() {
+        verificationExecutor.schedule(() -> {
+            if (!firstLiquidityReceived) {
+                log("WARN", "═══════════════════════════════════════════════════════════");
+                log("WARN", "⚠ LIQUIDITY FEED CHECK: NO liquidity events received after 30 seconds!");
+                log("WARN", "═══════════════════════════════════════════════════════════");
+                log("WARN", "Possible reasons:");
+                log("WARN", "  1. Liquidity Markers not enabled for this instrument");
+                log("WARN", "  2. Market is quiet (no significant liquidity levels detected)");
+                log("WARN", "  3. Insufficient market activity to form liquidity levels");
+                log("WARN", "  4. Generator not properly subscribed");
+                log("WARN", "═══════════════════════════════════════════════════════════");
+            } else {
+                log("INFO", "═══════════════════════════════════════════════════════════");
+                log("INFO", "✓ LIQUIDITY FEED VERIFIED: Receiving liquidity events!");
+                log("INFO", "═══════════════════════════════════════════════════════════");
+                log("INFO", String.format("  - Total liquidity levels: %d", liquidityCount.get()));
+                log("INFO", String.format("  - Support levels: %d", supportCount.get()));
+                log("INFO", String.format("  - Resistance levels: %d", resistanceCount.get()));
+                log("INFO", "═══════════════════════════════════════════════════════════");
+            }
+        }, 30, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Subscribe to a specific generator's live data
+     */
+    private void subscribeToGenerator(String generatorName) {
         try {
+            if (!connector.isConnected()) {
+                log("WARN", "Not connected, cannot subscribe to " + generatorName);
+                return;
+            }
+
+            // Event listener
             LiveEventListener eventListener = event -> {
                 if (event != null) {
-                    processLiquidityEvent(event);
+                    processIncomingEvent(event);
                 }
             };
 
+            // Connection status listener
             LiveConnectionStatusListener connectionListener = isSubscribed -> {
                 if (isSubscribed) {
-                    log("INFO", "✓ Successfully subscribed to: " + generatorName);
+                    log("INFO", "✓ Successfully subscribed to live data: " + generatorName);
                 } else {
                     log("WARN", "✗ Unsubscribed from: " + generatorName);
                 }
             };
 
             broadcaster.subscribeToLiveData(
-                providerName,
-                generatorName,
-                eventListener,
-                connectionListener
-            );
+                    Provider.LIQUIDITY_MARKERS.getFullName(),
+                    generatorName,
+                    eventListener,
+                    connectionListener);
 
         } catch (Exception e) {
-            log("ERROR", "Failed to subscribe to generator: " + e.getMessage());
+            log("ERROR", "Failed to subscribe to generator " + generatorName + ": " + e.getMessage());
         }
     }
 
-    private void processLiquidityEvent(Object event) {
+    /**
+     * Process incoming liquidity events from BrAPI
+     * Note: Liquidity Markers sends custom event objects that we handle via
+     * reflection
+     */
+    private void processIncomingEvent(Object event) {
         try {
-            // Check time window first
-            Object timeObj = getFieldValue(event, "time");
-            if (timeObj instanceof Long eventTime) {
-                if (!isWithinTradingWindow(eventTime)) {
-                    log("DEBUG", "LiquidityEvent outside trading window, skipping");
-                    return;
-                }
+            if (event == null) {
+                log("WARN", "Received null event");
+                return;
             }
 
-            Map<String, Object> liquidityData = new HashMap<>();
-            liquidityData.put("timestamp", dateFormat.format(new Date()));
-
-            if (totalCount.get() == 0) {
-                logEventStructure("LiquidityEvent", event);
+            // Log event class for debugging (first event only)
+            if (liquidityCount.get() == 0) {
+                log("INFO", "First event class: " + event.getClass().getName());
+                log("INFO", "Event package: " + event.getClass().getPackage().getName());
             }
 
-            String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
-
-            // Extract price and convert
-            Object priceObj = getFieldValue(event, "price");
-            if (priceObj instanceof Integer tickPrice) {
-                double actualPrice = convertPrice(tickPrice, instrument);
-                liquidityData.put("price", actualPrice);
-            } else {
-                liquidityData.put("price", priceObj);
-            }
-
-            liquidityData.put("size", getFieldValue(event, "size"));
-
-            Boolean isBid = (Boolean) getFieldValue(event, "isBid");
-            liquidityData.put("isBid", isBid);
-            liquidityData.put("side", (isBid != null && isBid) ? "BUY" : "SELL");
-
-            Object typeObj = getFieldValue(event, "type");
-            String eventType = (typeObj != null) ? typeObj.toString() : "LIQUIDITY";
-            liquidityData.put("eventType", eventType);
-            typeCounts.merge(eventType, 1, Integer::sum);
-
-            liquidityData.put("liquidityLevel", getFieldValue(event, "level"));
-            liquidityData.put("instrument", instrument);
-
-            liquidityEvents.add(liquidityData);
-            int count = totalCount.incrementAndGet();
-
-            String logMsg = "[LIQUIDITY #%d] %s @ %s, size=%s, level=%s".formatted(
-                    count,
-                    liquidityData.getOrDefault("side", "N/A"),
-                    formatNumber(liquidityData.get("price")),
-                    formatNumber(liquidityData.get("size")),
-                    formatNumber(liquidityData.get("liquidityLevel"))
-            );
-
-            log("LIQUIDITY", logMsg);
-            updateUI();
-            saveEventToDatabase(liquidityData);
-
-            if (count % 10 == 0) {
-                saveToJson();
-            }
+            // Process the liquidity event using reflection
+            // We don't have direct access to the event class, so we extract fields via
+            // reflection
+            processLiquidityEvent(event);
 
         } catch (Exception e) {
-            log("ERROR", "Error processing LiquidityEvent: " + e.getMessage());
+            log("ERROR", "Error processing incoming event: " + e.getMessage());
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            log("ERROR", sw.toString());
         }
-    }
-
-    private void saveEventToDatabase(Map<String, Object> event) {
-        if (dbConnection == null) {
-            return;
-        }
-
-        String insertSQL = """
-            INSERT INTO LiquidityEvents (timestamp, price, size, side,
-                                        is_bid, instrument, event_type, liquidity_level)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """;
-
-        try (PreparedStatement pstmt = dbConnection.prepareStatement(insertSQL)) {
-            pstmt.setString(1, (String) event.get("timestamp"));
-
-            setDoubleOrNull(pstmt, 2, event.get("price"));
-            setDoubleOrNull(pstmt, 3, event.get("size"));
-
-            pstmt.setString(4, (String) event.get("side"));
-
-            Boolean isBid = (Boolean) event.get("isBid");
-            pstmt.setInt(5, (isBid != null && isBid) ? 1 : 0);
-
-            pstmt.setString(6, (String) event.get("instrument"));
-            pstmt.setString(7, (String) event.get("eventType"));
-
-            setDoubleOrNull(pstmt, 8, event.get("liquidityLevel"));
-
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            log("ERROR", "Failed to save to database: " + e.getMessage());
-        }
-    }
-
-    private void setDoubleOrNull(PreparedStatement pstmt, int index, Object value) throws SQLException {
-        if (value instanceof Number number) {
-            pstmt.setDouble(index, number.doubleValue());
-        } else {
-            pstmt.setNull(index, java.sql.Types.REAL);
-        }
-    }
-
-    private double convertPrice(int tickPrice, String alias) {
-        Double pips = instrumentPips.get(alias);
-        if (pips == null && !instrumentPips.isEmpty()) {
-            pips = instrumentPips.values().iterator().next();
-        }
-        if (pips == null) {
-            pips = 0.25;
-        }
-        return tickPrice * pips;
-    }
-
-    private Object getFieldValue(Object obj, String fieldName) {
-        if (obj == null) return null;
-        try {
-            java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return field.get(obj);
-        } catch (Exception e) {
-            try {
-                String getter = "get" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                return obj.getClass().getMethod(getter).invoke(obj);
-            } catch (Exception e2) {
-                try {
-                    String getter = "is" + Character.toUpperCase(fieldName.charAt(0)) + fieldName.substring(1);
-                    return obj.getClass().getMethod(getter).invoke(obj);
-                } catch (Exception e3) {
-                    return null;
-                }
-            }
-        }
-    }
-
-    private void logEventStructure(String eventName, Object event) {
-        log("INSPECT", "========================================");
-        log("INSPECT", "Inspecting " + eventName);
-        log("INSPECT", "Class: " + event.getClass().getName());
-
-        java.lang.reflect.Field[] fields = event.getClass().getDeclaredFields();
-        for (java.lang.reflect.Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(event);
-                log("INSPECT", "  %s = %s".formatted(field.getName(), value));
-            } catch (Exception e) {
-                // Ignore
-            }
-        }
-        log("INSPECT", "========================================");
-    }
-
-    private void saveToJson() {
-        try (FileWriter writer = new FileWriter(JSON_PATH)) {
-            StringBuilder json = new StringBuilder();
-            json.append("{\n");
-            json.append("  \"timestamp\": \"").append(dateFormat.format(new Date())).append("\",\n");
-            json.append("  \"statistics\": {\n");
-            json.append("    \"total\": ").append(totalCount.get()).append(",\n");
-            json.append("    \"types\": {\n");
-
-            int idx = 0;
-            for (Map.Entry<String, Integer> e : typeCounts.entrySet()) {
-                json.append("      \"").append(e.getKey()).append("\": ").append(e.getValue());
-                if (++idx < typeCounts.size()) json.append(",");
-                json.append("\n");
-            }
-
-            json.append("    }\n");
-            json.append("  },\n");
-            json.append("  \"events\": [\n");
-
-            for (int i = 0; i < liquidityEvents.size(); i++) {
-                json.append("    ").append(mapToJson(liquidityEvents.get(i)));
-                if (i < liquidityEvents.size() - 1) json.append(",");
-                json.append("\n");
-            }
-
-            json.append("  ]\n");
-            json.append("}\n");
-            writer.write(json.toString());
-
-        } catch (IOException e) {
-            log("ERROR", "Failed to save JSON: " + e.getMessage());
-        }
-    }
-
-    private String mapToJson(Map<String, Object> map) {
-        StringBuilder s = new StringBuilder("{");
-        int i = 0;
-        for (Map.Entry<String, Object> e : map.entrySet()) {
-            s.append("\"").append(e.getKey()).append("\":");
-            Object v = e.getValue();
-            if (v == null) {
-                s.append("null");
-            } else if (v instanceof Number || v instanceof Boolean) {
-                s.append(v);
-            } else {
-                s.append("\"").append(v.toString().replace("\"", "\\\"")).append("\"");
-            }
-            if (++i < map.size()) s.append(",");
-        }
-        s.append("}");
-        return s.toString();
-    }
-
-    private void log(String level, String message) {
-        String logLine = "[%s] [%s] %s".formatted(dateFormat.format(new Date()), level, message);
-        Log.info(logLine);
-
-        try (FileWriter writer = new FileWriter(LOG_PATH, true)) {
-            writer.write(logLine + "\n");
-        } catch (IOException e) {
-            Log.error("Failed to write to log", e);
-        }
-
-        if (logArea != null) {
-            SwingUtilities.invokeLater(() -> {
-                logArea.append(logLine + "\n");
-                logArea.setCaretPosition(logArea.getDocument().getLength());
-            });
-        }
-    }
-
-    private void updateUI() {
-        if (statsLabel != null) {
-            SwingUtilities.invokeLater(() -> {
-                StringBuilder stats = new StringBuilder("<html><b>LIQUIDITY MARKER STATISTICS</b><br>");
-                stats.append("Total Events: ").append(totalCount.get()).append("<br>");
-                if (!typeCounts.isEmpty()) {
-                    stats.append("<br><b>Event Types:</b><br>");
-                    typeCounts.forEach((type, count) ->
-                        stats.append("  ").append(type).append(": ").append(count).append("<br>")
-                    );
-                }
-                stats.append("</html>");
-                statsLabel.setText(stats.toString());
-            });
-        }
-    }
-
-    private String formatNumber(Object o) {
-        if (o == null) return "N/A";
-        if (o instanceof Number number) {
-            return "%.2f".formatted(number.doubleValue());
-        }
-        return o.toString();
     }
 
     @Override
     public void onUserMessage(Object data) {
-        if (data == null) return;
+        try {
+            if (data == null)
+                return;
 
-        if (data.getClass() == UserMessageLayersChainCreatedTargeted.class) {
-            UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
-            if (message.targetClass == getClass()) {
-                isWorking.set(true);
-                log("INFO", "========================================");
-                log("INFO", "Broadcaster STARTED - Listening for Liquidity events");
-                log("INFO", "========================================");
-                connectToProvider();
-                ExecutorsUtilities.getExecutor().submit(() -> {
-                    provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui());
-                });
+            // Handle chain creation (addon initialization)
+            if (data.getClass() == UserMessageLayersChainCreatedTargeted.class) {
+                UserMessageLayersChainCreatedTargeted message = (UserMessageLayersChainCreatedTargeted) data;
+
+                if (message.targetClass == this.getClass()) {
+                    isWorking.set(true);
+                    broadcaster.start();
+
+                    log("INFO", "========================================");
+                    log("INFO", "Broadcaster STARTED - Now listening for Liquidity events");
+                    log("INFO", "========================================");
+
+                    connectToProvider();
+
+                    ExecutorsUtilities.getExecutor()
+                            .submit(() -> provider.sendUserMessage(new Layer1ApiUserMessageReloadStrategyGui()));
+                }
+                return;
+            }
+
+            if (!isWorking.get())
+                return;
+
+            // Note: Liquidity events come through LiveEventListener, not onUserMessage
+
+        } catch (Exception e) {
+            log("ERROR", "Error in onUserMessage: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Process liquidity event from Liquidity Markers indicator
+     * Uses reflection since we don't have direct access to the event class
+     */
+    private void processLiquidityEvent(Object event) {
+        try {
+            // Mark that we received first liquidity event (for verification)
+            if (!firstLiquidityReceived) {
+                firstLiquidityReceived = true;
+                log("INFO", "✓ First liquidity event received - feed is active!");
+            }
+
+            // Extract ALL available fields using reflection
+            Map<String, Object> allFields = EventFieldExtractor.extractAllFields(event);
+            String additionalDataJson = EventFieldExtractor.toJsonString(allFields);
+
+            // Log all extracted fields on first event for debugging
+            if (liquidityCount.get() == 0) {
+                log("INFO", "===== ALL EXTRACTED LIQUIDITY FIELDS =====");
+                log("INFO", additionalDataJson);
+            }
+
+            // Extract fields using reflection (since we don't have direct class access)
+            long timestampNanos = extractLong(event, "time", "timestamp");
+            double price = extractDouble(event, "price");
+            double strengthScore = extractDouble(event, "strength", "score");
+            long volumeAtLevel = extractLong(event, "volume");
+            int touchesCount = extractInt(event, "touches", "count");
+            String levelType = extractString(event, "levelType", "type");
+
+            // Normalize level type
+            if (levelType == null || levelType.isEmpty()) {
+                // Try to infer from price relationship or other fields
+                levelType = "UNKNOWN";
+            } else {
+                levelType = levelType.toUpperCase();
+            }
+
+            // CRITICAL: Convert price by multiplying by 0.25 (NQ tick to index point)
+            // For other instruments, this multiplier may be different
+            double convertedPrice = price * 0.25;
+
+            // Get instrument name
+            String instrument = instrumentsInfo.isEmpty() ? "" : instrumentsInfo.keySet().iterator().next();
+
+            // Update counters
+            liquidityCount.incrementAndGet();
+            if (levelType.contains("SUPPORT")) {
+                supportCount.incrementAndGet();
+            } else if (levelType.contains("RESISTANCE")) {
+                resistanceCount.incrementAndGet();
+            }
+
+            // Track level types
+            levelTypeCounts.merge(levelType, 1, Integer::sum);
+
+            // Log every 10th liquidity level
+            if (liquidityCount.get() % 10 == 0) {
+                log("INFO", String.format("Liquidity #%d: %s @ %.2f, Strength: %.2f, Volume: %d, Touches: %d",
+                        liquidityCount.get(), levelType, convertedPrice, strengthScore, volumeAtLevel, touchesCount));
+            }
+
+            // Store to Redis (hot storage)
+            Map<String, Object> liquidityData = new HashMap<>();
+            liquidityData.put("timestamp", dateFormat.format(new Date(timestampNanos / 1_000_000))); // nanos to millis
+            liquidityData.put("type", "liquidity");
+            liquidityData.put("instrument", instrument);
+            liquidityData.put("price", convertedPrice);
+            liquidityData.put("levelType", levelType);
+            liquidityData.put("strengthScore", strengthScore);
+            liquidityData.put("volumeAtLevel", volumeAtLevel);
+            liquidityData.put("touchesCount", touchesCount);
+            liquidityData.put("allFields", additionalDataJson);
+
+            String eventJson = EventFieldExtractor.toJsonString(liquidityData);
+            redisManager.addLiquidityLevel(instrument, levelType, convertedPrice, strengthScore, eventJson);
+
+            // Create LiquidityEvent for TimescaleDB batch processing
+            LiquidityEvent dbEvent = new LiquidityEvent();
+            dbEvent.timestamp = timestampNanos;
+            dbEvent.symbol = instrument;
+            dbEvent.sessionId = getCurrentSessionId(instrument);
+            dbEvent.price = convertedPrice;
+            dbEvent.levelType = levelType;
+            dbEvent.strengthScore = strengthScore;
+            dbEvent.volumeAtLevel = volumeAtLevel;
+            dbEvent.touchesCount = touchesCount;
+            dbEvent.createdAt = timestampNanos;
+            dbEvent.lastUpdatedAt = timestampNanos;
+            dbEvent.metadata = additionalDataJson;
+
+            // Queue for batch processing
+            if (!batchQueue.offer(dbEvent)) {
+                log("WARN", "Batch queue full, liquidity event dropped");
+            }
+
+            // Update UI
+            updateUI();
+
+        } catch (Exception e) {
+            log("ERROR", "Error processing liquidity event: " + e.getMessage());
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            log("ERROR", sw.toString());
+        }
+    }
+
+    // Inner class for liquidity events
+    public static class LiquidityEvent {
+        public long timestamp;
+        public String symbol;
+        public String sessionId;
+        public double price;
+        public String levelType;
+        public double strengthScore;
+        public long volumeAtLevel;
+        public int touchesCount;
+        public long createdAt;
+        public long lastUpdatedAt;
+        public String metadata;
+    }
+
+    // Reflection helper methods for extracting fields from liquidity events
+    private long extractLong(Object obj, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            try {
+                // Try getter method first
+                String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                java.lang.reflect.Method method = obj.getClass().getMethod(methodName);
+                Object result = method.invoke(obj);
+                if (result instanceof Number) {
+                    return ((Number) result).longValue();
+                }
+            } catch (Exception e) {
+                // Try field access
+                try {
+                    java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    Object result = field.get(obj);
+                    if (result instanceof Number) {
+                        return ((Number) result).longValue();
+                    }
+                } catch (Exception ex) {
+                    // Continue to next field name
+                }
             }
         }
+        return 0L;
+    }
+
+    private double extractDouble(Object obj, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            try {
+                String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                java.lang.reflect.Method method = obj.getClass().getMethod(methodName);
+                Object result = method.invoke(obj);
+                if (result instanceof Number) {
+                    return ((Number) result).doubleValue();
+                }
+            } catch (Exception e) {
+                try {
+                    java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    Object result = field.get(obj);
+                    if (result instanceof Number) {
+                        return ((Number) result).doubleValue();
+                    }
+                } catch (Exception ex) {
+                    // Continue
+                }
+            }
+        }
+        return 0.0;
+    }
+
+    private int extractInt(Object obj, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            try {
+                String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                java.lang.reflect.Method method = obj.getClass().getMethod(methodName);
+                Object result = method.invoke(obj);
+                if (result instanceof Number) {
+                    return ((Number) result).intValue();
+                }
+            } catch (Exception e) {
+                try {
+                    java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    Object result = field.get(obj);
+                    if (result instanceof Number) {
+                        return ((Number) result).intValue();
+                    }
+                } catch (Exception ex) {
+                    // Continue
+                }
+            }
+        }
+        return 0;
+    }
+
+    private String extractString(Object obj, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            try {
+                String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                java.lang.reflect.Method method = obj.getClass().getMethod(methodName);
+                Object result = method.invoke(obj);
+                if (result != null) {
+                    return result.toString();
+                }
+            } catch (Exception e) {
+                try {
+                    java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    Object result = field.get(obj);
+                    if (result != null) {
+                        return result.toString();
+                    }
+                } catch (Exception ex) {
+                    // Continue
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get current session ID for instrument
+     */
+    private String getCurrentSessionId(String symbol) {
+        if (currentSessionId == null) {
+            currentSessionId = SessionManager.getInstance().generateSessionId(symbol);
+        }
+        return currentSessionId;
+    }
+
+    /**
+     * Get current CBDR window
+     */
+    private String getCurrentCBDRWindow() {
+        // TODO: Implement CBDR window detection based on time
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 0 && hour < 8)
+            return "ASIAN";
+        if (hour >= 8 && hour < 9)
+            return "LONDON_OPEN";
+        if (hour >= 9 && hour < 16)
+            return "NEW_YORK";
+        if (hour >= 16 && hour < 20)
+            return "LONDON_CLOSE";
+        return "AFTER_HOURS";
+    }
+
+    /**
+     * Check if current time is within CBDR window
+     */
+    private boolean isInCbdr(String cbdrWindow) {
+        if (cbdrWindow == null)
+            return false;
+        return cbdrWindow.equals("LONDON_OPEN") || cbdrWindow.equals("NEW_YORK");
+    }
+
+    /**
+     * Calculate sweep significance score (0.0 to 1.0)
+     */
+    private double calculateSweepSignificance(int levelsSwept, int totalVolume) {
+        // Simple heuristic: combine levels and volume
+        // Normalize to 0-1 range
+        double levelScore = Math.min(levelsSwept / 10.0, 1.0); // 10 levels = max
+        double volumeScore = Math.min(totalVolume / 1000.0, 1.0); // 1000 volume = max
+        return (levelScore * 0.6) + (volumeScore * 0.4); // Weighted average
+    }
+
+    /**
+     * Update UI with current statistics
+     */
+    private void updateUI() {
+        if (statsLabel != null) {
+            SwingUtilities.invokeLater(() -> {
+                statsLabel.setText(String.format(
+                        "<html><b>Liquidity:</b> %d | <b>Support:</b> %d | <b>Resistance:</b> %d | <b>Types:</b> %d</html>",
+                        liquidityCount.get(),
+                        supportCount.get(),
+                        resistanceCount.get(),
+                        levelTypeCounts.size()));
+            });
+        }
+    }
+
+    /**
+     * Convert price from ticks to actual price
+     */
+    private double convertPrice(int priceTicks, String alias) {
+        Double pips = instrumentPips.get(alias);
+        if (pips == null)
+            return priceTicks;
+        return priceTicks * pips;
+    }
+
+    /**
+     * Get field value from event using reflection
+     */
+    private Object getFieldValue(Object event, String fieldName) {
+        try {
+            // Try direct field access
+            try {
+                Field field = event.getClass().getDeclaredField(fieldName);
+                field.setAccessible(true);
+                return field.get(event);
+            } catch (NoSuchFieldException e) {
+                // Try getter method
+                String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                Method method = event.getClass().getMethod(getterName);
+                return method.invoke(event);
+            }
+        } catch (Exception e) {
+            // Field doesn't exist, return null
+            return null;
+        }
+    }
+
+    /**
+     * Log event structure for debugging
+     */
+    private void logEventStructure(String eventType, Object event) {
+        log("INFO", "===== " + eventType + " STRUCTURE =====");
+        log("INFO", "Class: " + event.getClass().getName());
+
+        // Log all fields
+        Field[] fields = event.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                Object value = field.get(event);
+                log("INFO", String.format("  Field: %s = %s (%s)",
+                        field.getName(),
+                        value,
+                        field.getType().getSimpleName()));
+            } catch (Exception e) {
+                log("ERROR", "  Field: " + field.getName() + " - ERROR: " + e.getMessage());
+            }
+        }
+
+        // Log all methods
+        Method[] methods = event.getClass().getDeclaredMethods();
+        log("INFO", "Methods (" + methods.length + "):");
+        for (Method method : methods) {
+            if (method.getName().startsWith("get") && method.getParameterCount() == 0) {
+                try {
+                    Object value = method.invoke(event);
+                    log("INFO", String.format("  Method: %s() = %s",
+                            method.getName(),
+                            value));
+                } catch (Exception e) {
+                    log("ERROR", "  Method: " + method.getName() + "() - ERROR: " + e.getMessage());
+                }
+            }
+        }
+        log("INFO", "===================================");
     }
 
     @Override
     public void onInstrumentAdded(String alias, InstrumentInfo instrumentInfo) {
         instrumentsInfo.put(alias, instrumentInfo);
         instrumentPips.put(alias, instrumentInfo.pips);
-        log("INFO", "Instrument added: %s (pips=%.8f)".formatted(alias, instrumentInfo.pips));
+
+        log("INFO", String.format("Instrument added: %s (pips: %.5f)",
+                alias, instrumentInfo.pips));
+
+        // Generate session ID when instrument is added
+        if (currentSessionId == null) {
+            currentSessionId = SessionManager.getInstance().generateSessionId(alias);
+            log("INFO", "Session ID: " + currentSessionId);
+        }
     }
 
     @Override
-    public void finish() {
-        if (broadcaster != null) {
-            broadcaster.finish();
-        }
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-                log("INFO", "Database connection closed");
-            } catch (SQLException e) {
-                log("ERROR", "Error closing database: " + e.getMessage());
-            }
-        }
-        saveToJson();
+    public void onInstrumentRemoved(String alias) {
+        instrumentsInfo.remove(alias);
+        instrumentPips.remove(alias);
+        log("INFO", "Instrument removed: " + alias);
     }
 
     @Override
     public StrategyPanel[] getCustomGuiFor(String alias, String indicatorName) {
-        if (!isWorking.get()) {
-            return new StrategyPanel[0];
-        }
+        if (!isWorking.get())
+            return null;
 
-        StrategyPanel mainPanel = new StrategyPanel("Liquidity Events - " + alias);
-        mainPanel.setLayout(new BorderLayout());
+        StrategyPanel panel = new StrategyPanel("Liquidity Consumer");
+        panel.setLayout(new BorderLayout(5, 5));
 
-        statsLabel = new JLabel("<html><b>Waiting for events...</b></html>");
-        JPanel statsPanel = new JPanel(new BorderLayout());
-        statsPanel.add(statsLabel, BorderLayout.NORTH);
+        // Stats label at top
+        statsLabel = new JLabel("Waiting for liquidity data...");
+        statsLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.add(statsLabel, BorderLayout.NORTH);
 
-        logArea = new JTextArea(20, 60);
+        // Log area in center
+        logArea = new JTextArea(15, 50);
         logArea.setEditable(false);
-        logArea.setBackground(Color.BLACK);
-        logArea.setForeground(Color.CYAN);
+        logArea.setFont(new Font("Monospaced", Font.PLAIN, 11));
         JScrollPane scrollPane = new JScrollPane(logArea);
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-        mainPanel.add(statsPanel, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        // Info panel at bottom
+        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
+        infoPanel.add(new JLabel("Provider: Liquidity Markers"));
+        infoPanel.add(new JLabel("Log: " + LIQUIDITY_LOG_PATH));
+        infoPanel.add(new JLabel("Storage: Redis (hot) + TimescaleDB (cold)"));
+        panel.add(infoPanel, BorderLayout.SOUTH);
 
         updateUI();
 
-        return new StrategyPanel[]{mainPanel};
+        return new StrategyPanel[] { panel };
+    }
+
+    @Override
+    public void finish() {
+        log("INFO", "========================================");
+        log("INFO", "Liquidity Consumer: SHUTTING DOWN");
+        log("INFO", "========================================");
+        log("INFO", String.format("Final Statistics - Total: %d, Support: %d, Resistance: %d",
+                liquidityCount.get(), supportCount.get(), resistanceCount.get()));
+
+        // Report liquidity feed status
+        if (firstLiquidityReceived) {
+            log("INFO", "✓ Liquidity feed was ACTIVE during session");
+        } else {
+            log("WARN", "⚠ NO liquidity events received during session");
+        }
+
+        // Log level type breakdown
+        if (!levelTypeCounts.isEmpty()) {
+            log("INFO", "Liquidity level type breakdown:");
+            levelTypeCounts.forEach((type, count) -> log("INFO", String.format("  %s: %d", type, count)));
+        }
+
+        isWorking.set(false);
+
+        try {
+            // Process remaining batched events
+            processBatch();
+
+            // Shutdown executors
+            batchProcessor.shutdown();
+            batchProcessor.awaitTermination(5, TimeUnit.SECONDS);
+
+            verificationExecutor.shutdown();
+            verificationExecutor.awaitTermination(2, TimeUnit.SECONDS);
+
+            // Disconnect broadcaster
+            if (connector != null) {
+                connector.disconnect();
+            }
+            if (broadcaster != null) {
+                broadcaster.finish();
+            }
+
+            log("INFO", "✓ Cleanup completed successfully");
+
+        } catch (Exception e) {
+            log("ERROR", "Error during cleanup: " + e.getMessage());
+        }
+
+        log("INFO", "========================================");
+    }
+
+    /**
+     * Log message to file and console
+     */
+    private void log(String level, String message) {
+        String timestamp = dateFormat.format(new Date());
+        String logMessage = String.format("[%s] [%s] %s", timestamp, level, message);
+
+        // Log to console
+        System.out.println(logMessage);
+
+        // Log to file
+        try (FileWriter fw = new FileWriter(LIQUIDITY_LOG_PATH, true);
+                PrintWriter pw = new PrintWriter(fw)) {
+            pw.println(logMessage);
+        } catch (IOException e) {
+            System.err.println("Failed to write to log file: " + e.getMessage());
+        }
+
+        // Update UI log area
+        if (logArea != null) {
+            SwingUtilities.invokeLater(() -> {
+                logArea.append(logMessage + "\n");
+                logArea.setCaretPosition(logArea.getDocument().getLength());
+            });
+        }
+    }
+
+    /**
+     * Utility class for executor management
+     */
+    private static class ExecutorsUtilities {
+        private static final ExecutorService executor = Executors.newCachedThreadPool();
+
+        public static ExecutorService getExecutor() {
+            return executor;
+        }
     }
 }
-

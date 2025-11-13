@@ -1,8 +1,9 @@
 """Quick DST verification script"""
+
 from datetime import datetime
 import pytz
 
-est = pytz.timezone('America/New_York')
+est = pytz.timezone("America/New_York")
 now = datetime.now(est)
 
 print("=" * 60)
@@ -22,7 +23,7 @@ windows = {
     "PRE_NY": (7, 10),
     "NY_SESSION": (9, 16),
     "PM": (16, 20),
-    "AFTER_HOURS": (20, 24)
+    "AFTER_HOURS": (20, 24),
 }
 
 hour = now.hour

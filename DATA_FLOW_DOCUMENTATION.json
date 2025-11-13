@@ -1,0 +1,584 @@
+{
+  "architecture": {
+    "description": "Bookmap Broadcasting API (BrAPI) consumer/provider architecture with dual-storage (Redis + TimescaleDB)",
+    "data_sources": [
+      {
+        "name": "Bookmap Core Platform",
+        "type": "Java Application",
+        "role": "Host environment and data source",
+        "description": "Bookmap runs as the main application with real-time market data feeds"
+      },
+      {
+        "name": "BrAPI Provider Modules",
+        "type": "Bookmap Plugins/Addons",
+        "role": "Data providers",
+        "modules": [
+          "Absorption Indicator (v4.52)",
+          "Stops & Icebergs On-Chart",
+          "Sweep Indicator",
+          "Market Pulse"
+        ],
+        "location": "providers/modules/*.jar",
+        "description": "Pre-compiled provider addons that broadcast trading events to consumer addons"
+      }
+    ],
+    "consumer_addons": [
+      {
+        "name": "MboDataConsumer",
+        "provider": "Built-in Bookmap MBO feed",
+        "description": "Consumes Market-By-Order data directly from Bookmap (order-level data)",
+        "file": "src/main/java/com/bookmap/demo/consumer/MboDataConsumer.java"
+      },
+      {
+        "name": "StopsIcebergsConsumer",
+        "provider": "SIT_INDICATOR (Stops & Icebergs On-Chart)",
+        "description": "Detects stop hunts and hidden iceberg orders using MBO data",
+        "file": "src/main/java/com/bookmap/demo/consumer/StopsIcebergsConsumer.java"
+      },
+      {
+        "name": "AbsorptionConsumer",
+        "provider": "ABSORPTION_INDICATOR",
+        "description": "Tracks absorption events (aggressive orders absorbed by resting liquidity) and sweeps",
+        "file": "src/main/java/com/bookmap/demo/consumer/AbsorptionConsumer.java"
+      },
+      {
+        "name": "SweepsConsumer",
+        "provider": "SWEEP_INDICATOR",
+        "description": "Detects liquidity sweeps (aggressive orders clearing multiple price levels)",
+        "file": "src/main/java/com/bookmap/demo/consumer/SweepsConsumer.java"
+      },
+      {
+        "name": "OhlcCandleConsumer",
+        "provider": "Built-in Bookmap OHLC aggregation",
+        "description": "Aggregates tick data into OHLC candlesticks (1m, 5m, 15m, 1h, 4h, 1d)",
+        "file": "src/main/java/com/bookmap/demo/consumer/OhlcCandleConsumer.java"
+      },
+      {
+        "name": "MarketPulseConsumer",
+        "provider": "MARKET_PULSE",
+        "description": "Tracks market momentum and sentiment shifts",
+        "file": "src/main/java/com/bookmap/demo/consumer/MarketPulseConsumer.java"
+      },
+      {
+        "name": "LiquidityMarkerConsumer",
+        "provider": "LIQUIDITY_MARKERS",
+        "description": "Identifies significant support/resistance levels based on liquidity concentration",
+        "file": "src/main/java/com/bookmap/demo/consumer/LiquidityMarkerConsumer.java"
+      }
+    ]
+  },
+  "data_flow": {
+    "overview": "Real-time trading data flows from Bookmap → BrAPI Providers → Consumer Addons → Redis (hot) + TimescaleDB (cold)",
+    "stages": [
+      {
+        "stage": 1,
+        "name": "Event Generation",
+        "location": "Bookmap Core + Provider Modules",
+        "description": "Bookmap receives tick data from exchanges, provider modules analyze patterns and generate events"
+      },
+      {
+        "stage": 2,
+        "name": "Broadcasting",
+        "location": "BroadcastFactory.getBroadcasterConsumer()",
+        "description": "Provider modules broadcast events via BrAPI to subscribed consumer addons",
+        "technology": "In-process Java event system (not network-based)"
+      },
+      {
+        "stage": 3,
+        "name": "Event Listeners",
+        "location": "Consumer addon event handlers",
+        "description": "Consumer addons implement LiveEventListener to receive real-time events",
+        "examples": [
+          "onStopEvent() - Handles stop hunt detections",
+          "onIcebergEvent() - Handles iceberg order detections",
+          "onAbsorptionEvent() - Handles absorption events",
+          "onMboEvent() - Handles order book updates"
+        ]
+      },
+      {
+        "stage": 4,
+        "name": "Hot Storage (Redis)",
+        "location": "RedisManager.getInstance()",
+        "description": "Immediate write to Redis for real-time dashboard queries",
+        "pattern": "Synchronous write on event receipt",
+        "ttl": "Configurable TTL per data type (default: 24h-48h)"
+      },
+      {
+        "stage": 5,
+        "name": "Batch Queuing",
+        "location": "BlockingQueue<Event> batchQueue",
+        "description": "Events queued for batched TimescaleDB writes",
+        "queue_size": 5000,
+        "pattern": "Non-blocking put_nowait() to avoid slowing main thread"
+      },
+      {
+        "stage": 6,
+        "name": "Cold Storage (TimescaleDB)",
+        "location": "TimescaleDBManager.getInstance()",
+        "description": "Batched writes to PostgreSQL/TimescaleDB for historical analysis",
+        "pattern": "Scheduled batch processing every 5 seconds",
+        "batch_size": 500
+      }
+    ]
+  },
+  "storage_architecture": {
+    "redis": {
+      "role": "Hot storage - real-time queries",
+      "host": "localhost:6379",
+      "technology": "Redis Stack (includes RedisJSON, RedisSearch, RedisTimeSeries)",
+      "deployment": "Docker container (bookmap-redis-stack)",
+      "manager_class": "com.bookmap.demo.consumer.database.RedisManager",
+      "connection_pooling": "JedisPool with HikariCP-like configuration",
+      "data_structures": {
+        "sorted_sets": {
+          "description": "Time-series data sorted by timestamp or price",
+          "keys": [
+            "mbo:{symbol}:{sessionId} - MBO events sorted by timestamp",
+            "mbo:orders:{symbol}:bid - Bid orders sorted by price",
+            "mbo:orders:{symbol}:ask - Ask orders sorted by price",
+            "stop:{symbol}:session - Stop events sorted by timestamp",
+            "iceberg:{symbol}:session - Iceberg events sorted by timestamp",
+            "absorption:{symbol}:{cbdrWindow} - Absorption events sorted by significance",
+            "sweep:{symbol}:{side} - Sweep events sorted by price",
+            "liquidity:{symbol}:{levelType} - Liquidity levels sorted by price"
+          ]
+        },
+        "streams": {
+          "description": "Redis Streams for real-time event notifications",
+          "keys": [
+            "mbo:trades:{symbol} - Trade executions stream",
+            "stream:stops_icebergs:{symbol} - Stop/iceberg detections stream",
+            "stream:absorption:{symbol} - Absorption events stream",
+            "stream:sweep:{symbol} - Sweep events stream",
+            "stream:liquidity:{symbol} - Liquidity level changes stream"
+          ],
+          "maxlen": "500-1000 (approximate trimming)"
+        },
+        "hashes": {
+          "description": "Current state snapshots",
+          "keys": [
+            "mbo:depth:{symbol}:bid - Current bid ladder (price -> size)",
+            "mbo:depth:{symbol}:ask - Current ask ladder (price -> size)",
+            "mbo:stats:{symbol} - Statistics (event counts, session info)",
+            "candle:{symbol}:{timeframe}:current - Current candle in progress",
+            "ladder:{symbol}:bid - Price ladder bid side",
+            "ladder:{symbol}:ask - Price ladder ask side"
+          ]
+        }
+      },
+      "ttl_configuration": {
+        "mbo": "86400 seconds (24 hours)",
+        "ohlc_1m": "86400 seconds (24 hours)",
+        "stops_icebergs": "86400 seconds (24 hours)",
+        "absorption": "43200 seconds (12 hours)",
+        "cbdr": "28800 seconds (8 hours)",
+        "bias": "3600 seconds (1 hour)",
+        "dashboard": "30 seconds",
+        "config_file": "F:/Databases/database_config.properties"
+      }
+    },
+    "timescaledb": {
+      "role": "Cold storage - historical analysis",
+      "host": "localhost:5432",
+      "database": "trading_data",
+      "technology": "TimescaleDB (PostgreSQL 17 extension)",
+      "deployment": "Docker container (bookmap-timescaledb)",
+      "manager_class": "com.bookmap.demo.consumer.database.TimescaleDBManager",
+      "connection_pooling": "HikariCP (max 20 connections)",
+      "tables": [
+        {
+          "table_name": "mbo_data",
+          "description": "Market-By-Order data (order-level book updates)",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "order_id"],
+          "indexes": [
+            "mbo_data_timestamp_idx (timestamp DESC)",
+            "idx_mbo_symbol_time (symbol, timestamp DESC)",
+            "idx_mbo_price (symbol, price, timestamp DESC)",
+            "idx_mbo_session (session_id, timestamp DESC)",
+            "idx_mbo_cbdr (symbol, cbdr_window, timestamp DESC)",
+            "idx_mbo_data_type (data_type)",
+            "idx_mbo_data_symbol_type_timestamp (symbol, data_type, timestamp DESC)",
+            "idx_mbo_additional_data_gin (additional_data GIN)"
+          ],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Event timestamp in EST/EDT timezone"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Trading symbol (e.g., MNQZ5.CME@RITHMIC)"},
+            {"name": "order_id", "type": "bigint", "nullable": false, "description": "Unique order identifier"},
+            {"name": "side", "type": "varchar(4)", "nullable": false, "check": "BUY, SELL, N/A", "description": "Order side"},
+            {"name": "price", "type": "double precision", "nullable": false, "description": "Order price level"},
+            {"name": "size", "type": "bigint", "nullable": false, "description": "Order size (contracts/shares)"},
+            {"name": "order_type", "type": "varchar(20)", "nullable": true, "description": "Order type (LIMIT, MARKET, etc.)"},
+            {"name": "action", "type": "varchar(10)", "nullable": false, "check": "ADD, MODIFY, UPDATE, DELETE, EXECUTE, TRADE, DEPTH", "description": "Order action type"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Trading session identifier (format: {symbol}_{yyyyMMdd_HHmmss}_{UUID})"},
+            {"name": "cbdr_window", "type": "varchar(20)", "nullable": true, "description": "CBDR trading window (London, NewYork, Asian, Extended)"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Additional metadata as JSON"},
+            {"name": "additional_data", "type": "jsonb", "nullable": true, "description": "Complete JSON dump of all MBO event fields not captured in dedicated columns"},
+            {"name": "data_type", "type": "varchar(20)", "nullable": true, "default": "MBO", "description": "Type of market data: MBO (order-level), TRADE (execution), or DEPTH (aggregated level)"}
+          ],
+          "current_symbols": ["MNQZ5.CME", "MNQZ5.CME@RITHMIC"],
+          "record_count_approx": "5,184,137 (as of Nov 11, 2025)",
+          "latest_data": "2025-11-11 14:04:17 EST"
+        },
+        {
+          "table_name": "ohlc_candles",
+          "description": "Open-High-Low-Close candlestick data",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "timeframe"],
+          "indexes": [
+            "ohlc_candles_timestamp_idx (timestamp DESC)",
+            "idx_ohlc_symbol_tf_time (symbol, timeframe, timestamp DESC)",
+            "idx_ohlc_session (session_id, timeframe, timestamp DESC)",
+            "idx_ohlc_cbdr (symbol, cbdr_window, timestamp DESC)",
+            "idx_ohlc_additional_data_gin (additional_data GIN)"
+          ],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Candle start time in EST/EDT timezone"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Trading symbol"},
+            {"name": "timeframe", "type": "varchar(10)", "nullable": false, "check": "1m, 5m, 15m, 1h, 4h, 1d", "description": "Candle timeframe"},
+            {"name": "open", "type": "double precision", "nullable": false, "description": "Opening price"},
+            {"name": "high", "type": "double precision", "nullable": false, "description": "Highest price"},
+            {"name": "low", "type": "double precision", "nullable": false, "description": "Lowest price"},
+            {"name": "close", "type": "double precision", "nullable": false, "description": "Closing price"},
+            {"name": "volume", "type": "bigint", "nullable": false, "default": 0, "description": "Total volume"},
+            {"name": "trade_count", "type": "integer", "nullable": false, "default": 0, "description": "Number of trades"},
+            {"name": "vwap", "type": "double precision", "nullable": true, "description": "Volume-weighted average price"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Trading session identifier"},
+            {"name": "cbdr_window", "type": "varchar(20)", "nullable": true, "description": "CBDR trading window"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Additional metadata"},
+            {"name": "additional_data", "type": "jsonb", "nullable": true, "description": "Complete JSON dump of all OHLC event fields"}
+          ],
+          "current_symbols": ["MESZ5.CME@RITHMIC", "MESZ5.CME@TM.Pro", "MNQ1!"],
+          "record_count_approx": "3,696 (5m), 3,198 (15m)",
+          "latest_data": "2025-11-12 07:05:00 EST (5m), 2025-11-12 07:00:00 EST (15m)"
+        },
+        {
+          "table_name": "absorption_events",
+          "description": "Absorption events (aggressive orders absorbed by resting liquidity) and sweeps",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "event_type", "price"],
+          "indexes": [
+            "absorption_events_timestamp_idx (timestamp DESC)",
+            "idx_absorption_symbol_time (symbol, timestamp DESC)",
+            "idx_absorption_event_type (event_type, timestamp DESC)",
+            "idx_absorption_session (session_id, timestamp DESC)",
+            "idx_absorption_cbdr (symbol, cbdr_window, timestamp DESC)",
+            "idx_absorption_in_cbdr (symbol, is_in_cbdr, timestamp DESC) WHERE is_in_cbdr = true",
+            "idx_absorption_significance (symbol, significance_score DESC, timestamp DESC)",
+            "idx_absorption_additional_data_gin (additional_data GIN)"
+          ],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Event timestamp"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Trading symbol"},
+            {"name": "event_type", "type": "varchar(20)", "nullable": false, "check": "ABSORPTION, SWEEP", "description": "Type of event"},
+            {"name": "side", "type": "varchar(4)", "nullable": false, "check": "BUY, SELL, BID, ASK", "description": "Order side"},
+            {"name": "price", "type": "double precision", "nullable": false, "description": "Price level where event occurred"},
+            {"name": "absorbed_volume", "type": "bigint", "nullable": false, "default": 0, "description": "Volume absorbed by resting orders"},
+            {"name": "aggressor_volume", "type": "bigint", "nullable": false, "description": "Volume of aggressive orders"},
+            {"name": "liquidity_removed", "type": "bigint", "nullable": false, "default": 0, "description": "Total liquidity removed from book"},
+            {"name": "absorption_ratio", "type": "double precision", "nullable": true, "check": "0.0 to 1.0", "description": "Ratio of absorbed vs total volume"},
+            {"name": "imbalance_ratio", "type": "double precision", "nullable": true, "check": "0.0 to 1.0", "description": "Buy/sell imbalance ratio"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Trading session identifier"},
+            {"name": "cbdr_window", "type": "varchar(20)", "nullable": true, "description": "CBDR trading window"},
+            {"name": "is_in_cbdr", "type": "boolean", "nullable": false, "default": false, "description": "Whether event occurred during CBDR window"},
+            {"name": "significance_score", "type": "double precision", "nullable": false, "check": "0.0 to 1.0", "description": "Event significance (0.0-1.0)"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Additional metadata"},
+            {"name": "additional_data", "type": "jsonb", "nullable": true, "description": "Complete JSON dump of all BrAPI event fields"}
+          ],
+          "current_symbols": ["MNQZ5", "MNQZ5.CME@RITHMIC"],
+          "record_count_approx": "70,600",
+          "latest_data": "2025-11-11 14:04:16 EST"
+        },
+        {
+          "table_name": "stops_icebergs",
+          "description": "Stop hunt detections and hidden iceberg order identifications",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "event_type", "price"],
+          "indexes": [
+            "stops_icebergs_timestamp_idx (timestamp DESC)",
+            "idx_stops_symbol_time (symbol, timestamp DESC)",
+            "idx_stops_event_type (event_type, timestamp DESC)",
+            "idx_stops_session (session_id, timestamp DESC)",
+            "idx_stops_cbdr (symbol, cbdr_window, timestamp DESC)",
+            "idx_stops_iceberg_subtype (symbol, iceberg_subtype, timestamp DESC)",
+            "idx_stops_confidence (symbol, confidence_score DESC, timestamp DESC)",
+            "idx_stops_additional_data_gin (additional_data GIN)"
+          ],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Event timestamp"},
+            {"name": "symbol", "type": "varchar(50)", "nullable": false, "description": "Trading symbol"},
+            {"name": "event_type", "type": "varchar(20)", "nullable": false, "check": "STOP, ICEBERG", "description": "Type of detection"},
+            {"name": "side", "type": "varchar(4)", "nullable": false, "check": "BUY, SELL", "description": "Order side"},
+            {"name": "price", "type": "double precision", "nullable": false, "description": "Price level of detection"},
+            {"name": "detected_size", "type": "bigint", "nullable": false, "description": "Detected order size"},
+            {"name": "estimated_total_size", "type": "bigint", "nullable": true, "description": "Estimated total iceberg size"},
+            {"name": "fill_count", "type": "integer", "nullable": true, "default": 0, "description": "Number of partial fills detected"},
+            {"name": "confidence_score", "type": "double precision", "nullable": false, "check": "0.0 to 1.0", "description": "Detection confidence (0.0-1.0)"},
+            {"name": "duration_ms", "type": "bigint", "nullable": true, "description": "Duration of iceberg detection in milliseconds"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Trading session identifier"},
+            {"name": "cbdr_window", "type": "varchar(20)", "nullable": true, "description": "CBDR trading window"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Additional metadata"},
+            {"name": "iceberg_subtype", "type": "varchar(50)", "nullable": true, "description": "Iceberg detection subtype (BID_ICEBERG, ASK_ICEBERG, etc.)"},
+            {"name": "additional_data", "type": "jsonb", "nullable": true, "description": "Complete JSON dump of all event fields"}
+          ],
+          "current_symbols": ["MNQZ5.CME@RITHMIC"],
+          "record_count_approx": "2,935",
+          "latest_data": "2025-11-11 12:52:09 EST"
+        },
+        {
+          "table_name": "liquidity_levels",
+          "description": "Significant support/resistance levels identified by liquidity concentration",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "price"],
+          "indexes": [
+            "liquidity_levels_timestamp_idx (timestamp DESC)",
+            "idx_liquidity_symbol_time (symbol, timestamp DESC)",
+            "idx_liquidity_level_type (symbol, level_type, timestamp DESC)",
+            "idx_liquidity_session (session_id, timestamp DESC)",
+            "idx_liquidity_price_range (symbol, price, timestamp DESC)",
+            "idx_liquidity_strength (symbol, strength_score DESC, timestamp DESC)",
+            "idx_liquidity_metadata (metadata GIN)"
+          ],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Event timestamp in EST/EDT timezone"},
+            {"name": "symbol", "type": "varchar(50)", "nullable": false, "description": "Trading symbol (e.g., MNQZ5.CME@RITHMIC)"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": true, "description": "Trading session identifier"},
+            {"name": "price", "type": "double precision", "nullable": false, "description": "Price level (converted to index points for futures)"},
+            {"name": "level_type", "type": "varchar(20)", "nullable": false, "check": "SUPPORT, RESISTANCE, UNKNOWN", "description": "Type of liquidity level"},
+            {"name": "strength_score", "type": "double precision", "nullable": true, "default": 0.0, "description": "Strength score 0.0-1.0 based on volume and touches"},
+            {"name": "volume_at_level", "type": "bigint", "nullable": true, "default": 0, "description": "Total volume resting at this level"},
+            {"name": "touches_count", "type": "integer", "nullable": true, "default": 1, "description": "Number of times price tested this level"},
+            {"name": "created_at", "type": "timestamptz", "nullable": false, "description": "When the level was first detected"},
+            {"name": "last_updated_at", "type": "timestamptz", "nullable": false, "description": "Last time the level was updated"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Additional Liquidity Marker event data as JSON"}
+          ],
+          "current_symbols": [],
+          "record_count_approx": "0 (new table, no data yet)",
+          "latest_data": "N/A"
+        },
+        {
+          "table_name": "market_bias",
+          "description": "Market bias tracking (bullish/bearish sentiment) per CBDR window",
+          "hypertable": false,
+          "primary_key": ["symbol", "cbdr_window", "timestamp"],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "Bias calculation timestamp"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Trading symbol"},
+            {"name": "cbdr_window", "type": "varchar(20)", "nullable": false, "description": "CBDR trading window"},
+            {"name": "bullish_events", "type": "integer", "nullable": false, "default": 0, "description": "Count of bullish absorption events"},
+            {"name": "bearish_events", "type": "integer", "nullable": false, "default": 0, "description": "Count of bearish absorption events"},
+            {"name": "bias_score", "type": "double precision", "nullable": false, "description": "Calculated bias score (-1.0 to 1.0, negative=bearish, positive=bullish)"},
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Trading session identifier"}
+          ],
+          "current_symbols": [],
+          "record_count_approx": "0",
+          "latest_data": "N/A"
+        },
+        {
+          "table_name": "market_news",
+          "description": "Market news and sentiment from financial news APIs",
+          "hypertable": true,
+          "partitioning": "Time-based (automatic by TimescaleDB)",
+          "primary_key": ["timestamp", "symbol", "news_id"],
+          "columns": [
+            {"name": "timestamp", "type": "timestamptz", "nullable": false, "description": "News publication timestamp"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Related trading symbol"},
+            {"name": "news_id", "type": "varchar(100)", "nullable": false, "description": "Unique news article identifier"},
+            {"name": "headline", "type": "text", "nullable": false, "description": "News headline"},
+            {"name": "summary", "type": "text", "nullable": true, "description": "News summary/content"},
+            {"name": "source", "type": "varchar(50)", "nullable": false, "description": "News source (Yahoo Finance, etc.)"},
+            {"name": "sentiment_score", "type": "double precision", "nullable": true, "description": "Sentiment analysis score (-1.0 to 1.0)"},
+            {"name": "url", "type": "text", "nullable": true, "description": "Link to full article"}
+          ],
+          "current_symbols": [],
+          "record_count_approx": "0",
+          "latest_data": "N/A"
+        },
+        {
+          "table_name": "trading_sessions",
+          "description": "Trading session metadata and performance tracking",
+          "hypertable": false,
+          "primary_key": ["session_id"],
+          "columns": [
+            {"name": "session_id", "type": "varchar(100)", "nullable": false, "description": "Unique session identifier"},
+            {"name": "symbol", "type": "varchar(20)", "nullable": false, "description": "Trading symbol"},
+            {"name": "start_time", "type": "timestamptz", "nullable": false, "description": "Session start timestamp"},
+            {"name": "end_time", "type": "timestamptz", "nullable": true, "description": "Session end timestamp"},
+            {"name": "total_events", "type": "bigint", "nullable": false, "default": 0, "description": "Total events recorded"},
+            {"name": "metadata", "type": "jsonb", "nullable": true, "description": "Session metadata"}
+          ],
+          "current_symbols": [],
+          "record_count_approx": "Unknown",
+          "latest_data": "N/A"
+        }
+      ]
+    }
+  },
+  "session_management": {
+    "description": "All data is tracked by trading session for consistent retrieval",
+    "session_id_format": "{symbol}_{yyyyMMdd_HHmmss}_{UUID}",
+    "example": "MNQZ5_20251111_093045_a3f2e1d4-8b9c-4d3e-9f2a-1b3c4d5e6f7a",
+    "manager_class": "com.bookmap.demo.consumer.utils.SessionManager",
+    "pattern": "Singleton",
+    "usage": "SessionManager.getInstance().generateSessionId(symbol)"
+  },
+  "batch_processing": {
+    "description": "TimescaleDB writes use batch processing to avoid blocking real-time event handlers",
+    "pattern": "Producer-Consumer with BlockingQueue",
+    "queue": {
+      "type": "LinkedBlockingQueue",
+      "capacity": 5000,
+      "blocking": false,
+      "operation": "put_nowait() to avoid blocking main event thread"
+    },
+    "processor": {
+      "type": "ScheduledExecutorService",
+      "threads": 1,
+      "schedule": "Fixed rate every 5 seconds",
+      "batch_size": 500
+    },
+    "example": "batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS)"
+  },
+  "cbdr_windows": {
+    "description": "CBDR (Central Bank Dealing Range) windows for session-based analysis",
+    "windows": [
+      {
+        "name": "Asian",
+        "hours": "21:00-02:00 EST",
+        "description": "Asian trading session (Tokyo, Hong Kong, Singapore)"
+      },
+      {
+        "name": "London",
+        "hours": "02:00-08:00 EST",
+        "description": "London/European trading session"
+      },
+      {
+        "name": "NewYork",
+        "hours": "08:00-17:00 EST",
+        "description": "New York/US trading session"
+      },
+      {
+        "name": "Extended",
+        "hours": "17:00-21:00 EST",
+        "description": "Extended hours (pre-Asian)"
+      }
+    ],
+    "usage": "Absorption events and bias calculations are tracked per CBDR window"
+  },
+  "configuration": {
+    "database_config": {
+      "file": "F:/Databases/database_config.properties",
+      "properties": [
+        "redis.host=localhost",
+        "redis.port=6379",
+        "redis.timeout=5000",
+        "redis.max.connections=50",
+        "redis.ttl.mbo=86400",
+        "redis.ttl.stops.icebergs=86400",
+        "redis.ttl.absorption=43200",
+        "timescaledb.host=localhost",
+        "timescaledb.port=5432",
+        "timescaledb.database=trading_data",
+        "timescaledb.user=postgres",
+        "timescaledb.password=X74Ot*BvtjgKuCBx",
+        "timescaledb.pool.size=20"
+      ]
+    },
+    "symbol_config": {
+      "file": "config/symbol_config.json",
+      "description": "Active trading symbols configuration",
+      "manager_class": "com.bookmap.demo.consumer.utils.SymbolManager"
+    }
+  },
+  "deployment": {
+    "docker_compose": "docker-compose.yml",
+    "services": [
+      {
+        "name": "redis-stack",
+        "image": "redis/redis-stack:latest",
+        "ports": ["6379:6379", "8001:8001"],
+        "volume": "redis-data:/data",
+        "command": "redis-stack-server --appendonly yes --save 60 1000"
+      },
+      {
+        "name": "timescaledb",
+        "image": "timescale/timescaledb:latest-pg17",
+        "ports": ["5432:5432"],
+        "volume": "timescale-data:/var/lib/postgresql/data",
+        "init_script": "database/init_timescaledb.sql"
+      }
+    ]
+  },
+  "data_retention": {
+    "redis": {
+      "strategy": "TTL-based expiration",
+      "mbo_data": "24 hours",
+      "stops_icebergs": "24 hours",
+      "absorption_events": "12 hours",
+      "cbdr_data": "8 hours",
+      "dashboard_cache": "30 seconds"
+    },
+    "timescaledb": {
+      "strategy": "Compression + retention policies",
+      "compression": {
+        "enabled": true,
+        "chunk_time_interval": "1 day",
+        "compress_after": "7 days",
+        "description": "TimescaleDB automatically compresses chunks older than 7 days"
+      },
+      "retention": {
+        "policy": "Manual (not auto-drop)",
+        "recommendation": "Keep 90+ days for backtesting",
+        "current": "All data retained since Oct 23, 2025"
+      }
+    }
+  },
+  "api_patterns": {
+    "singleton_managers": {
+      "description": "All manager classes use singleton pattern for shared connection pools",
+      "classes": [
+        "RedisManager.getInstance()",
+        "TimescaleDBManager.getInstance()",
+        "SessionManager.getInstance()",
+        "SymbolManager.getInstance()"
+      ]
+    },
+    "broadcaster_connection": {
+      "description": "Consumer addons connect to provider modules via BroadcasterConsumer",
+      "pattern": "Observer pattern with event listeners",
+      "code_example": [
+        "BroadcasterConsumer broadcaster = BroadcastFactory.getBroadcasterConsumer(provider, ADDON_NAME, this.getClass());",
+        "broadcaster.start();",
+        "broadcaster.connectToProvider(PROVIDER_NAME, connectionListener, eventListener, filterListener, settingsListener);"
+      ]
+    },
+    "event_handling": {
+      "description": "Event listeners implement LiveEventListener interface",
+      "methods": [
+        "onEventReceived(Object o) - Main event handler",
+        "onConnectionStatus() - Connection state changes",
+        "onProviderStatus() - Provider availability changes"
+      ]
+    }
+  },
+  "symbols_summary": {
+    "mbo_data": ["MNQZ5.CME", "MNQZ5.CME@RITHMIC"],
+    "ohlc_candles": ["MESZ5.CME@RITHMIC", "MESZ5.CME@TM.Pro", "MNQ1!"],
+    "absorption_events": ["MNQZ5", "MNQZ5.CME@RITHMIC"],
+    "stops_icebergs": ["MNQZ5.CME@RITHMIC"],
+    "liquidity_levels": [],
+    "market_bias": [],
+    "notes": [
+      "MNQ = Micro E-mini Nasdaq-100 Futures",
+      "MES = Micro E-mini S&P 500 Futures",
+      "Z5 = December 2025 contract month",
+      "RITHMIC/TM.Pro = Broker/data feed suffixes",
+      "Symbol normalization handled by SymbolManager"
+    ]
+  }
+}

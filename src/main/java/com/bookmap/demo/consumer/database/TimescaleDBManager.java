@@ -744,4 +744,55 @@ public class TimescaleDBManager {
         public String metadata;
         public String additionalData; // Complete JSON dump of ALL BrAPI event fields
     }
+
+    /**
+     * Batch insert liquidity level events from Liquidity Marker indicator
+     */
+    public void batchInsertLiquidityLevels(
+            List<com.bookmap.demo.consumer.LiquidityMarkerConsumer.LiquidityEvent> events) {
+        String sql = "INSERT INTO liquidity_levels (timestamp, symbol, session_id, price, level_type, " +
+                "strength_score, volume_at_level, touches_count, created_at, last_updated_at, metadata) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb) " +
+                "ON CONFLICT (timestamp, symbol, price) DO UPDATE SET " +
+                "level_type = EXCLUDED.level_type, " +
+                "strength_score = EXCLUDED.strength_score, " +
+                "volume_at_level = EXCLUDED.volume_at_level, " +
+                "touches_count = EXCLUDED.touches_count, " +
+                "last_updated_at = EXCLUDED.last_updated_at, " +
+                "metadata = EXCLUDED.metadata";
+
+        try (Connection conn = getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            conn.setAutoCommit(false);
+
+            for (com.bookmap.demo.consumer.LiquidityMarkerConsumer.LiquidityEvent event : events) {
+                // Convert nanoseconds to milliseconds for Timestamp
+                Timestamp timestampObj = new Timestamp(event.timestamp / 1_000_000);
+                Timestamp createdAtObj = new Timestamp(event.createdAt / 1_000_000);
+                Timestamp lastUpdatedAtObj = new Timestamp(event.lastUpdatedAt / 1_000_000);
+
+                pstmt.setTimestamp(1, timestampObj);
+                pstmt.setString(2, event.symbol);
+                pstmt.setString(3, event.sessionId);
+                pstmt.setDouble(4, event.price);
+                pstmt.setString(5, event.levelType);
+                pstmt.setDouble(6, event.strengthScore);
+                pstmt.setLong(7, event.volumeAtLevel);
+                pstmt.setInt(8, event.touchesCount);
+                pstmt.setTimestamp(9, createdAtObj);
+                pstmt.setTimestamp(10, lastUpdatedAtObj);
+                pstmt.setString(11, event.metadata);
+                pstmt.addBatch();
+            }
+
+            pstmt.executeBatch();
+            conn.commit();
+            conn.setAutoCommit(true);
+
+            LOGGER.info("Batch inserted " + events.size() + " liquidity level events");
+        } catch (SQLException e) {
+            LOGGER.severe("Error batch inserting liquidity levels: " + e.getMessage());
+        }
+    }
 }

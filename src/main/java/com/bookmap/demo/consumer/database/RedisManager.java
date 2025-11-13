@@ -349,6 +349,43 @@ public class RedisManager {
         }
     }
 
+    /**
+     * Add liquidity level event to Redis
+     * Stores significant support/resistance levels identified by Liquidity Markers
+     * 
+     * @param symbol        Trading symbol
+     * @param levelType     SUPPORT or RESISTANCE
+     * @param price         Price level
+     * @param strengthScore Strength score (0.0 - 1.0)
+     * @param eventJson     Full event JSON
+     */
+    public void addLiquidityLevel(String symbol, String levelType, double price, double strengthScore,
+            String eventJson) {
+        String key = "liquidity:%s:%s".formatted(symbol, levelType);
+        try (Jedis jedis = getConnection()) {
+            // Store in sorted set by price
+            jedis.zadd(key, price, eventJson);
+            jedis.expire(key, ttlCache.get("absorption")); // Use absorption TTL
+
+            // Store by strength in separate sorted set
+            String strengthKey = "liquidity:strength:%s:%s".formatted(symbol, levelType);
+            jedis.zadd(strengthKey, strengthScore, eventJson);
+            jedis.expire(strengthKey, ttlCache.get("absorption"));
+
+            // Stream for real-time notifications
+            String streamKey = "stream:liquidity:%s".formatted(symbol);
+            Map<String, String> streamData = new HashMap<>();
+            streamData.put("type", levelType);
+            streamData.put("price", String.valueOf(price));
+            streamData.put("strength", String.valueOf(strengthScore));
+            streamData.put("data", eventJson);
+            jedis.xadd(streamKey, streamData,
+                    redis.clients.jedis.params.XAddParams.xAddParams().maxLen(500).approximateTrimming());
+        } catch (Exception e) {
+            LOGGER.severe("Error adding liquidity level: " + e.getMessage());
+        }
+    }
+
     public List<String> getTopAbsorptionEvents(String symbol, String cbdrWindow, int count) {
         String key = "absorption:%s:%s".formatted(symbol, cbdrWindow);
         try (Jedis jedis = getConnection()) {
