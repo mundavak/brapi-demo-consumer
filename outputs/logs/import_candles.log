@@ -1,0 +1,111 @@
+2025-11-17 07:45:53,877 - INFO - ============================================================
+2025-11-17 07:45:53,877 - INFO - Starting automated candle import
+2025-11-17 07:45:53,878 - INFO - ============================================================
+2025-11-17 07:45:53,879 - INFO - Found 2 CSV files
+2025-11-17 07:45:53,985 - INFO - Connected to database
+2025-11-17 07:45:53,988 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 07:45:53,988 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T12-01-17.csv (timeframe: 15m)
+2025-11-17 07:45:54,157 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 07:45:54,157 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv (timeframe: 5m)
+2025-11-17 07:45:54,260 - INFO - ============================================================
+2025-11-17 07:45:54,260 - INFO - Import complete!
+2025-11-17 07:45:54,261 - INFO -   Files processed: 2
+2025-11-17 07:45:54,261 - INFO -   Successful imports: 2
+2025-11-17 07:45:54,261 - INFO -   Total rows imported: 761
+2025-11-17 07:45:54,261 - INFO -   Timeframes: 15m, 5m
+2025-11-17 07:45:54,261 - INFO - ============================================================
+2025-11-17 07:45:54,261 - INFO - 
+Database summary:
+2025-11-17 07:45:54,319 - INFO -   15m: 8,502 candles
+2025-11-17 07:45:54,320 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 07:45:54,320 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 07:45:54,320 - INFO -   5m: 8,082 candles
+2025-11-17 07:45:54,320 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 07:45:54,320 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 07:45:54,320 - INFO - Database connection closed
+2025-11-17 07:52:40,164 - INFO - ============================================================
+2025-11-17 07:52:40,164 - INFO - Starting automated candle import
+2025-11-17 07:52:40,164 - INFO - ============================================================
+2025-11-17 07:52:40,165 - INFO - Found 2 CSV files
+2025-11-17 07:52:40,296 - INFO - Connected to database
+2025-11-17 07:52:40,298 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 07:52:40,299 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T12-01-17.csv (timeframe: 15m)
+2025-11-17 07:52:43,485 - INFO - ○ Skipping MNQ_15m_MNQ1!_2025-11-17T12-01-17.csv: All 461 candles already exist in database
+2025-11-17 07:52:43,486 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 07:52:43,486 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv (timeframe: 5m)
+2025-11-17 07:52:43,490 - INFO - ○ Skipping MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv: All 300 candles already exist in database
+2025-11-17 07:52:43,491 - INFO - 🗑 Deleted MNQ_15m_MNQ1!_2025-11-17T12-01-17.csv
+2025-11-17 07:52:43,492 - WARNING - Could not delete MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\Kudzai\\Downloads\\TradingView_Data\\MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv'
+2025-11-17 07:52:43,492 - INFO - ============================================================
+2025-11-17 07:52:43,492 - INFO - Import complete!
+2025-11-17 07:52:43,492 - INFO -   Files processed: 2
+2025-11-17 07:52:43,492 - INFO -   Successful imports: 0
+2025-11-17 07:52:43,493 - INFO -   Total rows imported: 0
+2025-11-17 07:52:43,493 - INFO -   Files deleted: 1
+2025-11-17 07:52:43,493 - INFO -   Timeframes: 15m, 5m
+2025-11-17 07:52:43,493 - INFO - ============================================================
+2025-11-17 07:52:43,493 - INFO - 
+Database summary:
+2025-11-17 07:52:43,561 - INFO -   15m: 8,502 candles
+2025-11-17 07:52:43,561 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 07:52:43,561 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 07:52:43,561 - INFO -   5m: 8,082 candles
+2025-11-17 07:52:43,562 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 07:52:43,562 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 07:52:43,562 - INFO - Database connection closed
+2025-11-17 08:04:09,415 - INFO - ============================================================
+2025-11-17 08:04:09,415 - INFO - Starting automated candle import
+2025-11-17 08:04:09,415 - INFO - ============================================================
+2025-11-17 08:04:09,417 - INFO - Found 1 CSV files
+2025-11-17 08:04:09,579 - INFO - Connected to database
+2025-11-17 08:04:09,583 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 08:04:09,583 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv (timeframe: 5m)
+2025-11-17 08:04:10,679 - INFO - ○ Skipping MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv: All 300 candles already exist in database
+2025-11-17 08:04:10,780 - WARNING - Could not delete MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\Kudzai\\Downloads\\TradingView_Data\\MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv'
+2025-11-17 08:04:10,780 - INFO - ============================================================
+2025-11-17 08:04:10,780 - INFO - Import complete!
+2025-11-17 08:04:10,780 - INFO -   Files processed: 1
+2025-11-17 08:04:10,780 - INFO -   Successful imports: 0
+2025-11-17 08:04:10,780 - INFO -   Total rows imported: 0
+2025-11-17 08:04:10,780 - INFO -   Files deleted: 0
+2025-11-17 08:04:10,781 - INFO -   Timeframes: 5m
+2025-11-17 08:04:10,781 - INFO - ============================================================
+2025-11-17 08:04:10,781 - INFO - 
+Database summary:
+2025-11-17 08:04:10,843 - INFO -   15m: 8,502 candles
+2025-11-17 08:04:10,843 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 08:04:10,844 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 08:04:10,844 - INFO -   5m: 8,082 candles
+2025-11-17 08:04:10,844 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 08:04:10,844 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 08:04:10,844 - INFO - Database connection closed
+2025-11-17 08:05:21,146 - INFO - ============================================================
+2025-11-17 08:05:21,146 - INFO - Starting automated candle import
+2025-11-17 08:05:21,146 - INFO - ============================================================
+2025-11-17 08:05:21,147 - INFO - Found 1 CSV files
+2025-11-17 08:05:21,254 - INFO - Connected to database
+2025-11-17 08:05:21,256 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 08:05:21,256 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv (timeframe: 5m)
+2025-11-17 08:05:22,465 - INFO - ○ Skipping MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv: All 300 candles already exist in database
+2025-11-17 08:05:22,567 - INFO - 🗑 Deleted MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv
+2025-11-17 08:05:22,567 - INFO - ============================================================
+2025-11-17 08:05:22,567 - INFO - Import complete!
+2025-11-17 08:05:22,568 - INFO -   Files processed: 1
+2025-11-17 08:05:22,568 - INFO -   Successful imports: 0
+2025-11-17 08:05:22,568 - INFO -   Total rows imported: 0
+2025-11-17 08:05:22,568 - INFO -   Files deleted: 1
+2025-11-17 08:05:22,568 - INFO -   Timeframes: 5m
+2025-11-17 08:05:22,568 - INFO - ============================================================
+2025-11-17 08:05:22,568 - INFO - 
+Database summary:
+2025-11-17 08:05:22,640 - INFO -   15m: 8,502 candles
+2025-11-17 08:05:22,640 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 08:05:22,640 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 08:05:22,640 - INFO -   5m: 8,082 candles
+2025-11-17 08:05:22,640 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 08:05:22,640 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 08:05:22,641 - INFO - Database connection closed
+2025-11-17 08:13:59,139 - INFO - ============================================================
+2025-11-17 08:13:59,139 - INFO - Starting automated candle import
+2025-11-17 08:13:59,140 - INFO - ============================================================
+2025-11-17 08:13:59,143 - WARNING - No CSV files found in C:\Users\Kudzai\Downloads\TradingView_Data

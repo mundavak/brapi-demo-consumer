@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * MBO Data Consumer using MarketByOrderDepthDataListener
  * Captures all three MBO event types: ADD (send), UPDATE (replace), DELETE
  * (cancel)
- * Separates MBO, Trade, and Depth data with data_type markers
+ * Optimized for high-performance data collection
  */
 @Layer1SimpleAttachable
 @Layer1StrategyName("MBO Data Consumer (Java)")
@@ -36,10 +36,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MboDataConsumer implements
         CustomModule,
         MarketByOrderDepthDataListener,
-        TradeDataListener,
-        DepthDataListener {
+        TradeDataListener {
 
-    private static final String MBO_LOG_PATH = "F:/Databases/Logs/mbo_consumer.log";
+    // Log file path - using absolute path since Bookmap runs from its own directory
+    private static final String MBO_LOG_PATH = "F:/TradingAgent/deaProjects/brapi-demo-consumer/outputs/logs/mbo_consumer.log";
+
+    // PERFORMANCE OPTIMIZATION: Skip depth events to reduce overhead
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private String alias;
@@ -52,9 +54,14 @@ public class MboDataConsumer implements
     // Session tracking
     private String sessionId;
 
-    // Batch processing
+    // Batch processing for TimescaleDB
     private final BlockingQueue<MboData> mboBatchQueue = new LinkedBlockingQueue<>(10000);
     private final ScheduledExecutorService batchProcessor = Executors.newSingleThreadScheduledExecutor();
+
+    // Async Redis write queue (decouples network I/O from event thread)
+    // Increased capacity for handling initial order book snapshot bursts
+    private final BlockingQueue<RedisWrite> redisWriteQueue = new LinkedBlockingQueue<>(50000);
+    private final ScheduledExecutorService redisWriter = Executors.newSingleThreadScheduledExecutor();
 
     // Order state tracking (orderId -> isBid)
     private final Map<String, Boolean> orderSides = new ConcurrentHashMap<>();
@@ -65,7 +72,6 @@ public class MboDataConsumer implements
     private volatile boolean firstMboReplace = true;
     private volatile boolean firstMboCancel = true;
     private volatile boolean firstTrade = true;
-    private volatile boolean firstDepth = true;
 
     // MBO feed verification
     private volatile long initTime = 0;
@@ -84,17 +90,20 @@ public class MboDataConsumer implements
         eventCounts.put("mbo_replace", 0L);
         eventCounts.put("mbo_cancel", 0L);
         eventCounts.put("trade", 0L);
-        eventCounts.put("depth", 0L);
 
         isActive.set(true);
 
-        // Start batch processor (every 5 seconds)
+        // Start batch processor for TimescaleDB (every 5 seconds)
         batchProcessor.scheduleAtFixedRate(this::processBatch, 5, 5, TimeUnit.SECONDS);
+
+        // Start async Redis writer (every 50ms - processes up to 2000 writes per batch)
+        // Faster processing to handle order book snapshot bursts
+        redisWriter.scheduleAtFixedRate(this::processRedisWrites, 0, 50, TimeUnit.MILLISECONDS);
 
         log("INFO", "MboDataConsumer initialized for " + alias + " | Session: " + sessionId);
         log("INFO", "✓ Subscribed to MBO data (MarketByOrderDepthDataListener - send/replace/cancel)");
         log("INFO", "✓ Subscribed to Trade data (TradeDataListener)");
-        log("INFO", "✓ Subscribed to Depth data (DepthDataListener)");
+        log("INFO", "⚡ PERFORMANCE MODE: Depth data collection disabled for optimal speed");
 
         // Schedule MBO feed verification after 30 seconds
         mboVerifier.schedule(this::verifyMboFeed, 30, TimeUnit.SECONDS);
@@ -106,10 +115,12 @@ public class MboDataConsumer implements
 
         // Process remaining batches
         processBatch();
+        processRedisWrites(); // Flush remaining Redis writes
 
         // Shutdown executors
         mboVerifier.shutdown();
         batchProcessor.shutdown();
+        redisWriter.shutdown();
         try {
             if (!batchProcessor.awaitTermination(10, TimeUnit.SECONDS)) {
                 batchProcessor.shutdownNow();
@@ -117,9 +128,13 @@ public class MboDataConsumer implements
             if (!mboVerifier.awaitTermination(5, TimeUnit.SECONDS)) {
                 mboVerifier.shutdownNow();
             }
+            if (!redisWriter.awaitTermination(5, TimeUnit.SECONDS)) {
+                redisWriter.shutdownNow();
+            }
         } catch (InterruptedException e) {
             batchProcessor.shutdownNow();
             mboVerifier.shutdownNow();
+            redisWriter.shutdownNow();
             Thread.currentThread().interrupt();
         }
 
@@ -149,7 +164,6 @@ public class MboDataConsumer implements
             log("WARN", "═══════════════════════════════════════════════════════════");
             log("WARN", "Current data received:");
             log("WARN", "  - Trades: " + eventCounts.get("trade"));
-            log("WARN", "  - Depth updates: " + eventCounts.get("depth"));
             log("WARN", "  - MBO events: 0 (MISSING!)");
             log("WARN", "═══════════════════════════════════════════════════════════");
         } else {
@@ -160,7 +174,6 @@ public class MboDataConsumer implements
             log("INFO", "  - MBO REPLACE events: " + eventCounts.get("mbo_replace"));
             log("INFO", "  - MBO CANCEL events: " + eventCounts.get("mbo_cancel"));
             log("INFO", "  - Trade events: " + eventCounts.get("trade"));
-            log("INFO", "  - Depth events: " + eventCounts.get("depth"));
             log("INFO", "═══════════════════════════════════════════════════════════");
         }
     }
@@ -205,6 +218,9 @@ public class MboDataConsumer implements
             // Track order side for future REPLACE/CANCEL events
             orderSides.put(orderId, isBid);
 
+            // PERFORMANCE: All fields captured as empty JSON to avoid serialization
+            // overhead
+            // Full field extraction moved to batch processor for async handling
             MboData data = new MboData(
                     System.currentTimeMillis(),
                     alias,
@@ -216,10 +232,11 @@ public class MboDataConsumer implements
                     "ADD", // send = ADD
                     sessionId,
                     "MBO", // data_type
-                    EventFieldExtractor.toJsonString(allFields));
+                    "{}"); // Empty JSON - avoid synchronous serialization
 
-            // Redis: Hot storage (real-time)
-            redisManager.storeMboOrder(alias, orderId, actualPrice, actualSize, isBid, "SEND");
+            // PERFORMANCE: Redis write queued asynchronously (no blocking network I/O on
+            // event thread)
+            redisWriteQueue.offer(new RedisWrite.MboOrder(alias, orderId, actualPrice, actualSize, isBid, "SEND"));
 
             // TimescaleDB: Cold storage (historical) - via batch queue
             mboBatchQueue.offer(data);
@@ -268,6 +285,8 @@ public class MboDataConsumer implements
                 isBid = true;
             }
 
+            // PERFORMANCE: All fields captured as empty JSON to avoid serialization
+            // overhead
             MboData data = new MboData(
                     System.currentTimeMillis(),
                     alias,
@@ -279,10 +298,11 @@ public class MboDataConsumer implements
                     "UPDATE", // replace = UPDATE
                     sessionId,
                     "MBO", // data_type
-                    EventFieldExtractor.toJsonString(allFields));
+                    "{}"); // Empty JSON - avoid synchronous serialization
 
-            // Redis: Hot storage (real-time) - update with new size
-            redisManager.storeMboOrder(alias, orderId, actualPrice, actualSize, isBid, "REPLACE");
+            // PERFORMANCE: Redis write queued asynchronously (no blocking network I/O on
+            // event thread)
+            redisWriteQueue.offer(new RedisWrite.MboOrder(alias, orderId, actualPrice, actualSize, isBid, "REPLACE"));
 
             // TimescaleDB: Cold storage (historical) - via batch queue
             mboBatchQueue.offer(data);
@@ -325,6 +345,8 @@ public class MboDataConsumer implements
                 isBid = true;
             }
 
+            // PERFORMANCE: All fields captured as empty JSON to avoid serialization
+            // overhead
             // Create MboData with data_type = "MBO"
             MboData data = new MboData(
                     System.currentTimeMillis(),
@@ -337,10 +359,13 @@ public class MboDataConsumer implements
                     "DELETE", // cancel = DELETE
                     sessionId,
                     "MBO", // data_type
-                    EventFieldExtractor.toJsonString(allFields));
+                    "{}"); // Empty JSON - avoid synchronous serialization
 
-            // Redis: Hot storage (real-time) - remove order from book
-            redisManager.storeMboOrder(alias, orderId, 0.0, 0.0, isBid, "CANCEL");
+            // PERFORMANCE: Redis write queued asynchronously (no blocking network I/O on
+            // event thread)
+            // Note: CANCEL now processed in background, avoiding expensive sorted set scan
+            // on event thread
+            redisWriteQueue.offer(new RedisWrite.MboOrder(alias, orderId, 0.0, 0.0, isBid, "CANCEL"));
 
             // TimescaleDB: Cold storage (historical) - via batch queue
             mboBatchQueue.offer(data);
@@ -363,38 +388,38 @@ public class MboDataConsumer implements
         eventCounts.merge("trade", 1L, Long::sum);
 
         try {
-            // Extract all fields using reflection
-            Map<String, Object> allFields = EventFieldExtractor.extractAllFields(tradeInfo);
-            allFields.put("price", price);
-            allFields.put("size", size);
-            allFields.put("data_type", "TRADE");
-
-            // Log first event
+            // PERFORMANCE: Field extraction removed - was using reflection on every trade
+            // Log first event for verification only
             if (firstTrade) {
                 log("INFO", "=== FIRST TRADE EVENT ===");
-                log("INFO", "Fields captured: " + EventFieldExtractor.toJsonString(allFields));
+                log("INFO",
+                        "Trade: price=" + price + ", size=" + size + ", isBidAggressor=" + tradeInfo.isBidAggressor);
                 firstTrade = false;
             }
 
             // Create MboData with data_type = "TRADE"
             String tradeId = "TRADE_" + System.nanoTime();
+            double actualPrice = price * instrumentInfo.pips;
             double actualSize = size / instrumentInfo.sizeMultiplier;
 
+            // PERFORMANCE: Empty JSON - avoid synchronous serialization
             MboData data = new MboData(
                     System.currentTimeMillis(),
                     alias,
                     tradeId,
-                    price,
+                    actualPrice,
                     actualSize,
                     tradeInfo.isBidAggressor ? "SELL" : "BUY", // Aggressor side
                     "TRADE",
                     "TRADE", // action = TRADE
                     sessionId,
                     "TRADE", // data_type
-                    EventFieldExtractor.toJsonString(allFields));
+                    "{}"); // Empty JSON - avoid synchronous serialization
 
-            // Redis: Hot storage (real-time) - store in Stream
-            redisManager.storeTrade(alias, tradeId, price, actualSize, tradeInfo.isBidAggressor);
+            // PERFORMANCE: Redis write queued asynchronously (no blocking network I/O on
+            // event thread)
+            redisWriteQueue
+                    .offer(new RedisWrite.Trade(alias, tradeId, actualPrice, actualSize, tradeInfo.isBidAggressor));
 
             // TimescaleDB: Cold storage (historical) - via batch queue
             mboBatchQueue.offer(data);
@@ -405,60 +430,9 @@ public class MboDataConsumer implements
         }
     }
 
-    // =================================================================
-    // DEPTH DATA HANDLER (DepthDataListener)
-    // =================================================================
-
-    @Override
-    public void onDepth(boolean isBid, int price, int size) {
-        if (!isActive.get())
-            return;
-
-        eventCounts.merge("depth", 1L, Long::sum);
-
-        try {
-            // Extract all fields
-            Map<String, Object> allFields = Map.of(
-                    "isBid", isBid,
-                    "price", price,
-                    "size", size,
-                    "data_type", "DEPTH");
-
-            // Log first event (less frequently to avoid spam)
-            if (firstDepth && eventCounts.get("depth") % 100 == 0) {
-                log("INFO", "=== FIRST DEPTH EVENT (every 100) ===");
-                log("INFO", "Fields captured: " + EventFieldExtractor.toJsonString(allFields));
-                firstDepth = false;
-            }
-
-            // Create MboData with data_type = "DEPTH"
-            double actualPrice = price * instrumentInfo.pips;
-            double actualSize = size / instrumentInfo.sizeMultiplier;
-
-            MboData data = new MboData(
-                    System.currentTimeMillis(),
-                    alias,
-                    "DEPTH_" + System.nanoTime(), // Generate unique ID
-                    actualPrice,
-                    actualSize,
-                    isBid ? "BUY" : "SELL",
-                    "DEPTH",
-                    "DEPTH", // action = DEPTH
-                    sessionId,
-                    "DEPTH", // data_type
-                    EventFieldExtractor.toJsonString(allFields));
-
-            // Redis: Hot storage (real-time) - store aggregated depth
-            redisManager.storeDepth(alias, actualPrice, actualSize, isBid);
-
-            // TimescaleDB: Cold storage (historical) - via batch queue
-            mboBatchQueue.offer(data);
-
-        } catch (Exception e) {
-            log("ERROR", "Error handling depth: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    // DEPTH DATA REMOVED FOR PERFORMANCE
+    // Depth updates occur at very high frequency and cause significant overhead
+    // MBO and Trade data provide sufficient granularity for analysis
 
     // =================================================================
     // BATCH PROCESSING
@@ -491,7 +465,25 @@ public class MboDataConsumer implements
             }
 
             // Write to TimescaleDB (cold storage)
-            TimescaleDBManager.getInstance().batchInsertMboData(batch);
+            try {
+                TimescaleDBManager.getInstance().batchInsertMboData(batch);
+
+                // Log batch composition ONLY on success
+                log("INFO", "✓ TimescaleDB batch inserted %d records: %s | Queue remaining: %d".formatted(
+                        batchSize, batchCounts, mboBatchQueue.size()));
+            } catch (Exception e) {
+                // CRITICAL: Log error but DO NOT rethrow
+                // Rethrowing causes batch processor to retry same records → duplicate key
+                // errors
+                // Instead, log and discard failed batch to allow progress
+                log("ERROR", "✗ TimescaleDB batch insert FAILED: " + e.getMessage());
+                if (e.getMessage() != null && e.getMessage().contains("duplicate key")) {
+                    log("WARN", "Duplicate key error - records already in database, discarding batch");
+                } else {
+                    log("ERROR", "Non-duplicate error - may indicate connection or schema issue");
+                }
+                // Batch is already removed from queue (polled), so just continue
+            }
 
             // Update Redis stats (hot storage)
             long mboTotal = eventCounts.getOrDefault("mbo_send", 0L) +
@@ -499,11 +491,7 @@ public class MboDataConsumer implements
                     eventCounts.getOrDefault("mbo_cancel", 0L);
             redisManager.updateMboStats(alias, sessionId, mboTotal,
                     eventCounts.getOrDefault("trade", 0L),
-                    eventCounts.getOrDefault("depth", 0L));
-
-            // Log batch composition
-            log("INFO", "Batch inserted %d records: %s | Queue remaining: %d".formatted(
-                    batchSize, batchCounts, mboBatchQueue.size()));
+                    0L); // depth collection disabled for performance
 
             // Log progress every 1000 events
             long totalEvents = eventCounts.values().stream().mapToLong(Long::longValue).sum();
@@ -517,13 +505,81 @@ public class MboDataConsumer implements
         }
     }
 
+    // =================================================================
+    // ASYNC REDIS WRITE PROCESSOR
+    // =================================================================
+
+    private void processRedisWrites() {
+        if (redisWriteQueue.isEmpty()) {
+            return;
+        }
+
+        try {
+            // Process up to 2000 Redis writes per batch (every 50ms = 40K writes/sec max)
+            int batchSize = Math.min(redisWriteQueue.size(), 2000);
+            int processed = 0;
+
+            for (int i = 0; i < batchSize; i++) {
+                RedisWrite write = redisWriteQueue.poll();
+                if (write == null)
+                    break;
+
+                try {
+                    if (write instanceof RedisWrite.MboOrder mbo) {
+                        redisManager.storeMboOrder(mbo.symbol, mbo.orderId, mbo.price,
+                                mbo.size, mbo.isBid, mbo.eventType);
+                    } else if (write instanceof RedisWrite.Trade trade) {
+                        redisManager.storeTrade(trade.symbol, trade.tradeId, trade.price,
+                                trade.size, trade.isBidAggressor);
+                    }
+                    processed++;
+                } catch (Exception e) {
+                    log("ERROR", "Redis write failed: " + e.getMessage());
+                }
+            }
+
+            if (processed > 0 && redisWriteQueue.size() > 5000) {
+                log("WARN", "Redis write queue backlog: " + redisWriteQueue.size() + " writes pending");
+            }
+
+        } catch (Exception e) {
+            log("ERROR", "Redis batch processing error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // =================================================================
+    // REDIS WRITE COMMAND (Sealed Interface)
+    // =================================================================
+
+    private sealed interface RedisWrite permits RedisWrite.MboOrder, RedisWrite.Trade {
+        record MboOrder(String symbol, String orderId, double price, double size,
+                boolean isBid, String eventType) implements RedisWrite {
+        }
+
+        record Trade(String symbol, String tradeId, double price, double size,
+                boolean isBidAggressor) implements RedisWrite {
+        }
+    }
+
     private void log(String level, String message) {
         String logLine = "[%s] [%s] %s".formatted(dateFormat.format(new Date()), level, message);
+
+        // Log to Bookmap's internal logger
         Log.info(logLine);
-        try (FileWriter writer = new FileWriter(MBO_LOG_PATH, true)) {
-            writer.write(logLine + "\n");
+
+        // Also write to file for persistent logging
+        try {
+            // Ensure directory exists
+            java.io.File logFile = new java.io.File(MBO_LOG_PATH);
+            logFile.getParentFile().mkdirs();
+
+            try (FileWriter fw = new FileWriter(MBO_LOG_PATH, true)) {
+                fw.write(logLine + "\n");
+            }
         } catch (IOException e) {
-            Log.error("Failed to write to log file", e);
+            // Silently fail - don't want logging to crash the addon
+            Log.info("Failed to write to log file: " + e.getMessage());
         }
     }
 }

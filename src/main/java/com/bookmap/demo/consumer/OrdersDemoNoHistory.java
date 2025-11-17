@@ -25,32 +25,33 @@ import velox.api.layer1.simplified.PositionListener;
 @Layer1StrategyName("Basic orders/balance info")
 @Layer1ApiVersion(Layer1ApiVersionValue.VERSION2)
 public class OrdersDemoNoHistory implements
-    CustomModule, OrdersListener, BalanceListener, PositionListener {
-    
+        CustomModule, OrdersListener, BalanceListener, PositionListener {
+
     private Indicator lastExecutionPrice;
     private Indicator lastOrderLimitPrice;
     private Indicator balance;
     private Indicator position;
-    
+
     private double pips;
-    
+
     @Override
     public void initialize(String alias, InstrumentInfo info, Api api, InitialState initialState) {
         pips = info.pips;
-        
+
         lastExecutionPrice = api.registerIndicator("Last execution price", GraphType.PRIMARY);
         lastOrderLimitPrice = api.registerIndicator("Last order limit price", GraphType.PRIMARY);
         balance = api.registerIndicator("Balance", GraphType.BOTTOM);
         position = api.registerIndicator("Position", GraphType.BOTTOM);
-        
+
         lastExecutionPrice.setColor(Color.ORANGE);
         lastOrderLimitPrice.setColor(Color.BLUE);
         balance.setColor(Color.CYAN);
         position.setColor(Color.WHITE);
     }
-    
+
     @Override
-    public void stop() {}
+    public void stop() {
+    }
 
     @Override
     public void onPositionUpdate(StatusInfo statusInfo) {
@@ -60,7 +61,8 @@ public class OrdersDemoNoHistory implements
     @Override
     public void onBalance(BalanceInfo balanceInfo) {
         if (balanceInfo.balancesInCurrency.isEmpty()) {
-            Log.warn("BalanceInfo with empty balancesInCurrency list received, account name: " + balanceInfo.accountName);
+            Log.warn("BalanceInfo with empty balancesInCurrency list received, account name: "
+                    + balanceInfo.accountName);
             return;
         }
 

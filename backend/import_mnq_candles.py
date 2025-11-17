@@ -28,15 +28,21 @@ def detect_timeframe(filename):
     Detect timeframe from filename.
 
     Args:
-        filename: CSV filename (e.g., 'CME_MINI_MNQZ2025, 15.csv')
+        filename: CSV filename (e.g., 'MNQ_5m_MNQ1!_2025-11-17T12-01-56.csv' or 'CME_MINI_MNQZ2025, 15.csv')
 
     Returns:
         Timeframe string ('5m' or '15m')
     """
-    if ", 5.csv" in filename or "_5.csv" in filename:
+    # TradingView format: MNQ_15m_... (check 15m first since it contains "5")
+    if "_15m_" in filename or "15m_MNQ" in filename:
+        return "15m"
+    elif "_5m_" in filename or "5m_MNQ" in filename:
         return "5m"
+    # Old format: ..., 5.csv or ..., 15.csv
     elif ", 15.csv" in filename or "_15.csv" in filename:
         return "15m"
+    elif ", 5.csv" in filename or "_5.csv" in filename:
+        return "5m"
     else:
         raise ValueError(f"Cannot detect timeframe from filename: {filename}")
 
@@ -87,19 +93,21 @@ def import_csv_file(filepath, conn, cursor):
             high_price = float(row["high"])
             low_price = float(row["low"])
             close_price = float(row["close"])
-            volume = 0  # Not provided in CSV
+            volume = int(
+                float(row.get("Volume", 0) or 0)
+            )  # TradingView may have volume
 
             batch.append(
                 (
                     timestamp,
-                    "MNQ1!",  # Symbol
+                    "MNQ",  # Symbol (use MNQ to match existing data)
                     timeframe,
                     open_price,
                     high_price,
                     low_price,
                     close_price,
                     volume,
-                    "imported_csv_mnqz2025",  # session_id
+                    f"imported_tradingview_{datetime.now().strftime('%Y%m%d')}",  # session_id
                 )
             )
 
@@ -146,13 +154,21 @@ def insert_batch(cursor, batch):
 
 def main():
     """Main import process."""
-    csv_dir = Path("H:/")
+    # Try TradingView directory first, then fall back to H:\
+    csv_dir = Path("C:/Users/Kudzai/Downloads/TradingView_Data")
 
-    # Find all CSV files
-    csv_files = sorted(csv_dir.glob("CME_MINI_MNQZ2025*.csv"))
+    if not csv_dir.exists():
+        print(f"❌ Directory not found: {csv_dir}")
+        csv_dir = Path("H:/")
+        print(f"Trying fallback directory: {csv_dir}")
+
+    # Find all CSV files (TradingView format or old format)
+    csv_files = sorted(csv_dir.glob("MNQ_*.csv"))
+    if not csv_files:
+        csv_files = sorted(csv_dir.glob("CME_MINI_MNQZ2025*.csv"))
 
     if not csv_files:
-        print("❌ No CSV files found in H:\\")
+        print(f"❌ No CSV files found in {csv_dir}")
         return
 
     print(f"Found {len(csv_files)} CSV files to import:")
@@ -195,7 +211,7 @@ def main():
                 MIN(close) as min_price,
                 MAX(close) as max_price
             FROM ohlc_candles
-            WHERE symbol = 'MNQ1!'
+            WHERE symbol = 'MNQ'
             GROUP BY timeframe
             ORDER BY timeframe
         """

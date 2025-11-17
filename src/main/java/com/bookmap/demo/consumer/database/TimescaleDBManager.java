@@ -133,13 +133,20 @@ public class TimescaleDBManager {
     }
 
     public void batchInsertMboData(List<MboData> mboDataList) {
+        // ON CONFLICT DO NOTHING: Skip duplicates, insert new records
+        // Critical for handling retries without losing data
         String sql = "INSERT INTO mbo_data (timestamp, symbol, order_id, side, price, size, order_type, action, session_id, data_type, cbdr_window, additional_data) "
                 +
-                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb)";
+                "VALUES (to_timestamp(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::jsonb) "
+                +
+                "ON CONFLICT (timestamp, symbol, order_id) DO NOTHING";
 
-        try (Connection conn = getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
 
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
             conn.setAutoCommit(false);
             int batchSize = 0;
 
@@ -196,10 +203,38 @@ public class TimescaleDBManager {
                 conn.commit();
             }
 
-            conn.setAutoCommit(true);
             LOGGER.info("Batch inserted " + mboDataList.size() + " MBO records");
+
         } catch (SQLException e) {
             LOGGER.severe("Error batch inserting MBO data: " + e.getMessage());
+
+            // Rollback on error
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    LOGGER.info("Transaction rolled back successfully");
+                } catch (SQLException rollbackEx) {
+                    LOGGER.severe("Failed to rollback: " + rollbackEx.getMessage());
+                }
+            }
+
+            // Rethrow as RuntimeException to propagate error to caller
+            // Caller (MboDataConsumer) will log and discard batch to avoid infinite retries
+            throw new RuntimeException("Failed to insert MBO data batch: " + e.getMessage(), e);
+
+        } finally {
+            // CRITICAL: Always restore autoCommit and close resources
+            // HikariCP returns connections to pool WITHOUT resetting autoCommit state
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null) {
+                    conn.setAutoCommit(true); // Restore default state before returning to pool
+                    conn.close();
+                }
+            } catch (SQLException closeEx) {
+                LOGGER.severe("Failed to close resources: " + closeEx.getMessage());
+            }
         }
     }
 
