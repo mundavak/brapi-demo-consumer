@@ -11,12 +11,20 @@ let autoDownloadSettings = {
   downloadPath: 'TradingView_Data',
   filePrefix: 'chart_export_',
   enableNotifications: true,
-  currentSymbol: 'UNKNOWN' // Stores symbol from content script
+  currentSymbol: 'UNKNOWN', // Stores symbol from content script
+  currentTimeframe: '1m'    // Stores timeframe from content script
+};
+
+// Scheduler settings
+let schedulerSettings = {
+  enabled: false,
+  times: ['08:00'],
+  timeframes: ['1', '60'],
+  nextExport: null
 };
 
 // The name for our daily alarm
 const DAILY_EXPORT_ALARM_NAME = 'dailyTradingViewExport';
-
 
 // =================================================================
 // DAILY SCHEDULER (Alarm API)
@@ -36,6 +44,12 @@ chrome.alarms.onAlarm.addListener((alarm) => {
       .then(() => console.log('Scheduled export initiated successfully.'))
       .catch(err => console.error('Scheduled export FAILED:', err));
   }
+  
+  // Handle custom scheduler alarms
+  if (alarm.name.startsWith('scheduler_export_')) {
+    console.log('⏰ Custom scheduler alarm triggered:', alarm.name);
+    handleScheduledExport();
+  }
 });
 
 
@@ -43,6 +57,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.runtime.onInstalled.addListener(() => {
   console.log('Extension installed/updated. Setting up daily alarm...');
   createDailyAlarm();
+  loadSchedulerSettings();
 });
 
 // 3. Helper function to create the alarm
@@ -81,6 +96,162 @@ function getNextExportTime(hour, minute) {
   return target.getTime();
 }
 
+// =================================================================
+// CUSTOM SCHEDULER FUNCTIONS
+// =================================================================
+
+/**
+ * Load scheduler settings from storage
+ */
+function loadSchedulerSettings() {
+  chrome.storage.sync.get([
+    'schedulerEnabled',
+    'schedulerTimes', 
+    'autoExportTimeframes'
+  ], function(result) {
+    if (result.schedulerEnabled) {
+      schedulerSettings.enabled = result.schedulerEnabled;
+      schedulerSettings.times = result.schedulerTimes || ['08:00'];
+      schedulerSettings.timeframes = result.autoExportTimeframes || ['1', '60'];
+      
+      if (schedulerSettings.enabled) {
+        setupSchedulerAlarms();
+      }
+    }
+  });
+}
+
+/**
+ * Setup alarms for scheduler times
+ */
+function setupSchedulerAlarms() {
+  // Clear existing scheduler alarms
+  chrome.alarms.getAll(function(alarms) {
+    alarms.forEach(alarm => {
+      if (alarm.name.startsWith('scheduler_export_')) {
+        chrome.alarms.clear(alarm.name);
+      }
+    });
+    
+    // Create new alarms for each time
+    schedulerSettings.times.forEach(time => {
+      const [hours, minutes] = time.split(':').map(Number);
+      const nextAlarm = getNextExportTime(hours, minutes);
+      
+      const alarmName = `scheduler_export_${time.replace(':', '')}`;
+      
+      chrome.alarms.create(alarmName, {
+        when: nextAlarm,
+        periodInMinutes: 24 * 60 // Repeat daily
+      });
+      
+      console.log(`⏰ Created scheduler alarm: ${alarmName} at ${new Date(nextAlarm).toLocaleString()}`);
+    });
+    
+    // Update next export time
+    updateNextExportTime();
+  });
+}
+
+/**
+ * Handle scheduled export
+ */
+async function handleScheduledExport() {
+  console.log('🔄 Starting scheduled export...');
+  
+  if (!schedulerSettings.enabled || schedulerSettings.timeframes.length === 0) {
+    console.log('⏰ Scheduler disabled or no timeframes selected');
+    return;
+  }
+  
+  try {
+    // Find active TradingView tab
+    const tabs = await chrome.tabs.query({
+      url: "*://www.tradingview.com/chart/*"
+    });
+    
+    if (tabs.length === 0) {
+      console.log('❌ No TradingView chart tab found for scheduled export');
+      return;
+    }
+    
+    const tab = tabs[0];
+    console.log('✅ Found TradingView tab for scheduled export:', tab.title);
+    
+    // Send export message to content script with scheduler timeframes
+    const result = await chrome.tabs.sendMessage(tab.id, {
+      action: 'exportData',
+      settings: {
+        timeframes: schedulerSettings.timeframes,
+        isScheduled: true
+      }
+    });
+    
+    if (result && result.success) {
+      console.log('✅ Scheduled export initiated successfully');
+      
+      // Show notification
+      if (autoDownloadSettings.enableNotifications) {
+        chrome.notifications.create(`scheduled-export-${Date.now()}`, {
+          type: 'basic',
+          iconUrl: 'icons/icon48.png',
+          title: '⏰ Scheduled Export Started',
+          message: `Exporting ${schedulerSettings.timeframes.length} timeframe(s)`
+        });
+      }
+    } else {
+      throw new Error(result?.error || 'Scheduled export failed in content script');
+    }
+    
+  } catch (error) {
+    console.error('❌ Scheduled export failed:', error);
+    
+    if (autoDownloadSettings.enableNotifications) {
+      chrome.notifications.create(`scheduled-export-error-${Date.now()}`, {
+        type: 'basic',
+        iconUrl: 'icons/icon48.png',
+        title: '❌ Scheduled Export Failed',
+        message: error.message
+      });
+    }
+  }
+}
+
+/**
+ * Update next export time display
+ */
+function updateNextExportTime() {
+  if (schedulerSettings.times.length === 0) {
+    schedulerSettings.nextExport = 'No times set';
+    return;
+  }
+  
+  // Find the next upcoming time
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  let nextTime = null;
+  
+  schedulerSettings.times.forEach(time => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const candidate = new Date(now);
+    candidate.setHours(hours, minutes, 0, 0);
+    
+    if (candidate <= now) {
+      candidate.setDate(candidate.getDate() + 1);
+    }
+    
+    if (!nextTime || candidate < nextTime) {
+      nextTime = candidate;
+    }
+  });
+  
+  if (nextTime) {
+    schedulerSettings.nextExport = nextTime.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      timeZone: 'America/New_York'
+    });
+  }
+}
 
 // =================================================================
 // DOWNLOAD HANDLING (Downloads API) - SIMPLIFIED
@@ -98,7 +269,9 @@ chrome.downloads.onCreated.addListener((downloadItem) => {
     downloadQueue.set(downloadItem.id, {
       item: downloadItem,
       timestamp: Date.now(),
-      type: 'tradingview_export'
+      type: 'tradingview_export',
+      symbol: autoDownloadSettings.currentSymbol,
+      timeframe: autoDownloadSettings.currentTimeframe
     });
     
     // Show "saving" notification
@@ -119,17 +292,43 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
     
     console.log('🎯 Customizing filename for TradingView export');
     
-    // Generate smart filename
+    // Generate smart filename with symbol and timeframe
     const timestamp = new Date().toISOString().replace(/:/g, '-').split('.')[0];
     
-    // Use the symbol we stored from the content script
+    // Use the symbol and timeframe we stored from the content script
     let symbol = autoDownloadSettings.currentSymbol || 'UNKNOWN';
+    let timeframe = autoDownloadSettings.currentTimeframe || '1m';
+    
     symbol = symbol.replace(/[^a-zA-Z0-9!]/g, '_'); // Sanitize symbol
     
-    const smartFilename = `${autoDownloadSettings.filePrefix}${symbol}_${timestamp}.csv`;
-    const downloadPath = `${autoDownloadSettings.downloadPath}/${smartFilename}`;
+    // Convert timeframe code to readable format
+    const timeframeMap = {
+      'tick': 'tick',
+      '1s': '1s',
+      '1': '1m',
+      '5': '5m',
+      '15': '15m',
+      '30': '30m',
+      '60': '1h',
+      '120': '2h',
+      '240': '4h',
+      '1D': '1D'
+    };
+    
+    const readableTimeframe = timeframeMap[timeframe] || timeframe;
+    
+    // Determine folder based on export type
+    const folder = downloadQueue.get(downloadItem.id)?.type === 'scheduled_export' 
+      ? `${autoDownloadSettings.downloadPath}/Auto_Exports`
+      : autoDownloadSettings.downloadPath;
+    
+    // NEW: Create filename with symbol and timeframe
+    const smartFilename = `${symbol}_${readableTimeframe}_${timestamp}.csv`;
+    const downloadPath = `${folder}/${smartFilename}`;
     
     console.log(`📁 Smart filename: ${downloadPath}`);
+    console.log(`   Symbol: ${symbol}`);
+    console.log(`   Timeframe: ${readableTimeframe} (code: ${timeframe})`);
     
     // Suggest the new path. This happens BEFORE the "Save As" dialog.
     suggest({
@@ -193,10 +392,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
   // Handle symbol info updates from content script
   if (request.action === 'updateSymbolInfo') {
-    console.log('📊 Received symbol info from content script:', request.symbol);
+    console.log('📊 Received symbol info from content script:', request.symbol, request.timeframe);
     
-    // Store symbol info for smart filename generation
+    // Store symbol and timeframe info for smart filename generation
     autoDownloadSettings.currentSymbol = request.symbol;
+    autoDownloadSettings.currentTimeframe = request.timeframe || '1m';
+    
+    console.log(`📝 Updated export info - Symbol: ${autoDownloadSettings.currentSymbol}, Timeframe: ${autoDownloadSettings.currentTimeframe}`);
     
     sendResponse({success: true});
     return true;
@@ -208,6 +410,57 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       .then(result => sendResponse(result))
       .catch(error => sendResponse({success: false, error: error.message}));
     return true; // Keep message channel open
+  }
+  
+  // Handle scheduler requests
+  if (request.action === 'startScheduler') {
+    schedulerSettings = {
+      enabled: true,
+      times: request.settings.schedulerTimes,
+      timeframes: request.settings.autoExportTimeframes
+    };
+    
+    setupSchedulerAlarms();
+    
+    // Save to storage
+    chrome.storage.sync.set({
+      schedulerEnabled: true,
+      schedulerTimes: schedulerSettings.times,
+      autoExportTimeframes: schedulerSettings.timeframes
+    });
+    
+    sendResponse({success: true});
+    return true;
+  }
+  
+  if (request.action === 'stopScheduler') {
+    schedulerSettings.enabled = false;
+    
+    // Clear scheduler alarms
+    chrome.alarms.getAll(function(alarms) {
+      alarms.forEach(alarm => {
+        if (alarm.name.startsWith('scheduler_export_')) {
+          chrome.alarms.clear(alarm.name);
+        }
+      });
+    });
+    
+    // Save to storage
+    chrome.storage.sync.set({
+      schedulerEnabled: false
+    });
+    
+    sendResponse({success: true});
+    return true;
+  }
+  
+  if (request.action === 'getSchedulerStatus') {
+    updateNextExportTime();
+    sendResponse({
+      active: schedulerSettings.enabled,
+      nextExport: schedulerSettings.nextExport
+    });
+    return true;
   }
   
   // Handle screenshot request

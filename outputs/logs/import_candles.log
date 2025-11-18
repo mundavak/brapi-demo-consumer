@@ -109,3 +109,608 @@ Database summary:
 2025-11-17 08:13:59,139 - INFO - Starting automated candle import
 2025-11-17 08:13:59,140 - INFO - ============================================================
 2025-11-17 08:13:59,143 - WARNING - No CSV files found in C:\Users\Kudzai\Downloads\TradingView_Data
+2025-11-17 09:20:00,731 - INFO - ============================================================
+2025-11-17 09:20:00,731 - INFO - Starting automated candle import
+2025-11-17 09:20:00,732 - INFO - ============================================================
+2025-11-17 09:20:00,732 - INFO - Found 2 CSV files
+2025-11-17 09:20:00,882 - INFO - Connected to database
+2025-11-17 09:20:00,883 - ERROR - Error detecting timeframe from MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:20:00,884 - ERROR - Could not detect timeframe for MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv, skipping
+2025-11-17 09:20:00,885 - ERROR - Error detecting timeframe from MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:20:00,885 - ERROR - Could not detect timeframe for MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv, skipping
+2025-11-17 09:20:00,886 - INFO - ============================================================
+2025-11-17 09:20:00,886 - INFO - Import complete!
+2025-11-17 09:20:00,886 - INFO -   Files processed: 2
+2025-11-17 09:20:00,886 - INFO -   Successful imports: 0
+2025-11-17 09:20:00,886 - INFO -   Total rows imported: 0
+2025-11-17 09:20:00,886 - INFO -   Files deleted: 0
+2025-11-17 09:20:00,886 - INFO -   Timeframes: 
+2025-11-17 09:20:00,887 - INFO - ============================================================
+2025-11-17 09:20:00,887 - INFO - 
+Database summary:
+2025-11-17 09:20:00,987 - INFO -   15m: 8,502 candles
+2025-11-17 09:20:00,987 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:20:00,988 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 09:20:00,988 - INFO -   5m: 8,082 candles
+2025-11-17 09:20:00,989 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:20:00,989 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 09:20:00,989 - INFO - Database connection closed
+2025-11-17 09:22:02,925 - INFO - ============================================================
+2025-11-17 09:22:02,925 - INFO - Starting automated candle import
+2025-11-17 09:22:02,926 - INFO - ============================================================
+2025-11-17 09:22:02,927 - INFO - Found 2 CSV files
+2025-11-17 09:22:03,047 - INFO - Connected to database
+2025-11-17 09:22:03,047 - ERROR - Error detecting timeframe from MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:22:03,048 - ERROR - Could not detect timeframe for MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv, skipping
+2025-11-17 09:22:03,048 - ERROR - Error detecting timeframe from MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:22:03,048 - ERROR - Could not detect timeframe for MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv, skipping
+2025-11-17 09:22:03,048 - INFO - ============================================================
+2025-11-17 09:22:03,049 - INFO - Import complete!
+2025-11-17 09:22:03,049 - INFO -   Files processed: 2
+2025-11-17 09:22:03,049 - INFO -   Successful imports: 0
+2025-11-17 09:22:03,049 - INFO -   Total rows imported: 0
+2025-11-17 09:22:03,049 - INFO -   Files deleted: 0
+2025-11-17 09:22:03,049 - INFO -   Timeframes: 
+2025-11-17 09:22:03,049 - INFO - ============================================================
+2025-11-17 09:22:03,049 - INFO - 
+Database summary:
+2025-11-17 09:22:03,130 - INFO -   15m: 8,502 candles
+2025-11-17 09:22:03,130 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:22:03,131 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 09:22:03,131 - INFO -   5m: 8,082 candles
+2025-11-17 09:22:03,131 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:22:03,131 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 09:22:03,131 - INFO - Database connection closed
+2025-11-17 09:22:38,066 - INFO - ============================================================
+2025-11-17 09:22:38,067 - INFO - Starting automated candle import
+2025-11-17 09:22:38,067 - INFO - ============================================================
+2025-11-17 09:22:38,067 - INFO - Found 2 CSV files
+2025-11-17 09:22:38,181 - INFO - Connected to database
+2025-11-17 09:22:38,182 - ERROR - Error detecting timeframe from MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:22:38,182 - ERROR - Could not detect timeframe for MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv, skipping
+2025-11-17 09:22:38,182 - ERROR - Error detecting timeframe from MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv: 'charmap' codec can't decode byte 0x8f in position 108: character maps to <undefined>
+2025-11-17 09:22:38,183 - ERROR - Could not detect timeframe for MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv, skipping
+2025-11-17 09:22:38,183 - INFO - ============================================================
+2025-11-17 09:22:38,183 - INFO - Import complete!
+2025-11-17 09:22:38,183 - INFO -   Files processed: 2
+2025-11-17 09:22:38,183 - INFO -   Successful imports: 0
+2025-11-17 09:22:38,183 - INFO -   Total rows imported: 0
+2025-11-17 09:22:38,183 - INFO -   Files deleted: 0
+2025-11-17 09:22:38,183 - INFO -   Timeframes: 
+2025-11-17 09:22:38,183 - INFO - ============================================================
+2025-11-17 09:22:38,183 - INFO - 
+Database summary:
+2025-11-17 09:22:38,255 - INFO -   15m: 8,502 candles
+2025-11-17 09:22:38,255 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:22:38,255 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 09:22:38,255 - INFO -   5m: 8,082 candles
+2025-11-17 09:22:38,255 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 07:00:00-05:00
+2025-11-17 09:22:38,255 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 09:22:38,256 - INFO - Database connection closed
+2025-11-17 09:25:10,818 - INFO - ============================================================
+2025-11-17 09:25:10,819 - INFO - Starting automated candle import
+2025-11-17 09:25:10,819 - INFO - ============================================================
+2025-11-17 09:25:10,820 - INFO - Found 2 CSV files
+2025-11-17 09:25:10,923 - INFO - Connected to database
+2025-11-17 09:25:10,925 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 09:25:10,926 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv (timeframe: 15m)
+2025-11-17 09:25:11,904 - ERROR - Error importing MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv: syntax error at or near "volume"
+LINE 7:             volume = EXCLUDED.volume,
+                    ^
+
+2025-11-17 09:25:11,905 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 09:25:11,905 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv (timeframe: 5m)
+2025-11-17 09:25:11,942 - WARNING - Could not check for duplicates in MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 09:25:11,945 - ERROR - Error importing MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv: syntax error at or near "volume"
+LINE 7:             volume = EXCLUDED.volume,
+                    ^
+
+2025-11-17 09:25:11,946 - INFO - ============================================================
+2025-11-17 09:25:11,946 - INFO - Import complete!
+2025-11-17 09:25:11,946 - INFO -   Files processed: 2
+2025-11-17 09:25:11,946 - INFO -   Successful imports: 0
+2025-11-17 09:25:11,946 - INFO -   Total rows imported: 0
+2025-11-17 09:25:11,946 - INFO -   Files deleted: 0
+2025-11-17 09:25:11,946 - INFO -   Timeframes: 
+2025-11-17 09:25:11,946 - INFO - ============================================================
+2025-11-17 09:25:11,946 - INFO - 
+Database summary:
+2025-11-17 09:25:11,947 - ERROR - Import failed: current transaction is aborted, commands ignored until end of transaction block
+Traceback (most recent call last):
+  File "F:\TradingAgent\deaProjects\brapi-demo-consumer\backend\auto_import_candles.py", line 385, in main
+    for row in get_database_summary(cursor):
+               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "F:\TradingAgent\deaProjects\brapi-demo-consumer\backend\auto_import_candles.py", line 293, in get_database_summary
+    cursor.execute(
+    ~~~~~~~~~~~~~~^
+        """
+        ^^^
+    ...<11 lines>...
+    """
+    ^^^
+    )
+    ^
+psycopg2.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 09:25:11,949 - INFO - Database connection closed
+2025-11-17 09:26:01,360 - INFO - ============================================================
+2025-11-17 09:26:01,360 - INFO - Starting automated candle import
+2025-11-17 09:26:01,360 - INFO - ============================================================
+2025-11-17 09:26:01,361 - INFO - Found 2 CSV files
+2025-11-17 09:26:01,475 - INFO - Connected to database
+2025-11-17 09:26:01,477 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 09:26:01,477 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv (timeframe: 15m)
+2025-11-17 09:26:02,411 - INFO - ✓ Imported 8 new rows from MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv
+2025-11-17 09:26:02,412 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 09:26:02,412 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv (timeframe: 5m)
+2025-11-17 09:26:02,542 - INFO - ✓ Imported 26 new rows from MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv
+2025-11-17 09:26:02,644 - INFO - 🗑 Deleted MNQ_15m_MNQ1!_2025-11-17T14-14-54.csv
+2025-11-17 09:26:02,745 - INFO - 🗑 Deleted MNQ_5m_MNQ1!_2025-11-17T14-14-38.csv
+2025-11-17 09:26:02,746 - INFO - ============================================================
+2025-11-17 09:26:02,746 - INFO - Import complete!
+2025-11-17 09:26:02,746 - INFO -   Files processed: 2
+2025-11-17 09:26:02,746 - INFO -   Successful imports: 2
+2025-11-17 09:26:02,747 - INFO -   Total rows imported: 34
+2025-11-17 09:26:02,747 - INFO -   Files deleted: 2
+2025-11-17 09:26:02,747 - INFO -   Timeframes: 15m, 5m
+2025-11-17 09:26:02,747 - INFO - ============================================================
+2025-11-17 09:26:02,747 - INFO - 
+Database summary:
+2025-11-17 09:26:02,813 - INFO -   15m: 8,510 candles
+2025-11-17 09:26:02,813 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 09:00:00-05:00
+2025-11-17 09:26:02,813 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 09:26:02,813 - INFO -   5m: 8,108 candles
+2025-11-17 09:26:02,813 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 09:10:00-05:00
+2025-11-17 09:26:02,814 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 09:26:02,814 - INFO - Database connection closed
+2025-11-17 10:14:47,685 - INFO - ============================================================
+2025-11-17 10:14:47,685 - INFO - Starting automated candle import
+2025-11-17 10:14:47,685 - INFO - ============================================================
+2025-11-17 10:14:47,686 - INFO - Found 2 CSV files
+2025-11-17 10:14:47,792 - INFO - Connected to database
+2025-11-17 10:14:47,795 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 10:14:47,795 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T15-14-15.csv (timeframe: 15m)
+2025-11-17 10:14:48,815 - INFO - ✓ Imported 4 new rows from MNQ_15m_MNQ1!_2025-11-17T15-14-15.csv
+2025-11-17 10:14:48,816 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 10:14:48,823 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T15-14-03.csv (timeframe: 5m)
+2025-11-17 10:14:48,940 - INFO - ✓ Imported 12 new rows from MNQ_5m_MNQ1!_2025-11-17T15-14-03.csv
+2025-11-17 10:14:49,042 - INFO - 🗑 Deleted MNQ_15m_MNQ1!_2025-11-17T15-14-15.csv
+2025-11-17 10:14:49,143 - INFO - 🗑 Deleted MNQ_5m_MNQ1!_2025-11-17T15-14-03.csv
+2025-11-17 10:14:49,144 - INFO - ============================================================
+2025-11-17 10:14:49,145 - INFO - Import complete!
+2025-11-17 10:14:49,145 - INFO -   Files processed: 2
+2025-11-17 10:14:49,145 - INFO -   Successful imports: 2
+2025-11-17 10:14:49,145 - INFO -   Total rows imported: 16
+2025-11-17 10:14:49,145 - INFO -   Files deleted: 2
+2025-11-17 10:14:49,145 - INFO -   Timeframes: 15m, 5m
+2025-11-17 10:14:49,146 - INFO - ============================================================
+2025-11-17 10:14:49,146 - INFO - 
+Database summary:
+2025-11-17 10:14:49,205 - INFO -   15m: 8,514 candles
+2025-11-17 10:14:49,205 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 10:00:00-05:00
+2025-11-17 10:14:49,206 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 10:14:49,206 - INFO -   5m: 8,120 candles
+2025-11-17 10:14:49,206 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 10:10:00-05:00
+2025-11-17 10:14:49,207 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 10:14:49,207 - INFO - Database connection closed
+2025-11-17 10:46:25,220 - INFO - ============================================================
+2025-11-17 10:46:25,229 - INFO - Starting automated candle import
+2025-11-17 10:46:25,229 - INFO - ============================================================
+2025-11-17 10:46:25,230 - INFO - Found 2 CSV files
+2025-11-17 10:46:25,376 - INFO - Connected to database
+2025-11-17 10:46:25,379 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 10:46:25,379 - INFO - Importing MNQ_15m_MNQ1!_2025-11-17T15-41-14.csv (timeframe: 15m)
+2025-11-17 10:46:26,620 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 10:46:26,958 - INFO - ✓ Imported 2 new candles from MNQ_15m_MNQ1!_2025-11-17T15-41-14.csv
+2025-11-17 10:46:26,958 - INFO - ✓ Imported 300 VWAP records from MNQ_15m_MNQ1!_2025-11-17T15-41-14.csv
+2025-11-17 10:46:26,959 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 10:46:26,959 - INFO - Importing MNQ_5m_MNQ1!_2025-11-17T15-41-01.csv (timeframe: 5m)
+2025-11-17 10:46:27,025 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 10:46:27,220 - INFO - ✓ Imported 6 new candles from MNQ_5m_MNQ1!_2025-11-17T15-41-01.csv
+2025-11-17 10:46:27,221 - INFO - ✓ Imported 300 VWAP records from MNQ_5m_MNQ1!_2025-11-17T15-41-01.csv
+2025-11-17 10:46:27,323 - INFO - 🗑 Deleted MNQ_15m_MNQ1!_2025-11-17T15-41-14.csv
+2025-11-17 10:46:27,424 - INFO - 🗑 Deleted MNQ_5m_MNQ1!_2025-11-17T15-41-01.csv
+2025-11-17 10:46:27,425 - INFO - ============================================================
+2025-11-17 10:46:27,425 - INFO - Import complete!
+2025-11-17 10:46:27,425 - INFO -   Files processed: 2
+2025-11-17 10:46:27,425 - INFO -   Successful imports: 2
+2025-11-17 10:46:27,425 - INFO -   Total rows imported: 8
+2025-11-17 10:46:27,425 - INFO -   Files deleted: 2
+2025-11-17 10:46:27,425 - INFO -   Timeframes: 15m, 5m
+2025-11-17 10:46:27,425 - INFO - ============================================================
+2025-11-17 10:46:27,425 - INFO - 
+Database summary:
+2025-11-17 10:46:27,514 - INFO -   15m: 8,516 candles
+2025-11-17 10:46:27,514 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 10:30:00-05:00
+2025-11-17 10:46:27,514 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 10:46:27,514 - INFO -   5m: 8,126 candles
+2025-11-17 10:46:27,514 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 10:40:00-05:00
+2025-11-17 10:46:27,515 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 10:46:27,515 - INFO - Database connection closed
+2025-11-17 11:27:25,581 - INFO - ============================================================
+2025-11-17 11:27:25,582 - INFO - Starting automated candle import
+2025-11-17 11:27:25,582 - INFO - ============================================================
+2025-11-17 11:27:25,584 - INFO - Found 4 CSV files
+2025-11-17 11:27:25,721 - INFO - Connected to database
+2025-11-17 11:27:25,724 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 11:27:25,724 - INFO - Importing MNQ1!_15m_2025-11-17T15-50-44.csv (timeframe: 15m)
+2025-11-17 11:27:27,786 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:27:27,990 - INFO - ✓ Imported 1 new candles from MNQ1!_15m_2025-11-17T15-50-44.csv
+2025-11-17 11:27:27,990 - INFO - ✓ Imported 300 VWAP records from MNQ1!_15m_2025-11-17T15-50-44.csv
+2025-11-17 11:27:28,005 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 11:27:28,005 - INFO - Importing MNQ1!_15m_2025-11-17T16-27-15.csv (timeframe: 15m)
+2025-11-17 11:27:28,060 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:27:28,287 - INFO - ✓ Imported 2 new candles from MNQ1!_15m_2025-11-17T16-27-15.csv
+2025-11-17 11:27:28,288 - INFO - ✓ Imported 300 VWAP records from MNQ1!_15m_2025-11-17T16-27-15.csv
+2025-11-17 11:27:28,291 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 11:27:28,292 - INFO - Importing MNQ1!_5m_2025-11-17T15-50-31.csv (timeframe: 5m)
+2025-11-17 11:27:28,359 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:27:28,580 - INFO - ✓ Imported 2 new candles from MNQ1!_5m_2025-11-17T15-50-31.csv
+2025-11-17 11:27:28,580 - INFO - ✓ Imported 300 VWAP records from MNQ1!_5m_2025-11-17T15-50-31.csv
+2025-11-17 11:27:28,582 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 11:27:28,582 - INFO - Importing MNQ1!_5m_2025-11-17T16-27-02.csv (timeframe: 5m)
+2025-11-17 11:27:28,616 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:27:28,830 - INFO - ✓ Imported 7 new candles from MNQ1!_5m_2025-11-17T16-27-02.csv
+2025-11-17 11:27:28,831 - INFO - ✓ Imported 300 VWAP records from MNQ1!_5m_2025-11-17T16-27-02.csv
+2025-11-17 11:27:28,933 - INFO - 🗑 Deleted MNQ1!_15m_2025-11-17T15-50-44.csv
+2025-11-17 11:27:29,035 - INFO - 🗑 Deleted MNQ1!_15m_2025-11-17T16-27-15.csv
+2025-11-17 11:27:29,136 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T15-50-31.csv
+2025-11-17 11:27:29,239 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T16-27-02.csv
+2025-11-17 11:27:29,240 - INFO - ============================================================
+2025-11-17 11:27:29,241 - INFO - Import complete!
+2025-11-17 11:27:29,242 - INFO -   Files processed: 4
+2025-11-17 11:27:29,242 - INFO -   Successful imports: 4
+2025-11-17 11:27:29,242 - INFO -   Total rows imported: 12
+2025-11-17 11:27:29,244 - INFO -   Files deleted: 4
+2025-11-17 11:27:29,244 - INFO -   Timeframes: 15m, 5m
+2025-11-17 11:27:29,244 - INFO - ============================================================
+2025-11-17 11:27:29,245 - INFO - 
+Database summary:
+2025-11-17 11:27:29,321 - INFO -   15m: 8,519 candles
+2025-11-17 11:27:29,322 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 11:15:00-05:00
+2025-11-17 11:27:29,322 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 11:27:29,322 - INFO -   5m: 8,135 candles
+2025-11-17 11:27:29,323 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 11:25:00-05:00
+2025-11-17 11:27:29,323 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 11:27:29,323 - INFO - Database connection closed
+2025-11-17 11:46:57,628 - INFO - ============================================================
+2025-11-17 11:46:57,628 - INFO - Starting automated candle import
+2025-11-17 11:46:57,629 - INFO - ============================================================
+2025-11-17 11:46:57,629 - INFO - Found 2 CSV files
+2025-11-17 11:46:57,744 - INFO - Connected to database
+2025-11-17 11:46:57,747 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 11:46:57,747 - INFO - Importing MNQ1!_15m_2025-11-17T16-44-22.csv (timeframe: 15m)
+2025-11-17 11:46:58,692 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:46:58,858 - INFO - ✓ Imported 1 new candles from MNQ1!_15m_2025-11-17T16-44-22.csv
+2025-11-17 11:46:58,858 - INFO - ✓ Imported 300 VWAP records from MNQ1!_15m_2025-11-17T16-44-22.csv
+2025-11-17 11:46:58,861 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 11:46:58,861 - INFO - Importing MNQ1!_5m_2025-11-17T16-44-10.csv (timeframe: 5m)
+2025-11-17 11:46:58,899 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 11:46:59,073 - INFO - ✓ Imported 3 new candles from MNQ1!_5m_2025-11-17T16-44-10.csv
+2025-11-17 11:46:59,074 - INFO - ✓ Imported 300 VWAP records from MNQ1!_5m_2025-11-17T16-44-10.csv
+2025-11-17 11:46:59,175 - WARNING - Could not delete MNQ1!_15m_2025-11-17T16-44-22.csv: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\Kudzai\\Downloads\\TradingView_Data\\MNQ1!_15m_2025-11-17T16-44-22.csv'
+2025-11-17 11:46:59,278 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T16-44-10.csv
+2025-11-17 11:46:59,278 - INFO - ============================================================
+2025-11-17 11:46:59,280 - INFO - Import complete!
+2025-11-17 11:46:59,280 - INFO -   Files processed: 2
+2025-11-17 11:46:59,280 - INFO -   Successful imports: 2
+2025-11-17 11:46:59,280 - INFO -   Total rows imported: 4
+2025-11-17 11:46:59,281 - INFO -   Files deleted: 1
+2025-11-17 11:46:59,281 - INFO -   Timeframes: 15m, 5m
+2025-11-17 11:46:59,281 - INFO - ============================================================
+2025-11-17 11:46:59,281 - INFO - 
+Database summary:
+2025-11-17 11:46:59,345 - INFO -   15m: 8,520 candles
+2025-11-17 11:46:59,345 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 11:30:00-05:00
+2025-11-17 11:46:59,347 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 11:46:59,347 - INFO -   5m: 8,138 candles
+2025-11-17 11:46:59,347 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 11:40:00-05:00
+2025-11-17 11:46:59,348 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 11:46:59,348 - INFO - Database connection closed
+2025-11-17 12:32:00,652 - INFO - ============================================================
+2025-11-17 12:32:00,653 - INFO - Starting automated candle import
+2025-11-17 12:32:00,653 - INFO - ============================================================
+2025-11-17 12:32:00,654 - WARNING - No CSV files found in C:\Users\Kudzai\Downloads\TradingView_Data
+2025-11-17 12:45:05,957 - INFO - ============================================================
+2025-11-17 12:45:05,957 - INFO - Starting automated candle import
+2025-11-17 12:45:05,958 - INFO - ============================================================
+2025-11-17 12:45:05,958 - INFO - Found 2 CSV files
+2025-11-17 12:45:06,081 - INFO - Connected to database
+2025-11-17 12:45:06,084 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 12:45:06,084 - INFO - Importing MNQ1!_15m_2025-11-17T17-44-57.csv (timeframe: 15m)
+2025-11-17 12:45:08,096 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 12:45:08,300 - INFO - ✓ Imported 4 new candles from MNQ1!_15m_2025-11-17T17-44-57.csv
+2025-11-17 12:45:08,301 - INFO - ✓ Imported 300 VWAP records from MNQ1!_15m_2025-11-17T17-44-57.csv
+2025-11-17 12:45:08,303 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 12:45:08,303 - INFO - Importing MNQ1!_5m_2025-11-17T17-44-45.csv (timeframe: 5m)
+2025-11-17 12:45:08,336 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 12:45:08,516 - INFO - ✓ Imported 12 new candles from MNQ1!_5m_2025-11-17T17-44-45.csv
+2025-11-17 12:45:08,516 - INFO - ✓ Imported 300 VWAP records from MNQ1!_5m_2025-11-17T17-44-45.csv
+2025-11-17 12:45:08,620 - INFO - 🗑 Deleted MNQ1!_15m_2025-11-17T17-44-57.csv
+2025-11-17 12:45:08,727 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T17-44-45.csv
+2025-11-17 12:45:08,727 - INFO - ============================================================
+2025-11-17 12:45:08,729 - INFO - Import complete!
+2025-11-17 12:45:08,729 - INFO -   Files processed: 2
+2025-11-17 12:45:08,730 - INFO -   Successful imports: 2
+2025-11-17 12:45:08,730 - INFO -   Total rows imported: 16
+2025-11-17 12:45:08,730 - INFO -   Files deleted: 2
+2025-11-17 12:45:08,730 - INFO -   Timeframes: 15m, 5m
+2025-11-17 12:45:08,730 - INFO - ============================================================
+2025-11-17 12:45:08,731 - INFO - 
+Database summary:
+2025-11-17 12:45:08,810 - INFO -   15m: 8,524 candles
+2025-11-17 12:45:08,810 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 12:30:00-05:00
+2025-11-17 12:45:08,811 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 12:45:08,811 - INFO -   5m: 8,150 candles
+2025-11-17 12:45:08,811 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 12:40:00-05:00
+2025-11-17 12:45:08,812 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 12:45:08,812 - INFO - Database connection closed
+2025-11-17 13:38:29,254 - INFO - ============================================================
+2025-11-17 13:38:29,264 - INFO - Starting automated candle import
+2025-11-17 13:38:29,264 - INFO - ============================================================
+2025-11-17 13:38:29,265 - INFO - Found 6 CSV files
+2025-11-17 13:38:29,368 - INFO - Connected to database
+2025-11-17 13:38:29,370 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 13:38:29,370 - INFO - Importing MNQ1!_15m_2025-11-17T18-33-38.csv (timeframe: 15m)
+2025-11-17 13:38:30,756 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:30,927 - INFO - ✓ Imported 4 new candles from MNQ1!_15m_2025-11-17T18-33-38.csv
+2025-11-17 13:38:30,928 - INFO - ✓ Imported 300 VWAP records from MNQ1!_15m_2025-11-17T18-33-38.csv
+2025-11-17 13:38:30,936 - INFO - Detected timeframe: 4h (interval: 240.0 min)
+2025-11-17 13:38:30,936 - INFO - Importing MNQ1!_1D_2025-11-17T18-31-38.csv (timeframe: 4h)
+2025-11-17 13:38:30,995 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:32,396 - INFO - ✓ Imported 300 new candles from MNQ1!_1D_2025-11-17T18-31-38.csv
+2025-11-17 13:38:32,396 - INFO - ✓ Imported 300 VWAP records from MNQ1!_1D_2025-11-17T18-31-38.csv
+2025-11-17 13:38:32,398 - INFO - Detected timeframe: 1h (interval: 60.0 min)
+2025-11-17 13:38:32,398 - INFO - Importing MNQ1!_1h_2025-11-17T18-31-01.csv (timeframe: 1h)
+2025-11-17 13:38:32,429 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:32,597 - INFO - ✓ Imported 300 new candles from MNQ1!_1h_2025-11-17T18-31-01.csv
+2025-11-17 13:38:32,597 - INFO - ✓ Imported 300 VWAP records from MNQ1!_1h_2025-11-17T18-31-01.csv
+2025-11-17 13:38:32,598 - WARNING - Unusual interval detected: 120.0 minutes
+2025-11-17 13:38:32,598 - INFO - Importing MNQ1!_2h_2025-11-17T18-31-13.csv (timeframe: 120m)
+2025-11-17 13:38:32,632 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:32,634 - ERROR - Error importing MNQ1!_2h_2025-11-17T18-31-13.csv: new row for relation "_hyper_3_336_chunk" violates check constraint "ohlc_candles_timeframe_check"
+DETAIL:  Failing row contains (2025-10-13 14:00:00-04, MNQ, 120m, 24926.25, 24965, 24882.5, 24920.75, 0, 0, null, auto_import_20251117_1338, null, null, null).
+
+2025-11-17 13:38:32,635 - WARNING - Unusual interval detected: 180.0 minutes
+2025-11-17 13:38:32,635 - INFO - Importing MNQ1!_4h_2025-11-17T18-31-26.csv (timeframe: 180m)
+2025-11-17 13:38:32,664 - WARNING - Could not check for duplicates in MNQ1!_4h_2025-11-17T18-31-26.csv: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 13:38:32,665 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:32,667 - ERROR - Error importing MNQ1!_4h_2025-11-17T18-31-26.csv: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 13:38:32,669 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 13:38:32,669 - INFO - Importing MNQ1!_5m_2025-11-17T18-33-26.csv (timeframe: 5m)
+2025-11-17 13:38:32,707 - WARNING - Could not check for duplicates in MNQ1!_5m_2025-11-17T18-33-26.csv: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 13:38:32,707 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:38:32,709 - ERROR - Error importing MNQ1!_5m_2025-11-17T18-33-26.csv: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 13:38:32,811 - INFO - 🗑 Deleted MNQ1!_15m_2025-11-17T18-33-38.csv
+2025-11-17 13:38:32,913 - INFO - 🗑 Deleted MNQ1!_1D_2025-11-17T18-31-38.csv
+2025-11-17 13:38:33,014 - INFO - 🗑 Deleted MNQ1!_1h_2025-11-17T18-31-01.csv
+2025-11-17 13:38:33,015 - INFO - ============================================================
+2025-11-17 13:38:33,017 - INFO - Import complete!
+2025-11-17 13:38:33,017 - INFO -   Files processed: 6
+2025-11-17 13:38:33,017 - INFO -   Successful imports: 3
+2025-11-17 13:38:33,017 - INFO -   Total rows imported: 604
+2025-11-17 13:38:33,018 - INFO -   Files deleted: 3
+2025-11-17 13:38:33,018 - INFO -   Timeframes: 15m, 1h, 4h
+2025-11-17 13:38:33,018 - INFO - ============================================================
+2025-11-17 13:38:33,018 - INFO - 
+Database summary:
+2025-11-17 13:38:33,019 - ERROR - Import failed: current transaction is aborted, commands ignored until end of transaction block
+Traceback (most recent call last):
+  File "F:\TradingAgent\deaProjects\brapi-demo-consumer\backend\auto_import_candles.py", line 467, in main
+    for row in get_database_summary(cursor):
+               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "F:\TradingAgent\deaProjects\brapi-demo-consumer\backend\auto_import_candles.py", line 375, in get_database_summary
+    cursor.execute(
+    ~~~~~~~~~~~~~~^
+        """
+        ^^^
+    ...<11 lines>...
+    """
+    ^^^
+    )
+    ^
+psycopg2.errors.InFailedSqlTransaction: current transaction is aborted, commands ignored until end of transaction block
+
+2025-11-17 13:38:33,024 - INFO - Database connection closed
+2025-11-17 13:47:52,403 - INFO - ============================================================
+2025-11-17 13:47:52,403 - INFO - Starting automated candle import
+2025-11-17 13:47:52,403 - INFO - ============================================================
+2025-11-17 13:47:52,404 - INFO - Found 3 CSV files
+2025-11-17 13:47:52,514 - INFO - Connected to database
+2025-11-17 13:47:52,517 - ERROR - Unsupported interval detected: 120.0 minutes. Database only allows: 1m, 5m, 15m, 1h (60m), 4h (240m), 1d (1440m)
+2025-11-17 13:47:52,517 - ERROR - Could not detect timeframe for MNQ1!_2h_2025-11-17T18-31-13.csv, skipping
+2025-11-17 13:47:52,518 - ERROR - Unsupported interval detected: 180.0 minutes. Database only allows: 1m, 5m, 15m, 1h (60m), 4h (240m), 1d (1440m)
+2025-11-17 13:47:52,518 - ERROR - Could not detect timeframe for MNQ1!_4h_2025-11-17T18-31-26.csv, skipping
+2025-11-17 13:47:52,518 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 13:47:52,518 - INFO - Importing MNQ1!_5m_2025-11-17T18-33-26.csv (timeframe: 5m)
+2025-11-17 13:47:53,437 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:47:53,594 - INFO - ✓ Imported 10 new candles from MNQ1!_5m_2025-11-17T18-33-26.csv
+2025-11-17 13:47:53,594 - INFO - ✓ Imported 300 VWAP records from MNQ1!_5m_2025-11-17T18-33-26.csv
+2025-11-17 13:47:53,696 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T18-33-26.csv
+2025-11-17 13:47:53,696 - INFO - ============================================================
+2025-11-17 13:47:53,696 - INFO - Import complete!
+2025-11-17 13:47:53,696 - INFO -   Files processed: 3
+2025-11-17 13:47:53,696 - INFO -   Successful imports: 1
+2025-11-17 13:47:53,697 - INFO -   Total rows imported: 10
+2025-11-17 13:47:53,697 - INFO -   Files deleted: 1
+2025-11-17 13:47:53,697 - INFO -   Timeframes: 5m
+2025-11-17 13:47:53,697 - INFO - ============================================================
+2025-11-17 13:47:53,697 - INFO - 
+Database summary:
+2025-11-17 13:47:53,758 - INFO -   15m: 8,528 candles
+2025-11-17 13:47:53,758 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 13:47:53,759 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 13:47:53,759 - INFO -   1h: 300 candles
+2025-11-17 13:47:53,759 - INFO -     Range: 2025-10-29 13:00:00-04:00 to 2025-11-17 13:00:00-05:00
+2025-11-17 13:47:53,759 - INFO -     Price: $24717.75 - $26377.75
+2025-11-17 13:47:53,759 - INFO -   4h: 300 candles
+2025-11-17 13:47:53,759 - INFO -     Range: 2025-09-08 14:00:00-04:00 to 2025-11-17 10:00:00-05:00
+2025-11-17 13:47:53,759 - INFO -     Price: $24040.00 - $26319.00
+2025-11-17 13:47:53,760 - INFO -   5m: 8,160 candles
+2025-11-17 13:47:53,760 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 13:47:53,760 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 13:47:53,760 - INFO - Database connection closed
+2025-11-17 13:49:46,157 - INFO - ============================================================
+2025-11-17 13:49:46,158 - INFO - Starting automated candle import
+2025-11-17 13:49:46,158 - INFO - ============================================================
+2025-11-17 13:49:46,158 - INFO - Found 2 CSV files
+2025-11-17 13:49:46,274 - INFO - Connected to database
+2025-11-17 13:49:46,276 - INFO - Detected timeframe: 2h (interval: 120.0 min)
+2025-11-17 13:49:46,277 - INFO - Importing MNQ1!_2h_2025-11-17T18-31-13.csv (timeframe: 2h)
+2025-11-17 13:49:47,065 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 13:49:47,262 - INFO - ✓ Imported 300 new candles from MNQ1!_2h_2025-11-17T18-31-13.csv
+2025-11-17 13:49:47,262 - INFO - ✓ Imported 300 VWAP records from MNQ1!_2h_2025-11-17T18-31-13.csv
+2025-11-17 13:49:47,263 - ERROR - Unsupported interval detected: 180.0 minutes. Database only allows: 1m, 5m, 15m, 1h (60m), 2h (120m), 4h (240m), 1d (1440m)
+2025-11-17 13:49:47,263 - ERROR - Could not detect timeframe for MNQ1!_4h_2025-11-17T18-31-26.csv, skipping
+2025-11-17 13:49:47,364 - INFO - 🗑 Deleted MNQ1!_2h_2025-11-17T18-31-13.csv
+2025-11-17 13:49:47,365 - INFO - ============================================================
+2025-11-17 13:49:47,365 - INFO - Import complete!
+2025-11-17 13:49:47,365 - INFO -   Files processed: 2
+2025-11-17 13:49:47,365 - INFO -   Successful imports: 1
+2025-11-17 13:49:47,365 - INFO -   Total rows imported: 300
+2025-11-17 13:49:47,365 - INFO -   Files deleted: 1
+2025-11-17 13:49:47,365 - INFO -   Timeframes: 2h
+2025-11-17 13:49:47,365 - INFO - ============================================================
+2025-11-17 13:49:47,366 - INFO - 
+Database summary:
+2025-11-17 13:49:47,420 - INFO -   15m: 8,528 candles
+2025-11-17 13:49:47,420 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 13:49:47,420 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 13:49:47,420 - INFO -   1h: 300 candles
+2025-11-17 13:49:47,420 - INFO -     Range: 2025-10-29 13:00:00-04:00 to 2025-11-17 13:00:00-05:00
+2025-11-17 13:49:47,421 - INFO -     Price: $24717.75 - $26377.75
+2025-11-17 13:49:47,421 - INFO -   2h: 300 candles
+2025-11-17 13:49:47,421 - INFO -     Range: 2025-10-13 14:00:00-04:00 to 2025-11-17 12:00:00-05:00
+2025-11-17 13:49:47,421 - INFO -     Price: $24475.50 - $26377.75
+2025-11-17 13:49:47,421 - INFO -   4h: 300 candles
+2025-11-17 13:49:47,421 - INFO -     Range: 2025-09-08 14:00:00-04:00 to 2025-11-17 10:00:00-05:00
+2025-11-17 13:49:47,421 - INFO -     Price: $24040.00 - $26319.00
+2025-11-17 13:49:47,421 - INFO -   5m: 8,160 candles
+2025-11-17 13:49:47,421 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 13:49:47,422 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 13:49:47,422 - INFO - Database connection closed
+2025-11-17 14:01:01,920 - INFO - ============================================================
+2025-11-17 14:01:01,920 - INFO - Starting automated candle import
+2025-11-17 14:01:01,920 - INFO - ============================================================
+2025-11-17 14:01:01,921 - INFO - Found 2 CSV files
+2025-11-17 14:01:02,035 - INFO - Connected to database
+2025-11-17 14:01:02,037 - INFO - Detected timeframe: 1d (interval: 1440.0 min)
+2025-11-17 14:01:02,038 - INFO - Importing MNQ1!_1D_2025-11-17T19-00-45.csv (timeframe: 1d)
+2025-11-17 14:01:02,966 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:01:05,600 - INFO - ✓ Imported 300 new candles from MNQ1!_1D_2025-11-17T19-00-45.csv
+2025-11-17 14:01:05,600 - INFO - ✓ Imported 300 VWAP records from MNQ1!_1D_2025-11-17T19-00-45.csv
+2025-11-17 14:01:05,601 - INFO - Detected timeframe: 4h (interval: 240.0 min)
+2025-11-17 14:01:05,602 - INFO - Importing MNQ1!_4h_2025-11-17T19-00-21.csv (timeframe: 4h)
+2025-11-17 14:01:05,743 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:01:05,918 - INFO - ✓ Imported 1 new candles from MNQ1!_4h_2025-11-17T19-00-21.csv
+2025-11-17 14:01:05,918 - INFO - ✓ Imported 300 VWAP records from MNQ1!_4h_2025-11-17T19-00-21.csv
+2025-11-17 14:01:06,020 - INFO - 🗑 Deleted MNQ1!_1D_2025-11-17T19-00-45.csv
+2025-11-17 14:01:06,121 - INFO - 🗑 Deleted MNQ1!_4h_2025-11-17T19-00-21.csv
+2025-11-17 14:01:06,122 - INFO - ============================================================
+2025-11-17 14:01:06,122 - INFO - Import complete!
+2025-11-17 14:01:06,122 - INFO -   Files processed: 2
+2025-11-17 14:01:06,122 - INFO -   Successful imports: 2
+2025-11-17 14:01:06,122 - INFO -   Total rows imported: 301
+2025-11-17 14:01:06,122 - INFO -   Files deleted: 2
+2025-11-17 14:01:06,122 - INFO -   Timeframes: 1d, 4h
+2025-11-17 14:01:06,122 - INFO - ============================================================
+2025-11-17 14:01:06,122 - INFO - 
+Database summary:
+2025-11-17 14:01:06,232 - INFO -   15m: 8,528 candles
+2025-11-17 14:01:06,233 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 14:01:06,233 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 14:01:06,233 - INFO -   1d: 300 candles
+2025-11-17 14:01:06,233 - INFO -     Range: 2024-09-10 00:00:00-04:00 to 2025-11-17 00:00:00-05:00
+2025-11-17 14:01:06,233 - INFO -     Price: $17701.75 - $26262.50
+2025-11-17 14:01:06,233 - INFO -   1h: 300 candles
+2025-11-17 14:01:06,233 - INFO -     Range: 2025-10-29 13:00:00-04:00 to 2025-11-17 13:00:00-05:00
+2025-11-17 14:01:06,234 - INFO -     Price: $24717.75 - $26377.75
+2025-11-17 14:01:06,234 - INFO -   2h: 300 candles
+2025-11-17 14:01:06,234 - INFO -     Range: 2025-10-13 14:00:00-04:00 to 2025-11-17 12:00:00-05:00
+2025-11-17 14:01:06,234 - INFO -     Price: $24475.50 - $26377.75
+2025-11-17 14:01:06,234 - INFO -   4h: 301 candles
+2025-11-17 14:01:06,234 - INFO -     Range: 2025-09-08 14:00:00-04:00 to 2025-11-17 14:00:00-05:00
+2025-11-17 14:01:06,234 - INFO -     Price: $24040.00 - $26319.00
+2025-11-17 14:01:06,234 - INFO -   5m: 8,160 candles
+2025-11-17 14:01:06,234 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 13:30:00-05:00
+2025-11-17 14:01:06,234 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 14:01:06,235 - INFO - Database connection closed
+2025-11-17 14:33:31,976 - INFO - ============================================================
+2025-11-17 14:33:31,977 - INFO - Starting automated candle import
+2025-11-17 14:33:31,978 - INFO - ============================================================
+2025-11-17 14:33:31,979 - INFO - Found 8 CSV files
+2025-11-17 14:33:32,149 - INFO - Connected to database
+2025-11-17 14:33:32,155 - INFO - Detected timeframe: 15m (interval: 15.0 min)
+2025-11-17 14:33:32,155 - INFO - Importing MNQ1!_15m_2025-11-17T19-31-19.csv (timeframe: 15m)
+2025-11-17 14:33:33,295 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:33:35,859 - INFO - ✓ Imported 4 new candles from MNQ1!_15m_2025-11-17T19-31-19.csv
+2025-11-17 14:33:35,859 - INFO - ✓ Imported 4015 VWAP records from MNQ1!_15m_2025-11-17T19-31-19.csv
+2025-11-17 14:33:35,860 - INFO - Detected timeframe: 1d (interval: 1440.0 min)
+2025-11-17 14:33:35,860 - INFO - Importing MNQ1!_1D_2025-11-17T19-30-00.csv (timeframe: 1d)
+2025-11-17 14:33:36,001 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:33:52,988 - INFO - ✓ Imported 1347 new candles from MNQ1!_1D_2025-11-17T19-30-00.csv
+2025-11-17 14:33:52,989 - INFO - ✓ Imported 1646 VWAP records from MNQ1!_1D_2025-11-17T19-30-00.csv
+2025-11-17 14:33:52,991 - INFO - Detected timeframe: 1h (interval: 60.0 min)
+2025-11-17 14:33:52,991 - INFO - Importing MNQ1!_1h_2025-11-17T19-31-31.csv (timeframe: 1h)
+2025-11-17 14:33:53,325 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:33:56,404 - INFO - ✓ Imported 3715 new candles from MNQ1!_1h_2025-11-17T19-31-31.csv
+2025-11-17 14:33:56,405 - INFO - ✓ Imported 4015 VWAP records from MNQ1!_1h_2025-11-17T19-31-31.csv
+2025-11-17 14:33:56,406 - INFO - Detected timeframe: 2h (interval: 120.0 min)
+2025-11-17 14:33:56,406 - INFO - Importing MNQ1!_2h_2025-11-17T19-31-43.csv (timeframe: 2h)
+2025-11-17 14:33:56,523 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:33:59,638 - INFO - ✓ Imported 3715 new candles from MNQ1!_2h_2025-11-17T19-31-43.csv
+2025-11-17 14:33:59,638 - INFO - ✓ Imported 4015 VWAP records from MNQ1!_2h_2025-11-17T19-31-43.csv
+2025-11-17 14:33:59,640 - ERROR - Unsupported interval detected: 180.0 minutes. Database only allows: 1m, 5m, 15m, 1h (60m), 2h (120m), 4h (240m), 1d (1440m)
+2025-11-17 14:33:59,640 - ERROR - Could not detect timeframe for MNQ1!_4h_2025-11-17T18-31-26.csv, skipping
+2025-11-17 14:33:59,641 - ERROR - Unsupported interval detected: 180.0 minutes. Database only allows: 1m, 5m, 15m, 1h (60m), 2h (120m), 4h (240m), 1d (1440m)
+2025-11-17 14:33:59,641 - ERROR - Could not detect timeframe for MNQ1!_4h_2025-11-17T18-50-38.csv, skipping
+2025-11-17 14:33:59,642 - INFO - Detected timeframe: 4h (interval: 240.0 min)
+2025-11-17 14:33:59,642 - INFO - Importing MNQ1!_4h_2025-11-17T19-31-55.csv (timeframe: 4h)
+2025-11-17 14:33:59,860 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:34:02,891 - INFO - ✓ Imported 3714 new candles from MNQ1!_4h_2025-11-17T19-31-55.csv
+2025-11-17 14:34:02,891 - INFO - ✓ Imported 4015 VWAP records from MNQ1!_4h_2025-11-17T19-31-55.csv
+2025-11-17 14:34:02,893 - INFO - Detected timeframe: 5m (interval: 5.0 min)
+2025-11-17 14:34:02,893 - INFO - Importing MNQ1!_5m_2025-11-17T19-31-06.csv (timeframe: 5m)
+2025-11-17 14:34:02,942 - INFO - VWAP columns found: 9:30=9:30 AM VWAP, Daily=Daily VWAP
+2025-11-17 14:34:05,350 - INFO - ✓ Imported 12 new candles from MNQ1!_5m_2025-11-17T19-31-06.csv
+2025-11-17 14:34:05,351 - INFO - ✓ Imported 4015 VWAP records from MNQ1!_5m_2025-11-17T19-31-06.csv
+2025-11-17 14:34:05,453 - INFO - 🗑 Deleted MNQ1!_15m_2025-11-17T19-31-19.csv
+2025-11-17 14:34:05,556 - INFO - 🗑 Deleted MNQ1!_1D_2025-11-17T19-30-00.csv
+2025-11-17 14:34:05,658 - INFO - 🗑 Deleted MNQ1!_1h_2025-11-17T19-31-31.csv
+2025-11-17 14:34:05,760 - INFO - 🗑 Deleted MNQ1!_2h_2025-11-17T19-31-43.csv
+2025-11-17 14:34:05,862 - INFO - 🗑 Deleted MNQ1!_4h_2025-11-17T19-31-55.csv
+2025-11-17 14:34:05,966 - INFO - 🗑 Deleted MNQ1!_5m_2025-11-17T19-31-06.csv
+2025-11-17 14:34:05,967 - INFO - ============================================================
+2025-11-17 14:34:05,970 - INFO - Import complete!
+2025-11-17 14:34:05,970 - INFO -   Files processed: 8
+2025-11-17 14:34:05,971 - INFO -   Successful imports: 6
+2025-11-17 14:34:05,971 - INFO -   Total rows imported: 12,507
+2025-11-17 14:34:05,973 - INFO -   Files deleted: 6
+2025-11-17 14:34:05,973 - INFO -   Timeframes: 15m, 1d, 1h, 2h, 4h, 5m
+2025-11-17 14:34:05,974 - INFO - ============================================================
+2025-11-17 14:34:05,975 - INFO - 
+Database summary:
+2025-11-17 14:34:06,754 - INFO -   15m: 8,532 candles
+2025-11-17 14:34:06,756 - INFO -     Range: 2025-07-09 16:45:00-04:00 to 2025-11-17 14:30:00-05:00
+2025-11-17 14:34:06,759 - INFO -     Price: $23059.19 - $26382.25
+2025-11-17 14:34:06,762 - INFO -   1d: 1,647 candles
+2025-11-17 14:34:06,763 - INFO -     Range: 2019-05-06 00:00:00-04:00 to 2025-11-17 00:00:00-05:00
+2025-11-17 14:34:06,763 - INFO -     Price: $9576.00 - $26262.50
+2025-11-17 14:34:06,764 - INFO -   1h: 4,015 candles
+2025-11-17 14:34:06,764 - INFO -     Range: 2025-03-14 06:00:00-04:00 to 2025-11-17 14:00:00-05:00
+2025-11-17 14:34:06,764 - INFO -     Price: $17000.00 - $26377.75
+2025-11-17 14:34:06,764 - INFO -   2h: 4,015 candles
+2025-11-17 14:34:06,765 - INFO -     Range: 2024-07-29 22:00:00-04:00 to 2025-11-17 14:00:00-05:00
+2025-11-17 14:34:06,765 - INFO -     Price: $17139.00 - $26377.75
+2025-11-17 14:34:06,765 - INFO -   4h: 4,015 candles
+2025-11-17 14:34:06,765 - INFO -     Range: 2023-04-11 06:00:00-04:00 to 2025-11-17 14:00:00-05:00
+2025-11-17 14:34:06,765 - INFO -     Price: $15158.25 - $26319.00
+2025-11-17 14:34:06,766 - INFO -   5m: 8,172 candles
+2025-11-17 14:34:06,766 - INFO -     Range: 2025-10-07 00:35:00-04:00 to 2025-11-17 14:30:00-05:00
+2025-11-17 14:34:06,766 - INFO -     Price: $24200.31 - $26389.44
+2025-11-17 14:34:06,766 - INFO - Database connection closed

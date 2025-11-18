@@ -9,14 +9,12 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
-print("=== MBO Actions in PRE_NY window (Nov 5) ===")
+print("=== MBO Actions on Nov 17 ===")
 cur.execute(
     """
     SELECT DISTINCT action, COUNT(*) as cnt
     FROM mbo_data 
-    WHERE symbol LIKE 'MNQ%' 
-    AND cbdr_window = 'PRE_NY'
-    AND DATE(timestamp AT TIME ZONE 'America/New_York') = '2025-11-05'
+    WHERE timestamp >= '2025-11-17' AND timestamp < '2025-11-18'
     GROUP BY action
     ORDER BY cnt DESC
 """
@@ -24,19 +22,26 @@ cur.execute(
 for row in cur.fetchall():
     print(f"{row[0]}: {row[1]:,}")
 
+print(f"\n=== Total events ===")
+cur.execute(
+    "SELECT COUNT(*) FROM mbo_data WHERE timestamp >= '2025-11-17' AND timestamp < '2025-11-18'"
+)
+print(f"Total: {cur.fetchone()[0]:,}")
+
 print("\n=== Sample MBO records ===")
 cur.execute(
     """
-    SELECT action, side, price, size
+    SELECT timestamp, action, side, price, size, order_id
     FROM mbo_data 
-    WHERE symbol LIKE 'MNQ%' 
-    AND cbdr_window = 'PRE_NY'
-    AND DATE(timestamp AT TIME ZONE 'America/New_York') = '2025-11-05'
+    WHERE timestamp >= '2025-11-17' AND timestamp < '2025-11-18'
+    ORDER BY timestamp
     LIMIT 10
 """
 )
 for row in cur.fetchall():
-    print(f"{row[0]:<15} {row[1]:<10} Price: {row[2]:<10} Size: {row[3]}")
+    print(
+        f"{row[0]} {row[1]:<5} {row[2]:<5} ${row[3]:<10.2f} size:{row[4]} id:{row[5]}"
+    )
 
 cur.close()
 conn.close()

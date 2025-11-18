@@ -1,4 +1,4 @@
-// content.js - STEALTH VERSION (FIXED)
+// content.js - STEALTH VERSION (FIXED) - WITH CORRECTED TIMEFRAME MAPPING
 // TradingView Auto-Exporter Extension
 // Designed to be undetectable by anti-bot systems
 
@@ -114,7 +114,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // ============================================================================
-// EXPORT WORKFLOW
+// EXPORT WORKFLOW WITH CORRECTED TIMEFRAME SUPPORT
 // ============================================================================
 
 /**
@@ -127,13 +127,22 @@ async function handleTradingViewDownload(settings = {}) {
   try {
     // Send symbol info to background script for smart naming
     const symbol = extractSymbolFromPage();
-    chrome.runtime.sendMessage({
-      action: 'updateSymbolInfo',
-      symbol: symbol,
-      timestamp: Date.now()
-    });
     
-    // Trigger the export workflow (right-click → Export → click button)
+    // If we have specific timeframes, we'll update the background for each one
+    // Otherwise, we'll use the current timeframe
+    if (settings.timeframes && settings.timeframes.length > 0) {
+      console.log('⏰ Multiple timeframes detected, will update background for each export');
+    } else {
+      // Single export - update background with current timeframe
+      chrome.runtime.sendMessage({
+        action: 'updateSymbolInfo',
+        symbol: symbol,
+        timeframe: '1m', // Default to 1m for single export
+        timestamp: Date.now()
+      });
+    }
+    
+    // Trigger the export workflow with timeframe support
     console.log('🔄 Triggering TradingView export workflow...');
     const exportResult = await exportData(settings);
     
@@ -141,11 +150,7 @@ async function handleTradingViewDownload(settings = {}) {
       throw new Error('Export workflow failed');
     }
     
-    console.log('✅ Export button clicked!');
-    console.log('💾 background.js handling download automatically...');
-    
-    // Wait a moment for download to start
-    await sleep(2000);
+    console.log('✅ Export completed successfully!');
     
     // Show success message
     await showSuccessMessage();
@@ -165,31 +170,186 @@ async function handleTradingViewDownload(settings = {}) {
 }
 
 /**
- * Main export function (Stealth Mode)
+ * Select timeframe in TradingView
+ * @param {string} timeframe - The timeframe to select (e.g., '1', '5', '15', '30', '60', '120', '240', '1D')
  */
-// content.js
+async function selectTimeframe(timeframe) {
+    console.log(`⏰ Selecting timeframe: ${timeframe}`);
+    
+    try {
+        // Strategy 1: Use the exact selector pattern from your screenshot
+        const timeframeIndex = getTimeframeIndex(timeframe);
+        const timeframeButton = document.querySelector(`#header-toolbar-intervals > div > button:nth-child(${timeframeIndex})`);
+        
+        if (timeframeButton) {
+            console.log(`✅ Found timeframe button for ${timeframe} at index ${timeframeIndex}, clicking...`);
+            await clickElement(timeframeButton);
+            await sleep(1500); // Wait for chart to update
+            return true;
+        }
+        
+        // Strategy 2: Look for buttons with timeframe text
+        const allTimeframeButtons = document.querySelectorAll('#header-toolbar-intervals button, [class*="timeframe"] button, [data-name*="timeframe"] button');
+        
+        console.log(`🔍 Found ${allTimeframeButtons.length} potential timeframe buttons`);
+        
+        for (const button of allTimeframeButtons) {
+            const buttonText = button.textContent?.trim();
+            if (buttonText && timeframeMatches(buttonText, timeframe)) {
+                console.log(`✅ Found timeframe button via text: "${buttonText}", clicking...`);
+                await clickElement(button);
+                await sleep(1500); // Wait for chart to update
+                return true;
+            }
+        }
+        
+        // Strategy 3: Look for data-value attributes
+        const dataValueButton = document.querySelector(`[data-value="${timeframe}"]`);
+        if (dataValueButton) {
+            console.log(`✅ Found timeframe button via data-value="${timeframe}", clicking...`);
+            await clickElement(dataValueButton);
+            await sleep(1500);
+            return true;
+        }
+        
+        console.log(`❌ Could not find timeframe button for: ${timeframe}`);
+        return false;
+        
+    } catch (error) {
+        console.error(`❌ Error selecting timeframe ${timeframe}:`, error);
+        return false;
+    }
+}
 
 /**
- * Main export function (Stealth Mode) - UPDATED
+ * Map timeframe values to button indices - CORRECTED MAPPING BASED ON USER FEEDBACK
+ * User reported: 
+ * - #header-toolbar-intervals > div > button:nth-child(10) = 4hour  
+ * - #header-toolbar-intervals > div > button:nth-child(11) = Daily
  */
+function getTimeframeIndex(timeframe) {
+    const indexMap = {
+        'tick': 1,   // Tick
+        '1s': 2,     // 1 second
+        '1': 3,      // 1 minute
+        '5': 4,      // 5 minutes
+        '15': 5,     // 15 minutes
+        '30': 6,     // 30 minutes
+        '60': 7,     // 1 hour
+        '120': 8,    // 2 hours
+        '180': 9,    // 3 hours
+        '240': 10,   // 4 hours (WAS 9, NOW 10 - CORRECTED)
+        '1D': 11,    // Daily (WAS 10, NOW 11 - CORRECTED)
+        '1W': 12     // Weekly
+    };
+    return indexMap[timeframe] || 3; // Default to 1 minute
+}
+
 /**
- * Main export function (FINAL STRATEGY - Stealth Mode)
- * Uses the exact IDs you found with the inspector.
+ * Check if button text matches timeframe - UPDATED
+ */
+function timeframeMatches(buttonText, timeframe) {
+    const textMap = {
+        '1': ['1m', '1 minute', '1 min'],
+        '5': ['5m', '5 minutes', '5 min'], 
+        '15': ['15m', '15 minutes', '15 min'],
+        '30': ['30m', '30 minutes', '30 min'],
+        '60': ['1h', '1 hour', '60m', '60 min'],
+        '120': ['2h', '2 hours', '120m'],
+        '180': ['3h', '3 hours', '180m'],
+        '240': ['4h', '4 hours', '240m'],
+        '1D': ['1d', 'daily', '1 day', 'D'],
+        '1W': ['1w', 'weekly', '1 week', 'W'],
+        'tick': ['tick', 'ticks'],
+        '1s': ['1s', '1 second']
+    };
+    
+    const patterns = textMap[timeframe] || [];
+    const lowerButtonText = buttonText.toLowerCase();
+    
+    return patterns.some(pattern => 
+        lowerButtonText.includes(pattern.toLowerCase())
+    );
+}
+
+/**
+ * Main export function with timeframe support
  */
 async function exportData(settings) {
-  console.log('═'.repeat(70));
-  console.log('FINAL EXPORT STRATEGY - Using Main Search Menu');
-  console.log('═'.repeat(70));
-  
-  try {
-    // STEP 1: Find and click the "Symbol Search" button
+    console.log('═'.repeat(70));
+    console.log('FINAL EXPORT STRATEGY - With CORRECTED Timeframe Selection');
+    console.log('═'.repeat(70));
+    
+    try {
+        // STEP 0: Select timeframes if specified
+        if (settings.timeframes && settings.timeframes.length > 0) {
+            console.log('⏰ Timeframes to export:', settings.timeframes);
+            
+            let allExportsSuccessful = true;
+            
+            for (const timeframe of settings.timeframes) {
+                console.log(`\n🔄 Processing timeframe: ${timeframe}`);
+                
+                // Select the timeframe
+                const timeframeSelected = await selectTimeframe(timeframe);
+                if (!timeframeSelected) {
+                    console.log(`⚠️ Could not select timeframe ${timeframe}, using current timeframe`);
+                }
+                
+                await sleep(2000); // Wait for chart to load new data
+                
+                // Update background script with current symbol and timeframe
+                const symbol = extractSymbolFromPage();
+                chrome.runtime.sendMessage({
+                  action: 'updateSymbolInfo',
+                  symbol: symbol,
+                  timeframe: timeframe,
+                  timestamp: Date.now()
+                });
+                
+                // Perform export for this timeframe
+                const exportSuccess = await performSingleExport(settings, timeframe);
+                
+                if (!exportSuccess) {
+                    allExportsSuccessful = false;
+                    console.log(`❌ Export failed for timeframe: ${timeframe}`);
+                } else {
+                    console.log(`✅ Export completed for timeframe: ${timeframe}`);
+                }
+                
+                // Wait before next timeframe
+                await sleep(1000);
+            }
+            
+            return allExportsSuccessful;
+        } else {
+            // No specific timeframes, just do single export
+            console.log('⏰ No specific timeframes selected, using current timeframe');
+            return await performSingleExport(settings);
+        }
+        
+    } catch (error) {
+        console.error('═'.repeat(70));
+        console.error('❌ EXPORT FAILED');
+        console.error('═'.repeat(70));
+        console.error('Error:', error.message);
+        
+        showManualInstructions(settings);
+        throw error;
+    }
+}
+
+/**
+ * Perform single export for current timeframe
+ */
+async function performSingleExport(settings, timeframe = null) {
     console.log('🔍 Finding "Symbol Search" button [#header-toolbar-quick-search]...');
     
     // Use the exact ID you found!
     const symbolButton = document.querySelector('#header-toolbar-quick-search');
     
     if (!symbolButton) {
-      throw new Error('Could not find the main "Symbol Search" button [#header-toolbar-quick-search].');
+        throw new Error('Could not find the main "Symbol Search" button [#header-toolbar-quick-search].');
     }
     
     console.log('✅ Found "Symbol Search" button, clicking to open menu...');
@@ -197,12 +357,11 @@ async function exportData(settings) {
     await sleep(1500); // Wait for search menu to open
 
     // STEP 2: Find the "Export chart data..." item
-    // This calls the *next* function we are replacing.
     console.log('🔍 Looking for "Export chart data..." [#ExportChartData]...');
     const exportMenuItem = await findExportMenuItem(); 
     
     if (!exportMenuItem) {
-      throw new Error('Found search menu, but could not find "Export chart data..." [#ExportChartData] inside it.');
+        throw new Error('Found search menu, but could not find "Export chart data..." [#ExportChartData] inside it.');
     }
 
     console.log('✅ Found "Export chart data" menu item, clicking...');
@@ -213,33 +372,49 @@ async function exportData(settings) {
     const exportDialog = document.querySelector('[data-name="chart-export-dialog"]');
     
     if (!exportDialog) {
-      throw new Error('Export dialog [data-name="chart-export-dialog"] did not appear.');
+        throw new Error('Export dialog [data-name="chart-export-dialog"] did not appear.');
     }
     
     console.log('✅ Export dialog opened!');
     await sleep(500);
 
-    // STEP 4: Configure the dialog (this function is already fixed)
+    // STEP 4: Configure the dialog
     console.log('⚙️ Configuring dialog (setting ISO time, clicking Export)...');
-    await configureExportDialog(); // This finds [#time-format-select] and [data-name="submit-button"]
+    const dialogConfigured = await configureExportDialog();
     
-    console.log('═'.repeat(70));
-    console.log('✅ EXPORT BUTTON CLICKED');
-    console.log('💾 background.js will handle download automatically');
-    console.log('═'.repeat(70));
-    
-    return true;
-    
-  } catch (error) {
-    console.error('═'.repeat(70));
-    console.error('❌ EXPORT FAILED');
-    console.error('═'.repeat(70));
-    console.error('Error:', error.message);
-    
-    showManualInstructions(settings);
-    throw error;
-  }
+    if (dialogConfigured) {
+        console.log('═'.repeat(70));
+        console.log('✅ EXPORT BUTTON CLICKED');
+        if (timeframe) {
+            console.log(`⏰ Timeframe: ${timeframe}`);
+        }
+        console.log('💾 background.js will handle download automatically');
+        console.log('═'.repeat(70));
+        return true;
+    } else {
+        console.log('❌ Failed to configure export dialog');
+        return false;
+    }
 }
+
+/**
+ * Find "Export chart data..." menu item
+ */
+async function findExportMenuItem() {
+  console.log('🔍 Searching for export menu item using [#ExportChartData]...');
+  
+  // This is the stable selector from your inspector
+  const exportItem = document.querySelector('#ExportChartData');
+  
+  if (exportItem) {
+    console.log('✅ Found export item via stable ID selector!');
+    return exportItem;
+  }
+  
+  console.log('❌ Export menu item [#ExportChartData] not found.');
+  return null;
+}
+
 /**
  * Configure the export dialog and click Export button
  */
@@ -248,13 +423,12 @@ async function configureExportDialog() {
   
   await sleep(800);
   
-  // **UPDATED: Use EXACT selectors from DOM inspection screenshots**
   console.log('🎯 Looking for export dialog using exact TradingView structure...');
   
-  const dialog = document.querySelector('[data-name="chart-export-dialog"]') ||  // EXACT match from screenshots
-                 document.querySelector('div[role="dialog"][aria-labelledby*="title"]') ||  // Specific dialog pattern
-                 document.querySelector('.wrapper-bSQMhzr') ||  // Specific wrapper class from screenshots
-                 document.querySelector('[role="dialog"]') ||  // Generic dialog fallback
+  const dialog = document.querySelector('[data-name="chart-export-dialog"]') ||
+                 document.querySelector('div[role="dialog"][aria-labelledby*="title"]') ||
+                 document.querySelector('.wrapper-bSQMhzr') ||
+                 document.querySelector('[role="dialog"]') ||
                  document.querySelector('.dialog') ||
                  document.querySelector('[class*="dialog"]') ||
                  Array.from(document.querySelectorAll('div')).find(el => 
@@ -263,19 +437,6 @@ async function configureExportDialog() {
   
   if (!dialog) {
     console.warn('⚠️ Export dialog not found with any selector');
-    console.log(' Debugging: Checking what dialogs exist...');
-    
-    // Debug: Show all dialog-like elements
-    const allDialogs = document.querySelectorAll('[role="dialog"], .dialog, [class*="dialog"], [data-name*="dialog"]');
-    console.log(`   Found ${allDialogs.length} dialog-like elements:`);
-    allDialogs.forEach((d, i) => {
-      const className = d.className?.toString() || 'no-class';
-      const dataName = d.getAttribute('data-name') || 'no-data-name';
-      const text = d.textContent?.substring(0, 50) || '';
-      console.log(`     ${i+1}. ${d.tagName}.${className} [data-name="${dataName}"] - "${text}"`);
-    });
-    
-    console.log('💡 Looking for Export button anywhere on page...');
     return await clickExportButtonGlobal();
   }
   
@@ -284,32 +445,22 @@ async function configureExportDialog() {
   console.log(`   Class: ${dialog.className}`);
   console.log(`   Text preview: ${dialog.textContent?.substring(0, 100)}`);
 
-  // =================================================================
-  // **NEW FIX:** Call the ISO time selector *before* clicking export
+  // Select ISO time format before clicking export
   await selectISOTimeFormat(dialog);
-  await sleep(300); // Give it time to register
-  // =================================================================
+  await sleep(300);
   
-  // **SIMPLE: Just find and click Export button**
+  // Find and click Export button
   console.log('🎯 Looking for Export button...');
   let exportButton = dialog.querySelector('[data-name="submit-button"]');
   
   if (exportButton) {
     console.log('✅ Found Export button via EXACT data-name selector!');
-    console.log('   Button details:', {
-      tagName: exportButton.tagName,
-      className: exportButton.className,
-      dataName: exportButton.getAttribute('data-name'),
-      textContent: exportButton.textContent?.trim()
-    });
-    
     exportButton.click();
     await showSuccessMessage();
     return true;
   }
   
-  // **STRATEGY 2: Look for submitButton class from screenshots**
-  console.log('🎯 Strategy 2: Looking for submitButton class...');
+  // Additional strategies for finding export button...
   exportButton = dialog.querySelector('.submitButton-PhMf7PhQ') ||
                  dialog.querySelector('[class*="submitButton"]');
   
@@ -320,8 +471,6 @@ async function configureExportDialog() {
     return true;
   }
   
-  // **STRATEGY 3: Look for content-D4RPB3ZC span from screenshots**
-  console.log('🎯 Strategy 3: Looking for Export span with exact class...');
   const exportSpan = dialog.querySelector('span.content-D4RPB3ZC');
   if (exportSpan && exportSpan.textContent?.includes('Export')) {
     const button = exportSpan.closest('button, [role="button"], [data-name*="submit"], [tabindex]');
@@ -333,34 +482,22 @@ async function configureExportDialog() {
     }
   }
   
-  // Strategy 2: Look for span with "Export" text (based on captured HTML)
+  // Additional fallback strategies...
   const exportSpans = Array.from(dialog.querySelectorAll('span')).filter(span => {
     const text = span.textContent?.trim();
     return text === 'Export' || text === 'Export...' || text === 'Export ';
   });
   
-  console.log(`Found ${exportSpans.length} export spans in dialog`);
-  
   for (const span of exportSpans) {
-    console.log(`   Checking span: "${span.textContent?.trim()}" with class: ${span.className}`);
-    
-    // Find the clickable parent button
     const button = span.closest('button, [role="button"], [data-name*="submit"], [tabindex]');
     if (button) {
       console.log('✅ Found Export button via span → button hierarchy, clicking...');
-      console.log('   Button details:', {
-        tagName: button.tagName,
-        className: button.className,
-        dataName: button.getAttribute('data-name'),
-        role: button.getAttribute('role')
-      });
       button.click();
       await showSuccessMessage();
       return true;
     }
   }
   
-  // Strategy 3: Look for buttons with Export text content
   const buttons = dialog.querySelectorAll('button, [role="button"]');
   console.log(`Found ${buttons.length} buttons in dialog`);
   
@@ -421,14 +558,12 @@ async function configureExportDialog() {
 }
 
 /**
- * Select ISO time format in the export dialog dropdown (FINAL FIX 2)
- * Uses the native .click() method instead of the complex clickElement() simulation.
+ * Select ISO time format in the export dialog dropdown
  */
 async function selectISOTimeFormat(dialog) {
-  console.log('🕐 Attempting to select ISO time format (using native .click())...');
+  console.log('🕐 Attempting to select ISO time format...');
   
   try {
-    // 1. Find the dropdown button
     const timeFormatDropdown = dialog.querySelector('#time-format-select');
     
     if (!timeFormatDropdown) {
@@ -436,30 +571,21 @@ async function selectISOTimeFormat(dialog) {
       return false;
     }
 
-    console.log('🖱️ Opening time format dropdown (native click)...');
-    
-    // --- THIS IS THE FIX ---
-    // Instead of await clickElement(timeFormatDropdown), we use the direct .click()
+    console.log('🖱️ Opening time format dropdown...');
     timeFormatDropdown.click();
-    // -----------------------
+    await sleep(500);
 
-    // 2. Wait for the option to appear (this function is smart and unchanged)
     const isoOption = await waitForElement('#time-format-iso');
-
-    // 3. Click the "ISO time" option
+    
     if (isoOption) {
-      console.log('✅ Found "ISO time" option [#time-format-iso], selecting (native click)...');
-      
-      // --- ALSO APPLYING THE FIX HERE ---
+      console.log('✅ Found "ISO time" option [#time-format-iso], selecting...');
       isoOption.click();
-      // ----------------------------------
-      
-      await sleep(200); // Brief pause to let it register
+      await sleep(200);
       console.log('✅ ISO time format selected successfully!');
       return true;
     } else {
       console.log('⚠️ "ISO time" option [#time-format-iso] not found in dropdown.');
-      timeFormatDropdown.click(); // Click again to close it
+      timeFormatDropdown.click(); // Close dropdown
       return false;
     }
     
@@ -469,14 +595,12 @@ async function selectISOTimeFormat(dialog) {
   }
 }
 
-
 // ============================================================================
-// HELPER & DEBUGGING FUNCTIONS (No changes needed below)
+// HELPER & DEBUGGING FUNCTIONS (COMPLETE)
 // ============================================================================
 
 /**
  * Show success message after export
- * background.js handles all download automation via chrome.downloads API
  */
 async function showSuccessMessage() {
   await sleep(1000);
@@ -487,13 +611,9 @@ async function showSuccessMessage() {
   console.log('═'.repeat(70));
   console.log('💾 Download handled by background.js - no dialog automation needed');
   console.log('📁 File saved automatically to Downloads folder');
-  console.log('📊 Check Downloads for: chart_export_{SYMBOL}_{TIMEFRAME}_{TIMESTAMP}.csv');
+  console.log('📊 Check Downloads for: SYMBOL_TIMEFRAME_2025-11-03T14-30-25.csv');
   console.log('═'.repeat(70));
   console.log('');
-  
-  // NO SAVE DIALOG AUTOMATION NEEDED
-  // background.js intercepts download via chrome.downloads.onDeterminingFilename
-  // and saves directly with smart filename - no "Save As" dialog appears!
 }
 
 /**
@@ -510,7 +630,7 @@ function showExportSuccessMessage(result) {
   console.log('🔔 Check for browser notification');
   console.log('');
   console.log('📂 Expected location: Downloads/TradingView_Data/');
-  console.log('📄 Filename format: chart_export_SYMBOL_2025-11-03_TIME.csv');
+  console.log('📄 Filename format: SYMBOL_TIMEFRAME_2025-11-03_TIME.csv');
   console.log('═'.repeat(70));
   console.log('');
 }
@@ -535,7 +655,6 @@ function showExportFallbackMessage(error) {
   console.log('═'.repeat(70));
   console.log('');
 }
-
 
 /**
  * Show manual instructions (fallback)
@@ -568,6 +687,7 @@ Settings being used:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • Symbol: ${settings.symbol}
 • Exchange: ${settings.exchange}
+• Timeframes: ${settings.timeframes ? settings.timeframes.join(', ') : 'Current timeframe'}
 • Data: Visible chart range (automatic)
 
 The extension will continue trying to automate after you
@@ -648,11 +768,10 @@ function extractSymbolFromPage() {
   
   // Strategy 3: Check page title (most reliable for TradingView)
   const title = document.title;
-  // Match patterns like "MNQ1! Chart" or "CME_MINI:MNQ2025H - TradingView"
   const titleMatches = [
-    title.match(/^([A-Z0-9_:!]+)\s+(?:Chart|—|-)/i),  // "MNQ1! Chart"
-    title.match(/^([A-Z0-9_:!]+)\s*—\s*TradingView/i), // "MNQ1! — TradingView"
-    title.match(/([A-Z0-9_]+:[A-Z0-9!]+)/i)            // "CME_MINI:MNQ1!"
+    title.match(/^([A-Z0-9_:!]+)\s+(?:Chart|—|-)/i),
+    title.match(/^([A-Z0-9_:!]+)\s*—\s*TradingView/i),
+    title.match(/([A-Z0-9_]+:[A-Z0-9!]+)/i)
   ];
   
   for (const match of titleMatches) {
@@ -662,22 +781,21 @@ function extractSymbolFromPage() {
     }
   }
   
-  // Strategy 4: Look for symbol in chart header (current TradingView structure)
+  // Strategy 4: Look for symbol in chart header
   const headerSelectors = [
-    '[data-name="legend-source-title"]',              // Main chart title
-    '[class*="chartTitle"]',                          // Chart title container
-    '[class*="symbol-"]',                             // Symbol display
-    '[data-role="button"][class*="symbol"]',          // Symbol button
-    '.chart-container [class*="symbol"]',             // Chart symbol
-    '.tv-symbol-header',                              // Symbol header
-    '.js-button-text'                                 // Button text (may contain symbol)
+    '[data-name="legend-source-title"]',
+    '[class*="chartTitle"]',
+    '[class*="symbol-"]',
+    '[data-role="button"][class*="symbol"]',
+    '.chart-container [class*="symbol"]',
+    '.tv-symbol-header',
+    '.js-button-text'
   ];
   
   for (const selector of headerSelectors) {
     const element = document.querySelector(selector);
     if (element) {
       const text = element.textContent?.trim();
-      // Match symbol patterns: MNQ1!, CME_MINI:MNQ1!, ES1!, etc.
       if (text && /^[A-Z0-9_]+:?[A-Z0-9!]+$/.test(text)) {
         console.log('✅ Found symbol via header selector:', text);
         return text;
@@ -759,12 +877,146 @@ async function clickElement(element) {
   console.log(`✅ Clicked element successfully`);
 }
 
+/**
+ * Smart helper to wait for an element to appear in the DOM
+ */
+function waitForElement(selector, timeout = 3000) {
+  console.log(`🕒 Waiting for selector: ${selector}`);
+  return new Promise((resolve, reject) => {
+    const startTime = Date.now();
+    
+    const interval = setInterval(() => {
+      const el = document.querySelector(selector);
+      if (el) {
+        clearInterval(interval);
+        console.log(`✅ Found element: ${selector}`);
+        resolve(el);
+      }
+      
+      if (Date.now() - startTime > timeout) {
+        clearInterval(interval);
+        console.error(`❌ Timed out waiting for: ${selector}`);
+        reject(new Error(`Timed out waiting for element: ${selector}`));
+      }
+    }, 100);
+  });
+}
 
-// ============================================================================
-// ALL FUNCTIONS BELOW THIS LINE ARE OBSOLETE OR HELPERS
-// FOR THE UI AUTOMATION
-// ============================================================================
+/**
+ * Try to find and click Export button globally (fallback)
+ */
+async function clickExportButtonGlobal() {
+  console.log('🔍 Searching for Export button globally with EXACT TradingView selectors...');
+  
+  // Strategy 1: Use EXACT button selector
+  const exactSubmitBtn = document.querySelector('[data-name="submit-button"]');
+  if (exactSubmitBtn) {
+    console.log('✅ Found Export button via EXACT data-name selector!');
+    exactSubmitBtn.click();
+    await showSuccessMessage();
+    return true;
+  }
+  
+  // Strategy 2: Look for submitButton class
+  const submitButtonClass = document.querySelector('.submitButton-PhMf7PhQ') ||
+                            document.querySelector('[class*="submitButton"]');
+  if (submitButtonClass) {
+    console.log('✅ Found Export button via submitButton class!');
+    submitButtonClass.click();
+    await showSuccessMessage();
+    return true;
+  }
+  
+  // Strategy 3: Look for content-D4RPB3ZC span
+  const exactExportSpan = document.querySelector('span.content-D4RPB3ZC');
+  if (exactExportSpan && exactExportSpan.textContent?.trim() === 'Export') {
+    const button = exactExportSpan.closest('button, [role="button"], [data-name*="submit"], [tabindex]');
+    if (button) {
+      console.log('✅ Found Export button via EXACT content span class!');
+      button.click();
+      await showSuccessMessage();
+      return true;
+    }
+  }
+  
+  // Strategy 4: Look within export dialog specifically
+  const exportDialog = document.querySelector('[data-name="chart-export-dialog"]') ||
+                       document.querySelector('.wrapper-bSQMhzr');
+  
+  if (exportDialog) {
+    console.log('   Found export dialog, searching for buttons inside...');
+    
+    const dialogButtons = exportDialog.querySelectorAll('button, [role="button"]');
+    console.log(`   Found ${dialogButtons.length} buttons in dialog:`);
+    
+    for (let i = 0; i < dialogButtons.length; i++) {
+      const btn = dialogButtons[i];
+      const btnText = btn.textContent?.trim() || '';
+      const btnClass = btn.className?.toString() || '';
+      const btnDataName = btn.getAttribute('data-name') || '';
+      
+      console.log(`     ${i+1}. "${btnText}" (class: ${btnClass}, data-name: ${btnDataName})`);
+      
+      if (btnText.toLowerCase().includes('export') || 
+          btnDataName.includes('submit') ||
+          btnClass.includes('submit')) {
+        console.log(`   ✅ Found Export button in dialog (button ${i+1})!`);
+        btn.click();
+        await showSuccessMessage();
+        return true;
+      }
+    }
+  }
+  
+  // Strategy 5: Original button text approach
+  const allButtons = document.querySelectorAll('button');
+  for (const btn of allButtons) {
+    if ((btn.textContent.trim().toLowerCase() === 'export' || 
+         btn.textContent.trim().toLowerCase() === 'export...') &&
+        btn.offsetParent !== null) {
+      console.log('✅ Found visible Export button via text, clicking...');
+      btn.click();
+      await showSuccessMessage();
+      return true;
+    }
+  }
+  
+  console.log('❌ Could not find Export button');
+  return false;
+}
 
+/**
+ * Check if an element is clickable
+ */
+function isClickableElement(element) {
+  if (!element) return false;
+  
+  // Check tag names
+  if (['BUTTON', 'A', 'INPUT'].includes(element.tagName)) {
+    return true;
+  }
+  
+  // Check attributes that indicate clickability
+  if (element.getAttribute('role') === 'menuitem' ||
+      element.getAttribute('role') === 'button' ||
+      element.getAttribute('role') === 'row' ||
+      element.onclick ||
+      element.getAttribute('tabindex') !== null ||
+      element.style.cursor === 'pointer') {
+    return true;
+  }
+  
+  // Check classes that often indicate clickable elements
+  const clickableClasses = ['clickable', 'button', 'menu-item', 'item'];
+  const className = element.className.toLowerCase();
+  for (const cls of clickableClasses) {
+    if (className.includes(cls)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
 
 /**
  * Simulate human-like clicking with micro-movements
@@ -908,181 +1160,6 @@ async function simulateRightClick(element) {
   console.log('✅ Human-like right-click dispatched at', {x: Math.round(x), y: Math.round(y)});
 }
 
-
-/**
- * Smart helper to wait for an element to appear in the DOM
- */
-function waitForElement(selector, timeout = 3000) {
-  console.log(`🕒 Waiting for selector: ${selector}`);
-  return new Promise((resolve, reject) => {
-    const startTime = Date.now();
-    
-    const interval = setInterval(() => {
-      const el = document.querySelector(selector);
-      if (el) {
-        clearInterval(interval);
-        console.log(`✅ Found element: ${selector}`);
-        resolve(el);
-      }
-      
-      if (Date.now() - startTime > timeout) {
-        clearInterval(interval);
-        console.error(`❌ Timed out waiting for: ${selector}`);
-        reject(new Error(`Timed out waiting for element: ${selector}`));
-      }
-    }, 100); // Check every 100ms
-  });
-}
-/**
- * Find "Export chart data..." menu item (FINAL, SIMPLIFIED)
- * Uses the exact ID="#ExportChartData" found in your screenshots.
- */
-async function findExportMenuItem() {
-  console.log('🔍 Searching for export menu item using [#ExportChartData]...');
-  
-  // This is the stable selector from your inspector
-  const exportItem = document.querySelector('#ExportChartData');
-  
-  if (exportItem) {
-    console.log('✅ Found export item via stable ID selector!');
-    return exportItem;
-  }
-  
-  console.log('❌ Export menu item [#ExportChartData] not found.');
-  return null;
-}
-
-/**
- * Check if an element is clickable
- */
-function isClickableElement(element) {
-  if (!element) return false;
-  
-  // Check tag names
-  if (['BUTTON', 'A', 'INPUT'].includes(element.tagName)) {
-    return true;
-  }
-  
-  // Check attributes that indicate clickability
-  if (element.getAttribute('role') === 'menuitem' ||
-      element.getAttribute('role') === 'button' ||
-      element.getAttribute('role') === 'row' ||
-      element.onclick ||
-      element.getAttribute('tabindex') !== null ||
-      element.style.cursor === 'pointer') {
-    return true;
-  }
-  
-  // Check classes that often indicate clickable elements
-  const clickableClasses = ['clickable', 'button', 'menu-item', 'item'];
-  const className = element.className.toLowerCase();
-  for (const cls of clickableClasses) {
-    if (className.includes(cls)) {
-      return true;
-    }
-  }
-  
-  return false;
-}
-
-/**
- * Try to find and click Export button globally (fallback) (UPDATED with monitored data)
- */
-async function clickExportButtonGlobal() {
-  console.log('🔍 Searching for Export button globally with EXACT TradingView selectors...');
-  
-  // **STRATEGY 1: Use EXACT button selector from DOM inspection**
-  console.log('🎯 Strategy 1: Looking for exact data-name="submit-button"...');
-  const exactSubmitBtn = document.querySelector('[data-name="submit-button"]');
-  if (exactSubmitBtn) {
-    console.log('✅ Found Export button via EXACT data-name selector!');
-    console.log('   Button text:', exactSubmitBtn.textContent?.trim());
-    console.log('   Button class:', exactSubmitBtn.className);
-    
-    exactSubmitBtn.click();
-    await showSuccessMessage();
-    return true;
-  }
-  
-  // **STRATEGY 2: Look for submitButton class from DOM inspection**
-  console.log('🎯 Strategy 2: Looking for submitButton-PhMf7PhQ class...');
-  const submitButtonClass = document.querySelector('.submitButton-PhMf7PhQ') ||
-                            document.querySelector('[class*="submitButton"]');
-  if (submitButtonClass) {
-    console.log('✅ Found Export button via submitButton class!');
-    submitButtonClass.click();
-    await showSuccessMessage();
-    return true;
-  }
-  
-  // **STRATEGY 3: Look for content-D4RPB3ZC span from DOM inspection**
-  console.log('🎯 Strategy 3: Looking for exact content-D4RPB3ZC span...');
-  const exactExportSpan = document.querySelector('span.content-D4RPB3ZC');
-  if (exactExportSpan && exactExportSpan.textContent?.trim() === 'Export') {
-    const button = exactExportSpan.closest('button, [role="button"], [data-name*="submit"], [tabindex]');
-    if (button) {
-      console.log('✅ Found Export button via EXACT content span class!');
-      console.log('   Span text:', exactExportSpan.textContent);
-      console.log('   Button details:', {
-        tagName: button.tagName,
-        className: button.className,
-        dataName: button.getAttribute('data-name')
-      });
-      
-      button.click();
-      await showSuccessMessage();
-      return true;
-    }
-  }
-  
-  // **STRATEGY 4: Look within export dialog specifically**
-  console.log('🎯 Strategy 4: Looking within export dialog container...');
-  const exportDialog = document.querySelector('[data-name="chart-export-dialog"]') ||
-                       document.querySelector('.wrapper-bSQMhzr');
-  
-  if (exportDialog) {
-    console.log('   Found export dialog, searching for buttons inside...');
-    
-    // Look for any button with "Export" text inside the dialog
-    const dialogButtons = exportDialog.querySelectorAll('button, [role="button"]');
-    console.log(`   Found ${dialogButtons.length} buttons in dialog:`);
-    
-    for (let i = 0; i < dialogButtons.length; i++) {
-      const btn = dialogButtons[i];
-      const btnText = btn.textContent?.trim() || '';
-      const btnClass = btn.className?.toString() || '';
-      const btnDataName = btn.getAttribute('data-name') || '';
-      
-      console.log(`     ${i+1}. "${btnText}" (class: ${btnClass}, data-name: ${btnDataName})`);
-      
-      if (btnText.toLowerCase().includes('export') || 
-          btnDataName.includes('submit') ||
-          btnClass.includes('submit')) {
-        console.log(`   ✅ Found Export button in dialog (button ${i+1})!`);
-        btn.click();
-        await showSuccessMessage();
-        return true;
-      }
-    }
-  }
-  
-  // Strategy 4: Original button text approach
-  const allButtons = document.querySelectorAll('button');
-  for (const btn of allButtons) {
-    if ((btn.textContent.trim().toLowerCase() === 'export' || 
-         btn.textContent.trim().toLowerCase() === 'export...') &&
-        btn.offsetParent !== null) {
-      console.log('✅ Found visible Export button via text, clicking...');
-      btn.click();
-      await showSuccessMessage();
-      return true;
-    }
-  }
-  
-  console.log('❌ Could not find Export button');
-  return false;
-}
-
 /**
  * Debug function to log current page state
  */
@@ -1139,13 +1216,8 @@ function debugPageState() {
   console.log('═'.repeat(50));
 }
 
-// ============================================================================
-// DELETED: All save dialog automation functions removed
-// Reason: background.js uses chrome.downloads.onDeterminingFilename API
-// ============================================================================
-
-
 // Ready!
-console.log('✅ TradingView Exporter: Enhanced with Downloads API');
+console.log('✅ TradingView Exporter: Enhanced with CORRECTED Timeframe Selection & Downloads API');
 console.log('💡 Click extension icon and press "Export Visible Data" to start');
-console.log(' Downloads API will automatically manage files with smart names');
+console.log('⏰ Multiple timeframe export now supported with CORRECTED button indices!');
+console.log('📊 Timeframes available: Tick, 1s, 1m, 5m, 15m, 30m, 1h, 2h, 3h, 4h, Daily, Weekly');

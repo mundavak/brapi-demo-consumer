@@ -52,7 +52,7 @@ def detect_timeframe_from_data(csv_path, max_samples=50):
         Timeframe string ('5m', '15m', '1h', '4h', '1d') or None
     """
     try:
-        with open(csv_path, "r") as f:
+        with open(csv_path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
 
             # Find time column (case-insensitive)
@@ -97,13 +97,13 @@ def detect_timeframe_from_data(csv_path, max_samples=50):
             counter = Counter(diffs)
             most_common_diff = counter.most_common(1)[0][0]
 
-            # Map to timeframe
+            # Map to timeframe (only valid database values)
             timeframe_map = {
                 1: "1m",
                 5: "5m",
                 15: "15m",
-                30: "30m",
                 60: "1h",
+                120: "2h",
                 240: "4h",
                 1440: "1d",
             }
@@ -113,9 +113,13 @@ def detect_timeframe_from_data(csv_path, max_samples=50):
                 timeframe_map.keys(), key=lambda x: abs(x - most_common_diff)
             )
 
-            if abs(closest_tf - most_common_diff) > 2:  # Tolerance of 2 minutes
-                logger.warning(f"Unusual interval detected: {most_common_diff} minutes")
-                return f"{int(most_common_diff)}m"
+            # Check if interval matches an allowed timeframe (with tolerance)
+            if abs(closest_tf - most_common_diff) > 5:  # Tolerance of 5 minutes
+                logger.error(
+                    f"Unsupported interval detected: {most_common_diff} minutes. "
+                    f"Database only allows: 1m, 5m, 15m, 1h (60m), 2h (120m), 4h (240m), 1d (1440m)"
+                )
+                return None
 
             timeframe = timeframe_map[closest_tf]
             logger.info(
@@ -198,7 +202,7 @@ def import_csv_file(filepath, conn, cursor):
         logger.warning(f"Could not check for duplicates in {filename}: {e}")
 
     try:
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
 
             # Find column names (case-insensitive)
@@ -210,13 +214,31 @@ def import_csv_file(filepath, conn, cursor):
             close_col = fieldnames_lower.get("close")
             volume_col = fieldnames_lower.get("volume")
 
+            # Check for VWAP columns (with exact match for special naming)
+            vwap_930_col = None
+            vwap_daily_col = None
+            for col_name in reader.fieldnames:
+                if "9:30" in col_name and "VWAP" in col_name.upper():
+                    vwap_930_col = col_name
+                elif "Daily" in col_name and "VWAP" in col_name.upper():
+                    vwap_daily_col = col_name
+
+            has_vwap = vwap_930_col or vwap_daily_col
+            if has_vwap:
+                logger.info(
+                    f"VWAP columns found: 9:30={vwap_930_col}, Daily={vwap_daily_col}"
+                )
+
             if not all([time_col, open_col, high_col, low_col, close_col]):
                 logger.error(f"Missing required columns in {filename}")
                 return 0, None
 
             batch = []
+            vwap_batch = []
             batch_size = 1000
             row_count = 0
+            vwap_count = 0
+            session_id = f"auto_import_{datetime.now().strftime('%Y%m%d_%H%M')}"
 
             for row in reader:
                 try:
@@ -240,9 +262,43 @@ def import_csv_file(filepath, conn, cursor):
                             low_price,
                             close_price,
                             volume,
-                            f"auto_import_{datetime.now().strftime('%Y%m%d_%H%M')}",
+                            session_id,
                         )
                     )
+
+                    # Parse VWAP values if columns exist
+                    if has_vwap:
+                        vwap_930 = None
+                        vwap_daily = None
+
+                        if vwap_930_col:
+                            val = row.get(vwap_930_col, "").strip()
+                            if val and val.lower() not in ["", "nan", "null"]:
+                                try:
+                                    vwap_930 = float(val)
+                                except ValueError:
+                                    pass
+
+                        if vwap_daily_col:
+                            val = row.get(vwap_daily_col, "").strip()
+                            if val and val.lower() not in ["", "nan", "null"]:
+                                try:
+                                    vwap_daily = float(val)
+                                except ValueError:
+                                    pass
+
+                        # Only insert if at least one VWAP value exists
+                        if vwap_930 is not None or vwap_daily is not None:
+                            vwap_batch.append(
+                                (
+                                    timestamp,
+                                    "MNQ",
+                                    timeframe,
+                                    vwap_930,
+                                    vwap_daily,
+                                    session_id,
+                                )
+                            )
 
                     # Insert batch when full
                     if len(batch) >= batch_size:
@@ -251,6 +307,14 @@ def import_csv_file(filepath, conn, cursor):
                         conn.commit()
                         row_count += affected_rows
                         batch = []
+
+                        # Insert VWAP batch if exists
+                        if vwap_batch:
+                            insert_vwap_batch(cursor, vwap_batch)
+                            vwap_affected = cursor.rowcount
+                            conn.commit()
+                            vwap_count += vwap_affected
+                            vwap_batch = []
 
                 except (ValueError, KeyError) as e:
                     logger.warning(f"Skipping invalid row in {filename}: {e}")
@@ -263,8 +327,17 @@ def import_csv_file(filepath, conn, cursor):
                 conn.commit()
                 row_count += affected_rows
 
+            # Insert remaining VWAP rows
+            if vwap_batch:
+                insert_vwap_batch(cursor, vwap_batch)
+                vwap_affected = cursor.rowcount
+                conn.commit()
+                vwap_count += vwap_affected
+
             if row_count > 0:
-                logger.info(f"✓ Imported {row_count} new rows from {filename}")
+                logger.info(f"✓ Imported {row_count} new candles from {filename}")
+                if vwap_count > 0:
+                    logger.info(f"✓ Imported {vwap_count} VWAP records from {filename}")
             else:
                 logger.info(f"○ No new data in {filename} (all candles already exist)")
             return row_count, timeframe
@@ -282,7 +355,20 @@ def insert_batch(cursor, batch):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         ON CONFLICT (timestamp, symbol, timeframe) 
         DO NOTHING
-            volume = EXCLUDED.volume,
+    """
+    cursor.executemany(sql, batch)
+
+
+def insert_vwap_batch(cursor, batch):
+    """Insert batch of VWAP records with conflict resolution."""
+    sql = """
+        INSERT INTO vwap_levels 
+        (timestamp, symbol, timeframe, vwap_930am, vwap_daily, session_id)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        ON CONFLICT (timestamp, symbol, timeframe) 
+        DO UPDATE SET
+            vwap_930am = COALESCE(EXCLUDED.vwap_930am, vwap_levels.vwap_930am),
+            vwap_daily = COALESCE(EXCLUDED.vwap_daily, vwap_levels.vwap_daily),
             session_id = EXCLUDED.session_id
     """
     cursor.executemany(sql, batch)
@@ -346,16 +432,22 @@ def main():
         timeframes_imported = set()
 
         for filepath in csv_files:
-            rows, timeframe = import_csv_file(filepath, conn, cursor)
+            try:
+                rows, timeframe = import_csv_file(filepath, conn, cursor)
 
-            # Track for deletion if import was attempted (even if 0 new rows)
-            if timeframe:
-                files_to_delete.append(filepath)
-                timeframes_imported.add(timeframe)
+                # Track for deletion if import was attempted (even if 0 new rows)
+                if timeframe:
+                    files_to_delete.append(filepath)
+                    timeframes_imported.add(timeframe)
 
-            if rows > 0:
-                total_rows += rows
-                successful_imports += 1
+                if rows > 0:
+                    total_rows += rows
+                    successful_imports += 1
+            except Exception as e:
+                logger.error(f"Failed to import {filepath.name}: {e}")
+                # Rollback transaction to recover from error
+                conn.rollback()
+                continue
 
         # Delete successfully processed CSV files
         deleted_count = 0

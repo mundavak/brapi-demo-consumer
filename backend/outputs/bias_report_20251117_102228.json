@@ -1,0 +1,254 @@
+{
+  "timestamp": "2025-11-17T10:22:28.394444-05:00",
+  "analysis_period": {
+    "start": "2025-11-16T20:45:00-05:00",
+    "end": "2025-11-17T10:22:28.394444-05:00"
+  },
+  "overnight_structure": {
+    "overnight_low": 24955.25,
+    "overnight_high": 25362.0,
+    "session_open": 25223.5,
+    "current_price": 25138.0,
+    "avg_price": 25227.04938271605,
+    "range_size": 406.75,
+    "range_position": 44.929317762753534,
+    "volatility": 81.13368807857498
+  },
+  "volume_profile": [
+    {
+      "price": 25240.0,
+      "volume": 325653,
+      "touches": 305541
+    },
+    {
+      "price": 25210.0,
+      "volume": 309269,
+      "touches": 286668
+    },
+    {
+      "price": 25220.0,
+      "volume": 302710,
+      "touches": 281418
+    },
+    {
+      "price": 25250.0,
+      "volume": 292369,
+      "touches": 276272
+    },
+    {
+      "price": 25270.0,
+      "volume": 240380,
+      "touches": 223118
+    }
+  ],
+  "absorption_zones": [
+    {
+      "price": 25202.0,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 155,
+      "significance": 0.8357777777777777,
+      "count": 2,
+      "last_seen": "2025-11-17T09:47:04.659912-05:00"
+    },
+    {
+      "price": 25169.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 143,
+      "significance": 0.8754736842105264,
+      "count": 2,
+      "last_seen": "2025-11-17T09:39:39.696526-05:00"
+    },
+    {
+      "price": 25211.0,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 135,
+      "significance": 0.8014782608695651,
+      "count": 3,
+      "last_seen": "2025-11-17T10:00:11.746883-05:00"
+    },
+    {
+      "price": 25058.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 133,
+      "significance": 0.822,
+      "count": 2,
+      "last_seen": "2025-11-17T09:32:21.947512-05:00"
+    },
+    {
+      "price": 25087.25,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 131,
+      "significance": 0.7639999999999999,
+      "count": 3,
+      "last_seen": "2025-11-17T10:08:40.445066-05:00"
+    },
+    {
+      "price": 25178.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 116,
+      "significance": 0.752,
+      "count": 4,
+      "last_seen": "2025-11-17T10:01:44.345984-05:00"
+    },
+    {
+      "price": 25087.5,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 107,
+      "significance": 0.94,
+      "count": 1,
+      "last_seen": "2025-11-17T10:08:40.445066-05:00"
+    },
+    {
+      "price": 25146.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 100,
+      "significance": 0.7493333333333334,
+      "count": 3,
+      "last_seen": "2025-11-17T10:05:42.145104-05:00"
+    },
+    {
+      "price": 25085.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 99,
+      "significance": 0.7855555555555556,
+      "count": 2,
+      "last_seen": "2025-11-17T10:20:56.455868-05:00"
+    },
+    {
+      "price": 25087.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 99,
+      "significance": 0.7799999999999999,
+      "count": 3,
+      "last_seen": "2025-11-17T10:19:10.453064-05:00"
+    }
+  ],
+  "iceberg_positions": [],
+  "stop_clusters": [
+    {
+      "price": 25200.0,
+      "side": "BUY",
+      "density": 164,
+      "confidence": 0.0,
+      "clusters": 122,
+      "last_seen": "2025-11-17T10:02:11.070842-05:00"
+    },
+    {
+      "price": 25100.0,
+      "side": "SELL",
+      "density": 154,
+      "confidence": 0.0,
+      "clusters": 116,
+      "last_seen": "2025-11-17T10:18:36.184796-05:00"
+    },
+    {
+      "price": 25200.0,
+      "side": "SELL",
+      "density": 126,
+      "confidence": 0.0,
+      "clusters": 99,
+      "last_seen": "2025-11-17T09:59:29.698883-05:00"
+    },
+    {
+      "price": 25150.0,
+      "side": "SELL",
+      "density": 113,
+      "confidence": 0.0,
+      "clusters": 98,
+      "last_seen": "2025-11-17T10:03:33.476008-05:00"
+    },
+    {
+      "price": 25060.0,
+      "side": "SELL",
+      "density": 96,
+      "confidence": 0.0,
+      "clusters": 75,
+      "last_seen": "2025-11-17T10:19:45.569738-05:00"
+    }
+  ],
+  "bias_assessment": {
+    "bias_score": 60,
+    "confidence_score": 30,
+    "bias_category": "BULLISH",
+    "factors": [
+      "Strong bullish absorption below (9 zones) (+20)",
+      "Buy stops below vulnerable to hunt (4 zones) (-10)"
+    ]
+  },
+  "key_levels": {
+    "support_levels": [
+      {
+        "price": 25091.75,
+        "type": "Absorption Support",
+        "strength": 84
+      },
+      {
+        "price": 25084.25,
+        "type": "Absorption Support",
+        "strength": 85
+      },
+      {
+        "price": 25058.75,
+        "type": "Absorption Support",
+        "strength": 82
+      },
+      {
+        "price": 24955.25,
+        "type": "Overnight Low",
+        "strength": 80
+      }
+    ],
+    "resistance_levels": [
+      {
+        "price": 25210.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25220.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25240.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25250.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25270.0,
+        "type": "Volume Node",
+        "strength": 60
+      }
+    ]
+  },
+  "trading_plan": {
+    "bias": "BULLISH",
+    "confidence": 30,
+    "current_price": 25138.0,
+    "recommendations": [
+      "Look for long opportunities on pullbacks",
+      "Entry on dip to $25,091.75 support",
+      "Target: $25,210.00 resistance",
+      "Stop loss below $25,091.75"
+    ],
+    "primary_direction": "LONG",
+    "entry_zone": "$25,091.75 - $25,138.00",
+    "target": "$25,210.00",
+    "stop": "Below $25,091.75"
+  }
+}

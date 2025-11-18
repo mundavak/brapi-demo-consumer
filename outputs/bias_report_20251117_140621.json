@@ -1,0 +1,391 @@
+{
+  "timestamp": "2025-11-17T14:06:21.239340-05:00",
+  "analysis_period": {
+    "start": "2025-11-16T20:45:00-05:00",
+    "end": "2025-11-17T14:06:21.239340-05:00",
+    "nine_thirty_cutoff": "2025-11-17T09:30:00-05:00"
+  },
+  "ict_context": {
+    "kill_zone": {
+      "name": "AFTER_HOURS",
+      "multiplier": 0.3,
+      "description": "After hours - Very low probability"
+    },
+    "power_of_three_phase": {
+      "phase": "DISTRIBUTION",
+      "confidence": 80,
+      "description": "Directional move in progress - Follow the trend"
+    }
+  },
+  "overnight_structure": {
+    "overnight_low": 24989.25,
+    "overnight_high": 25362.0,
+    "session_open": 25223.5,
+    "current_price": 24967.5,
+    "avg_price": 25231.13725490196,
+    "range_size": 372.75,
+    "range_position": -5.8350100603621735,
+    "volatility": 80.70538088787491,
+    "prev_day_low": 24626.0,
+    "prev_day_high": 25293.5
+  },
+  "vwap_analysis": {
+    "timestamp": "2025-11-17T13:30:00-05:00",
+    "current_price": 24967.5,
+    "vwap_930am": 25095.1411,
+    "vwap_daily": 25126.8679,
+    "diff_930am": -127.64110000000073,
+    "diff_daily": -159.3679000000011,
+    "pct_930am": -0.508628740087063,
+    "pct_daily": -0.6342529464247356,
+    "daily_bias": "BEARISH",
+    "recent_crosses": [
+      {
+        "timestamp": "2025-11-17T12:35:00-05:00",
+        "price": 25111.0,
+        "vwap": 25112.1037,
+        "type": "BEARISH_CROSS"
+      }
+    ]
+  },
+  "vwap_bands": {
+    "vwap": 25126.8679,
+    "std_dev": 95.00521039778693,
+    "+1sd": 25221.873110397788,
+    "+2sd": 25316.878320795575,
+    "+3sd": 25411.88353119336,
+    "-1sd": 25031.862689602214,
+    "-2sd": 24936.857479204427,
+    "-3sd": 24841.85226880664
+  },
+  "volume_profile": [
+    {
+      "price": 25150.0,
+      "volume": 697136,
+      "touches": 642187
+    },
+    {
+      "price": 25140.0,
+      "volume": 653602,
+      "touches": 601627
+    },
+    {
+      "price": 24980.0,
+      "volume": 498761,
+      "touches": 453167
+    },
+    {
+      "price": 25180.0,
+      "volume": 485112,
+      "touches": 445512
+    },
+    {
+      "price": 24970.0,
+      "volume": 482807,
+      "touches": 435776
+    }
+  ],
+  "absorption_zones": [
+    {
+      "price": 25090.0,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 245,
+      "significance": 0.7786666666666666,
+      "count": 9,
+      "last_seen": "2025-11-17T10:52:42.848080-05:00"
+    },
+    {
+      "price": 25090.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 237,
+      "significance": 0.765142857142857,
+      "count": 7,
+      "last_seen": "2025-11-17T11:32:24.194674-05:00"
+    },
+    {
+      "price": 25087.25,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 222,
+      "significance": 0.7457142857142858,
+      "count": 7,
+      "last_seen": "2025-11-17T10:52:42.848080-05:00"
+    },
+    {
+      "price": 25147.0,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 221,
+      "significance": 0.7826731707317073,
+      "count": 5,
+      "last_seen": "2025-11-17T12:20:33.505432-05:00"
+    },
+    {
+      "price": 25081.75,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 207,
+      "significance": 0.7405714285714285,
+      "count": 7,
+      "last_seen": "2025-11-17T10:57:10.950000-05:00"
+    },
+    {
+      "price": 25090.25,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 206,
+      "significance": 0.7605714285714286,
+      "count": 7,
+      "last_seen": "2025-11-17T10:52:42.848080-05:00"
+    },
+    {
+      "price": 24971.0,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 204,
+      "significance": 0.7399999999999999,
+      "count": 3,
+      "last_seen": "2025-11-17T13:39:26.450000-05:00"
+    },
+    {
+      "price": 25084.25,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 202,
+      "significance": 0.7658095238095238,
+      "count": 6,
+      "last_seen": "2025-11-17T10:57:10.950000-05:00"
+    },
+    {
+      "price": 25087.5,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 200,
+      "significance": 0.8419999999999999,
+      "count": 4,
+      "last_seen": "2025-11-17T10:58:22.855570-05:00"
+    },
+    {
+      "price": 25089.5,
+      "side": "BUY",
+      "type": "ABSORPTION",
+      "volume": 196,
+      "significance": 0.725142857142857,
+      "count": 7,
+      "last_seen": "2025-11-17T10:52:42.848080-05:00"
+    }
+  ],
+  "iceberg_positions": [
+    {
+      "price": 25090.75,
+      "side": "SELL",
+      "avg_size": 75.0,
+      "detections": 2,
+      "subtypes": "DETECTION, EXECUTION",
+      "last_seen": "2025-11-17T11:32:24.194697-05:00"
+    }
+  ],
+  "stop_clusters": [
+    {
+      "price": 25100.0,
+      "side": "SELL",
+      "density": 203,
+      "confidence": 0.0,
+      "clusters": 160,
+      "last_seen": "2025-11-17T12:40:14.496587-05:00"
+    },
+    {
+      "price": 25200.0,
+      "side": "BUY",
+      "density": 199,
+      "confidence": 0.0,
+      "clusters": 143,
+      "last_seen": "2025-11-17T11:59:09.444026-05:00"
+    },
+    {
+      "price": 25000.0,
+      "side": "SELL",
+      "density": 197,
+      "confidence": 0.0,
+      "clusters": 169,
+      "last_seen": "2025-11-17T13:45:45.942339-05:00"
+    },
+    {
+      "price": 25060.0,
+      "side": "SELL",
+      "density": 168,
+      "confidence": 0.0,
+      "clusters": 131,
+      "last_seen": "2025-11-17T12:50:21.437365-05:00"
+    },
+    {
+      "price": 25150.0,
+      "side": "SELL",
+      "density": 165,
+      "confidence": 0.0,
+      "clusters": 135,
+      "last_seen": "2025-11-17T12:36:16.555658-05:00"
+    }
+  ],
+  "fair_value_gaps": [
+    {
+      "type": "BEARISH_FVG",
+      "timeframe": "15m",
+      "timestamp": "2025-11-17T13:00:00-05:00",
+      "gap_low": 25012.0,
+      "gap_high": 25073.75,
+      "gap_size": 61.75,
+      "age_minutes": 66,
+      "tf_priority": 4
+    },
+    {
+      "type": "BEARISH_FVG",
+      "timeframe": "15m",
+      "timestamp": "2025-11-17T12:45:00-05:00",
+      "gap_low": 25078.5,
+      "gap_high": 25123.5,
+      "gap_size": 45.0,
+      "age_minutes": 81,
+      "tf_priority": 4
+    }
+  ],
+  "market_structure_shifts": [
+    {
+      "type": "BEARISH_MSS",
+      "timestamp": "2025-11-17T13:25:00-05:00",
+      "price": 24996.0,
+      "description": "Break of Structure to downside"
+    },
+    {
+      "type": "BEARISH_MSS",
+      "timestamp": "2025-11-17T13:15:00-05:00",
+      "price": 25009.0,
+      "description": "Break of Structure to downside"
+    },
+    {
+      "type": "BULLISH_MSS",
+      "timestamp": "2025-11-17T13:10:00-05:00",
+      "price": 24965.5,
+      "description": "Break of Structure to upside"
+    },
+    {
+      "type": "BEARISH_MSS",
+      "timestamp": "2025-11-17T12:40:00-05:00",
+      "price": 25112.25,
+      "description": "Break of Structure to downside"
+    },
+    {
+      "type": "BULLISH_MSS",
+      "timestamp": "2025-11-17T12:30:00-05:00",
+      "price": 25130.5,
+      "description": "Break of Structure to upside"
+    }
+  ],
+  "ipda_ranges": {
+    "20day": {
+      "low": 24626.0,
+      "high": 26399.5,
+      "size": 1773.5,
+      "midpoint": 25512.75
+    },
+    "40day": {
+      "low": 24157.75,
+      "high": 26399.5,
+      "size": 2241.75,
+      "midpoint": 25278.625
+    },
+    "60day": {
+      "low": 24157.75,
+      "high": 26399.5,
+      "size": 2241.75,
+      "midpoint": 25278.625
+    }
+  },
+  "bias_assessment": {
+    "bias_score": 9.5,
+    "confidence_score": 100,
+    "bias_category": "STRONG_BEARISH",
+    "factors": [
+      "Price in lower 30% of range (-15)",
+      "Price below Daily VWAP (-25) - Institutional bearish intent",
+      "Recent bearish VWAP cross (-5) - Judas swing completion",
+      "Sell stops above vulnerable to hunt (3 zones) (+10)",
+      "Kill Zone: AFTER_HOURS (0.3x) - Low probability time",
+      "Unfilled Bearish FVG at $25012.00-$25073.75 (-15)",
+      "Recent Bearish MSS at $24996.00 (-25) - Downside break of structure",
+      "P03 Phase: DISTRIBUTION - Follow trend (Directional move in progress - Follow the trend)",
+      "IPDA 20D: Price in lower range (19%) - Expect bounce (+10)"
+    ]
+  },
+  "key_levels": {
+    "support_levels": [
+      {
+        "price": 24989.25,
+        "type": "Overnight Low",
+        "strength": 80
+      }
+    ],
+    "resistance_levels": [
+      {
+        "price": 24970.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 24980.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25090.75,
+        "type": "Iceberg Resistance",
+        "strength": 75
+      },
+      {
+        "price": 25140.0,
+        "type": "Volume Node",
+        "strength": 60
+      },
+      {
+        "price": 25150.0,
+        "type": "Volume Node",
+        "strength": 60
+      }
+    ]
+  },
+  "trading_plan": {
+    "bias": "STRONG_BEARISH",
+    "confidence": 100,
+    "current_price": 24967.5,
+    "recommendations": [
+      "Look for short opportunities on rallies",
+      "Entry on rally to $24,970.00 resistance",
+      "T1: $25,031.86 (-257 ticks) -1 SD - First target",
+      "T2: $24,936.86 (123 ticks) -2 SD - Extended target",
+      "T3: $24,841.85 (503 ticks) -3 SD - Extreme target",
+      "Stop loss above $24,970.00"
+    ],
+    "primary_direction": "SHORT",
+    "entry_zone": "$24,967.50 - $24,970.00",
+    "targets": {
+      "T1": {
+        "price": 25031.862689602214,
+        "ticks": -257.4507584088569,
+        "label": "-1 SD"
+      },
+      "T2": {
+        "price": 24936.857479204427,
+        "ticks": 122.57008318229055,
+        "label": "-2 SD"
+      },
+      "T3": {
+        "price": 24841.85226880664,
+        "ticks": 502.590924773438,
+        "label": "-3 SD"
+      }
+    },
+    "stop": "Above $24,970.00"
+  }
+}

@@ -178,6 +178,90 @@
       opacity: 0.9;
       line-height: 1.4;
     }
+
+    /* NEW: Auto Export Scheduler Styles */
+    .scheduler-section {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .scheduler-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .scheduler-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .scheduler-start { background: #10b981; color: white; }
+    .scheduler-start::before { content: "⏰"; }
+    .scheduler-stop { background: #f59e0b; color: white; }
+    .scheduler-stop::before { content: "⏹️"; }
+    .scheduler-status {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      font-size: 11px;
+      text-align: center;
+    }
+    .scheduler-status.active { 
+      background: rgba(16, 185, 129, 0.3); 
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+    .scheduler-times {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .time-input-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .time-input-group input {
+      flex: 1;
+    }
+    .remove-time {
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .add-time-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    .scheduler-info {
+      font-size: 11px;
+      margin-top: 8px;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -191,6 +275,10 @@
     <div class="quick-select">
       <button class="quick-btn active" data-symbol="MNQ1!">MNQ!</button>
       <button class="quick-btn" data-symbol="MES1!">MES!</button>
+      <button class="quick-btn" data-symbol="MYM1!">MYM!</button>
+      <button class="quick-btn" data-symbol="M2K1!">M2K!</button>
+      <button class="quick-btn" data-symbol="MCL1!">MCL!</button>
+      <button class="quick-btn" data-symbol="MBT1!">MBT!</button>
     </div>
   </div>
   
@@ -224,10 +312,6 @@
           <label for="tf_1s">1 Second</label>
         </div>
         <div class="checkbox-group">
-          <input type="checkbox" id="tf_15s" />
-          <label for="tf_15s">15 Seconds</label>
-        </div>
-        <div class="checkbox-group">
           <input type="checkbox" id="tf_1m" checked />
           <label for="tf_1m">1 Minute</label>
         </div>
@@ -240,12 +324,24 @@
           <label for="tf_15m">15 Minutes</label>
         </div>
         <div class="checkbox-group">
+          <input type="checkbox" id="tf_30m" />
+          <label for="tf_30m">30 Minutes</label>
+        </div>
+        <div class="checkbox-group">
           <input type="checkbox" id="tf_1h" checked />
           <label for="tf_1h">1 Hour</label>
         </div>
         <div class="checkbox-group">
+          <input type="checkbox" id="tf_2h" />
+          <label for="tf_2h">2 Hours</label>
+        </div>
+        <div class="checkbox-group">
           <input type="checkbox" id="tf_4h" />
           <label for="tf_4h">4 Hours</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="tf_1D" />
+          <label for="tf_1D">Daily</label>
         </div>
       </div>
     </div>
@@ -279,13 +375,77 @@
       
       <div class="download-info">
         <small style="opacity: 0.9;">
-          📁 Files auto-saved as: <code>chart_export_SYMBOL_2025-11-03_143025.csv</code><br>
+          📁 Files auto-saved as: <code>SYMBOL_TIMEFRAME_2025-11-03T14-30-25.csv</code><br>
           🚀 Downloads API provides enhanced automation & monitoring
         </small>
       </div>
     </div>
     
     <button class="export-btn" id="exportNow">Export Visible Data</button>
+  </div>
+
+  <!-- NEW: Auto Export Scheduler Section -->
+  <div class="scheduler-section">
+    <div class="section-title">⏰ Auto Export Scheduler</div>
+    
+    <div class="form-group">
+      <label>Export Times (24h format, EST):</label>
+      <div class="scheduler-times" id="schedulerTimes">
+        <div class="time-input-group">
+          <input type="time" class="export-time" value="08:00" />
+          <button class="remove-time">×</button>
+        </div>
+      </div>
+      <button class="add-time-btn" id="addTime">+ Add Another Time</button>
+    </div>
+    
+    <div class="form-group">
+      <label>Auto Export Timeframes:</label>
+      <div class="timeframes">
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto_tf_1m" checked />
+          <label for="auto_tf_1m">1 Minute</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto_tf_5m" />
+          <label for="auto_tf_5m">5 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto_tf_15m" />
+          <label for="auto_tf_15m">15 Minutes</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto_tf_1h" checked />
+          <label for="auto_tf_1h">1 Hour</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="auto_tf_4h" />
+          <label for="auto_tf_4h">4 Hours</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="schedulerEnabled" />
+        Enable Auto Export Scheduler
+      </label>
+    </div>
+    
+    <div class="scheduler-controls">
+      <button class="scheduler-btn scheduler-start" id="startScheduler">Start Scheduler</button>
+      <button class="scheduler-btn scheduler-stop" id="stopScheduler">Stop Scheduler</button>
+    </div>
+    
+    <div class="scheduler-status" id="schedulerStatus">
+      Status: Ready
+    </div>
+    
+    <div class="scheduler-info">
+      💡 Scheduler will automatically export selected timeframes at specified times<br>
+      ⏰ Times are in EST (New York) timezone<br>
+      📁 Files saved to: TradingView_Data/Auto_Exports/
+    </div>
   </div>
   
   <div class="auto-section">
@@ -360,3 +520,4 @@
   <script src="popup.js"></script>
 </body>
 </html>
+[file content end]
